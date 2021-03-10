@@ -64,7 +64,7 @@ gantt
     CBF 추천 알고리즘 :    b_t3, after b_t1, 4d
 ```
 
-## Branch 규칙
+## Branch 규칙 
 
 
 

@@ -34,5 +34,6 @@ class UserServiceTest {
             System.out.println(userList.get(i).getUserPhone());
             System.out.println(userList.get(i).getUserPassword());
         }
+        System.out.println("확인용");
     }
 }

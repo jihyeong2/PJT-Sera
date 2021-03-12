@@ -41,17 +41,17 @@ gantt
     
 
     section Frontend
-    회원가입/로그인 페이지  :   t1, 2021-03-11, 2d
-    마이페이지  :    t2, 2021-03-11, 2d
-    상품 리스트/디테일 페이지   :   t3, 2021-03-11,2d 
+   	회원가입/로그인/비밀번호찾기 페이지 :  t1, 2021-03-12, 3d
+   	마이페이지 :  t2, 2021-03-12, 1d
+   	상품 리스트/디테일 페이지  :  t3, 2021-03-12, 3d
     피부진단(바우만) 페이지 : t4, after t1,2d
     퍼스널컬러 페이지 : t5, after t2, 2d
     메인페이지 : t6, after t3, 2d
     
     
     section Backend
-    글로우픽/올리브영 크롤링  : active, b_t1, 2021-03-08, 3d
-    DB설계, 테이블 구축 : b_t2, after b_t1, 1d
+  	글로우픽 크롤링 : done, b_t1, 2021-03-08, 4d
+  	DB설계, 테이블 구축 : b_t2, after 2021-03-12, 6h
     회원가입 SMTP 메일 인증 : b_t4, after b_t2, 2d
     로그인 JWT 토큰 인증, 세션설정 : b_t5, after b_t2, 2d
     비밀번호 메일인증 : b_t6, after b_t5, 1d
@@ -64,11 +64,64 @@ gantt
     CBF 추천 알고리즘 :    b_t3, after b_t1, 4d
 ```
 
-## Branch 규칙 
+## ✔ Branch 규칙
+
+```bash
+develop/feature/기능명
+```
 
 
 
-## Code Style
+## **✔** 커밋 메시지
+
+📌 하나의 기능 완성되면 한번에 커밋
+
+```markdown
+> 공통
+https://blog.ull.im/engineering/2019/03/10/logs-on-git.html 대로 메시지 
+한글 사용하자 :)) 
+
+프론트 : "[Jira issue number]FE_{featureName}_날짜:완성한 기능(작업 부분-폴더명)" 
+		ex) FE_0118:피드작성 컴포넌트 추가/수정/삭제 (Feed)
+
+백 : "[Jira issue number]BE_{featureName}_날짜: 완성한 기능(작업 부분-파일명)" 
+		ex) BE_0118:피드작성 컴포넌트 추가/수정/삭제 (UserController)
+
+리드미 : "README_날짜: 수정한 부분" 
+		ex) README_0118:와이어프레임 수정
+```
+
+
+
+## ✔ Code Style
+
+| FrontEnd                                                     | BackEnd                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 1. 폴더명: 첫글자 대문자<br />→ ex) Feed/Add.vue <br/><br/>2. 파일명: 첫글자 대문자 <br/> → ex) Add.vue <br/><br/>3. 경로명: 소문자 → ex) /add | 1. 클래스명:  첫글자 대문자 + camel case <br/> ex) MainController.java <br/><br/> 2. 함수, 변수: 첫글자 소문자 + camel case <br/> ex) public void setUserName(); |
+
+- if문
+
+  - 한줄 일 때, Block 처리하기
+  - else if / else /중괄호는 조건문 바로 옆에 붙이기
+
+  ```
+  if(condition){
+   statement;
+  } else if(condition2){
+   statement2;
+  } else{
+   statement3;
+  }
+  ```
+
+- for
+
+  - 단순 반복문은 iterator를 i,j,k,...,z순으로 명명하기
+
+- 주석 상대방이 이해할 수 있도록 달기
+
+  - /**/ 설명 여러줄 필요할 때 코드 위에 작성
+  - // 간단한 주석 코드 옆에 작성
 
 
 
@@ -89,6 +142,14 @@ gantt
 
 
 ### 와이어프레임
+
+
+
+
+
+
+
+
 
 
 

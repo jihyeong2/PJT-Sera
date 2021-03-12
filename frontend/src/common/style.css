@@ -1,0 +1,63 @@
+/* Color */
+
+@value color-black: #000000;
+@value color-white: #FFFFFF;
+@value color-red: #AF3131;
+@value color-yellow: #FAC56A;
+@value color-green: #4E9157;
+@value color-blue: #616BAD;
+@value color-grey-1: #333333;
+@value color-grey-2: #666666;
+@value color-grey-3: #999999;
+@value color-grey-4: #CCCCCC;
+@value color-orange-1: #FD6C1D;
+@value color-orange-2: #F29765;
+@value color-orange-3: #FFDBC7;
+@value color-orange-4: #FFF4EE;
+@value color-skin-1: #E7CAB9;
+@value color-skin-2: #F1DACC;
+@value color-skin-3: #F7E6DC;
+@value color-skin-4: #FAEEE7;
+
+/* Font Family 
+  ex) 
+  import font-gothic from '{style.css 파일 상대 경로}';
+
+  font-family: var(font-gothic);
+*/
+@value font-gothic: 'Nanum Gothic', sans-serif;
+@value font-myeong: 'Nanum Myeongjo', serif;
+
+/* Font Size */
+@value font-size-12: 12px;
+@value font-size-14: 14px;
+@value font-size-16: 16px;
+@value font-size-18: 18px;
+@value font-size-20: 20px;
+@value font-size-22: 22px;
+@value font-size-24: 24px;
+@value font-size-26: 26px;
+@value font-size-28: 28px;
+@value font-size-30: 30px;
+@value font-size-40: 40px;
+@value font-size-50: 50px;
+@value font-size-65: 65px;
+@value font-size-80: 80px;
+
+/* Font Weight */
+@value font-weight-regular : 400;
+@value font-weight-bold : 700;
+@value font-weight-exbold : 800;
+
+/* Border Radius */
+@value border-rad-circle: 50%;
+@value border-rad-xl: 38px;
+@value border-rad-lg: 32px;
+@value border-rad-md: 28px;
+@value border-rad-sm: 24px;
+@vlaue border-rad-xs: 20px;
+
+/* Animation */
+@value ani-duration-300: 300ms;
+@value ani-duration-800: 800ms;
+@value ani-duration-1300: 1300ms;

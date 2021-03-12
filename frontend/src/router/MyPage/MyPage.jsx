@@ -1,13 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
+import styles from './MyPage.module.css';
+import SkinInfo from '../../components/MyPage/SkinInfo/SkinInfo';
 
-class MyPage extends Component {
-  render() {
-    return (
-      <div>
-        MyPage
-      </div>
-    );
-  }
-}
+const MyPage = (props) => {
+  return (
+    <div className={styles.container}>
+      {/* <Navbar/> */}
+      {/* <Header/> */}
+      <header className={styles.title}>
+        마이페이지
+      </header>
+      <SkinInfo/>
+    </div>
+  );
+};
 
 export default MyPage;

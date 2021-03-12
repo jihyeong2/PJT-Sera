@@ -1,0 +1,19 @@
+.container {
+  width: 100%;
+}
+.info_box {
+  display: flex;
+  justify-content: center;
+}
+.info_left {
+}
+.info_right {
+}
+.navbar {
+}
+.update_form {
+}
+.skin_result {
+}
+.color_result {
+}

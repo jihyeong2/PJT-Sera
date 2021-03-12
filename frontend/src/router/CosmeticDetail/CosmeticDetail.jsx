@@ -1,13 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
+import Detail from './components/CosmeticDetail/detail';
+import Youtube from './components/CosmeticDetail/youtube';
+import Review from './components/CosmeticDetail/review';
 
-class CosmeticDetail extends Component {
-  render() {
+const CosmeticDetail = ( ) => {
+    
     return (
-      <div>
-        CosmeticDetail
-      </div>
+        <div>
+            <Detail />
+            <Youtube />
+            <Review />
+        </div>
     );
-  }
-}
+};
 
 export default CosmeticDetail;

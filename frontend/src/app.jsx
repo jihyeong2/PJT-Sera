@@ -1,4 +1,4 @@
-import './app.css';
+import './app.module.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './router/Home/Home';
 import Login from './router/Login/Login';
@@ -15,35 +15,35 @@ function App() {
     <div>
       <BrowserRouter>
         <Switch>
-          <Route>
-            <Home exact path="/"/>
+          <Route exact path="/">
+            <Home/>
           </Route>
-          <Route>
-            <Login path="/login"/>
+          <Route  path="/login">
+            <Login/>
           </Route>
-          <Route>
-            <SignUp path="/signup"/>
+          <Route path="/signup">
+            <SignUp />
           </Route>
-          <Route>
-            <FindPW path="/findpw"/>
+          <Route path="/findpw">
+            <FindPW />
           </Route>
-          <Route>
-            <MyPage path="/mypage"/>
+          <Route path="/mypage">
+            <MyPage />
           </Route>
-          <Route>
-            <MyPick path="/mypick"/>
+          <Route path="/mypick">
+            <MyPick />
           </Route>
-          <Route>
-            <CosmeticList path="/list"/>
+          <Route path="/list">
+            <CosmeticList />
           </Route>
-          <Route>
-            <CosmeticDetail path="/detail/:id"/>
+          <Route path="/detail/:id">
+            <CosmeticDetail />
           </Route>
-          <Route>
-            <SkinType path="/skintype"/>
+          <Route path="/skintype">
+            <SkinType />
           </Route>
-          <Route>
-            <PersonalColor path="/personal_color"/>
+          <Route path="/personal_color">
+            <PersonalColor />
           </Route>
         </Switch>
       </BrowserRouter>

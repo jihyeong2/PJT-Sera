@@ -1,7 +1,7 @@
 import React from 'react';
-import Detail from './components/CosmeticDetail/detail';
-import Youtube from './components/CosmeticDetail/youtube';
-import Review from './components/CosmeticDetail/review';
+import Detail from '../../components/CosmeticDetail/detail';
+import Youtube from '../../components/CosmeticDetail/youtube';
+import Review from '../../components/CosmeticDetail/review';
 
 const CosmeticDetail = ( ) => {
     

@@ -1,8 +1,9 @@
 import React from 'react';
 
-const Detail = (props) => (
+const Detail = ( ) => (
     <>
-        <h1>상품정보</h1>         
+        <h1>상품디테일</h1> 
+
     </>            
 );
 

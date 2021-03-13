@@ -1,11 +1,11 @@
 /* Color */
 
-@value color-black: #000000;
-@value color-white: #FFFFFF;
-@value color-red: #AF3131;
-@value color-yellow: #FAC56A;
-@value color-green: #4E9157;
-@value color-blue: #616BAD;
+@value colorBlack: #000000;
+@value colorWhite: #FFFFFF;
+@value colorRed: #AF3131;
+@value colorYellow: #FAC56A;
+@value colorGreen: #4E9157;
+@value colorBlue: #616BAD;
 @value color-grey-1: #333333;
 @value color-grey-2: #666666;
 @value color-grey-3: #999999;

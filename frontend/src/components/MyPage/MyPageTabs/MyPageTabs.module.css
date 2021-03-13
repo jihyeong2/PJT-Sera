@@ -1,0 +1,4 @@
+@value color-white from '../../../common/style.css';
+.white {
+  background-color: color-white;
+}

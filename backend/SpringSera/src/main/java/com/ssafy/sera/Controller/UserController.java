@@ -3,6 +3,7 @@ package com.ssafy.sera.Controller;
 import com.ssafy.sera.Domain.User;
 import com.ssafy.sera.Service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+
     @PostMapping("/signIn")
     public BaseResponse signIn(@RequestBody UserRequest request){
         BaseResponse response = null;

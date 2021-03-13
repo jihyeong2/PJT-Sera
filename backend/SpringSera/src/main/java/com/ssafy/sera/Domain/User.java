@@ -14,10 +14,12 @@ public class User {
     private Long userId;
 
     @Column(nullable = false)
-    private String userEmail;
+    private String userLoginId;
 
     @Column(nullable = false)
     private String userPassword;
+
+    private String userName;
 
     private int userAge;
 
@@ -26,9 +28,21 @@ public class User {
 
     private String userGender;
 
+//    skin 객체 만들면 다시 확인.
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "skin_id")
+//    private Skin skinId;
+
+//    Personal 객체 만들면 다시 확인.
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "personal_id")
+//    private Personal personalId;
+
+
+
     public static User createUser(UserRequest userRequest){
         User userInput = new User();
-        userInput.setUserEmail(userRequest.getUserEmail());
+        userInput.setUserLoginId(userRequest.getUserLoginId());
         userInput.setUserPassword(userRequest.getUserPassword());
         userInput.setUserAge(userRequest.getUserAge());
         userInput.setUserPhone(userRequest.getUserPhone());

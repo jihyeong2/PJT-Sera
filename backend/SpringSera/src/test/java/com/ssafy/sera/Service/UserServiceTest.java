@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 class UserServiceTest {
@@ -26,5 +27,15 @@ class UserServiceTest {
         List<User> userList = userService.findAll();
         Assertions.assertEquals(userList.size(),1);
         System.out.println(userList.get(0).getUserPassword());
+    }
+    @Test
+    void findByUserId(){
+        User userTest = new User();
+        userTest.setUserLoginId("test입니다.");
+        userTest.setUserPassword("테스트 비밀번호입니다");
+        userTest.setUserPhone("폰번호입니다");
+        userService.save(userTest);
+        User result = userService.findByUserLoginId("test입니다.");
+        Assertions.assertEquals(result.getUserPassword(), "테스트 비밀번호입니다");
     }
 }

@@ -1,8 +1,9 @@
 import React from 'react';
+import styles from './detail.module.css';
 
 const Detail = ( ) => (
     <>
-        <h1>상품디테일</h1> 
+        <p className={styles.product_name}>상품명</p> 
 
     </>            
 );

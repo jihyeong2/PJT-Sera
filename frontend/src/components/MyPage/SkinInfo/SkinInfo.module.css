@@ -3,7 +3,7 @@
 }
 .info_box {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
 }
 .info_left {
 }

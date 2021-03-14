@@ -10,6 +10,7 @@ import CosmeticList from './router/CosmeticList/CosmeticList';
 import CosmeticDetail from './router/CosmeticDetail/CosmeticDetail';
 import SkinType from './router/SkinType/SkinType';
 import PersonalColor from './router/PersonalColor/PersonalColor';
+
 function App() {
   return (
     <div>

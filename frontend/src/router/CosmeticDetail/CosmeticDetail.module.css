@@ -1,0 +1,20 @@
+.page,
+.detail,
+.youtube,
+.review{
+    width: 1400px;
+    margin: 0 auto;
+    /* border: 3px solid yellowgreen; */
+}
+.detail{
+    /* border: 3px solid rgb(50, 112, 205); */
+    margin-bottom: 20px;
+}
+.youtube{
+    /* border: 3px solid rgb(169, 50, 205); */
+    margin-bottom: 20px;
+}
+.review{
+    /* border: 3px solid rgb(205, 50, 97); */
+    margin-bottom: 20px;
+}

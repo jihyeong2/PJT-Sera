@@ -1,11 +1,23 @@
+@value color-orange-4,color-orange-1 from '../../../common/style.css';
+@value font-size-22 from '../../../common/style.css';
+@value font-weight-bold from '../../../common/style.css';
 .container {
   width: 100%;
 }
 .info_box {
   display: flex;
   justify-content: center;
+  background-color: color-orange-4;
+  padding: 2em;
 }
 .info_left {
+}
+.username {
+  font-size: font-size-22;
+  font-weight: 700;
+}
+.name {
+  color: color-orange-1;
 }
 .info_right {
 }

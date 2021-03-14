@@ -1,7 +1,13 @@
+@value color-grey-1,font-size-30,font-weight-bold from '../../common/style.css';
 .container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   width: 80%;
   margin: auto;
+}
+.title {
+  color: color-grey-1;
+  font-size: font-size-30;
+  font-weight: 700;
 }

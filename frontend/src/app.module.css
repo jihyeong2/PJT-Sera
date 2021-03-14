@@ -1,10 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap");
-@value font-gothic from './common/style.css';
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap");
+@value font-noto from './common/style.css';
 * {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  font-family: font-gothic;
+  font-family: font-noto;
 }
 .App {
   text-align: center;

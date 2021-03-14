@@ -59,10 +59,10 @@ public class UserController {
         return response;
     }
     @PutMapping("/{userLoginId}")
-    public BaseResponse updateUser(@PathVariable String userEmail, @RequestBody UserRequest request) {
+    public BaseResponse updateUser(@PathVariable String userLoginId, @RequestBody UserRequest request) {
         BaseResponse response = null;
         try {
-            userService.updateUser(userEmail, request);
+            userService.updateUser(userLoginId, request);
             response = new BaseResponse("success", "수정성공");
         } catch (IllegalStateException e) {
             response = new BaseResponse("fail", e.getMessage());

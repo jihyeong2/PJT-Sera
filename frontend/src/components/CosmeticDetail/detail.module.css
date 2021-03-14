@@ -1,0 +1,56 @@
+.detail_left{
+    /* background-color: teal; */
+    text-align: center;
+
+}
+.detail_right{
+    /* background-color: tomato; */
+    text-align: left;
+}
+.product_image{
+    width: 300px;
+}
+.icon{
+    width: 80px;
+    height: 33px;
+    text-align: center;
+}
+.heart_icon{
+    width: 33px;
+    height: 33px;
+}
+.share_icon{
+    width: 33px;
+    height: 33px;
+    border-radius:50%;
+    border: 1px solid gray;
+    margin-left: 8px;
+    padding: 7px;
+}
+
+
+.product_category{
+
+}
+.product_name{
+
+}
+.volume{
+
+}
+.price{
+
+}
+.brand{
+
+}
+.brand_name{
+
+}
+.brand_go_btn{
+    float: right;
+}
+.bar{
+    clear: both;
+    border: 1px solid #CCCCCC;
+}

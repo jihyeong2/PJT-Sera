@@ -1,14 +1,16 @@
-@value color-orange-4,color-orange-1 from '../../../common/style.css';
+@value color-orange-4,color-orange-1,color-grey-3,color-white,color-yellow-1,color-yellow-2 from '../../../common/style.css';
+@value color-orange-5,color-red-3,color-red-2,color-green-2,color-green-3 from '../../../common/style.css';
 @value font-size-22 from '../../../common/style.css';
 @value font-weight-bold from '../../../common/style.css';
+@value border-rad-circle, color-red-4 from '../../../common/style.css';
 .container {
   width: 100%;
 }
 .info_box {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   background-color: color-orange-4;
-  padding: 2em;
+  padding: 3em 0;
 }
 .info_left {
 }
@@ -19,7 +21,56 @@
 .name {
   color: color-orange-1;
 }
+.user_info {
+  margin: 0.5em 0;
+  color: color-grey-3;
+}
+.skin_box {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  justify-content: space-around;
+}
+.skin_text {
+  color: color-white;
+  font-weight: 700;
+}
+.skin_info1 {
+  background-color: color-yellow-2;
+  padding: 0.25em 1em;
+}
+.skin_info2 {
+  background-color: color-orange-5;
+  padding: 0.25em 0.75em;
+  margin: 0 0.5em;
+}
+.skin_info2 .skin_arrow {
+  color: color-red-3;
+}
+.skin_info3 {
+  background-color: color-red-2;
+  padding: 0.25em 0.75em;
+  margin: 0 0.5em;
+}
+.skin_info3 .skin_arrow {
+  color: color-red-3;
+}
+.skin_info4 {
+  background-color: color-green-2;
+  padding: 0.25em 0.75em;
+}
+.skin_info4 .skin_arrow {
+  color: color-green-3;
+}
 .info_right {
+  display: flex;
+}
+.info_right .skin_type {
+  font-size: font-size-22;
+  font-weight: 700;
+  color: color-red-4;
+}
+.info_right .color_type {
 }
 .navbar {
 }

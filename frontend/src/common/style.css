@@ -2,9 +2,15 @@
 
 @value color-black: #000000;
 @value color-white: #FFFFFF;
-@value color-red: #AF3131;
-@value color-yellow: #FAC56A;
-@value color-green: #4E9157;
+@value color-red-1: #AF3131;
+@value color-red-2: #EBB1A5;
+@value color-red-3: #D47489;
+@value color-red-4: #D17489;
+@value color-yellow-1: #FAC56A;
+@value color-yellow-2: #FADE9F;
+@value color-green-1: #4E9157;
+@value color-green-2: #C6DC9B;
+@value color-green-3: #748AA2;
 @value color-blue: #616BAD;
 @value color-grey-1: #333333;
 @value color-grey-2: #666666;
@@ -14,6 +20,7 @@
 @value color-orange-2: #F29765;
 @value color-orange-3: #FFDBC7;
 @value color-orange-4: #FFF4EE;
+@value color-orange-5: #F8D3B8;
 @value color-skin-1: #E7CAB9;
 @value color-skin-2: #F1DACC;
 @value color-skin-3: #F7E6DC;
@@ -23,7 +30,7 @@
   ex) 
   import font-gothic from '{style.css 파일 상대 경로}';
 
-  font-family: var(font-gothic);
+  font-family: font-gothic;
 */
 @value font-noto: 'Noto Sans KR', sans-serif;
 @value font-myeong: 'Nanum Myeongjo', serif;
@@ -47,7 +54,7 @@
 /* Font Weight */
 @value font-weight-regular : 400;
 @value font-weight-bold : 700;
-@value font-weight-exbold : 800;
+@value font-weight-exbold : 900;
 
 /* Border Radius */
 @value border-rad-circle: 50%;

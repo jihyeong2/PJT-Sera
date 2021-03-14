@@ -7,7 +7,9 @@ const SkinInfo = (props) => {
     <div className={styles.container}>
       <section className={styles.info_box}>
         <div className={styles.info_left}>
-          <div className={styles.username}>다우니님의 피부타입</div>
+          <div className={styles.username}>
+            <span className={styles.name}>다우니</span>
+            님의 피부타입</div>
           <div className={styles.user_info}>여성 | 26세</div>
           <ul className={styles.skin_box}>
             <div className={styles.skin_info1}>

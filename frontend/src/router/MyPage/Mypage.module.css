@@ -1,4 +1,4 @@
-@value color-grey-1 from '../../common/style.css';
+@value color-grey-1,font-size-30,font-weight-bold from '../../common/style.css';
 .container {
   display: flex;
   flex-direction: column;
@@ -8,4 +8,6 @@
 }
 .title {
   color: color-grey-1;
+  font-size: font-size-30;
+  font-weight: 700;
 }

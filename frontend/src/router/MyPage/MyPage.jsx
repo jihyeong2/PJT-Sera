@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Mypage.module.css';
+import styles from './MyPage.module.css';
 import SkinInfo from '../../components/MyPage/SkinInfo/SkinInfo';
 
 const MyPage = (props) => {

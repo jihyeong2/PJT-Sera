@@ -21,12 +21,13 @@ def scrolling(driver):
     ul = driver.find_element_by_class_name('contents__reviews')
     start_height = ul.size['height']
 
-    target = driver.find_element_by_class_name('wrap-bottom')
-    
+    target = driver.find_element_by_id('gp-footer')
+    start = driver.find_element_by_id('gp-default-top')
     loop = True
     actions = ActionChains(driver)
 
     while loop:
+        actions.move_to_element(start).perform()
         actions.move_to_element(target).perform()
         time.sleep(0.5)
 
@@ -50,6 +51,7 @@ def getProductInfo(driver):
     for t in tags:
         p_tags.append(t.text)
     
+    img = driver.find_element_by_class_name('product-image__detail--desktop').find_element_by_tag_name('meta').get_attribute('content')
     elements = []
     try:
         btn_elements = driver.find_element_by_class_name('ingredient')
@@ -73,7 +75,7 @@ def getProductInfo(driver):
         colors = driver.find_element_by_class_name('info__color-type-list').text.strip()
     except:
         pass
-    return {'name':p_name, 'volume':p_volume, 'price':p_price, 'brand':p_brand, 'discription' :p_discription, 'tags':p_tags, 'elements':elements, 'colors':colors} 
+    return {'name':p_name, 'image' : img, 'volume':p_volume, 'price':p_price, 'brand':p_brand, 'discription' :p_discription, 'tags':p_tags, 'elements':elements, 'colors':colors} 
 
 def getProductReviews(id, driver):
     result = []
@@ -101,8 +103,8 @@ def writeJsonFile(start_num, end_num, items, reviews):
     file_path = path + "/output/"
     if not os.path.exists(file_path):
         os.makedirs(file_path)
-    item_outpath = file_path + "OY_items_"+str(start_num)+"-"+str(end_num)+".json"
-    review_outpath = file_path + "OY_reviews_" + str(start_num)+"-"+str(end_num)+ ".json"
+    item_outpath = file_path + "GP_items_"+str(start_num)+"-"+str(end_num)+".json"
+    review_outpath = file_path + "GP_reviews_" + str(start_num)+"-"+str(end_num)+ ".json"
     
     with open(item_outpath, 'w', encoding="utf-8") as of:
         json.dump(items, of, ensure_ascii=False, indent="\t")
@@ -119,19 +121,15 @@ def getProducts(start_num, end_num):
 
     items = []
     reviews = []
-    # start_num = 501
-    # end_num = 1000
     for i in range(start_num, end_num+1): 
         url = baseUrl + str(i)
-        # url = baseUrl + str(132372)
         driver.get(url=url)  # url open
-        time.sleep(0.5)
+        time.sleep(1)
         print(str(i)+" / "+ str(end_num))
         try :
             p_name = driver.find_element_by_class_name('product-main-info__product_name__text').text
         except:
             continue
-
         if '단종' in p_name:
             continue
         categories = driver.find_element_by_class_name('info__category').text.split(' ')
@@ -155,11 +153,28 @@ def getProducts(start_num, end_num):
         item_reviews = getProductReviews(item['id'], driver)
 
         items.append(item)
-        reviews.append(item_reviews)
+        reviews += item_reviews
 
     writeJsonFile(start_num, end_num, items, reviews)
     driver.quit()
     
-        
+def getItemsReviews():
+    file_path = path + 'output/'
+    file_list = os.listdir(file_path)
+    items = []
+    reviews = []
+
+    for f_name in file_list:
+        with open(file_path + f_name, 'r',encoding='utf-8') as f:
+            json_data = json.load(f)
+            if 'item' in f_name:
+                items += json_data
+            else:
+                reviews += json_data
+    
+    return items, reviews
+
 if __name__ == '__main__':
-    getProducts(5001,10000)#145498
+    # 숫자 바꿔서 크롤링 예시 (10001~20000) #145498
+    getProducts(1,10000)
+

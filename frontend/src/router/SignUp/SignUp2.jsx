@@ -4,9 +4,10 @@ import Grid from "@material-ui/core/Grid";
 import { withRouter } from "react-router-dom";
 
 const SignUp2 = (props) => {
-
-  const goSingnUp = () => {
-    props.history.push('/login');
+  console.log("야"+props.location.state.user.userLoginId); //넘어옴
+  const submit = () => {
+    //props.history.push('/login');
+    
   }
 
   return (
@@ -76,7 +77,7 @@ const SignUp2 = (props) => {
                       type="radio"
                       name="gender"
                       value="1"
-                      checked
+                      defaultChecked
                     />
                     <label for="man">남성</label>
                   </div>
@@ -97,7 +98,7 @@ const SignUp2 = (props) => {
                   className={styles.submit}
                   type="submit"
                   value="확인"
-                  onClick={goSingnUp}
+                  onClick={submit}
                 />
               </li>
             </ul>

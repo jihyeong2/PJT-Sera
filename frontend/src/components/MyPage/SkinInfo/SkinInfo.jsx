@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './SkinInfo.module.css';
-import MyPageTabs from '../MyPageTabs/MyPageTabs';
+
 
 const SkinInfo = (props) => {
   return (
@@ -9,7 +9,8 @@ const SkinInfo = (props) => {
         <div className={styles.info_left}>
           <div className={styles.username}>
             <span className={styles.name}>다우니</span>
-            님의 피부타입</div>
+            님의 피부타입
+          </div>
           <div className={styles.user_info}>여성 | 26세</div>
           <ul className={styles.skin_box}>
             <div className={styles.skin_info1}>
@@ -34,7 +35,7 @@ const SkinInfo = (props) => {
           <div className={styles.color_type}>봄웜</div>
         </div>
       </section>
-      <MyPageTabs/>
+      
     </div>
   );
 }

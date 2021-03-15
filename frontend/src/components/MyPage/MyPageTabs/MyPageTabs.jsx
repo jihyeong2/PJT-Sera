@@ -6,6 +6,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import UpdateForm from '../UpdateForm/UpdateForm';
 // import styles from './MyPageTabs.module.css';
 
 function TabPanel(props) {
@@ -86,7 +87,7 @@ export default function NavTabs() {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        Page One
+        <UpdateForm/>
       </TabPanel>
       <TabPanel value={value} index={1}>
         Page Two

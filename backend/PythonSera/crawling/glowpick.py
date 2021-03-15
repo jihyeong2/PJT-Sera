@@ -103,8 +103,8 @@ def writeJsonFile(start_num, end_num, items, reviews):
     file_path = path + "/output/"
     if not os.path.exists(file_path):
         os.makedirs(file_path)
-    item_outpath = file_path + "OY_items_"+str(start_num)+"-"+str(end_num)+".json"
-    review_outpath = file_path + "OY_reviews_" + str(start_num)+"-"+str(end_num)+ ".json"
+    item_outpath = file_path + "GP_items_"+str(start_num)+"-"+str(end_num)+".json"
+    review_outpath = file_path + "GP_reviews_" + str(start_num)+"-"+str(end_num)+ ".json"
     
     with open(item_outpath, 'w', encoding="utf-8") as of:
         json.dump(items, of, ensure_ascii=False, indent="\t")
@@ -153,11 +153,28 @@ def getProducts(start_num, end_num):
         item_reviews = getProductReviews(item['id'], driver)
 
         items.append(item)
-        reviews.append(item_reviews)
+        reviews += item_reviews
 
     writeJsonFile(start_num, end_num, items, reviews)
     driver.quit()
     
-        
+def getItemsReviews():
+    file_path = path + 'output/'
+    file_list = os.listdir(file_path)
+    items = []
+    reviews = []
+
+    for f_name in file_list:
+        with open(file_path + f_name, 'r',encoding='utf-8') as f:
+            json_data = json.load(f)
+            if 'item' in f_name:
+                items += json_data
+            else:
+                reviews += json_data
+    
+    return items, reviews
+
 if __name__ == '__main__':
-    getProducts(1,500)#145498
+    # 숫자 바꿔서 크롤링 예시 (10001~20000) #145498
+    getProducts(1,10000)
+

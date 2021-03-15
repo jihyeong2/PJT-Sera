@@ -1,8 +1,12 @@
 @value color-grey-1, color-grey-2, color-red-5, font-size-12, font-size-14 from '../../../common/style.css';
 @value color-orange-1, color-white, color-grey-5, color-grey-3, color-grey-4, font-size-14 from '../../../common/style.css';
+
 button {
   cursor: pointer;
   outline: none;
+}
+.container {
+  margin-top: 2em;
 }
 .guide {
   color: color-grey-2;

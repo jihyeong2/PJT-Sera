@@ -3,6 +3,7 @@ package com.ssafy.sera.Controller;
 import com.ssafy.sera.Domain.User;
 import com.ssafy.sera.Domain.UserDto;
 import com.ssafy.sera.Service.UserService;
+import com.ssafy.sera.Util.Validator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,14 +17,15 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-
+    private final Validator validator;
     @PostMapping("/signIn")
     public BaseResponse signIn(@RequestBody UserRequest request){
         BaseResponse response = null;
         try{
+            request.setUserPhone(validator.phoneValidator(request.getUserPhone()));
             User user = User.createUser(request);
             userService.save(user);
-            response = new BaseResponse("success", "성공적으로 입력");
+            response = new BaseResponse("success", "성공적으로 가입");
         }catch(IllegalStateException e){
             response = new BaseResponse("fail",e.getMessage());
         }

@@ -19,7 +19,7 @@ public class User {
     @Column(nullable = false)
     private String userPassword;
 
-    private String userName;
+    private String userNickname;
 
     private int userAge;
 
@@ -44,6 +44,7 @@ public class User {
         User userInput = new User();
         userInput.setUserLoginId(userRequest.getUserLoginId());
         userInput.setUserPassword(userRequest.getUserPassword());
+        userInput.setUserNickname(userRequest.getUserNickname());
         userInput.setUserAge(userRequest.getUserAge());
         userInput.setUserPhone(userRequest.getUserPhone());
         userInput.setUserGender(userRequest.getUserGender());

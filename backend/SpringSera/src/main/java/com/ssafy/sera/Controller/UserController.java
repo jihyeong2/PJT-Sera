@@ -38,7 +38,7 @@ public class UserController {
         try{
             List<User> findUsers = userService.findAll();
             List<UserDto> collect = findUsers.stream()
-                    .map(m-> new UserDto(m.getUserId(), m.getUserLoginId(), m.getUserPassword(), m.getUserName(), m.getUserAge(), m.getUserPhone(), m.getUserGender()))
+                    .map(m-> new UserDto(m.getUserId(), m.getUserLoginId(), m.getUserPassword(), m.getUserNickname(), m.getUserAge(), m.getUserPhone(), m.getUserGender()))
                     .collect(Collectors.toList());
             response = new BaseResponse("success", collect);
         }
@@ -61,6 +61,39 @@ public class UserController {
         }
         return response;
     }
+
+    @GetMapping("/duplicate/{userLoginId}")
+    public BaseResponse duplicateUserLoginId(@PathVariable String userLoginId){
+        BaseResponse response = null;
+        try{
+            boolean isDuplicate = userService.validateDuplicateUserLoginId(userLoginId);
+            if(isDuplicate){
+                response = new BaseResponse("success", "중복입니다");
+            }else{
+                response = new BaseResponse("success", "중복이 아닙니다");
+            }
+        }catch(Exception e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    @GetMapping("/duplicate/nickname/{userNickname}")
+    public BaseResponse duplicateUserNickname(@PathVariable String userNickname){
+        BaseResponse response = null;
+        try{
+            boolean isDuplicate = userService.validateDuplicateNickname(userNickname);
+            if(isDuplicate){
+                response = new BaseResponse("success", "중복입니다");
+            }else{
+                response = new BaseResponse("success", "중복이 아닙니다");
+            }
+        }catch(Exception e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
     @PutMapping("/{userLoginId}")
     public BaseResponse updateUser(@PathVariable String userLoginId, @RequestBody UserRequest request) {
         BaseResponse response = null;

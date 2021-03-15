@@ -79,7 +79,8 @@ const UpdateForm = (props) => {
           </div>
           <div className={styles.value}>
             <button className={styles.gender_button}>남성</button>
-            <button className={styles.gender_button,styles.gender_button_active}>여성</button>
+            {/* <button className={styles.gender_button, styles.gender_button_active}>여성</button> */}
+            <button className={`${styles.gender_button} ${styles.gender_button_active}`}>여성</button>
           </div>
         </div>
       </section>

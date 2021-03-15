@@ -2,6 +2,21 @@
 @value color-grey-2,color-grey-3 from '../../common/style.css';
 
 
+<<<<<<< HEAD
+/* html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+} */
+
+/* *{
+    height:100%;
+} */
+
+=======
+>>>>>>> b72c0c2b91d6124e3d06cc9bfc3834e7c45e3762
 .container {
     position: relative;
     width: 100%;

@@ -28,7 +28,7 @@ public class JwtService {
         jwtBuilder.setHeaderParam("typ", "JWT");
         jwtBuilder.setSubject("LoginToken")
                 .setExpiration(new Date(System.currentTimeMillis()+1000*60*EXPIRE))
-                .claim("user",user).claim("greeting","환영합니다." + user.getUserName());
+                .claim("user",user).claim("greeting","환영합니다." + user.getUserNickname());
         jwtBuilder.signWith(SignatureAlgorithm.HS256, signature.getBytes());
 
         String jwt = jwtBuilder.compact();

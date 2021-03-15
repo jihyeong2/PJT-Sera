@@ -15,7 +15,7 @@ public class UserDto {
     private Long userId;
     private String userLoginId;
     private String userPassword;
-    private String userName;
+    private String userNickname;
     private int userAge;
     private String userPhone;
     private String userGender;
@@ -24,7 +24,7 @@ public class UserDto {
         this.userId = user.getUserId();
         this.userLoginId = user.getUserLoginId();
         this.userPassword = user.getUserPassword();
-        this.userName = user.getUserName();
+        this.userNickname = user.getUserNickname();
         this.userAge = user.getUserAge();
         this.userPhone = user.getUserPhone();
         this.userGender = user.getUserGender();

@@ -21,9 +21,9 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
+        <div p={3}>
+          {children}
+        </div>
       )}
     </div>
   );
@@ -58,6 +58,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
+    padding: 0,
+    height: '100vh',
   },
   bar:{
     backgroundColor: 'white',

@@ -176,5 +176,5 @@ def getItemsReviews():
 
 if __name__ == '__main__':
     # 숫자 바꿔서 크롤링 예시 (10001~20000) #145498
-    getProducts(1,10000)
+    getProducts(120001,125000)
 

@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 
 const Detail = ( ) => (
     <div className={styles.detail_right}>
-            <p className={styles.product_category}>스킨케어 > 세럼</p>
+            <p className={styles.product_category}>스킨케어 세럼</p>
             <p className={styles.product_name}>프로바이오틱스 세라마이드 크림</p> 
             <p><span className={styles.volume}>60ml /  </span><span className={styles.price}>35,000원</span></p>
             <div className={styles.brand}>

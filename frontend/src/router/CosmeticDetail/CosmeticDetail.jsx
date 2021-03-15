@@ -40,6 +40,6 @@ const CosmeticDetail = ( ) => {
             </Grid>
         </div>
     );
-};
+  }
 
-export default CosmeticDetail;
+  export default CosmeticDetail;

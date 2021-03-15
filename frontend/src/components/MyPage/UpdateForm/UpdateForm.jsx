@@ -103,7 +103,7 @@ const UpdateForm = (props) => {
       <section className={styles.button_box}>
         <button className={styles.white_button}>원래대로</button>
         <button className={styles.black_button}>수정하기</button>
-        <button className={styles.red_button}>탈퇴하기</button>
+        <button className={styles.red_button}>탈퇴하기 ></button>
       </section>
     </div>
   );

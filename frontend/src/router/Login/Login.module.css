@@ -10,6 +10,10 @@ body {
     overflow: hidden;
 }
 
+*{
+    height:100%;
+}
+
 .container {
     position: relative;
     width: 100%;
@@ -21,15 +25,15 @@ body {
     display: inline-block;
     width: 50%;
     height: 100%;
+    background-color: #FFF5F0;
 }
 
 .leftBox .left_con {
     position: relative;
     top: 2vh;
-    left: 5vw;
     margin: 0 auto;
-    width: 60%;
-    height: auto;
+    width: 50%;
+    height: 100%;
 }
 
 .leftBox .left_con .left_ttl {
@@ -102,6 +106,7 @@ body {
     font-size: 18px;
     color: #333;
     padding-bottom: 10px;
+    background-color: transparent;
 }
 
 
@@ -183,6 +188,7 @@ body {
     position: relative;
     margin: 0 auto;
     width: 306px;
+    height: auto;
     top: -3vh;
 }
 

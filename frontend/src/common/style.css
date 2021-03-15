@@ -68,3 +68,8 @@
 @value ani-duration-300: 300ms;
 @value ani-duration-800: 800ms;
 @value ani-duration-1300: 1300ms;
+
+ul ,li{
+  list-style:none;
+  padding-left: 0;
+}

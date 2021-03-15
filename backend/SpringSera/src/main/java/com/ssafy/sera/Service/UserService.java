@@ -21,6 +21,21 @@ public class UserService {
     public User findByUserLoginId(String userLoginId){
         return userRepository.findByUserLoginId(userLoginId);
     }
+
+    public boolean validateDuplicateUserLoginId(String userLoginId){
+        if(userRepository.findByUserLoginId(userLoginId)==null){ // null이면 중복X
+            return false;
+        }else{
+            return true;
+        }
+    }
+    public boolean validateDuplicateNickname(String userNickname){
+       if(userRepository.findByUserNickname(userNickname)==null){ // null이면 중복X
+           return false;
+       }else{
+           return true;
+       }
+    }
     public List<User> findAll(){
         return userRepository.findAll();
     }
@@ -38,7 +53,11 @@ public class UserService {
             findUser.get().setUserPassword(request.getUserPassword());
             findUser.get().setUserPhone(request.getUserPhone());
             findUser.get().setUserAge(request.getUserAge());
-            findUser.get().setUserName(request.getUserName());
+            findUser.get().setUserNickname(request.getUserNickname());
         }
+    }
+
+    public User findByUserLoginIdAndUserPassword(String userLoginId, String userPassword){
+        return userRepository.findByUserLoginIdAndUserPassword(userLoginId, userPassword);
     }
 }

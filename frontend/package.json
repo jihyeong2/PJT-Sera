@@ -18,7 +18,9 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-swipeable-views": "^0.13.9",
-    "web-vitals": "^1.0.1"
+    "react-wordcloud": "^1.2.7",
+    "web-vitals": "^1.0.1",
+    "youtube-api-search": "^0.0.5"
   },
   "scripts": {
     "start": "react-scripts start",

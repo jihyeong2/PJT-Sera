@@ -1,0 +1,52 @@
+@value font-size-24, font-size-16, font-size-14 from '../../common/style.css';
+@value color-grey-2 from '../../common/style.css';
+
+.head{
+    height: 43px;
+    display: flex;
+}
+.youtube_icon{
+    width: 50px;
+}
+.main_title{
+    font-size: font-size-24;
+    font-weight: 500;
+    margin-left: 10px;
+}
+.sub{
+    margin-top: 0px;
+    margin-left: 58px;
+    font-size: font-size-16;
+    color : color-grey-2;
+}
+.videos{
+    list-style-type : none;
+}
+.thumbnail{
+    width: 260px;
+}
+.video{
+    display: inline-block;
+    margin-left: 10px;
+}
+.metadata{
+    width: 260px;
+}
+.title{
+    font-size: font-size-16;
+    font-weight: 600;
+    margin-bottom: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 260px;
+}
+.channel{
+    font-size: font-size-14;
+    color : color-grey-2;
+    margin-top: 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 260px;
+}

@@ -12,14 +12,8 @@ const MyPage = (props) => {
       <header className={styles.title}>
         마이페이지
       </header>
-      <Grid container spacing={4}>
-        <Grid item xs={12}>
-          <SkinInfo/>
-        </Grid>
-        <Grid item xs={12}>
-          <MyPageTabs/>
-        </Grid>
-      </Grid>
+      <SkinInfo/>
+      <MyPageTabs/>
     </div>
   );
 };

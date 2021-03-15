@@ -41,4 +41,8 @@ public class UserService {
             findUser.get().setUserName(request.getUserName());
         }
     }
+
+    public User findByUserLoginIdAndUserPassword(String userLoginId, String userPassword){
+        return userRepository.findByUserLoginIdAndUserPassword(userLoginId, userPassword);
+    }
 }

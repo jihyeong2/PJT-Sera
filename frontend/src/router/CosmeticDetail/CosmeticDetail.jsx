@@ -15,7 +15,7 @@ const CosmeticDetail = ( ) => {
             redirect: 'follow'
           };
           
-          fetch("https://youtube.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&maxResults=5&key=AIzaSyAIAN4fWbhQxYcuLU-cnjAGihX695m5azE", requestOptions)
+          fetch("https://youtube.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&maxResults=8&key=AIzaSyAIAN4fWbhQxYcuLU-cnjAGihX695m5azE", requestOptions)
             .then(response => response.json())
             .then(result => setVideos(result.items))
             .catch(error => console.log('error', error));

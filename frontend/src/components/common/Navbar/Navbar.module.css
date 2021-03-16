@@ -1,0 +1,12 @@
+@value color-grey-2 from '../../../common/style.css';
+.navbar {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.user_btn {
+  position: absolute;
+  right: 0;
+  color: color-grey-2;
+  float: right;
+}

@@ -12,15 +12,15 @@ const Logo = ({type}) => {
   }
   if (type===1){
     return(
-      <img src={logo1} alt="Logo" className={styles.large} onClick={onClick}/>
+      <img src={logo1} alt="Logo" className={[styles.large,styles.btn].join(' ')} onClick={onClick}/>
     );
   } else if (type===2){
     return(
-      <img src={logo2} alt="Logo" className={styles.small} />
+      <img src={logo2} alt="Logo" className={[styles.small,styles.btn].join(' ')} />
     );
   } else {
     return(
-      <img src={logo3} alt="Logo" className={styles.large} onClick={onClick}/>
+      <img src={logo3} alt="Logo" className={[styles.large,styles.btn].join(' ')} onClick={onClick}/>
     );
   }
 };

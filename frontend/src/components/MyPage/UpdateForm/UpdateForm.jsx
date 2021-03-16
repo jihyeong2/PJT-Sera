@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import styles from './UpdateForm.module.css';
 
@@ -103,7 +104,10 @@ const UpdateForm = (props) => {
       <section className={styles.button_box}>
         <button className={styles.white_button}>원래대로</button>
         <button className={styles.black_button}>수정하기</button>
-        <button className={styles.red_button}>탈퇴하기</button>
+        <button className={styles.red_button}>
+          탈퇴하기&nbsp;
+          <FontAwesomeIcon icon="chevron-right" size="lg" color="#EB0000"/>  
+        </button>
       </section>
     </div>
   );

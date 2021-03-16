@@ -2,24 +2,19 @@ import React from 'react';
 import styles from './Mypage.module.css';
 import SkinInfo from '../../components/MyPage/SkinInfo/SkinInfo';
 import MyPageTabs from '../../components/MyPage/MyPageTabs/MyPageTabs';
-import Grid from '@material-ui/core/Grid';
+import Logo from '../../components/common/Logo/Logo';
+import Navbar from '../../components/common/Navbar/Navbar';
 
 const MyPage = (props) => {
   return (
     <div className={styles.container}>
-      {/* <Navbar/> */}
-      {/* <Header/> */}
+      <Navbar/>
+      <Logo type={1}/>
       <header className={styles.title}>
         마이페이지
       </header>
-      <Grid container spacing={4}>
-        <Grid item xs={12}>
-          <SkinInfo/>
-        </Grid>
-        <Grid item xs={12}>
-          <MyPageTabs/>
-        </Grid>
-      </Grid>
+      <SkinInfo s/>
+      <MyPageTabs/>
     </div>
   );
 };

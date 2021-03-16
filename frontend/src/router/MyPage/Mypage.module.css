@@ -10,4 +10,8 @@
   color: color-grey-1;
   font-size: font-size-30;
   font-weight: 700;
+  margin: 1em 0;
+}
+.logo {
+  margin: 0 2em;
 }

@@ -1,0 +1,11 @@
+@value color-white, color-grey-4 from '../../../../common/style.css';
+.top_button {
+  border: 1px solid color-grey-4;
+  background-color: color-white;
+  position: fixed;
+  bottom: 5em;
+  right: 5em;
+}
+.text {
+  color: color-grey-4;
+}

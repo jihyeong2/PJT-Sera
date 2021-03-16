@@ -1,14 +1,36 @@
-import React from "react";
+import React, { useRef } from "react";
 import styles from "./SignUp2.module.css";
 import Grid from "@material-ui/core/Grid";
 import { withRouter } from "react-router-dom";
+import axios from 'axios';
 
 const SignUp2 = (props) => {
   console.log("야"+props.location.state.user.userLoginId); //넘어옴
   const submit = () => {
-    //props.history.push('/login');
-    
+   
+
   }
+
+  //핸드폰 인증번호 테스트
+  const phoneRef = useRef();
+  const sendSns = () => {
+    const phoneNumber = phoneRef.current.value;
+    console.log(phoneNumber);
+
+    axios.get( 'http://localhost:9999/api/v1/auth?phoneNumber='+phoneNumber) 
+    .then((response) => { 
+      console.log("인증번호 가져오자 "+response.data);
+      const obj = response.data;
+      
+      for(var key in obj){
+        console.log("key: "+key+", value: "+JSON.stringify(obj[key]));
+      }
+
+     }) 
+    .catch((response) => { console.log("Error") });
+
+  }  
+
 
   return (
     <Grid container spacing={12} className={styles.container}>
@@ -42,6 +64,7 @@ const SignUp2 = (props) => {
                 </select>
                 <input
                   className={styles.input_text_select}
+                  ref = {phoneRef}
                   type="text"
                   name="userPhone"
                   placeholder="ex)010-7123-1815"
@@ -50,6 +73,7 @@ const SignUp2 = (props) => {
                   className={styles.input_btn_select}
                   type="button"
                   value="인증번호 전송"
+                  onClick={sendSns}
                 />
               </li>
               <li className={styles.form_input}>

@@ -1,4 +1,4 @@
-import './app.module.css';
+import styles from './app.module.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './router/Home/Home';
 import Login from './router/Login/Login';
@@ -15,7 +15,7 @@ import PersonalColor from './router/PersonalColor/PersonalColor';
 
 function App() {
   return (
-    <div>
+    <div className={styles.app}>
       <BrowserRouter>
         <Switch>
           <Route exact path="/">

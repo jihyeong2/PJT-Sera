@@ -1,0 +1,32 @@
+@value color-orange-1,color-grey-2, color-grey-4 from '../../common/style.css';
+@value font-size-30, font-size-20, font-size-18, font-size-16 from '../../common/style.css';
+
+.review_head{
+    border: 2px solid steelblue;
+    margin-bottom: 10px;
+}
+.search_bar{
+    border: 2px solid rgb(70, 180, 88);
+    margin-bottom: 80px;
+}
+.review_title{
+    font-size: font-size-30;
+    font-weight: 700;
+}
+.picture_list{
+    text-align: center;
+
+}
+.review_image{
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 160px;
+    height: 160px;
+}
+.filtering{
+    text-align: right;
+    margin-right: 20px;
+}
+.radio{
+    padding-top: 20px;
+}

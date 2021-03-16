@@ -1,5 +1,6 @@
 package com.ssafy.sera.Service;
 
+import com.ssafy.sera.Controller.PasswordRequest;
 import com.ssafy.sera.Controller.UserRequest;
 import com.ssafy.sera.Domain.User;
 import com.ssafy.sera.Repository.UserRepository;
@@ -21,6 +22,21 @@ public class UserService {
     public User findByUserLoginId(String userLoginId){
         return userRepository.findByUserLoginId(userLoginId);
     }
+
+    public boolean validateDuplicateUserLoginId(String userLoginId){
+        if(userRepository.findByUserLoginId(userLoginId)==null){ // null이면 중복X
+            return false;
+        }else{
+            return true;
+        }
+    }
+    public boolean validateDuplicateNickname(String userNickname){
+       if(userRepository.findByUserNickname(userNickname)==null){ // null이면 중복X
+           return false;
+       }else{
+           return true;
+       }
+    }
     public List<User> findAll(){
         return userRepository.findAll();
     }
@@ -38,10 +54,22 @@ public class UserService {
             findUser.get().setUserPassword(request.getUserPassword());
             findUser.get().setUserPhone(request.getUserPhone());
             findUser.get().setUserAge(request.getUserAge());
-            findUser.get().setUserName(request.getUserName());
+            findUser.get().setUserNickname(request.getUserNickname());
+        }
+        else{
+            throw new IllegalStateException("잘못된 유저 아이디입니다.");
         }
     }
-
+    @Transactional
+    public void updatePassword(PasswordRequest request){
+        Optional<User> findUser = Optional.ofNullable(userRepository.findByUserLoginId(request.getUserLoginId()));
+        if(findUser.isPresent()){
+            findUser.get().setUserPassword(request.getUserPassword());
+        }
+        else{
+                throw new IllegalStateException("잘못된 유저 아이디입니다.");
+        }
+    }
     public User findByUserLoginIdAndUserPassword(String userLoginId, String userPassword){
         return userRepository.findByUserLoginIdAndUserPassword(userLoginId, userPassword);
     }

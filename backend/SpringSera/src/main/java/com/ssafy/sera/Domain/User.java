@@ -1,6 +1,8 @@
 package com.ssafy.sera.Domain;
 
 import com.ssafy.sera.Controller.UserRequest;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +10,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter @Setter
+@ApiModel(value = "사용자 entity", description = "사용자에 대한 테이블과 1대1로 매핑이되는 데이터이다.")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +22,7 @@ public class User {
     @Column(nullable = false)
     private String userPassword;
 
-    private String userName;
+    private String userNickname;
 
     private int userAge;
 
@@ -44,6 +47,7 @@ public class User {
         User userInput = new User();
         userInput.setUserLoginId(userRequest.getUserLoginId());
         userInput.setUserPassword(userRequest.getUserPassword());
+        userInput.setUserNickname(userRequest.getUserNickname());
         userInput.setUserAge(userRequest.getUserAge());
         userInput.setUserPhone(userRequest.getUserPhone());
         userInput.setUserGender(userRequest.getUserGender());

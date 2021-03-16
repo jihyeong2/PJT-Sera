@@ -3,6 +3,10 @@ package com.ssafy.sera.Controller;
 import com.ssafy.sera.Domain.User;
 import com.ssafy.sera.Service.JwtService;
 import com.ssafy.sera.Service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
+@Api
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/v1/login")
@@ -25,8 +30,11 @@ public class LoginController {
 
     public static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
+    @ApiOperation(value = "로그인", notes = "토큰이 유요한가, 로그인이 되는가에 대한 데이터가 반환됨",response = ResponseEntity.class)
     @PostMapping
-    public ResponseEntity<Map<String, Object>> login(@RequestBody UserRequest userRequest, HttpServletResponse response, HttpSession session){
+    public ResponseEntity<Map<String, Object>> login(@ApiParam(value = "사용자 객체") @RequestBody UserRequest userRequest,
+                                                     HttpServletResponse response,
+                                                     HttpSession session){
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
         try{

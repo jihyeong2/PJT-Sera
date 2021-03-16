@@ -1,15 +1,6 @@
 @value font-size-50,font-size-20 from '../../common/style.css';
 @value color-grey-2,color-grey-3 from '../../common/style.css';
 
-
-html,
-body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-}
-
 .container {
     position: relative;
     width: 100%;

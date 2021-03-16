@@ -1,258 +1,240 @@
 @value font-size-50,font-size-20 from '../../common/style.css';
 @value color-grey-2,color-grey-3 from '../../common/style.css';
 
-
-html,
-body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-}
-
-*{
-    height:100%;
-}
-
 .container {
-    position: relative;
-    width: 100%;
-    height: 100%;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .leftBox {
-    position: relative;
-    display: inline-block;
-    width: 50%;
-    height: 100%;
-    background-color: #FFF5F0;
+  position: relative;
+  display: inline-block;
+  width: 50%;
+  height: 100%;
+  background-color: #fff5f0;
 }
 
 .leftBox .left_con {
-    position: relative;
-    top: 2vh;
-    margin: 0 auto;
-    width: 50%;
-    height: 100%;
+  position: relative;
+  top: 2vh;
+  margin: 0 auto;
+  width: 50%;
+  height: 100%;
 }
 
 .leftBox .left_con .left_ttl {
-    position: relative;
-    width: 100%;
-    height: auto;
+  position: relative;
+  width: 100%;
+  height: auto;
 }
 
 .leftBox .left_con .left_ttl .ttl_h {
-    position: relative;
-    font-size: font-size-50;
-    font-weight: bold;
+  position: relative;
+  font-size: font-size-50;
+  font-weight: bold;
 }
 
 .leftBox .left_con .left_ttl .ttl_p {
-    position: relative;
-    top: -40px;
-    font-size: 22px;
-    color: color-grey-3;
-    font-weight: 700;
+  position: relative;
+  top: -40px;
+  font-size: 22px;
+  color: color-grey-3;
+  font-weight: 700;
 }
 
 .leftBox .left_con .login_form {
-    position: relative;
-    top: -2vh;
-    width: 100%;
-    height: auto;
+  position: relative;
+  top: -2vh;
+  width: 100%;
+  height: auto;
 }
 
-
 .leftBox .left_con .login_form .form_ul {
-    position: relative;
-    width: 100%;
-    height: auto;
+  position: relative;
+  width: 100%;
+  height: auto;
 }
 
 .leftBox .left_con .login_form .form_ul .form_input {
-    position: relative;
-    width: 100%;
-    margin-top: 20px;
+  position: relative;
+  width: 100%;
+  margin-top: 20px;
 }
 
 .leftBox .left_con .login_form .form_ul .form_input:first-child {
-    margin-top: 0px;
+  margin-top: 0px;
 }
 
-
 .leftBox .left_con .login_form .form_ul .form_input .input {
-    position: relative;
-    width: 100%;
+  position: relative;
+  width: 100%;
 }
 
 .leftBox .left_con .login_form .form_ul .form_input .input_ttl {
-    position: relative;
-    font-size: 18px;
-    font-weight: 700;
-    color: color-grey-2;
+  position: relative;
+  font-size: 18px;
+  font-weight: 700;
+  color: color-grey-2;
 }
-
 
 .leftBox .left_con .login_form .form_ul .form_input input {
-    position: relative;
-    top: -10px;
-    width:100%;
-    height: 30px;
-    border-top: 0;
-    border-left: 0;
-    border-right: 0;
-    border-bottom: 1px solid #ccc;
-    font-size: 18px;
-    color: #333;
-    padding-bottom: 10px;
-    background-color: transparent;
+  position: relative;
+  top: -10px;
+  width: 100%;
+  height: 30px;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 1px solid #ccc;
+  font-size: 18px;
+  color: #333;
+  padding-bottom: 10px;
+  background-color: transparent;
 }
 
-
 .leftBox .left_con .login_form .form_ul .form_input input::placeholder {
-    font-size: 16px;
-    color: #ccc;
+  font-size: 16px;
+  color: #ccc;
 }
 
 /*아이디 기억하기*/
 .leftBox .left_con .login_form .form_ul li:nth-child(3) {
-    position: relative;
-    top: -20px;
-    width: 100%;
-    height: 25px;
+  position: relative;
+  top: -20px;
+  width: 100%;
+  height: 25px;
 }
 
-.leftBox .left_con .login_form .form_ul li:nth-child(3) .input_left{
-    display: inline-block;
-    position: relative;
-    left: 0;
+.leftBox .left_con .login_form .form_ul li:nth-child(3) .input_left {
+  display: inline-block;
+  position: relative;
+  left: 0;
 }
 
 .leftBox .left_con .login_form .form_ul li:nth-child(3) .input_left input {
-    position: relative;
-    top: 0;
-    left: -4px;
-    width: 18px;
-    height: 18px;
-    border: 1px solid #999;
+  position: relative;
+  top: 0;
+  left: -4px;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #999;
 }
 
 .leftBox .left_con .login_form .form_ul li:nth-child(3) .input_left span {
-    position: relative;
-    left: -4px;
-    bottom: 3px;
-    color: #999;
-    font-size: 14px;
-    font-weight: 700;
+  position: relative;
+  left: -4px;
+  bottom: 3px;
+  color: #999;
+  font-size: 14px;
+  font-weight: 700;
 }
 
-.leftBox .left_con .login_form .form_ul li:nth-child(3) .input_right{
-    display: inline-block;
-    position:relative;
-    float:right;
-    color: #999;
+.leftBox .left_con .login_form .form_ul li:nth-child(3) .input_right {
+  display: inline-block;
+  position: relative;
+  float: right;
+  color: #999;
 }
 
-.leftBox .left_con .login_form .form_ul li:nth-child(3) .input_right span{
-    color: #999;
-    font-size:14px;
-    font-weight: 600;
-    cursor: pointer;
+.leftBox .left_con .login_form .form_ul li:nth-child(3) .input_right span {
+  color: #999;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
-.leftBox .left_con .login_form .form_ul li:nth-child(3) .input_right .line{
-    color: #999;
-    font: size 12px;
-    padding: 0 8px 0 8px;
-    font-weight: 600;
+.leftBox .left_con .login_form .form_ul li:nth-child(3) .input_right .line {
+  color: #999;
+  font: size 12px;
+  padding: 0 8px 0 8px;
+  font-weight: 600;
 }
-
 
 .leftBox .left_con .login_form .form_ul .form_input .submit {
-    display: block;
-    margin: 0 auto;
-    margin-top: 5vh;
-    padding-top: 5px;
-    width: 200px;
-    height: 55px;
-    border: 1px solid #FD6C1D;
-    border-radius: 38px;
-    font-size: 20px;
-    color: #FD6C1D;
-    cursor: pointer;
-    background-color: #fff;
+  display: block;
+  margin: 0 auto;
+  margin-top: 5vh;
+  padding-top: 5px;
+  width: 200px;
+  height: 55px;
+  border: 1px solid #fd6c1d;
+  border-radius: 38px;
+  font-size: 20px;
+  color: #fd6c1d;
+  cursor: pointer;
+  background-color: #fff;
 }
 
-.leftBox .left_con .or{
-    position: relative;
-    margin: 0 auto;
-    width: 306px;
-    height: auto;
-    top: -3vh;
+.leftBox .left_con .or {
+  position: relative;
+  margin: 0 auto;
+  width: 306px;
+  height: auto;
+  top: -3vh;
 }
 
-.leftBox .left_con .or .left_line{
-    display: inline-block;
-    width: 128px;
-    height: 0.5px;
-    background-color: #ccc;
-    margin-bottom: 4px;
+.leftBox .left_con .or .left_line {
+  display: inline-block;
+  width: 128px;
+  height: 0.5px;
+  background-color: #ccc;
+  margin-bottom: 4px;
 }
 
-.leftBox .left_con .or .or_txt{
-    color: #ccc;
-    padding:0 10px 0 10px;
-    font-size:14px;
+.leftBox .left_con .or .or_txt {
+  color: #ccc;
+  padding: 0 10px 0 10px;
+  font-size: 14px;
 }
 
-.leftBox .left_con .or .right_line{
-    display: inline-block;
-    width: 128px;
-    height: 0.5px;
-    background-color: #ccc;
-    margin-bottom: 4px;
+.leftBox .left_con .or .right_line {
+  display: inline-block;
+  width: 128px;
+  height: 0.5px;
+  background-color: #ccc;
+  margin-bottom: 4px;
 }
 
-.leftBox .left_con .left_sns{
-    position: relative;
-    top: -1vh;
-    margin: 0 auto;
-    width: 160px;
+.leftBox .left_con .left_sns {
+  position: relative;
+  top: -1vh;
+  margin: 0 auto;
+  width: 160px;
 }
 
-.leftBox .left_con .left_sns div{
-    position: relative;
-    display: inline-block;
-    width: 70px;
-    height: 70px;
-    cursor: pointer;
+.leftBox .left_con .left_sns div {
+  position: relative;
+  display: inline-block;
+  width: 70px;
+  height: 70px;
+  cursor: pointer;
 }
 
-.leftBox .left_con .left_sns .google{
-    position: relative;
-    left: 20px;
+.leftBox .left_con .left_sns .google {
+  position: relative;
+  left: 20px;
 }
 
-.leftBox .left_con .left_sns div img{
-    width: 100%;
-    height: 100%;
+.leftBox .left_con .left_sns div img {
+  width: 100%;
+  height: 100%;
 }
 
 .rightBox {
-    display: inline-block;
-    width: 50%;
-    height: 100%;
-    background-color: #fff;
+  display: inline-block;
+  width: 50%;
+  height: 100%;
+  background-color: #fff;
 }
 
 .rightBox .right_con {
-    float: left;
-    margin-left: 13.3%;
-    width: 86.6%;
-    height: 100%;
+  float: left;
+  margin-left: 13.3%;
+  width: 86.6%;
+  height: 100%;
 }
 
-.rightBox .right_img{
-    width: 100%;
+.rightBox .right_img {
+  width: 100%;
 }

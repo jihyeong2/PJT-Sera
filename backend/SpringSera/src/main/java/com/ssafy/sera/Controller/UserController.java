@@ -4,13 +4,16 @@ import com.ssafy.sera.Domain.User;
 import com.ssafy.sera.Domain.UserDto;
 import com.ssafy.sera.Service.UserService;
 import com.ssafy.sera.Util.Validator;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Api
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/v1/users")
@@ -18,8 +21,10 @@ import java.util.stream.Collectors;
 public class UserController {
     private final UserService userService;
     private final Validator validator;
+
+    @ApiOperation(value = "회원가입", notes = "가입 성공시 BaseResponse에 data값으로 '성공적으로 가입' 설정 후 반환", response = BaseResponse.class)
     @PostMapping("/signIn")
-    public BaseResponse signIn(@RequestBody UserRequest request){
+    public BaseResponse signIn(@ApiParam(value = "사용자 객체") @RequestBody UserRequest request){
         BaseResponse response = null;
         try{
             request.setUserPhone(validator.phoneValidator(request.getUserPhone()));
@@ -32,6 +37,7 @@ public class UserController {
         return response;
     }
 
+    @ApiOperation(value = "모든 유저 목록 불러오기", notes = "모든 유저정보를 반환 List 형식으로", response = BaseResponse.class)
     @GetMapping
     public BaseResponse findUsers(){
         BaseResponse response = null;
@@ -47,9 +53,9 @@ public class UserController {
         }
         return response;
     }
-
+    @ApiOperation(value = "유저 한명 찾기", notes = "모든 유저정보를 반환 List 형식으로", response = BaseResponse.class)
     @GetMapping("/{userLoginId}")
-    public BaseResponse findUser(@PathVariable String userLoginId){
+    public BaseResponse findUser(@ApiParam(value = "사용자 로그인 아이디") @PathVariable String userLoginId){
         BaseResponse response = null;
         try{
             User findUser = userService.findByUserLoginId(userLoginId);
@@ -62,8 +68,9 @@ public class UserController {
         return response;
     }
 
+    @ApiOperation(value = "아이디 중복여부 검사", notes = "반환되는 data값은 중복입니다 / 중복이 아닙니다", response = BaseResponse.class)
     @GetMapping("/duplicate/{userLoginId}")
-    public BaseResponse duplicateUserLoginId(@PathVariable String userLoginId){
+    public BaseResponse duplicateUserLoginId(@ApiParam(value = "사용자 로그인 아이디")@PathVariable String userLoginId){
         BaseResponse response = null;
         try{
             boolean isDuplicate = userService.validateDuplicateUserLoginId(userLoginId);
@@ -78,8 +85,9 @@ public class UserController {
         return response;
     }
 
+    @ApiOperation(value = "닉네임 중복여부 검사", notes = "반환되는 data값은 중복입니다 / 중복이 아닙니다", response = BaseResponse.class)
     @GetMapping("/duplicate/nickname/{userNickname}")
-    public BaseResponse duplicateUserNickname(@PathVariable String userNickname){
+    public BaseResponse duplicateUserNickname(@ApiParam(value = "사용자 닉네임")@PathVariable String userNickname){
         BaseResponse response = null;
         try{
             boolean isDuplicate = userService.validateDuplicateNickname(userNickname);
@@ -93,9 +101,10 @@ public class UserController {
         }
         return response;
     }
-
+    @ApiOperation(value = "사용자 정보 업데이트", notes = "반환되는 데이터는 수정 성공 / 에러 메시지", response = BaseResponse.class)
     @PutMapping("/{userLoginId}")
-    public BaseResponse updateUser(@PathVariable String userLoginId, @RequestBody UserRequest request) {
+    public BaseResponse updateUser(@ApiParam(value = "사용자 로그인 아이디")@PathVariable String userLoginId,
+                                   @ApiParam(value = "사용자 객체")@RequestBody UserRequest request) {
         BaseResponse response = null;
         try {
             userService.updateUser(userLoginId, request);
@@ -105,8 +114,10 @@ public class UserController {
         }
         return response;
     }
+
+    @ApiOperation(value = "비밀번호 업데이트", notes = "반환되는 데이터는 수정 성공 / 에러 메시지", response = BaseResponse.class)
     @PutMapping("/password")
-    public BaseResponse updatePassword(@RequestBody PasswordRequest request) {
+    public BaseResponse updatePassword(@ApiParam(value = "패스워드 수정 정보(아이디, 패스워드)")@RequestBody PasswordRequest request) {
         BaseResponse response = null;
         try {
             userService.updatePassword(request);
@@ -117,8 +128,9 @@ public class UserController {
         return response;
     }
 
+    @ApiOperation(value = "회원 삭제", notes = "반환되는 데이터는 삭제 성공 / 에러 메시지", response = BaseResponse.class)
     @DeleteMapping("/{userLoginId}")
-    public BaseResponse deleteUser(@PathVariable String userLoginId){
+    public BaseResponse deleteUser(@ApiParam(value = "사용자 로그인 정보")@PathVariable String userLoginId){
         BaseResponse response = null;
         try {
             userService.deleteUser(userLoginId);

@@ -1,4 +1,4 @@
-package com.ssafy.sera.JWTConfig;
+package com.ssafy.sera.Config;
 
 import com.ssafy.sera.Service.JwtService;
 import lombok.RequiredArgsConstructor;

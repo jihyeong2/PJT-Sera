@@ -1,5 +1,6 @@
 package com.ssafy.sera.Service;
 
+import com.ssafy.sera.Controller.PasswordRequest;
 import com.ssafy.sera.Controller.UserRequest;
 import com.ssafy.sera.Domain.User;
 import com.ssafy.sera.Repository.UserRepository;
@@ -55,8 +56,20 @@ public class UserService {
             findUser.get().setUserAge(request.getUserAge());
             findUser.get().setUserNickname(request.getUserNickname());
         }
+        else{
+            throw new IllegalStateException("잘못된 유저 아이디입니다.");
+        }
     }
-
+    @Transactional
+    public void updatePassword(PasswordRequest request){
+        Optional<User> findUser = Optional.ofNullable(userRepository.findByUserLoginId(request.getUserLoginId()));
+        if(findUser.isPresent()){
+            findUser.get().setUserPassword(request.getUserPassword());
+        }
+        else{
+                throw new IllegalStateException("잘못된 유저 아이디입니다.");
+        }
+    }
     public User findByUserLoginIdAndUserPassword(String userLoginId, String userPassword){
         return userRepository.findByUserLoginIdAndUserPassword(userLoginId, userPassword);
     }

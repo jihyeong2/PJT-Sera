@@ -99,12 +99,24 @@ public class UserController {
         BaseResponse response = null;
         try {
             userService.updateUser(userLoginId, request);
-            response = new BaseResponse("success", "수정성공");
+            response = new BaseResponse("success", "수정 성공");
         } catch (IllegalStateException e) {
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;
     }
+    @PutMapping("/password")
+    public BaseResponse updatePassword(@RequestBody PasswordRequest request) {
+        BaseResponse response = null;
+        try {
+            userService.updatePassword(request);
+            response = new BaseResponse("success", "수정 성공");
+        } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
     @DeleteMapping("/{userLoginId}")
     public BaseResponse deleteUser(@PathVariable String userLoginId){
         BaseResponse response = null;

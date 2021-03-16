@@ -1,0 +1,11 @@
+.container {
+  margin: auto;
+  width: 80%;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+.search {
+  margin: auto;
+}

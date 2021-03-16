@@ -1,4 +1,4 @@
-@value color-grey-2 from '../../../common/style.css';
+@value font-size-14, color-grey-2 from '../../../common/style.css';
 .navbar {
   position: relative;
   display: flex;
@@ -9,4 +9,11 @@
   right: 0;
   color: color-grey-2;
   float: right;
+}
+.tab {
+  font-weight: 700;
+}
+.menu_item {
+  font-size: font-size-14 !important;
+  font-weight: 700 !important;
 }

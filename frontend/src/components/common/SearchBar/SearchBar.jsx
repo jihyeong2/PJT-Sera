@@ -1,40 +1,38 @@
-import React from "react";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import Slide from "@material-ui/core/Slide";
-import './Mui.css';
+import React from 'react';
+import CloseIcon from '@material-ui/icons/Close';
+import SearchIcon from '@material-ui/icons/Search';
+import IconButton from '@material-ui/core/IconButton';
 import styles from './SearchBar.module.css';
-import Logo from '../../common/Logo/Logo';
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="down" ref={ref} {...props} />;
-});
 const SearchBar = (props) => {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   return (
-    <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open full-screen dialog
-      </Button>
-      <Dialog
-        fullScreen
-        open={open}
-        onClose={handleClose}
-        TransitionComponent={Transition}
-      >
-        {/* <div className={}></div> */}
-      </Dialog>
+    <div style={{marginTop: '2em'}}>
+      <div className={styles.title}>
+        검색어를 입력해주세요.
+      </div>
+      <div className={styles.container}>
+        <select name="" id="" className={styles.select}>
+          <option className={styles.option} value="화장품">화장품</option>
+          <option className={styles.option} value="성분">성분</option>
+          <option className={styles.option} value="작성자">작성자</option>
+          <option className={styles.option} value="내용">내용</option>
+        </select>
+        <input
+          type="text"
+          name=""
+          id=""
+          className={styles.input}
+          />
+        <IconButton
+          aria-label="close"
+          size="large"
+          className={styles.icon}
+          >
+          <SearchIcon fontSize="large"/>
+        </IconButton>
+      </div>
     </div>
-  );
-};
+  )
+}
 
 export default SearchBar;

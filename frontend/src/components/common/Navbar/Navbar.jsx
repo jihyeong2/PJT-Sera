@@ -11,6 +11,7 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import SearchModal from '../SearchModal/SearchModal';
 
 
 const StyledTabs = withStyles({
@@ -84,9 +85,9 @@ const Navbar = (props) => {
   return (
     <nav className={styles.navbar}>
       <StyledTabs value={value} onChange={handleChange} aria-label="styled tabs example">
-        <StyledTab label="피부 진단" />
-        <StyledTab label="퍼스널컬러 진단" />
-        <StyledTab label="상품 보기" />
+        <StyledTab label="피부 진단" className={styles.tab}/>
+        <StyledTab label="퍼스널컬러 진단" className={styles.tab}/>
+        <StyledTab label="상품 보기" className={styles.tab}/>
       </StyledTabs>
       <Button
         ref={anchorRef}
@@ -107,15 +108,16 @@ const Navbar = (props) => {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={handleClose}>My account</MenuItem>
-                  <MenuItem onClick={handleClose}>Logout</MenuItem>
+                  <MenuItem className={styles.menu_item} onClick={handleClose}>로그아웃</MenuItem>
+                  <MenuItem className={styles.menu_item} onClick={handleClose}>마이페이지</MenuItem>
+                  <MenuItem className={styles.menu_item} onClick={handleClose}>내 찜 목록</MenuItem>
                 </MenuList>
               </ClickAwayListener>
             </Paper>
           </Grow>
         )}
       </Popper>
+      <SearchModal/>
     </nav>
   )
 }

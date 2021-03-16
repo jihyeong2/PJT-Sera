@@ -37,31 +37,27 @@ gantt
     SubⅠ Jira,Git 생성  :done, 2021-03-08, 6h
     와이어프레임 : done, 2021-03-09, 6h
     사전학습   :done, 2021-03-05, 3d
-    UI/UX   : active,   2021-03-10, 2d
+    UI/UX   : done,   2021-03-10, 2d
     
 
     section Frontend
-   	회원가입/로그인/비밀번호찾기 페이지 :  t1, 2021-03-14, 2d
-   	마이페이지 :  t2, 2021-03-14, 2d
-   	상품 리스트/디테일 페이지  :  t3, 2021-03-14, 2d
-    피부진단(바우만) 페이지 : t4, after t1,2d
-    퍼스널컬러 페이지 : t5, after t2, 2d
-    메인페이지 : t6, after t3, 2d
-    
+   	회원가입/로그인/비밀번호찾기 페이지 :  done, t1, 2021-03-14, 2d
+   	마이페이지 :  done, t2, 2021-03-14, 2d
+   	상품 리스트/디테일 페이지  : active, t3, 2021-03-14, 3d
+    회원가입/로그인/비밀번호찾기 api 연동 : active, t4, after t1,2d
+    공통 컴포넌트 UI : active, t7, 2021-03-16, 1d
+    마이페이지 api 연동: t5, 2021-03-16, 2d
+    Redux : t6, 2021-03-18, 2d
     
     section Backend
-  	글로우픽 크롤링 : done, b_t1, 2021-03-08, 4d
-  	DB설계, 테이블 구축 : b_t2, after 2021-03-12, 6h
-    회원가입 SMS 인증 : b_t4, after b_t2, 2d
-    로그인 JWT 토큰 인증, 세션설정 : b_t5, after b_t2, 2d
-    비밀번호 메일인증 : b_t6, after b_t5, 1d
-    회원정보 CRUD : b_t7, after b_t4, 1d
-    Swagger : b_t8, after b_t4, 1d
-    마이페이지 : b_t12, after b_t7, 1d
-    화장품 리스트/디테일 : b_t9, after b_t7, 1d
-    리뷰 CRUD : b_t10, after b_t7, 1d
-    검색 : b_t11, after b_t7, 1d
-    CBF 추천 알고리즘 :    b_t3, after b_t1, 4d
+  	글로우픽 크롤링 : active, b_t1, 2021-03-15, 6d
+  	DB설계, 테이블 구축 : done, b_t2, after 2021-03-12, 6h
+    회원가입 SMS 인증 : done, b_t4, 2021-03-15, 1d
+    로그인 JWT 토큰 인증, 세션설정 : done, b_t5, 2021-03-15, 1d
+    비밀번호 SMS 인증 : active, b_t6, 2021-03-16, 1d
+    회원정보 CRUD : done, b_t7, 2021-03-15, 1d
+    Swagger : b_t8, after b_t6, 1d
+    CBF 추천 알고리즘 : active, b_t3, 2021-03-14, 7d
 ```
 
 ## ✔ Branch 규칙

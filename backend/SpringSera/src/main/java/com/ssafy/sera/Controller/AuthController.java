@@ -18,11 +18,10 @@ import java.util.Random;
 public class AuthController {
     private final AuthService authService;
     private final Validator validator;
-
-    @GetMapping
-    public BaseResponse getAuthNumber(@RequestParam(required = false) String phoneNumber){
+    private static SMSResponse smsResponse;
+    @PostMapping
+    public BaseResponse postAuthNumber(@RequestParam(required = false) String phoneNumber){
         BaseResponse response = null;
-
         try{
             Random random = new Random();
             String secret = "";
@@ -30,7 +29,25 @@ public class AuthController {
                 secret += Integer.toString(random.nextInt(10));
             }
             authService.sendSMS(validator.phoneValidator(phoneNumber),secret);
-            response = new BaseResponse("success", new SMSResponse(secret));
+            smsResponse = new SMSResponse();
+            smsResponse.setCertificateNum(secret);
+            response = new BaseResponse("success", "true");
+        }catch(Exception e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    @GetMapping("/{certificateNum}")
+    public BaseResponse GetAuthResult(@PathVariable String certificateNum){
+        BaseResponse response = null;
+        try{
+            if(certificateNum.equals(smsResponse.getCertificateNum())){
+                response = new BaseResponse("success","true");
+            }
+            else{
+                response = new BaseResponse("success", "false");
+            }
         }catch(Exception e){
             response = new BaseResponse("fail", e.getMessage());
         }

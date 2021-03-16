@@ -1,6 +1,10 @@
 @value font-size-50,font-size-20 from '../../common/style.css';
 @value color-grey-2,color-grey-3 from '../../common/style.css';
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 81f86c3eb0251627e7380417114e99a0a9defcb1
 .container {
   position: relative;
   width: 100%;

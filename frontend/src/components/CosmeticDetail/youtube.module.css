@@ -19,18 +19,19 @@
     font-size: font-size-16;
     color : color-grey-2;
 }
-.videos{
-    list-style-type : none;
-}
 .thumbnail{
-    width: 260px;
+    /* width: 30%; */
+}
+.youtube_item{
+    margin-right: 10px;
+
 }
 .video{
     display: inline-block;
     margin-left: 10px;
 }
 .metadata{
-    width: 260px;
+    /* width: 30%; */
 }
 .title{
     font-size: font-size-16;
@@ -39,7 +40,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 260px;
+    width: 30%;
 }
 .channel{
     font-size: font-size-14;
@@ -48,5 +49,5 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 260px;
+    /* width: 30%; */
 }

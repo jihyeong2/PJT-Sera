@@ -7,7 +7,8 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import {withStyles } from '@material-ui/core/styles';
+// import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -34,15 +35,15 @@ const StyledTab = withStyles((theme) => ({
   },
 }))((props) => <Tab disableRipple {...props} />);
 
-const useStyles = makeStyles((theme) => ({
-  demo2: {
-    backgroundColor: '#FFFFFF',
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   demo2: {
+//     backgroundColor: '#FFFFFF',
+//   },
+// }));
 
 const Navbar = (props) => {
   // Material App Bar
-  const classes = useStyles();
+  // const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {

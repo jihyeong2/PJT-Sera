@@ -13,7 +13,7 @@ const MyPage = (props) => {
       <header className={styles.title}>
         마이페이지
       </header>
-      <SkinInfo/>
+      <SkinInfo s/>
       <MyPageTabs/>
     </div>
   );

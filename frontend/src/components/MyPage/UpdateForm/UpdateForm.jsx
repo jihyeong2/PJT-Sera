@@ -1,22 +1,63 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './UpdateForm.module.css';
+import {connect} from 'react-redux';
+import {login, logout, update} from '../../../actions/index';
 
-const UpdateForm = (props) => {
+const UpdateForm = ({user,login,logout,update}) => {
+  let [userInfo,setUserInfo] = useState({...user});
+  const nickNameRef=useRef();
+  const pwRef=useRef();
+  const pwConfirmRef=useRef();
+  const ageRef=useRef();
+  const phoneRef=useRef();
+  // const genderRef=useRef();
+  const handleChange = (e)=>{
+    if(e.target==null) return;
+    e.preventDefault();
+    let value='';
+    switch (e.target.name){
+      case 'nickName':
+        value=nickNameRef.current.value;
+        break;
+      case 'pw':
+        value=pwRef.current.value;
+        break;
+      case 'pwConfirm':
+        value=pwConfirmRef.current.value;
+        break;
+      case 'age':
+        value=ageRef.current.value;
+        break;
+      case 'phone':
+        value=phoneRef.current.value;
+        break;
+    }
+    setUserInfo(userInfo=>{
+      const updated={
+        ...userInfo,
+        [e.target.name]: value,
+      }
+      return updated;
+    });
+  }
+  const onSubmit = (e) => {
+    update(userInfo);
+  };
   return (
     <div className={styles.container}>
       <div className={styles.guide}>
         <span className={styles.highlight}> *</span>
         <span className={styles.text}>표시 항목은 반드시 입력해주세요.</span>
       </div>
-      <section className={styles.table}>
+      <div className={styles.table}>
         <div className={styles.table_row}>
           <div className={styles.label}>
             아이디
             <span className={styles.highlight}> *</span>
           </div>
           <div className={styles.value}>
-            unni2
+            {userInfo.userId}
           </div>
         </div>
         <div className={styles.table_row}>
@@ -25,7 +66,7 @@ const UpdateForm = (props) => {
             <span className={styles.highlight}> *</span>
           </div>
           <div className={styles.value}>
-            <input type="text" className={styles.input}/>
+            <input ref={nickNameRef} type="text" className={styles.input} name="nickName" value={userInfo.nickName} onChange={handleChange}/>
             <button className={styles.button}>
               중복확인
             </button>
@@ -37,7 +78,7 @@ const UpdateForm = (props) => {
             <span className={styles.highlight}> *</span>
           </div>
           <div className={styles.value}>
-            <input type="password" className={styles.input}/>
+            <input ref={pwRef} type="password" className={styles.input} name="pw" value={userInfo.pw} onChange={handleChange}/>
           </div>
         </div>
         <div className={styles.table_row}>
@@ -46,7 +87,7 @@ const UpdateForm = (props) => {
             <span className={styles.highlight}> *</span>
           </div>
           <div className={styles.value}>
-            <input type="password" className={styles.input}/>
+            <input ref={pwConfirmRef} type="password" className={styles.input} name="pwConfirm" value={userInfo.pwConfirm} onChange={handleChange}/>
           </div>
         </div>
         <div className={styles.table_row}>
@@ -54,7 +95,7 @@ const UpdateForm = (props) => {
             나이
           </div>
           <div className={styles.value}>
-            <input type="number" className={styles.input}/>
+            <input ref={ageRef} type="number" className={styles.input} name="age" value={userInfo.age} onChange={handleChange}/>
           </div>
         </div>
         <div className={styles.table_row}>
@@ -68,7 +109,7 @@ const UpdateForm = (props) => {
               <option className={styles.option} value="KT">KT</option>
               <option className={styles.option} value="LG">LG</option>
             </select>
-            <input type="text" className={styles.input}/>
+            <input ref={phoneRef} type="text" className={styles.input} name="phone" value={userInfo.phone} onChange={handleChange}/>
             <button className={styles.button}>
               인증번호 발송
             </button>
@@ -84,7 +125,7 @@ const UpdateForm = (props) => {
             <button className={`${styles.gender_button} ${styles.gender_button_active}`}>여성</button>
           </div>
         </div>
-      </section>
+      </div>
       <section className={styles.notice_box}>
         <div className={styles.notice_title}>
           비밀번호 변경 시 유의사항
@@ -103,7 +144,7 @@ const UpdateForm = (props) => {
       </section>
       <section className={styles.button_box}>
         <button className={styles.white_button}>원래대로</button>
-        <button className={styles.black_button}>수정하기</button>
+        <button className={styles.black_button} onClick={onSubmit}>수정하기</button>
         <button className={styles.red_button}>
           탈퇴하기&nbsp;
           <FontAwesomeIcon icon="chevron-right" size="lg" color="#EB0000"/>  
@@ -112,5 +153,17 @@ const UpdateForm = (props) => {
     </div>
   );
 };
+const mapStateToProps = (state) => ({
+  user: state.user.user,
+})
 
-export default UpdateForm;
+const mapDispatchToProps = (dispatch) => ({
+  login: user => dispatch(login(user)),
+  logout: () => dispatch(logout()),
+  update: user => dispatch(update(user))
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UpdateForm)

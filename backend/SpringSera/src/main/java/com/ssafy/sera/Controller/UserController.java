@@ -25,6 +25,7 @@ public class UserController {
     @ApiOperation(value = "회원가입", notes = "가입 성공시 BaseResponse에 data값으로 '성공적으로 가입' 설정 후 반환", response = BaseResponse.class)
     @PostMapping("/signIn")
     public BaseResponse signIn(@ApiParam(value = "사용자 객체") @RequestBody UserRequest request){
+
         BaseResponse response = null;
         try{
             request.setUserPhone(validator.phoneValidator(request.getUserPhone()));
@@ -118,6 +119,7 @@ public class UserController {
     @ApiOperation(value = "비밀번호 업데이트", notes = "반환되는 데이터는 수정 성공 / 에러 메시지", response = BaseResponse.class)
     @PutMapping("/password")
     public BaseResponse updatePassword(@ApiParam(value = "패스워드 수정 정보(아이디, 패스워드)")@RequestBody PasswordRequest request) {
+
         BaseResponse response = null;
         try {
             userService.updatePassword(request);

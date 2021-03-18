@@ -1,17 +1,18 @@
 import React, {useState, useEffect} from "react";
 import styles from "./SignUp2.module.css";
 import Grid from "@material-ui/core/Grid";
-import { withRouter } from "react-router-dom";
 import http from "../../http-common.js";
 import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router";
 
-const SignUp2 = (props) => {
+const SignUp2 = () => {
   const history = useHistory();
-  
+  const location = useLocation();
+
   const user = {
-    userLoginId: props.location.state.userLoginId,
-    userNickname: props.location.state.userNickname,
-    userPassword: props.location.state.userPassword,
+    userLoginId: location.state.userLoginId,
+    userNickname: location.state.userNickname,
+    userPassword: location.state.userPassword,
     userAge:'',
     userPhone:'',
     userGender:'',
@@ -65,13 +66,12 @@ const SignUp2 = (props) => {
   const onChangecertificateNumber = (e) => {
     setAblePhone(false);
     setCertificateNumber(e.target.value);
-    //여기서부터 다시
+   
     if(isNaN(e.target.value)){
       alert("숫자를 입력해주세요");
       onResetCertificateNumber();
     }else if(e.target.value==="") setCertificateNumColor("#666");
-    else{
-      setCertificateNumber(e.target.value);
+    else if(e.target.value.length === 6){
       setCertificateNumColor("#FD6C1D");
     }
   };
@@ -123,6 +123,7 @@ const SignUp2 = (props) => {
     }
   }
 
+  //회원가입
   const onSubmit = () => {
     if(submitTxtColor === "#FD6C1D" && submitBorderColor === "#FD6C1D"){
       user.userAge = userAge;
@@ -139,6 +140,11 @@ const SignUp2 = (props) => {
       .catch((err) => {
           console.error(err);
       });
+    }else{
+      if(!ableAge) alert("나이를 입력해주세요");
+      else if(!ablePhone) alert("핸드폰 본인인증을 완료해주세요");
+      else if(!ableGender) alert("성별을 체크해주세요");
+      else alert("모든 입력폼을 작성해주세요");
     }
   }
 
@@ -256,7 +262,7 @@ const SignUp2 = (props) => {
           </form>
           <div
             className={styles.prevBtn}
-            onClick={() => { props.history.push("/signup1");}}>
+            onClick={() => { history.push("/signup1");}}>
             &lt; &nbsp;&nbsp; prev
           </div>
         </div>
@@ -274,4 +280,4 @@ const SignUp2 = (props) => {
   );
 };
 
-export default withRouter(SignUp2);
+export default SignUp2;

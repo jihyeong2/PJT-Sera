@@ -106,6 +106,10 @@ const SignUp1 = () => {
                     userLoginId, userNickname, userPassword
                 }
             });
+       }else{
+         if(!ableLoginId) alert("아이디 중복확인을 해주세요");
+         else if(!ableNickname) alert("닉네임 중복확인을 해주세요");
+         else alert("모든 입력폼을 작성해주세요");
        }
   };
 

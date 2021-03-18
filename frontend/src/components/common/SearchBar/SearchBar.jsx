@@ -12,6 +12,7 @@ const SearchBar = (props) => {
       </div>
       <div className={styles.container}>
         <select name="" id="" className={styles.select}>
+          <option className={styles.option} value="none">정렬기준</option>
           <option className={styles.option} value="화장품">화장품</option>
           <option className={styles.option} value="성분">성분</option>
           <option className={styles.option} value="작성자">작성자</option>

@@ -14,7 +14,9 @@ const YoutubeList = (props) => {
             <Grid className={styles.videos} container spacing={3}>
                 {props.videos.map(video => (
                     <Grid item xs={3} className={styles.youtube_item}>
-                        <VideoItem key={video.id} video={video} />
+                        <div>
+                            <VideoItem key={video.id} video={video} />
+                        </div>
                     </Grid>
                 ))}
             </Grid>

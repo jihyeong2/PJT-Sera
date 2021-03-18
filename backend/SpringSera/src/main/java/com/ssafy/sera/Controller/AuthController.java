@@ -27,6 +27,7 @@ public class AuthController {
     @ApiOperation(value = "인증번호 요청", notes = "SMS 요청",response = BaseResponse.class)
     @PostMapping
     public BaseResponse postAuthNumber(@ApiParam(value = "휴대폰 번호") @RequestParam(required = false) String phoneNumber){
+
         BaseResponse response = null;
         try{
             Random random = new Random();

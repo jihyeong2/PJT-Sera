@@ -38,25 +38,26 @@ gantt
     와이어프레임 : done, 2021-03-09, 6h
     사전학습   :done, 2021-03-05, 3d
     UI/UX   : done,   2021-03-10, 2d
-    
+    추가 UI/UX(메인,피부진단,퍼스널컬러): t8, 2021-03-19, 2d
 
     section Frontend
    	회원가입/로그인/비밀번호찾기 페이지 :  done, t1, 2021-03-14, 2d
    	마이페이지 :  done, t2, 2021-03-14, 2d
-   	상품 리스트/디테일 페이지  : active, t3, 2021-03-14, 3d
-    회원가입/로그인/비밀번호찾기 api 연동 : active, t4, after t1,2d
+   	상품 리스트/디테일 페이지  : active, t3, 2021-03-14, 5d
+    회원가입/로그인/비밀번호찾기 api 연동 : done, t4, after t1,2d
     공통 컴포넌트 UI : active, t7, 2021-03-16, 1d
-    마이페이지 api 연동: t5, 2021-03-16, 2d
-    Redux : t6, 2021-03-18, 2d
+    마이페이지 api 연동: active, t5, 2021-03-18, 1d
+    Redux : done, t6, 2021-03-17, 1d
+  
     
     section Backend
   	글로우픽 크롤링 : active, b_t1, 2021-03-15, 6d
   	DB설계, 테이블 구축 : done, b_t2, after 2021-03-12, 6h
     회원가입 SMS 인증 : done, b_t4, 2021-03-15, 1d
     로그인 JWT 토큰 인증, 세션설정 : done, b_t5, 2021-03-15, 1d
-    비밀번호 SMS 인증 : active, b_t6, 2021-03-16, 1d
+    비밀번호 SMS 인증 : done, b_t6, 2021-03-16, 1d
     회원정보 CRUD : done, b_t7, 2021-03-15, 1d
-    Swagger : b_t8, after b_t6, 1d
+    Swagger : done, b_t8, after b_t6, 1d
     CBF 추천 알고리즘 : active, b_t3, 2021-03-14, 7d
 ```
 

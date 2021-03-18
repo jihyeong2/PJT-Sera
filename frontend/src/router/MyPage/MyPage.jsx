@@ -4,6 +4,7 @@ import SkinInfo from '../../components/MyPage/SkinInfo/SkinInfo';
 import MyPageTabs from '../../components/MyPage/MyPageTabs/MyPageTabs';
 import Logo from '../../components/common/Logo/Logo';
 import Navbar from '../../components/common/Navbar/Navbar';
+import ProductList from '../../components/common/ProductList/ProductList';
 
 const MyPage = (props) => {
   return (
@@ -15,6 +16,7 @@ const MyPage = (props) => {
       </header>
       <SkinInfo s/>
       <MyPageTabs/>
+      <ProductList/>
     </div>
   );
 };

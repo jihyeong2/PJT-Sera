@@ -10,36 +10,56 @@ const Detail = ( ) => (
             <p><span className={styles.volume}>60ml /  </span><span className={styles.price}>35,000원</span></p>
             <div className={styles.brand}>
                 <span className={styles.brand_name}>마몽드 (Mamonde)</span>
+                <Button className={styles.naver_go_btn} variant="outlined">
+                <img className={styles.naver_icon} src={process.env.PUBLIC_URL + '/images/naver_icon.png'} alt="네이버아이콘"/>
+                최저가 검색</Button>
                 <Button className={styles.brand_go_btn} variant="outlined">브랜드몰 가기</Button>
             </div>
             <div className={styles.bar}></div>
             <div className={styles.match_detail}>
-                <div className={styles.circle_percent}>80%</div>
-                <div className={styles.result}>
-                    <span className={styles.test_result}>ORNT</span>인
-                    <span className={styles.nickname}> 지니</span>님과 성분이
-                    <span className={styles.test_percent}> 80%</span> 일치합니다.
-                </div>
-                <Button className={styles.ingredient_btn} variant="outlined">성분보기</Button>
+                <Grid container spacing={1}>
+                        <Grid item xs={2} >
+                            <div className={styles.circle_percent}>80%</div>
+                        </Grid>
+                        <Grid item xs={7} >
+                            <div className={styles.result}>
+                                <br></br>
+                                <span className={styles.test_result}>ORNT</span>인
+                                <span className={styles.nickname}> 지니</span>님과 성분이
+                                <span className={styles.test_percent}> 80%</span> 일치합니다.
+                            </div>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <br></br>
+                            <Button className={styles.ingredient_btn} variant="outlined">성분보기</Button>
+                        </Grid>
+                    </Grid>
             </div>
             <div className={styles.bar}></div>
             <div className={styles.tone_detail}>
-                <div className={styles.tone_circle}>가을웜</div>
-                <div className={styles.tone_result}>
-                    <span className={styles.nickname}> 지니</span>님은 
-                    <span className={styles.test_tone}> 가을웜톤</span> 입니다.
-                </div>
-                <Button className={styles.tone_btn} variant="outlined">정보보기</Button>
+                <Grid container spacing={1}>
+                    <Grid item xs={2} >
+                        <div className={styles.tone_circle}>
+                            <div>가을</div>
+                            <div>웜</div>
+                        </div>
+                    </Grid>
+                    <Grid item xs={7} >
+                        <div className={styles.tone_result}>
+                            <br></br>
+                            <span className={styles.nickname}> 지니</span>님은 
+                            <span className={styles.test_tone}> 가을웜톤</span> 입니다.
+                        </div>
+                    </Grid>
+                    <Grid item xs={3}>
+                        <br></br>
+                        <Button className={styles.tone_btn} variant="outlined">정보보기</Button>
+                    </Grid>
+                </Grid>
             </div>
             <div className={styles.bar}></div>
             <div className={styles.detail}>
                 <Grid container spacing={2}>
-                    <Grid item xs={2}>
-                        <div className={styles.mall_name}> 판매처 </div>
-                    </Grid>
-                    <Grid item xs={10}>
-                        <div className={styles.mall_content}>올리브영, 글로우픽</div>
-                    </Grid>
                     <Grid item xs={2}>
                         <div className={styles.description_name}> 설명 </div>
                     </Grid>

@@ -1,0 +1,93 @@
+@value color-orange-1, color-red-1, color-yellow-1, color-green-1, color-blue, color-grey-2, color-grey-3, color-grey-4 from '../../common/style.css';
+@value font-size-30, font-size-24, font-size-16, font-size-14 from '../../common/style.css';
+
+.review_pro{
+}
+.review_content{
+}
+.star_rate{
+    display: inline-block;
+    margin-bottom: 0px!important;
+    padding: 0px;
+    margin-right: 10px;
+}
+.date{
+    font-size: font-size-14;
+    color: color-grey-2;
+    margin-right: 10px;
+}
+.trash_icon{
+    cursor: pointer;
+    color: color-red-1;
+}
+.change_icon{
+    cursor: pointer;
+    color: color-grey-2;
+}
+.like_icon{
+    cursor: pointer;
+    color: color-blue;
+    margin-left: 7px;
+}
+.unlike_icon{
+    cursor: pointer;
+    color: color-red-1;
+    margin-left: 7px;
+}
+.des{
+    font-size: font-size-14;
+}
+.help{
+    margin-left: 3px;
+    margin-right: 7px;
+}
+.good,
+.bad{
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+.good_icon,
+.bad_icon{
+    margin-right: 5px;
+}
+.good_content,
+.bad_content{
+    border: 1px solid color-grey-4;
+    font-size: font-size-14;
+    margin-bottom: 15px;
+    padding: 5px;
+}
+.review_image{
+    width: 120px;
+    height: 120px;
+}
+.nickname{
+    font-size: font-size-24;
+    color: color-orange-1;
+    font-weight: 600;
+}
+.prof{
+    font-size: font-size-14;
+    color: color-grey-2;
+}
+.title_pro{
+    margin-bottom: 10px;
+}
+.circle{
+    margin-top: 10px;
+}
+.skin_type{
+    width: 130px;
+    height: 130px;
+    line-height: 100px;
+    padding: 10px;
+    border-radius:50%;
+    text-align: center;
+    font-size: font-size-30;
+    font-weight: 600;
+    color: color-green-1;
+    border: 3px solid color-green-1;
+}
+.review_pro{
+    margin-left: 15%;
+}

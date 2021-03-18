@@ -12,6 +12,7 @@ import CosmeticList from './router/CosmeticList/CosmeticList';
 import CosmeticDetail from './router/CosmeticDetail/CosmeticDetail';
 import SkinType from './router/SkinType/SkinType';
 import PersonalColor from './router/PersonalColor/PersonalColor';
+import Footer from './components/common/Footer/Footer';
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
           </Route>
         </Switch>
       </BrowserRouter>
+      <Footer/>
     </div>
   );
 }

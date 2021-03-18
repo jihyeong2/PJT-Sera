@@ -4,7 +4,7 @@
 .detail,
 .youtube,
 .review{
-    width: 1400px;
+    width: 80%;
     margin: 0 auto;
 }
 .detail{
@@ -17,6 +17,6 @@
     margin-bottom: 20px;
 }
 .bar{
-    border: 1px solid color-grey-4;
+    border-top: 1px solid color-grey-4;
     width: 100%;
 }

@@ -1,35 +1,148 @@
-import React, { useRef } from "react";
+import React, {useState, useEffect} from "react";
 import styles from "./SignUp2.module.css";
 import Grid from "@material-ui/core/Grid";
 import { withRouter } from "react-router-dom";
-import axios from 'axios';
+import http from "../../http-common.js";
+import { useHistory } from "react-router-dom";
 
 const SignUp2 = (props) => {
-  console.log("야"+props.location.state.user.userLoginId); //넘어옴
-  const submit = () => {
-   
-
+  const history = useHistory();
+  
+  const user = {
+    userLoginId: props.location.state.userLoginId,
+    userNickname: props.location.state.userNickname,
+    userPassword: props.location.state.userPassword,
+    userAge:'',
+    userPhone:'',
+    userGender:'',
   }
 
-  //핸드폰 인증번호 테스트
-  const phoneRef = useRef();
+  const [userAge, setUserAge] = useState(""); //나이
+  const [userPhone, setUserPhone] = useState(""); //휴대번호
+  const [userGender, setUserGender] = useState("남성"); //성별
+  const [certificateNumber, setCertificateNumber] = useState(""); //인증번호
+
+  //style
+  const [snsButtonColor, setSnsButtonColor] = useState("#666");
+  const [certificateNumColor, setCertificateNumColor] = useState("#666");
+  const [submitBorderColor, setSubmitBorderColor] = useState("#666");
+  const [submitTxtColor, setSubmitTxtColor] = useState("#666");
+
+  const [ableAge, setAbleAge] = useState(false);
+  const [ablePhone, setAblePhone] = useState(false);
+  const [ableGender, setAbleGender] = useState(true);
+
+  useEffect(() => {
+    console.log(ableAge+", "+ablePhone+", "+ableGender);
+    if(ableAge && ablePhone && ableGender){
+      setSubmitBorderColor("#FD6C1D");
+      setSubmitTxtColor("#FD6C1D");
+    }else{
+      setSubmitBorderColor("#666");
+      setSubmitTxtColor("#666");
+    }
+  }, [ableAge, ablePhone, ableGender]);
+  
+  const onChangeUserAge = (e) => {
+    setAbleAge(false);
+    if(isNaN(e.target.value)){
+      alert("숫자를 입력해주세요");
+      onResetUserAge();
+    }else{
+      setUserAge(e.target.value);
+      setAbleAge(true);
+    }
+  };
+
+  const onChangeUserPhone = (e) => {
+    setAblePhone(false);
+    setUserPhone(e.target.value);
+    if(e.target.value !== "" && e.target.value.length === 13 && e.target.value[3]==='-' && e.target.value[8]==='-'){
+      setSnsButtonColor("#FD6C1D");
+    }else setSnsButtonColor("#666");
+  };
+
+  const onChangecertificateNumber = (e) => {
+    setAblePhone(false);
+    setCertificateNumber(e.target.value);
+    //여기서부터 다시
+    if(isNaN(e.target.value)){
+      alert("숫자를 입력해주세요");
+      onResetCertificateNumber();
+    }else if(e.target.value==="") setCertificateNumColor("#666");
+    else{
+      setCertificateNumber(e.target.value);
+      setCertificateNumColor("#FD6C1D");
+    }
+  };
+
+  const onResetUserAge = () => {
+    setUserAge("");
+  };
+  
+  const onResetCertificateNumber = () => {
+    setCertificateNumber("");
+  }
+
+
+  const clickGender = (e) => {
+    setAbleGender("true");
+    setUserGender(e.target.value);
+  };
+
+  //인증번호 발송
   const sendSns = () => {
-    const phoneNumber = phoneRef.current.value;
-    console.log(phoneNumber);
+    if(snsButtonColor === "#FD6C1D"){
+      http.post("v1/auth?phoneNumber="+userPhone)
+      .then((res) => {
+        if(res.data.status === "success") alert("인증번호가 발송되었습니다.");
+        else alert("인증번호 발송이 실패했습니다.");
+      })
+      .catch((err) => {
+          console.error(err);
+      });
+    }
+  };
+  
+ 
+  //백에서 인증번호 비교
+  const certificate = () => {
+    if(certificateNumColor === "#FD6C1D"){
+      http.get("v1/auth/"+certificateNumber)
+      .then((res) => {
+        console.log(res.data.data);
+          if(res.data.data === "true"){
+            setAblePhone(true);
+            alert("본인인증이 완료했습니다.");
+          }
+          else alert("인증번호가 일치하지 않습니다.");
+      })
+      .catch((err) => {
+          console.error(err);
+      });
+    }
+  }
 
-    axios.get( 'http://localhost:9999/api/v1/auth?phoneNumber='+phoneNumber) 
-    .then((response) => { 
-      console.log("인증번호 가져오자 "+response.data);
-      const obj = response.data;
-      
-      for(var key in obj){
-        console.log("key: "+key+", value: "+JSON.stringify(obj[key]));
-      }
+  const onSubmit = () => {
+    if(submitTxtColor === "#FD6C1D" && submitBorderColor === "#FD6C1D"){
+      user.userAge = userAge;
+      user.userPhone = userPhone;
+      user.userGender = userGender;
 
-     }) 
-    .catch((response) => { console.log("Error") });
+      http.post("v1/users/signIn", user)
+      .then((res) => {
+          if(res.data.status){
+            alert("회원가입이 완료되었습니다.");
+            history.push("/login");
+          }else alert("회원가입이 실패했습니다");
+      })
+      .catch((err) => {
+          console.error(err);
+      });
+    }
+  }
 
-  }  
+
 
 
   return (
@@ -40,7 +153,7 @@ const SignUp2 = (props) => {
             <p className={styles.ttl_h}>Join</p>
             <p className={styles.ttl_p}>회원정보를 입력하세요</p>
           </div>
-          <div className={styles.join_form}>
+          <form className={styles.join_form}>
             <ul class={styles.form_ul}>
               <li className={styles.form_input}>
                 <p class={styles.input_ttl}>
@@ -48,9 +161,12 @@ const SignUp2 = (props) => {
                 </p>
                 <input
                   className={styles.input_text_max}
-                  type="number"
+                  type="text"
                   name="userAge"
                   placeholder="나이를 입력하세요 예)26"
+                  maxlength="2"
+                  value={userAge}
+                  onChange={onChangeUserAge}
                 />
               </li>
               <li className={styles.form_input}>
@@ -64,29 +180,37 @@ const SignUp2 = (props) => {
                 </select>
                 <input
                   className={styles.input_text_select}
-                  ref = {phoneRef}
                   type="text"
                   name="userPhone"
                   placeholder="ex)010-7123-1815"
+                  value={userPhone}
+                  onChange={onChangeUserPhone}
+                  maxlength="13"
                 />
                 <input
                   className={styles.input_btn_select}
                   type="button"
                   value="인증번호 전송"
                   onClick={sendSns}
+                  style = {{backgroundColor: snsButtonColor}}
                 />
               </li>
               <li className={styles.form_input}>
                 <input
                   className={styles.input_text}
-                  type="number"
-                  name="authnumber"
+                  type="text"
+                  name="certificateNumber"
                   placeholder="발송된 인증번호를 입력해주세요 예)1234"
+                  value={certificateNumber}
+                  onChange={onChangecertificateNumber}
+                  maxlength="6"
                 />
                 <input
                   className={styles.input_btn}
                   type="button"
                   value="본인 인증"
+                  style = {{backgroundColor: certificateNumColor}}
+                  onClick = {certificate}
                 />
               </li>
               <li className={styles.form_input}>
@@ -100,7 +224,8 @@ const SignUp2 = (props) => {
                       className={styles.only_sr}
                       type="radio"
                       name="gender"
-                      value="1"
+                      value="남성"
+                      onClick={clickGender}
                       defaultChecked
                     />
                     <label for="man">남성</label>
@@ -111,7 +236,8 @@ const SignUp2 = (props) => {
                       className={styles.only_sr}
                       type="radio"
                       name="gender"
-                      value="2"
+                      value="여성"
+                      onClick={clickGender}
                     />
                     <label for="woman">여성</label>
                   </div>
@@ -120,14 +246,19 @@ const SignUp2 = (props) => {
               <li className={styles.form_input}>
                 <input
                   className={styles.submit}
-                  type="submit"
+                  type="button"
                   value="확인"
-                  onClick={submit}
+                  style={{borderColor: submitBorderColor, color: submitTxtColor}}
+                  onClick={onSubmit}
                 />
               </li>
             </ul>
+          </form>
+          <div
+            className={styles.prevBtn}
+            onClick={() => { props.history.push("/signup1");}}>
+            &lt; &nbsp;&nbsp; prev
           </div>
-          <div className={styles.prevBtn} onClick={() => { props.history.push("/signup1");}}>&lt; &nbsp;&nbsp; prev</div>
         </div>
       </Grid>
       <Grid container item xs={6} className={styles.rightBox}>

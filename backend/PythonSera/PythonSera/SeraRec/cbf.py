@@ -62,8 +62,6 @@ def readSkinTypeFile():
         skin_elements.append({'skinType' : skinType, 'helpful' : helpful, 'caution' : caution})
     
     return skin_elements
-        
-
 
 def initData():
     items = readItemFile()
@@ -81,6 +79,7 @@ def initData():
     n_element = len(element)
     element2idx = {v: k for k, v in element_dict.items()}
     # print(element2idx)
+
     data = []
     item_idexes = []
     for item in items:
@@ -95,14 +94,35 @@ def initData():
         item_idexes.append(item["id"])
     data = np.stack(data)
     column = [i for i in element_dict.keys()]
-    df = pd.DataFrame(data, columns=column, index=item_idexes)
-    # print(df)
-    for i in item_idexes[:10]:
-        temp = []
-        for j in range(1,n_element+1):
-            if df.loc[i,j] == 1:
-                temp.append(element_dict[j])
-        print(i, temp)
+    item_df = pd.DataFrame(data, columns=column, index=item_idexes)
+    # print(item_df)
+
+    skin_data = []
+    skin_indexes = []
+    for skin in help_caution:
+        vector = np.zeros(n_element)
+        element_idx = []
+        for h in skin["helpful"]:
+            if h["korean"] in element2idx.keys():
+                element_idx.append(element2idx[h["korean"]]-1)
+        for c in skin["caution"]:
+            if c["korean"] in element2idx.keys():
+                element_idx.append(element2idx[c["korean"]]-1)
+        vector[element_idx] = 1
+        skin_data.append(vector)
+        skin_indexes.append(skin["skinType"])
+    skin_data = np.stack(skin_data)
+    column = [i for i in element_dict.keys()]
+    skin_df = pd.DataFrame(skin_data, columns=column, index=skin_indexes)
+    
+    return item_df, skin_df
+
+def tf_idf():
+    item_df, skin_df = initData()
+    N = skin_df.shape
+    print(N)
+    return 
 
 if __name__ == '__main__':
-    initData()
+    # initData()
+    tf_idf()

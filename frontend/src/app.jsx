@@ -12,52 +12,27 @@ import CosmeticList from './router/CosmeticList/CosmeticList';
 import CosmeticDetail from './router/CosmeticDetail/CosmeticDetail';
 import SkinType from './router/SkinType/SkinType';
 import PersonalColor from './router/PersonalColor/PersonalColor';
-import Footer from './components/common/Footer/Footer';
-
+import SearchResult from './router/SearchResult/SearchResult'
 function App() {
   return (
     <div className={styles.app}>
       <BrowserRouter>
         <Switch>
-          <Route exact path="/">
-            <Home/>
-          </Route>
-          <Route  path="/login">
-            <Login/>
-          </Route>
-          <Route path="/signup1">
-            <SignUp1 />
-          </Route>
-          <Route path="/signup2">
-            <SignUp2 />
-          </Route>
-          <Route path="/findpw1">
-            <FindPW1 />
-          </Route>
-          <Route path="/findpw2">
-            <FindPW2 />
-          </Route>
-          <Route path="/mypage">
-            <MyPage />
-          </Route>
-          <Route path="/mypick">
-            <MyPick />
-          </Route>
-          <Route path="/list">
-            <CosmeticList />
-          </Route>
-          <Route path="/detail/:id">
-            <CosmeticDetail />
-          </Route>
-          <Route path="/skintype">
-            <SkinType />
-          </Route>
-          <Route path="/personal_color">
-            <PersonalColor />
-          </Route>
+          <Route exact path="/" component={Home}/>
+          <Route path="/login" component={Login}/>
+          <Route path="/signup1" component={SignUp1}/>
+          <Route path="/signup2" component={SignUp2}/>
+          <Route path="/findpw1" component={FindPW1}/>
+          <Route path="/findpw2" component={FindPW2}/>
+          <Route path="/mypage" component={MyPage}/>
+          <Route path="/mypick" component={MyPick}/>
+          <Route path="/list" component={CosmeticList}/>
+          <Route path="/detail/:id" component={CosmeticDetail}/>
+          <Route path="/skintype" component={SkinType}/>
+          <Route path="/personal_color" component={PersonalColor}/>
+          <Route path="/search/:name" component={SearchResult}/>
         </Switch>
       </BrowserRouter>
-      <Footer/>
     </div>
   );
 }

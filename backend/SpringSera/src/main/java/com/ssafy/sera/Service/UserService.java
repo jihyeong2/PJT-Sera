@@ -73,4 +73,5 @@ public class UserService {
     public User findByUserLoginIdAndUserPassword(String userLoginId, String userPassword){
         return userRepository.findByUserLoginIdAndUserPassword(userLoginId, userPassword);
     }
+
 }

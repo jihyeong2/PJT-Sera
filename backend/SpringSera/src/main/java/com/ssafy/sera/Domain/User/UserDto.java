@@ -1,14 +1,11 @@
-package com.ssafy.sera.Domain;
+package com.ssafy.sera.Domain.User;
 
+import com.ssafy.sera.Domain.Skin.SkinDto;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,7 +18,7 @@ public class UserDto {
     private int userAge;
     private String userPhone;
     private String userGender;
-
+    private SkinDto skinDto;
     public UserDto(User user){
         this.userId = user.getUserId();
         this.userLoginId = user.getUserLoginId();
@@ -30,6 +27,8 @@ public class UserDto {
         this.userAge = user.getUserAge();
         this.userPhone = user.getUserPhone();
         this.userGender = user.getUserGender();
+        this.skinDto.setSkinId(user.getSkinId().getSkinId());
+        this.skinDto.setSkinType(user.getSkinId().getSkinType());
     }
 
 

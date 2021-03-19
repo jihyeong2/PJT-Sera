@@ -1,7 +1,6 @@
 package com.ssafy.sera.Service;
 
 import com.ssafy.sera.Domain.Skin.Skin;
-import com.ssafy.sera.Domain.User;
 import com.ssafy.sera.Repository.SkinRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,12 +16,12 @@ public class SkinService {
 
     /**
      * 스킨 값 저장하기
-     * @param skin
+     * @param skinType
      * @return
      */
     @Transactional
-    public Skin save(Skin skin){
-        return skinRepository.save(skin);
+    public Skin save(String skinType){
+        return skinRepository.save(skinType);
     }
 
     /**

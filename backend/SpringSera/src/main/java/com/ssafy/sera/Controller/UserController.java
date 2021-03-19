@@ -1,7 +1,8 @@
 package com.ssafy.sera.Controller;
 
-import com.ssafy.sera.Domain.User;
-import com.ssafy.sera.Domain.UserDto;
+import com.ssafy.sera.Domain.Skin.Skin;
+import com.ssafy.sera.Domain.User.User;
+import com.ssafy.sera.Domain.User.UserDto;
 import com.ssafy.sera.Service.UserService;
 import com.ssafy.sera.Util.Validator;
 import io.swagger.annotations.Api;
@@ -45,7 +46,7 @@ public class UserController {
         try{
             List<User> findUsers = userService.findAll();
             List<UserDto> collect = findUsers.stream()
-                    .map(m-> new UserDto(m.getUserId(), m.getUserLoginId(), m.getUserPassword(), m.getUserNickname(), m.getUserAge(), m.getUserPhone(), m.getUserGender()))
+                    .map(m-> new UserDto(m)) //.getUserId(), m.getUserLoginId(), m.getUserPassword(), m.getUserNickname(), m.getUserAge(), m.getUserPhone(), m.getUserGender()
                     .collect(Collectors.toList());
             response = new BaseResponse("success", collect);
         }
@@ -138,6 +139,18 @@ public class UserController {
             userService.deleteUser(userLoginId);
             response = new BaseResponse("success", "삭제 성공");
         } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    @ApiOperation(value = "사용자 피부 설정", notes = "반환되는 데이터는 성공 / 에러메시지", response =BaseResponse.class)
+    @PostMapping("/skin/{userLoginId}")
+    public BaseResponse updateUserSkin(@ApiParam(value = "Skin 정보")@PathVariable String userLoginId, @RequestBody String skinType){
+        BaseResponse response = null;
+        try{
+
+        }catch(IllegalStateException e){
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;

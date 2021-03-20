@@ -30,6 +30,7 @@ const Ingredient = (props) => {
             </div>
             
             <div className={styles.ingredients}>
+            
             <Grid container spacing={6}>
                     <Grid item xs={6} >
                         <IngredientItem />

@@ -57,9 +57,7 @@ const SignUp1 = () => {
   
   var upperCase = /[A-Z]/; //대문자
   var regKorean =  /^[ㄱ-ㅎ가-힣]+$/; //한글 정규식
-  var RegExp =  /[~!@#$%^&*()_+|<>?:{}]/;
-  
-  ; //특수문자 정규식
+  var RegExp =  /[~!@#$%^&*()_+|<>?:{}]/;//특수문자 정규식
 
   //아이디 중복확인
   const checkUserLoginId = () => {
@@ -98,7 +96,7 @@ const SignUp1 = () => {
   
 
   //다음 페이지 이동
-  const onNext = () => {
+  const onNext = (e) => {
       if(nextColor === "#FD6C1D"){
             history.push({
                 pathname:'/signup2',

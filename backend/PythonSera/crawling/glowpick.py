@@ -1,4 +1,3 @@
-from urllib.request import urlopen
 from selenium import webdriver
 from selenium.webdriver import ActionChains
 import time
@@ -175,5 +174,5 @@ def getItemsReviews():
 
 if __name__ == '__main__':
     # 숫자 바꿔서 크롤링 예시 (10001~20000) #145498
-    getProducts(105001,115000)
+    getProducts(1,10000)
 

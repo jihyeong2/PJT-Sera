@@ -64,7 +64,7 @@ section {
   background-repeat: no-repeat;
   -webkit-background-size: contain;
   background-size: contain;
-  padding: 0 15px;
+  /* padding: 0 15px; */
 }
 section.right {
   background-position: center center;
@@ -78,14 +78,14 @@ section {
   width: 1024px;
   max-width: 100%;
   margin: 0 auto;
-  padding: 140px 0;
+  /* padding: 140px 0; */
   color: #fff;
 }
 .right .sec_container {
   text-align: right;
 }
 .sec_container.home {
-  padding-top: 250px;
+  /* padding-top: 250px; */
   text-align: center;
 }
 
@@ -93,27 +93,6 @@ h1 {
   font-size: 56px;
   font-weight: 300;
   margin-bottom: 40px;
-}
-
-.sec__link {
-  color: #fff;
-  text-decoration: none;
-  text-transform: uppercase;
-  padding: 20px 40px;
-  font-size: 18px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  line-height: 1;
-  border: 3px solid rgba(255, 255, 255, 0.56);
-  background-color: rgba(250, 250, 250, 0.07);
-  border-radius: 35px;
-  display: inline-block;
-  -webkit-transition: border 0.1s ease-in-out;
-  -o-transition: border 0.1s ease-in-out;
-  transition: border 0.1s ease-in-out;
-}
-.sec__link:hover {
-  border-color: #fff;
 }
 
 h2 {
@@ -144,10 +123,10 @@ h2 {
   }
   .fullscreen section {
     height: 100vh;
-    padding-top: 110px;
+    /* padding-top: 110px; */
   }
   .fullscreen .sec_container.home {
-    padding-top: 140px;
+    /* padding-top: 140px; */
   }
   .section_navigation {
     position: fixed;

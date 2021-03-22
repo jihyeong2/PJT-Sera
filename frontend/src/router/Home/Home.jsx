@@ -35,7 +35,7 @@
 // // export default Home;
 // import React from "react";
 
-// // import { Animator, ScrollContainer, ScrollPage, batch, Fade, FadeIn, Move, MoveIn, MoveOut, Sticky, StickyIn, ZoomIn } from "react-scroll-motion";
+// import { Animator, ScrollContainer, ScrollPage, batch, Fade, FadeIn, Move, MoveIn, MoveOut, Sticky, StickyIn, ZoomIn } from "react-scroll-motion";
 // import * as Scroll from 'react-scroll';
 // import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 // import Home1 from '../../components/Home/home2';
@@ -149,7 +149,8 @@ const Home = (props) => {
     <div className="fullscreen">
       <div className="main__content">
         <section data-title="Home" className="fbx" style={{backgroundColor:'#000000',}}>
-          <div className="sec_container home">
+          <div className="sec_container">
+            <img src="../../assets/mainz.png" alt=""/>
             <Home1/>
           </div>
         </section>
@@ -169,11 +170,11 @@ const Home = (props) => {
           </div>
         </section>
       </div>
-      <div class="section_navigation">
-        <div class="sec_button"></div>
-        <div class="sec_button"></div>
-        <div class="sec_button"></div>
-        <div class="sec_button"></div>
+      <div className="section_navigation">
+        <div className="sec_button"></div>
+        <div className="sec_button"></div>
+        <div className="sec_button"></div>
+        <div className="sec_button"></div>
       </div>
     </div>
   )

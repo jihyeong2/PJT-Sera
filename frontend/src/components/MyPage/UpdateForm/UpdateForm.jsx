@@ -13,6 +13,7 @@ const UpdateForm = ({user,login,logout,update}) => {
   const ageRef=useRef();
   const phoneRef=useRef();
   // const genderRef=useRef();
+  // test
   const handleChange = (e)=>{
     if(e.target==null) return;
     e.preventDefault();

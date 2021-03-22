@@ -1,6 +1,6 @@
 package com.ssafy.sera.Service;
 
-import com.ssafy.sera.Domain.User;
+import com.ssafy.sera.Domain.User.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @SpringBootTest
 class UserServiceTest {

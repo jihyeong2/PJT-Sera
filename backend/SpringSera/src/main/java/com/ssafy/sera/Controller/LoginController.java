@@ -1,10 +1,9 @@
 package com.ssafy.sera.Controller;
 
-import com.ssafy.sera.Domain.User;
+import com.ssafy.sera.Domain.User.User;
 import com.ssafy.sera.Service.JwtService;
 import com.ssafy.sera.Service.UserService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;

@@ -1,10 +1,10 @@
 import { Grid } from '@material-ui/core';
 import React, { useState } from 'react';
-import data from '../../../data/GP_items_1-10000.json';
+
 import styles from './ProductList.module.css';
 import Product from './Product';
-const ProductList = (props) => {
-  const [products,setProducts] = useState(data.slice(0,8));
+const ProductList = ({products}) => {
+  
   
   return (
     <Grid className={styles.products} container spacing={5}>

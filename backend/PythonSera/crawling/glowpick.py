@@ -1,7 +1,5 @@
-from urllib.request import urlopen
 from selenium import webdriver
 from selenium.webdriver import ActionChains
-from bs4 import BeautifulSoup
 import time
 import os
 import re

@@ -9,14 +9,6 @@ const SignUp2 = () => {
   const history = useHistory();
   const location = useLocation();
 
-  const user = {
-    userLoginId: location.state.userLoginId,
-    userNickname: location.state.userNickname,
-    userPassword: location.state.userPassword,
-    userAge:'',
-    userPhone:'',
-    userGender:'',
-  }
 
   const [userAge, setUserAge] = useState(""); //나이
   const [userPhone, setUserPhone] = useState(""); //휴대번호
@@ -124,11 +116,18 @@ const SignUp2 = () => {
   }
 
   //회원가입
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
+
     if(submitTxtColor === "#FD6C1D" && submitBorderColor === "#FD6C1D"){
-      user.userAge = userAge;
-      user.userPhone = userPhone;
-      user.userGender = userGender;
+      const user = {
+        userLoginId: location.state.userLoginId,
+        userNickname: location.state.userNickname,
+        userPassword: location.state.userPassword,
+        userAge: userAge,
+        userPhone: userPhone,
+        userGender: userGender,
+      }
 
       http.post("v1/users/signIn", user)
       .then((res) => {
@@ -252,7 +251,7 @@ const SignUp2 = () => {
               <li className={styles.form_input}>
                 <input
                   className={styles.submit}
-                  type="button"
+                  type="submit"
                   value="확인"
                   style={{borderColor: submitBorderColor, color: submitTxtColor}}
                   onClick={onSubmit}

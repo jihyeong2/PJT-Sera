@@ -2,9 +2,72 @@ import React from 'react';
 import styles from './detail.module.css';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
+import Dialog from '@material-ui/core/Dialog';
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import MuiDialogContent from '@material-ui/core/DialogContent';
+import MuiDialogActions from '@material-ui/core/DialogActions';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import Typography from '@material-ui/core/Typography';
+import Ingredient from './ingredient';
 
-const Detail = ( ) => (
-    <div className={styles.detail_right}>
+const dstyles = (theme) => ({
+    root: {
+      margin: 0,
+      padding: theme.spacing(2),
+    },
+    closeButton: {
+      position: 'absolute',
+      right: theme.spacing(1),
+      top: theme.spacing(1),
+      color: theme.palette.grey[500],
+    },
+    dialogPaper: {
+        minHeight: '80vh',
+        maxHeight: '80vh',
+    },
+  });
+  
+  const DialogTitle = withStyles(dstyles)((props) => {
+    const { children, classes, onClose, ...other } = props;
+    return (
+      <MuiDialogTitle disableTypography className={classes.root} {...other}>
+        <Typography variant="h6">{children}</Typography>
+        {onClose ? (
+          <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+            <CloseIcon />
+          </IconButton>
+        ) : null}
+      </MuiDialogTitle>
+    );
+  });
+  
+  const DialogContent = withStyles((theme) => ({
+    root: {
+      padding: theme.spacing(2),
+    },
+  }))(MuiDialogContent);
+  
+  const DialogActions = withStyles((theme) => ({
+    root: {
+      margin: 0,
+      padding: theme.spacing(1),
+    },
+  }))(MuiDialogActions);
+
+const Detail = (props) => {
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const [fullWidth, setFullWidth] = React.useState(true);
+    return(
+        <div className={styles.detail_right}>
             <p className={styles.product_category}>스킨케어 세럼</p>
             <p className={styles.product_name}>프로바이오틱스 세라마이드 크림</p> 
             <p><span className={styles.volume}>60ml /  </span><span className={styles.price}>35,000원</span></p>
@@ -31,7 +94,15 @@ const Detail = ( ) => (
                         </Grid>
                         <Grid item xs={3}>
                             <br></br>
-                            <Button className={styles.ingredient_btn} variant="outlined">성분보기</Button>
+                            <Button className={styles.ingredient_btn} variant="outlined" onClick={handleClickOpen}>성분보기</Button>
+                            <Dialog  fullWidth={fullWidth} maxWidth="lg" onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+                                <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+                                    성분결과
+                                </DialogTitle>
+                                <DialogContent dividers>
+                                    <Ingredient />
+                                </DialogContent>
+                            </Dialog>
                         </Grid>
                     </Grid>
             </div>
@@ -53,7 +124,17 @@ const Detail = ( ) => (
                     </Grid>
                     <Grid item xs={3}>
                         <br></br>
-                        <Button className={styles.tone_btn} variant="outlined">정보보기</Button>
+                        <Button className={styles.tone_btn} variant="outlined" >정보보기</Button>
+                        {/* <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+                                <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+                                    퍼스널컬러 정보
+                                </DialogTitle>
+                                <DialogContent dividers>
+                                    <Typography gutterBottom>
+                                    퍼스널컬러 정보
+                                    </Typography>
+                                </DialogContent>
+                            </Dialog> */}
                     </Grid>
                 </Grid>
             </div>
@@ -73,7 +154,8 @@ const Detail = ( ) => (
                     </Grid>
                 </Grid>
             </div>
-        </div>           
-);
+        </div> 
+    );    
+}
 
 export default Detail;

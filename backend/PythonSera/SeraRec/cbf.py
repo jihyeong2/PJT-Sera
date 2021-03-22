@@ -96,7 +96,6 @@ def initData():
     column = [i for i in element_dict.keys()]
     item_df = pd.DataFrame(data, columns=column, index=item_idexes)
     # print(item_df)
-
     skin_data = []
     skin_indexes = []
     for skin in help_caution:
@@ -114,8 +113,18 @@ def initData():
     skin_data = np.stack(skin_data)
     column = [i for i in element_dict.keys()]
     skin_df = pd.DataFrame(skin_data, columns=column, index=skin_indexes)
-    
+    # print(skin_df)
+    print(len(column))
+    print(len(items))
     return item_df, skin_df
+
+def test():
+    reviews = readReviewFile()
+    item_ids = set()
+    for review in reviews:
+        item_ids.add(review['item'])
+
+    print(len(reviews), len(item_ids), len(reviews) / len(item_ids))
 
 def tf_idf():
     item_df, skin_df = initData()
@@ -125,4 +134,5 @@ def tf_idf():
 
 if __name__ == '__main__':
     # initData()
-    tf_idf()
+    # tf_idf()
+    test()

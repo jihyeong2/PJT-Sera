@@ -77,11 +77,11 @@ public class UserService {
         return userRepository.findByUserLoginIdAndUserPassword(userLoginId, userPassword);
     }
     @Transactional
-    public void updateSkinType(String userLoginId, String skinType){
+    public void updateSkinType(String userLoginId, Skin skin){
         Optional<User> findUser = Optional.ofNullable(userRepository.findByUserLoginId(userLoginId));
         if(findUser.isPresent()){
-            Skin findSkin = skinRepository.findBySkinType(skinType);
-            findUser.get().setSkinId(findSkin);
+            System.out.println(skin);
+            findUser.get().setSkinId(skin);
         }
     }
 }

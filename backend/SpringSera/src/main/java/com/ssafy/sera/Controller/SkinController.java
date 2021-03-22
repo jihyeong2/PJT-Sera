@@ -18,12 +18,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SkinController {
     private final SkinService skinService;
-    @PostMapping("/addSkin")
-    public BaseResponse addSkinType(@ApiParam(value = "스킨타입") @RequestParam String skinType){
+    @PostMapping("/addSkin/{skinType}")
+    public BaseResponse addSkinType(@ApiParam(value = "스킨타입") @PathVariable String skinType){
         BaseResponse response = null;
         try{
             Skin skin = Skin.createSkin(skinType);
             skinService.save(skin);
+            response = new BaseResponse("success", "성공");
         }catch(IllegalStateException e){
             response = new BaseResponse("fail", e.getMessage());
         }
@@ -43,11 +44,12 @@ public class SkinController {
         }
         return response;
     }
-    @GetMapping("/{skinId}")
-    public BaseResponse findSkinId(@ApiParam(value = "스킨아이디")@PathVariable Long skinId){
+    @GetMapping("/{skinType}")
+    public BaseResponse findBySkinType(@ApiParam(value = "스킨아이디")@PathVariable String skinType){
         BaseResponse response = null;
         try {
-            skinService.findBySkinId(skinId);
+            Skin skin = skinService.findBySkinType(skinType);
+            response = new BaseResponse("success", skin);
         }catch(IllegalStateException e){
             response = new BaseResponse("fail", e.getMessage());
         }
@@ -58,6 +60,7 @@ public class SkinController {
         BaseResponse response = null;
         try{
             skinService.deleteSkin(skinType);
+            response = new BaseResponse("success", "삭제");
         }catch(IllegalStateException e){
             response = new BaseResponse("fail", e.getMessage());
         }

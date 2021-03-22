@@ -27,6 +27,7 @@ public class UserDto {
         this.userAge = user.getUserAge();
         this.userPhone = user.getUserPhone();
         this.userGender = user.getUserGender();
+        skinDto = new SkinDto();
         this.skinDto.setSkinId(user.getSkinId().getSkinId());
         this.skinDto.setSkinType(user.getSkinId().getSkinType());
     }

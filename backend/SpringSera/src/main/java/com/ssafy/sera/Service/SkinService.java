@@ -33,15 +33,6 @@ public class SkinService {
     }
 
     /**
-     * 스킨아이디로 가져오기
-     * @param skinId
-     * @return
-     */
-    public Skin findBySkinId(Long skinId){
-        return skinRepository.findBySkinId(skinId);
-    }
-
-    /**
      * 스킨타입명으로 가져오기
      * @param skinType
      * @return

@@ -13,7 +13,9 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SearchModal from '../SearchModal/SearchModal';
-
+import {connect} from 'react-redux';
+import {logout} from '../../../actions/index';
+import { useHistory } from 'react-router';
 
 const StyledTabs = withStyles({
   indicator: {
@@ -35,15 +37,7 @@ const StyledTab = withStyles((theme) => ({
   },
 }))((props) => <Tab disableRipple {...props} />);
 
-// const useStyles = makeStyles((theme) => ({
-//   demo2: {
-//     backgroundColor: '#FFFFFF',
-//   },
-// }));
-
-const Navbar = (props) => {
-  // Material App Bar
-  // const classes = useStyles();
+const Navbar = ({user,logout}) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -82,7 +76,68 @@ const Navbar = (props) => {
 
     prevOpen.current = open;
   }, [open]);
-  
+
+  const history = useHistory();
+  const onClickLogin = (e) => {
+    handleClose(e);
+    history.push('/login');
+  }
+  const onClickLogout = (e) => {
+    handleClose(e);
+    logout();
+    history.push('/login');
+  }
+  const onClickSignup = (e) => {
+    handleClose(e);
+    history.push('/signup1');
+  }
+  const onClickMyPage = (e) => {
+    handleClose(e);
+    history.push('/mypage');
+  }
+  const onClickMyPick = (e) => {
+    handleClose(e);
+    history.push('/mypick');
+  }
+  if(user===null){
+    return (
+      <nav className={styles.navbar}>
+        <StyledTabs value={value} onChange={handleChange} aria-label="styled tabs example">
+          <StyledTab label="피부 진단" className={styles.tab}/>
+          <StyledTab label="퍼스널컬러 진단" className={styles.tab}/>
+          <StyledTab label="상품 보기" className={styles.tab}/>
+        </StyledTabs>
+        <Button
+          ref={anchorRef}
+          aria-controls={open ? 'menu-list-grow' : undefined}
+          aria-haspopup="true"
+          onClick={handleToggle}
+          style={{color: '#666666'}}
+        >
+          비회원 &nbsp;
+          <FontAwesomeIcon icon="chevron-down" size="lg"/>
+        </Button>
+        <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+          {({ TransitionProps, placement }) => (
+            <Grow
+              {...TransitionProps}
+              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+            >
+              <Paper>
+                <ClickAwayListener onClickAway={handleClose}>
+                  <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                    <MenuItem className={styles.menu_item} onClick={onClickLogin}>로그인</MenuItem>
+                    <MenuItem className={styles.menu_item} onClick={onClickSignup}>회원가입</MenuItem>
+                  </MenuList>
+                </ClickAwayListener>
+              </Paper>
+            </Grow>
+          )}
+        </Popper>
+        <SearchModal/>
+      </nav>
+    )
+  }
   return (
     <nav className={styles.navbar}>
       <StyledTabs value={value} onChange={handleChange} aria-label="styled tabs example">
@@ -97,7 +152,7 @@ const Navbar = (props) => {
         onClick={handleToggle}
         style={{color: '#666666'}}
       >
-        지니님&nbsp;
+        {user.nickName}님&nbsp;
         <FontAwesomeIcon icon="chevron-down" size="lg"/>
       </Button>
       <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
@@ -109,9 +164,9 @@ const Navbar = (props) => {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                  <MenuItem className={styles.menu_item} onClick={handleClose}>로그아웃</MenuItem>
-                  <MenuItem className={styles.menu_item} onClick={handleClose}>마이페이지</MenuItem>
-                  <MenuItem className={styles.menu_item} onClick={handleClose}>내 찜 목록</MenuItem>
+                  <MenuItem className={styles.menu_item} onClick={onClickLogout}>로그아웃</MenuItem>
+                  <MenuItem className={styles.menu_item} onClick={onClickMyPage}>마이페이지</MenuItem>
+                  <MenuItem className={styles.menu_item} onClick={onClickMyPick}>내 찜 목록</MenuItem>
                 </MenuList>
               </ClickAwayListener>
             </Paper>
@@ -122,5 +177,15 @@ const Navbar = (props) => {
     </nav>
   )
 }
+const mapStateToProps = (state) => ({
+  user: state.user.user,
+})
 
-export default Navbar;
+const mapDispatchToProps = (dispatch) => ({
+  logout: () => dispatch(logout()),
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Navbar);

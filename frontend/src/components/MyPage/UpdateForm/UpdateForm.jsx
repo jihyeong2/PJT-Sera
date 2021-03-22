@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {login, logout, update} from '../../../actions/index';
 
 const UpdateForm = ({user,login,logout,update}) => {
+  console.log(user);
   let [userInfo,setUserInfo] = useState({...user});
   const nickNameRef=useRef();
   const pwRef=useRef();
@@ -41,9 +42,35 @@ const UpdateForm = ({user,login,logout,update}) => {
       return updated;
     });
   }
+  const onReset = () => {
+    setUserInfo({...user});
+  };
   const onSubmit = (e) => {
     update(userInfo);
   };
+  const onClickGender = (e) => {
+    const beforeTarget = document.querySelector(`#${userInfo.gender}`);
+    const currTarget = document.querySelector(`#${e.target.id}`);
+    beforeTarget.classList.toggle(styles.gender_button_active);
+    currTarget.classList.toggle(styles.gender_button_active);
+    setUserInfo(userInfo=>{
+      const updated={
+        ...userInfo,
+        gender:e.target.id,
+      }
+      return updated;
+    });
+  }
+  const onClickCheck = () => {
+
+  };
+  const onClickPhone = () => {
+
+  };
+  useEffect(()=>{
+    const btn = document.querySelector(`#${userInfo.gender}`);
+    btn.classList.toggle(styles.gender_button_active);
+  },[]);
   return (
     <div className={styles.container}>
       <div className={styles.guide}>
@@ -67,7 +94,7 @@ const UpdateForm = ({user,login,logout,update}) => {
           </div>
           <div className={styles.value}>
             <input ref={nickNameRef} type="text" className={styles.input} name="nickName" value={userInfo.nickName} onChange={handleChange}/>
-            <button className={styles.button}>
+            <button className={styles.button} onClick={onClickCheck}>
               중복확인
             </button>
           </div>
@@ -110,7 +137,7 @@ const UpdateForm = ({user,login,logout,update}) => {
               <option className={styles.option} value="LG">LG</option>
             </select>
             <input ref={phoneRef} type="text" className={styles.input} name="phone" value={userInfo.phone} onChange={handleChange}/>
-            <button className={styles.button}>
+            <button className={styles.button} onClick={onClickPhone}>
               인증번호 발송
             </button>
           </div>
@@ -120,9 +147,9 @@ const UpdateForm = ({user,login,logout,update}) => {
             성별
           </div>
           <div className={styles.value}>
-            <button className={styles.gender_button}>남성</button>
+            <button id="male" className={styles.gender_button} onClick={onClickGender}>남성</button>
             {/* <button className={styles.gender_button, styles.gender_button_active}>여성</button> */}
-            <button className={`${styles.gender_button} ${styles.gender_button_active}`}>여성</button>
+            <button id="female" className={styles.gender_button} onClick={onClickGender}>여성</button>
           </div>
         </div>
       </div>
@@ -143,7 +170,7 @@ const UpdateForm = ({user,login,logout,update}) => {
         </ul>
       </section>
       <section className={styles.button_box}>
-        <button className={styles.white_button}>원래대로</button>
+        <button className={styles.white_button} onClick={onReset}>원래대로</button>
         <button className={styles.black_button} onClick={onSubmit}>수정하기</button>
         <button className={styles.red_button}>
           탈퇴하기&nbsp;

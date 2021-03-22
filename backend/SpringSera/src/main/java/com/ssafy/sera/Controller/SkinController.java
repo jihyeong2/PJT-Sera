@@ -6,7 +6,6 @@ import com.ssafy.sera.Service.SkinService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
-import net.bytebuddy.pool.TypePool;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,10 +19,11 @@ import java.util.stream.Collectors;
 public class SkinController {
     private final SkinService skinService;
     @PostMapping("/addSkin")
-    public BaseResponse addSkinType(@ApiParam(value = "스킨타입") @RequestParam String skintype){
+    public BaseResponse addSkinType(@ApiParam(value = "스킨타입") @RequestParam String skinType){
         BaseResponse response = null;
         try{
-            skinService.save(skintype);
+            Skin skin = Skin.createSkin(skinType);
+            skinService.save(skin);
         }catch(IllegalStateException e){
             response = new BaseResponse("fail", e.getMessage());
         }

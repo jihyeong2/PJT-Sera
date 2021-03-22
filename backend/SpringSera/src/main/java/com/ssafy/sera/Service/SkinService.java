@@ -16,12 +16,12 @@ public class SkinService {
 
     /**
      * 스킨 값 저장하기
-     * @param skinType
+     * @param skin
      * @return
      */
     @Transactional
-    public Skin save(String skinType){
-        return skinRepository.save(skinType);
+    public Skin save(Skin skin){
+        return skinRepository.save(skin);
     }
 
     /**

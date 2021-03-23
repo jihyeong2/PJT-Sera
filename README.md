@@ -39,9 +39,14 @@ gantt
     사전학습   :done, 2021-03-05, 3d
     UI/UX   : done,   2021-03-10, 2d
     발표 PPT 제작: done, t8, 2021-03-16, 3d
-    발표 준비 : active,t9, after t8, 1d
-    Sub2 발표 : t10, 2021-03-19, 1d
-    추가 UI/UX(메인,피부진단,퍼스널컬러): t8, 2021-03-19, 2d
+    발표 준비 : done,t9, after t8, 1d
+    Sub2 발표 : done, t10, 2021-03-19, 1d
+    추가 UI/UX(메인,피부진단,퍼스널컬러): crit, t8, 2021-03-19, 5d
+    테스트 시나리오 작성 : active, t14, 2021-03-25, 1d
+    와이어프레임 산출물 제작 :  active, t15, 2021-03-25, 1d
+    SUB3 중간 발표 PPT 제작 : active, t16, 2021-03-24, 2d
+    SUB3 중간 발표 : active, t17, 2021-03-26, 1d
+
 
     section Frontend
    	회원가입/로그인/비밀번호찾기 페이지 :  done, t1, 2021-03-14, 2d
@@ -53,24 +58,24 @@ gantt
     Redux : done, t6, 2021-03-17, 1d
   	검색결과 페이지 : done, t11, 2021-03-18, 1d
   	찜 목록 페이지 : done, t12, 2021-03-18, 1d
-  	메인화면: t12, after t8, 3d
-
+  	메인화면: crit, t13, after t8, 3d
+	피부진단 : active, t17, 2021-03-23, 1d
     
     section Backend
-  	글로우픽 크롤링 : active, b_t1, 2021-03-15, 6d
+  	글로우픽 크롤링 : done, b_t1, 2021-03-15, 6d
   	DB설계, 테이블 구축 : done, b_t2, after 2021-03-12, 6h
     회원가입 SMS 인증 : done, b_t4, 2021-03-15, 1d
     로그인 JWT 토큰 인증, 세션설정 : done, b_t5, 2021-03-15, 1d
     비밀번호 SMS 인증 : done, b_t6, 2021-03-16, 1d
     회원정보 CRUD : done, b_t7, 2021-03-15, 1d
     Swagger : done, b_t8, after b_t6, 1d
-    CBF 추천 알고리즘 : active, b_t3, 2021-03-14, 11d
-    상품 리스트 & 디테일 조회 api (Spring): b_t9, 2021-03-19,6d
-    리뷰 CRUD api (Spring): b_t10, 2021-03-19, 6d
-	상품 검색 api(Spring):  b_t12, 2021-03-19, 6d
-    상품 리스트 & 디테일 조회 api (Django): b_t11, after b_t3, 1d
-    상품 검색 api (Django): b_t13, after b_t11, 1d
-    AWS 배포: b_t13, 2021-03-22, 3d
+    CF 추천 알고리즘 : crit, b_t3, 2021-03-14, 11d
+    상품 리스트 & 디테일 조회 api (Spring): crit, b_t9, 2021-03-19,6d
+    리뷰 CRUD api (Spring): active, b_t10, 2021-03-24, 2d
+	상품 검색 api(Spring):  crit,b_t12, 2021-03-19, 8d
+    상품 리스트 & 디테일 조회 api (Django): active, b_t11, after b_t3, 1d
+    상품 검색 api (Django): active, b_t13, after b_t11, 1d
+    AWS 배포: crit, b_t13, 2021-03-23, 2d
     
 ```
 
@@ -145,7 +150,7 @@ https://blog.ull.im/engineering/2019/03/10/logs-on-git.html 대로 메시지
 
 ### ERD
 
-
+![ERD](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/a6bdb043-83da-4938-9a92-e87227f8cce0/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210323%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210323T011727Z&X-Amz-Expires=86400&X-Amz-Signature=f4fa2282ffe2ad3e9a7bf9386162f02debfcd8dbd12e43dbcb37e5ef90bbd1d5&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
 
 ### 화면 정의서
 

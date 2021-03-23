@@ -176,9 +176,8 @@ def insertItemByElement():
     # query = """DELETE FROM item_element"""
     # curs.execute(query)
     # connect.commit()
-    # print(items[36318:36319])
     
-    for i, item in enumerate(items[19002:]):
+    for i, item in enumerate(items[36316:]):
         query = """SELECT item_id FROM item WHERE item_id = %s"""
         curs.execute(query, (item['id']))
         item_id = curs.fetchone()
@@ -193,7 +192,7 @@ def insertItemByElement():
                 e['korean'] = '3-O-에틸아스코빅애씨드'
             elif e['korean'] == '크리산텔룸인디쿰추출물':
                 e['korean'] = '크리산텔룸 인디쿰추출물;감국추출물'
-            elif e['korean'] == '감자펄프':
+            elif e['korean'] == '감자펄프' or e['korean'] == '검정콩가루':
                 continue
 
             query = """SELECT element_id FROM element WHERE element_korean_name = %s"""
@@ -255,7 +254,7 @@ def insertItemByElement():
         connect.commit()
     connect.close()
 
-def insertHelpfulCaution():
+def insertHelpful():
     skins = loadSkinType()
     connect, curs = connectMySQL()
 
@@ -264,43 +263,144 @@ def insertHelpfulCaution():
         curs.execute(query, (skin['skinType']))
         skin_id = curs.fetchone()
         for e in skin['helpful']:
+            
+            if e['korean'] == '제니스테인':
+                e['korean'] = '제니스테인메틸에테르'
+            
             query = """SELECT element_id FROM element WHERE element_korean_name = %s"""
             curs.execute(query, (e['korean']))
-            element_id = curs.fetchall()
-            if len(element_id) == 0:
+            element_id = curs.fetchone()
+            if element_id is None:
                 query = """SELECT element_id FROM element WHERE element_korean_name like %s OR element_korean_name like %s 
                         OR element_korean_name like %s"""
                 curs.execute(query, (e['korean']+';%','%;'+e['korean'],'%;'+e['korean']+';%'))
                 element_id = curs.fetchall()
-            if len(element_id) > 1:
-                print(skin_id[0], element_id, e)
-            # try :
-            #     query = """INSERT INTO helpful (skin_id, element_id)
-            #            VALUES(%s, %s) """
-            #     curs.execute(query, (skin_id[0], element_id[0]))
-            # except pymysql.err.IntegrityError as e:
-            #     print(e)
-            #     continue
-        # connect.commit()
+
+                if len(element_id) > 1:
+                    print(skin_id[0], element_id, e)
+
+                    return
+                elif len(element_id) < 1:
+                    if '추출물' not in e['korean'] :
+                        e['korean'] = e['korean']+'추출물'
+                    
+                    query = """SELECT element_id FROM element WHERE element_korean_name = %s"""
+                    curs.execute(query, (e['korean']))
+                    element_id = curs.fetchone()
+
+                    if element_id is None:
+                        query = """SELECT element_id FROM element WHERE element_korean_name like %s OR element_korean_name like %s 
+                            OR element_korean_name like %s"""
+                        curs.execute(query, (e['korean']+';%','%;'+e['korean'],'%;'+e['korean']+';%'))
+                        element_id = curs.fetchall()
+                        if len(element_id) >= 1 : element_id = element_id[0]
+                        else : 
+                            print('?',skin_id[0], element_id, e)
+                            continue
+                else :
+                    element_id = element_id[0]
+            if element_id is None:
+                continue
+            else :
+                try :
+                    query = """INSERT INTO helpful (skin_id, element_id)
+                            VALUES(%s, %s) """
+                    curs.execute(query, (skin_id[0], element_id[0]))
+                except pymysql.err.IntegrityError as e:
+                    print(e)
+                    continue
+        connect.commit()
+    connect.close()
+
+def insertCaution():
+    skins = loadSkinType()
+    connect, curs = connectMySQL()
+
+    for skin in skins:
+        query = """SELECT skin_id FROM skin WHERE skin_type = %s"""
+        curs.execute(query, (skin['skinType']))
+        skin_id = curs.fetchone()
         for e in skin['caution']:
+            
+            if e['korean'] == '제니스테인':
+                e['korean'] = '제니스테인메틸에테르'
+            
             query = """SELECT element_id FROM element WHERE element_korean_name = %s"""
             curs.execute(query, (e['korean']))
-            element_id = curs.fetchall()
-            if len(element_id) == 0:
+            element_id = curs.fetchone()
+            if element_id is None:
                 query = """SELECT element_id FROM element WHERE element_korean_name like %s OR element_korean_name like %s 
                         OR element_korean_name like %s"""
                 curs.execute(query, (e['korean']+';%','%;'+e['korean'],'%;'+e['korean']+';%'))
                 element_id = curs.fetchall()
-            if len(element_id) > 1:
-                print(skin_id[0], element_id, e)
-            # try :
-            #     query = """INSERT INTO caution (skin_id, element_id)
-            #             VALUES(%s, %s) """
-            #     curs.execute(query, (skin_id[0], element_id[0]))
-            # except pymysql.err.IntegrityError as e:
-            #     print(e)
-            #     continue
-        # connect.commit()
+
+                if len(element_id) > 1:
+                    print(skin_id[0], element_id, e)
+
+                    return
+                elif len(element_id) < 1:
+                    if '추출물' not in e['korean'] :
+                        e['korean'] = e['korean']+'추출물'
+                    
+                    query = """SELECT element_id FROM element WHERE element_korean_name = %s"""
+                    curs.execute(query, (e['korean']))
+                    element_id = curs.fetchone()
+
+                    if element_id is None:
+                        query = """SELECT element_id FROM element WHERE element_korean_name like %s OR element_korean_name like %s 
+                            OR element_korean_name like %s"""
+                        curs.execute(query, (e['korean']+';%','%;'+e['korean'],'%;'+e['korean']+';%'))
+                        element_id = curs.fetchall()
+                        if len(element_id) >= 1 : element_id = element_id[0]
+                        else : 
+                            print('?',skin_id[0], element_id, e)
+                            continue
+                else :
+                    element_id = element_id[0]
+            if element_id is None:
+                continue
+            else :
+                try :
+                    query = """INSERT INTO caution (skin_id, element_id)
+                            VALUES(%s, %s) """
+                    curs.execute(query, (skin_id[0], element_id[0]))
+                except pymysql.err.IntegrityError as e:
+                    print(e)
+                    continue
+        connect.commit()
+    connect.close()
+
+def insertTag():
+    items = loadJsonItem()
+    connect, curs = connectMySQL()
+    tags = set()
+    for item in items:
+        [tags.add(t) for t in item['tags']]
+    tags = sorted(tags)
+    query = """INSERT INTO tag (tag_name)
+                VALUES (%s)"""
+    for t in tags:
+        curs.execute(query,(t))
+    connect.commit()
+    connect.close()
+
+def insertItemTag():
+    items = loadJsonItem()
+    connect, curs = connectMySQL()
+    query = """INSERT INTO item_tag (item_id, tag_id)
+            VALUES (%s,%s)"""
+    for i, item in enumerate(items[28022:]):
+        q = """SELECT item_id FROM item WHERE item_id = %s"""
+        curs.execute(q, (item['id']))
+        item_id = curs.fetchone()
+        if item_id is None : continue
+        for t in item['tags']:
+            q = """SELECT tag_id FROM tag WHERE tag_name = %s"""
+            curs.execute(q, t)
+            tag_id = curs.fetchone()
+            curs.execute(query, (item_id[0], tag_id[0]))
+        connect.commit()
+        print(str(i+1)+'/'+str(len(items))+' '+str(item['id']))
     connect.close()
 
 if __name__ == '__main__':
@@ -308,5 +408,8 @@ if __name__ == '__main__':
     # insertItems()
     # insertSkinType()
     # insertElement()
-    insertItemByElement()
-    # insertHelpfulCaution()
+    # insertItemByElement()
+    # insertHelpful()
+    # insertCaution()
+    # insertTag()
+    insertItemTag()

@@ -1,7 +1,9 @@
 package com.ssafy.sera.Controller;
 
-import com.ssafy.sera.Domain.User;
-import com.ssafy.sera.Domain.UserDto;
+import com.ssafy.sera.Domain.Skin.Skin;
+import com.ssafy.sera.Domain.User.User;
+import com.ssafy.sera.Domain.User.UserDto;
+import com.ssafy.sera.Service.SkinService;
 import com.ssafy.sera.Service.UserService;
 import com.ssafy.sera.Util.Validator;
 import io.swagger.annotations.Api;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final SkinService skinService;
     private final Validator validator;
 
     @ApiOperation(value = "회원가입", notes = "가입 성공시 BaseResponse에 data값으로 '성공적으로 가입' 설정 후 반환", response = BaseResponse.class)
@@ -29,7 +32,8 @@ public class UserController {
         BaseResponse response = null;
         try{
             request.setUserPhone(validator.phoneValidator(request.getUserPhone()));
-            User user = User.createUser(request);
+            Skin  skin = skinService.findBySkinType(request.getSkinType());
+            User user = User.createUser(request, skin);
             userService.save(user);
             response = new BaseResponse("success", "성공적으로 가입");
         }catch(IllegalStateException e){
@@ -45,7 +49,7 @@ public class UserController {
         try{
             List<User> findUsers = userService.findAll();
             List<UserDto> collect = findUsers.stream()
-                    .map(m-> new UserDto(m.getUserId(), m.getUserLoginId(), m.getUserPassword(), m.getUserNickname(), m.getUserAge(), m.getUserPhone(), m.getUserGender()))
+                    .map(m-> new UserDto(m))
                     .collect(Collectors.toList());
             response = new BaseResponse("success", collect);
         }
@@ -138,6 +142,24 @@ public class UserController {
             userService.deleteUser(userLoginId);
             response = new BaseResponse("success", "삭제 성공");
         } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    @ApiOperation(value = "사용자 피부 설정", notes = "반환되는 데이터는 성공 / 에러메시지", response =BaseResponse.class)
+    @PostMapping("/skin/{userLoginId}/{skinType}")
+    public BaseResponse updateUserSkin(@ApiParam(value = "Skin 정보")
+                                           @PathVariable String userLoginId,
+                                           @PathVariable String skinType){
+        BaseResponse response = null;
+        try{
+            System.out.println(skinType);
+            Skin skin = skinService.findBySkinType(skinType);
+            System.out.println(skin.getSkinId()+" "+skin.getSkinType());
+            userService.updateSkinType(userLoginId, skin);
+            response = new BaseResponse("success", "성공");
+        }catch(IllegalStateException e){
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;

@@ -1,7 +1,6 @@
 package com.ssafy.sera.Service;
 
-import com.ssafy.sera.Domain.User;
-import com.ssafy.sera.Domain.UserDto;
+import com.ssafy.sera.Domain.User.User;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

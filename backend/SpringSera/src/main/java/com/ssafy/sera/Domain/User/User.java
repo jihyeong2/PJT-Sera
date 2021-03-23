@@ -1,8 +1,8 @@
-package com.ssafy.sera.Domain;
+package com.ssafy.sera.Domain.User;
 
 import com.ssafy.sera.Controller.UserRequest;
+import com.ssafy.sera.Domain.Skin.Skin;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,9 +32,9 @@ public class User {
     private String userGender;
 
 //    skin 객체 만들면 다시 확인.
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "skin_id")
-//    private Skin skinId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "skin_id")
+    private Skin skinId;
 
 //    Personal 객체 만들면 다시 확인.
 //    @ManyToOne(fetch = FetchType.LAZY)
@@ -43,7 +43,7 @@ public class User {
 
 
 
-    public static User createUser(UserRequest userRequest){
+    public static User createUser(UserRequest userRequest, Skin skin){
         User userInput = new User();
         userInput.setUserLoginId(userRequest.getUserLoginId());
         userInput.setUserPassword(userRequest.getUserPassword());
@@ -51,6 +51,7 @@ public class User {
         userInput.setUserAge(userRequest.getUserAge());
         userInput.setUserPhone(userRequest.getUserPhone());
         userInput.setUserGender(userRequest.getUserGender());
+        userInput.setSkinId(skin);
         return userInput;
     }
 }

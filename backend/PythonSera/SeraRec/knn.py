@@ -11,4 +11,4 @@ def selectItemIds():
 
 if __name__ == '__main__':
     test = selectItemIds()
-    print(test[:5])
+    print(test)

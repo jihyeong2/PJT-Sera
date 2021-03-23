@@ -1,7 +1,5 @@
 package com.ssafy.sera.Domain.Skin;
 
-import com.ssafy.sera.Controller.UserRequest;
-import com.ssafy.sera.Domain.User.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

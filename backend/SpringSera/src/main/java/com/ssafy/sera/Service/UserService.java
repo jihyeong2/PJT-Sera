@@ -1,10 +1,9 @@
 package com.ssafy.sera.Service;
 
-import com.ssafy.sera.Controller.PasswordRequest;
-import com.ssafy.sera.Controller.UserRequest;
+import com.ssafy.sera.Controller.Request.PasswordRequest;
+import com.ssafy.sera.Controller.Request.UserRequest;
 import com.ssafy.sera.Domain.Skin.Skin;
 import com.ssafy.sera.Domain.User.User;
-import com.ssafy.sera.Repository.SkinRepository;
 import com.ssafy.sera.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    private final SkinRepository skinRepository;
     @Transactional
     public User save(User user){
         return userRepository.save(user);
@@ -80,7 +78,6 @@ public class UserService {
     public void updateSkinType(String userLoginId, Skin skin){
         Optional<User> findUser = Optional.ofNullable(userRepository.findByUserLoginId(userLoginId));
         if(findUser.isPresent()){
-            System.out.println(skin);
             findUser.get().setSkinId(skin);
         }
     }

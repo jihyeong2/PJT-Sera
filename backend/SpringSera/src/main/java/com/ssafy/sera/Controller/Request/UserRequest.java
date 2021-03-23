@@ -1,4 +1,4 @@
-package com.ssafy.sera.Controller;
+package com.ssafy.sera.Controller.Request;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;

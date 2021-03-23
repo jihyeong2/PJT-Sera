@@ -5,7 +5,7 @@ import numpy as np
 import re
 
 def readItemFile():
-    path = '../../crawling/data/GP/output'
+    path = '../crawling/data/GP/output'
     item_json = []
     file_list = os.listdir(path)
     for filename in file_list:
@@ -15,7 +15,7 @@ def readItemFile():
     return item_json
 
 def readReviewFile():
-    path = '../../crawling/data/GP/output'
+    path = '../crawling/data/GP/output'
     review_json = []
     file_list = os.listdir(path)
     for filename in file_list:
@@ -25,7 +25,7 @@ def readReviewFile():
     return review_json
 
 def readSkinTypeFile():
-    path = '../../crawling/data/피부타입'
+    path = '../crawling/data/피부타입'
     file_list = os.listdir(path)
     skin_elements = []
 
@@ -95,7 +95,8 @@ def initData():
     data = np.stack(data)
     column = [i for i in element_dict.keys()]
     item_df = pd.DataFrame(data, columns=column, index=item_idexes)
-    # print(item_df)
+    print(item_df)
+
     skin_data = []
     skin_indexes = []
     for skin in help_caution:
@@ -113,9 +114,10 @@ def initData():
     skin_data = np.stack(skin_data)
     column = [i for i in element_dict.keys()]
     skin_df = pd.DataFrame(skin_data, columns=column, index=skin_indexes)
-    # print(skin_df)
-    print(len(column))
-    print(len(items))
+    print(skin_df)
+
+    # print(len(column))
+    # print(len(items))
     return item_df, skin_df
 
 def test():
@@ -133,6 +135,6 @@ def tf_idf():
     return 
 
 if __name__ == '__main__':
-    # initData()
+    initData()
     # tf_idf()
-    test()
+    # test()

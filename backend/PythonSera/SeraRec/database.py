@@ -63,7 +63,6 @@ def loadSkinType():
 def loadElement():
     items = loadJsonItem()
     elements = {}
-    element = set()
 
     for jdic in items:
         for i in jdic["elements"]:
@@ -79,13 +78,35 @@ def loadElement():
                 if len(elements[i['korean']]['purpose']) < len(i['purpose']):
                     elements[i['korean']]['purpose'] = i['purpose']
 
-            # element.add((i['level'], i['korean'], i['english'], i['purpose']))
-    # return sorted(list(element), key=lambda x:x[1])
     return sorted(elements.items())
 
 def loadCategory():
     items = loadJsonItem()
     large_category_dic = {}
+
+    text = """-스킨케어
+            스킨케어 - 스킨/토너, 로션/에멀젼, 에센스/세럼, 크림, 미스트, 페이스오일
+            선케어 - 선크림, 선쿠션, 선스틱, 선젤, 선베이스, 선스프레이
+            클렌징 - 페이셜클렌저, 메이크업클렌저, 포인트리무버, 각질케어
+            -메이크업
+            페이스메이크업 - 파운데이션, 피니시파우더, 컨실러, 베이스/프라이머, BB크림, CC크림, 메이크업픽서
+            립메이크업 - 립스틱, 립틴트/라커, 립펜슬, 립글로스, 립베이스, 립케어
+            아이메이크업 - 아이섀도우, 아이라이너, 아이브로우, 마스카라, 아이프라이머
+            컨투어링 - 블러셔, 쉐딩, 하이라이터, 컨투어링팔레트, 멀티팔레트
+            -향수
+            프래그런스 - 향수
+            -남성 화장품
+            남성화장품 - 남성 스킨케어, 남성 메이크업, 남성 클렌징, 남성 쉐이빙"""
+
+    category3to = {}
+    for line in text.split("\n"):
+        line = line.strip()
+        if (line.startswith("-")):
+            category1 = line[1:]
+        else:
+            category2, tmp = line.split(" - ")
+            for category3 in tmp.split(", "):
+                category3to[category3] = [category1, category2]
 
     for item in items:
         category = item['category']
@@ -93,9 +114,18 @@ def loadCategory():
         large_category_dic[category[0]].add(category[-1])
     
     category_dic = []
-    for large_cate, list_small_cate in sorted(large_category_dic.items(), key=lambda x:x[0]):
+    for large_cate, list_small_cate in sorted(large_category_dic.items(), key=lambda x: x[0]):
+        category3to[large_cate][0]
         for small_cate in sorted(list_small_cate):
-            category_dic.append([large_cate, small_cate])
+            if (large_cate.startswith("남성")):
+                tmp_cate =  large_cate.split()[1]
+            elif (large_cate.startswith("향수")):
+                tmp_cate = large_cate.split()[0]
+            else:
+                tmp_cate = category3to[large_cate][1]
+            category_dic.append([category3to[large_cate][0], tmp_cate, large_cate+' '+small_cate])
+    
+    # print("\n".join([" - ".join(tmp) for tmp in category_dic]))
     return category_dic
 
 def connectMySQL():
@@ -134,9 +164,9 @@ def insertCategories():
     category_dic = loadCategory()
     connect, curs = connectMySQL()
     for category in category_dic:
-        query = """INSERT INTO category (category_large, category_small)
-                VALUES(%s, %s) """
-        curs.execute(query, (category[0], category[1]))        
+        query = """INSERT INTO category (category_large, category_middle, category_small)
+                VALUES(%s, %s, %s) """
+        curs.execute(query, (category[0], category[1], category[2]))        
     connect.commit()
     connect.close()
 
@@ -412,4 +442,5 @@ if __name__ == '__main__':
     # insertHelpful()
     # insertCaution()
     # insertTag()
-    insertItemTag()
+    # insertItemTag()
+    # loadCategory()

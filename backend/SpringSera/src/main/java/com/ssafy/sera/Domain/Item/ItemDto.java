@@ -18,7 +18,7 @@ public class ItemDto {
     private String itemDescription;
     private String itemTags;
     private int dibsCnt;
-
+    private boolean isDibs = false;
     public ItemDto(Item item){
         this.itemId = item.getItemId();
         this.itemName = item.getItemName();

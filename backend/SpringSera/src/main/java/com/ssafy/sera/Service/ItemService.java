@@ -1,11 +1,14 @@
 package com.ssafy.sera.Service;
 
+import com.ssafy.sera.Domain.Dibs.Dibs;
 import com.ssafy.sera.Domain.Item.Item;
+import com.ssafy.sera.Domain.User.User;
 import com.ssafy.sera.Repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,4 +54,14 @@ public class ItemService {
             itemRepository.delete(deleteItem.get());
         }
     }
+
+    /**
+     * 검색이름으로 확인하기
+     * @param itemName
+     * @return
+     */
+    public List<Item> findByItemNameContaining(String itemName){
+        return itemRepository.findByItemNameContaining(itemName);
+    }
+
 }

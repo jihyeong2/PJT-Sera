@@ -13,6 +13,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,10 +50,13 @@ public class Item {
         itemInput.setItemDescription(itemRequest.getItemDescription());
         return itemInput;
     }
-    public void pressDibs(Dibs dibs){
+
+    public int pushDibs(){
         this.dibsCnt += 1;
+        return this.dibsCnt;
     }
-    public void unpressDibs(Dibs dibs){
+    public int pullDibs(){
         this.dibsCnt -= 1;
+        return this.dibsCnt;
     }
 }

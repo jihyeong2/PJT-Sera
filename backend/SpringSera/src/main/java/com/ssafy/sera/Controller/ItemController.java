@@ -1,9 +1,14 @@
 package com.ssafy.sera.Controller;
 
+import com.ssafy.sera.Controller.Request.DibsRequest;
 import com.ssafy.sera.Controller.Request.ItemRequest;
+import com.ssafy.sera.Controller.Request.SearchRequest;
 import com.ssafy.sera.Domain.Item.Item;
 import com.ssafy.sera.Domain.Item.ItemDto;
+import com.ssafy.sera.Domain.User.User;
+import com.ssafy.sera.Service.DibsService;
 import com.ssafy.sera.Service.ItemService;
+import com.ssafy.sera.Service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +24,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ItemController {
     private final ItemService itemService;
-
+    private final UserService userService;
+    private final DibsService dibsService;
     @ApiOperation(value = "아이템 저장", notes = "개발 테스트용", response = BaseResponse.class)
     @PostMapping("/addItem")
     public BaseResponse itemRegister(@RequestBody ItemRequest request){
@@ -73,6 +79,35 @@ public class ItemController {
             itemService.deleteItem(itemId);
             response = new BaseResponse("success", "삭제 성공");
         }catch(IllegalStateException e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    @GetMapping("/search")
+    public BaseResponse searchItem(@RequestBody SearchRequest request){
+        BaseResponse response = null;
+        try{
+            List<Item> findItems = itemService.findByItemNameContaining(request.getSearchWord()); // 아이템 이름으로 가져오기
+            List<ItemDto> collect = findItems.stream()
+                    .map(m-> new ItemDto(m))
+                    .collect(Collectors.toList());
+            response = new BaseResponse("success", collect);
+        }catch(Exception e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    @GetMapping("/dibs")
+    public BaseResponse dibsItem(@RequestBody DibsRequest request){
+        BaseResponse response = null;
+        try{
+            User user = userService.findByUserLoginId(request.getUserLoginId());
+            Item item = itemService.findByItemId(request.itemId);
+            int dibsCount = dibsService.pressDibs(user, item);
+            response = new BaseResponse("success", dibsCount);
+        }catch(Exception e){
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;

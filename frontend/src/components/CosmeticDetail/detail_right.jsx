@@ -95,7 +95,7 @@ const Detail = (props) => {
                         <Grid item xs={3}>
                             <br></br>
                             <Button className={styles.ingredient_btn} variant="outlined" onClick={handleClickOpen}>성분보기</Button>
-                            <Dialog  fullWidth={fullWidth} maxWidth="lg" onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+                            <Dialog style={{height:'90%',}} fullWidth={fullWidth} maxWidth="lg" onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
                                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
                                     성분결과
                                 </DialogTitle>

@@ -2,7 +2,6 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import Slide from "@material-ui/core/Slide";
-import './Mui.css';
 import styles from './SearchModal.module.css';
 import Logo from '../Logo/Logo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -25,11 +24,12 @@ const SearchModal = (props) => {
   };
 
   return (
-    <>
+    <div id="t">
       <Button color="primary" onClick={handleClickOpen}>
         <FontAwesomeIcon icon="search" size="lg" color="#666666"/>
       </Button>
       <Dialog
+      style={{height:'50%',}}
         fullScreen
         open={open}
         onClose={handleClose}
@@ -51,7 +51,7 @@ const SearchModal = (props) => {
           </div>
         </div>
       </Dialog>
-    </>
+    </div>
   );
 };
 

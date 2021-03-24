@@ -2,11 +2,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './UpdateForm.module.css';
 import {connect} from 'react-redux';
-import {login, logout, update} from '../../../actions/index';
-import {updateUser, checkName, deleteUser} from '../../../service/user';
+import {update} from '../../../actions/index';
+import {updateUser, checkName, deleteUser, requestCertify, getCertify} from '../../../service/user';
 import Swal from 'sweetalert2';
 
-const UpdateForm = ({user,login,logout,update}) => {
+const UpdateForm = ({user,update}) => {
   const gender={'남':'male','여':'female'};
   const trueState=true;
   const falseState=false;
@@ -15,11 +15,13 @@ const UpdateForm = ({user,login,logout,update}) => {
   const pwConfirmRef=useRef();
   const ageRef=useRef();
   const phoneRef=useRef();
+  const certifyNumRef=useRef();
   const [userInfo,setUserInfo] = useState({...user});
   const [userPasswordConfirm,setPasswordConfirm] = useState(user.userPassword)
   const [isCheckedName, setIsCheckedName] = useState(true);
-  const [isCheckedPhone, setIsCheckedPhone] = useState(true);
-  console.log(userInfo);
+  const [certifyNum, setCertifyNum] = useState('');
+  const [isClickedCertify, setisClickedCertify] = useState(false);
+  const [isCertified, setIscertified] = useState(true);
   const handleChange = (e)=>{
     if(e.target==null) return;
     e.preventDefault();
@@ -45,13 +47,20 @@ const UpdateForm = ({user,login,logout,update}) => {
       case 'userPhone':
         value=phoneRef.current.value;
         if(value===userInfo.userPhone){
-          setIsCheckedPhone(trueState);
+          setIscertified(trueState);
         } else{
-          setIsCheckedPhone(falseState);
+          setIscertified(falseState);
         }
         break;
+      case 'certifyNum':
+        value=certifyNumRef.current.value;
+        break;
     }
-    if(e.target.name!='userPasswordConfirm'){
+    if(e.target.name==='certifyNum'){
+      setCertifyNum(value);
+    } else if(e.target.name === 'userPasswordConfirm'){
+      setPasswordConfirm(value);
+    } else{
       setUserInfo(userInfo=>{
         const updated={
           ...userInfo,
@@ -59,10 +68,7 @@ const UpdateForm = ({user,login,logout,update}) => {
         }
         return updated;
       });
-    } else{
-      setPasswordConfirm(value);
     }
-
   }
   const onReset = () => {
     if(userInfo.userGender!=user.userGender){
@@ -70,8 +76,10 @@ const UpdateForm = ({user,login,logout,update}) => {
       document.querySelector(`#${gender[user.userGender]}`).classList.toggle(styles.gender_button_active);
     }
     setUserInfo({...user});
-    setIsCheckedName(falseState);
-    setIsCheckedPhone(falseState);
+    setIsCheckedName(trueState);
+    setIscertified(trueState);
+    setisClickedCertify(falseState);
+    setCertifyNum('');
   };
   const onClickGender = (e) => {
     const beforeTarget = document.querySelector(`#${gender[userInfo.userGender]}`);
@@ -90,7 +98,8 @@ const UpdateForm = ({user,login,logout,update}) => {
     checkName(
       userInfo.userNickname,
       (res)=>{
-        if(res.status==="success"){
+        console.log(res);
+        if(res.data.status==="success"){
           Swal.fire({
             icon: 'success',
             text: '사용 가능한 이름입니다.',
@@ -116,7 +125,82 @@ const UpdateForm = ({user,login,logout,update}) => {
     )
   };
   const onClickPhone = () => {
-    // 마이페이지 용 api 나오면 바로 연결
+    if(isCertified || user.userPhone === userInfo.userPhone){
+      Swal.fire({
+        icon: 'error',
+        text: '이미 인증된 번호입니다.',
+        showConfirmButton: false,
+        timer: 2000
+      })
+    } else {
+      requestCertify(
+        userInfo.userPhone,
+        (res)=>{
+          if(res.data.status==="success"){
+            Swal.fire({
+              icon: 'success',
+              text: `${userInfo.userPhone}의 번호로 인증번호가 발송되었습니다.`,
+              showConfirmButton: false,
+              timer: 2000
+            });
+            setisClickedCertify(trueState);
+          } else{
+            setisClickedCertify(falseState);
+            Swal.fire({
+              icon: 'error',
+              text: `${userInfo.userPhone}의 번호로 인증번호 발송에 실패했습니다.`,
+              showConfirmButton: false,
+              timer: 2000
+            });
+          }
+        },
+        (err)=>{
+          console.err(err);
+          setisClickedCertify(falseState);
+          Swal.fire({
+            icon: 'error',
+            text: `${userInfo.userPhone}의 번호로 인증번호 발송에 실패했습니다.`,
+            showConfirmButton: false,
+            timer: 2000
+          });
+        }
+      )
+    }
+    
+  };
+  const onClickCertify = () => {
+    getCertify(
+      certifyNum,
+      (res)=>{
+        if(res.data.status==="success"){
+          Swal.fire({
+            icon: 'success',
+            text: '성공적으로 인증되었습니다.',
+            showConfirmButton: false,
+            timer: 2000
+          });
+          setIscertified(trueState);
+        } else{
+          Swal.fire({
+            icon: 'error',
+            text: `${userInfo.userPhone}의 번호로 인증번호 발송에 실패했습니다.`,
+            showConfirmButton: false,
+            timer: 2000
+          });
+          setIscertified(falseState);
+        }
+      },
+      (err)=>{
+        console.err(err);
+        Swal.fire({
+          icon: 'error',
+          text: `${userInfo.userPhone}의 번호로 인증번호 발송에 실패했습니다.`,
+          showConfirmButton: false,
+          timer: 2000
+        });
+        setIscertified(falseState);
+      }
+    );
   };
   const onSubmit = () => {
     if(!isCheckedName){
@@ -128,7 +212,7 @@ const UpdateForm = ({user,login,logout,update}) => {
       });
       return;
     }
-    if(!isCheckedPhone){
+    if(!isCertified){
       Swal.fire({
         icon: 'error',
         text: '휴대폰 인증이 되지 않았습니다.',
@@ -149,13 +233,15 @@ const UpdateForm = ({user,login,logout,update}) => {
     updateUser(
       userInfo,
       (res)=>{
-        if(res.status==="success"){
+        console.log(res);
+        if(res.data.status==="success"){
           Swal.fire({
             icon: 'success',
             text: '회원 정보가 수정되었습니다.',
             showConfirmButton: false,
             timer: 2000
           });
+          update(userInfo);
         } else{
           Swal.fire({
             icon: 'error',
@@ -167,9 +253,50 @@ const UpdateForm = ({user,login,logout,update}) => {
       },
       (err)=>{
         console.error(err);
+        Swal.fire({
+          icon: 'error',
+          text: '회원 정보 수정에 실패했습니다.',
+          showConfirmButton: false,
+          timer: 2000
+        });
       }
     );
-    update(userInfo);
+  };
+  const onDelete = () =>{
+    Swal.fire({
+      title: '정말로 탈퇴하시겠습니까?',
+      text: "탈퇴 후 모든 정보는 되돌릴 수 없습니다.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: '예',
+      cancelButtonText:'아니오',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteUser(
+          user.userLoginId,
+          (res)=>{
+            if(res.data.status==="success"){
+              Swal.fire(
+                '탈퇴되었습니다.',
+                '',
+                'success'
+              );
+            } else{
+              Swal.fire(
+                '탈퇴에 실패했습니다.',
+                '',
+                'error'
+              );
+            }
+          },
+          (err)=>{
+            console.error(err);
+          }
+        )
+      }
+    })
   };
   useEffect(()=>{
     const btn = document.querySelector(`#${gender[userInfo.userGender]}`);
@@ -234,16 +361,26 @@ const UpdateForm = ({user,login,logout,update}) => {
             휴대폰 번호
             <span className={styles.highlight}> *</span>
           </div>
-          <div className={styles.value}>
-            <select name="" id="" className={styles.select}>
-              <option className={styles.option} value="SKT">SKT</option>
-              <option className={styles.option} value="KT">KT</option>
-              <option className={styles.option} value="LG">LG</option>
-            </select>
-            <input ref={phoneRef} type="text" className={styles.input} name="userPhone" value={userInfo.userPhone} onChange={handleChange}/>
-            <button className={styles.button} onClick={onClickPhone}>
-              인증번호 발송
-            </button>
+          <div className={styles.value} style={{display:'flex', flexDirection:'column'}}>
+            <div>
+              <select name="" id="" className={styles.select}>
+                <option className={styles.option} value="SKT">SKT</option>
+                <option className={styles.option} value="KT">KT</option>
+                <option className={styles.option} value="LG">LG</option>
+              </select>
+              <input ref={phoneRef} type="text" className={styles.input} name="userPhone" value={userInfo.userPhone} onChange={handleChange}/>
+              <button className={styles.button} onClick={onClickPhone}>
+                인증번호 발송
+              </button>
+            </div>
+            {
+              <div style={{marginTop:'0.5em'}}>
+                <input ref={certifyNumRef} type="text" className={styles.input} name="certifyNum" value={certifyNum} onChange={handleChange}/>
+                <button className={styles.button} onClick={onClickCertify}>
+                  인증하기
+                </button>
+              </div>
+            }
           </div>
         </div>
         <div className={styles.table_row}>
@@ -276,7 +413,7 @@ const UpdateForm = ({user,login,logout,update}) => {
       <section className={styles.button_box}>
         <button className={styles.white_button} onClick={onReset}>원래대로</button>
         <button className={styles.black_button} onClick={onSubmit}>수정하기</button>
-        <button className={styles.red_button}>
+        <button onClick={onDelete} className={styles.red_button}>
           탈퇴하기&nbsp;
           <FontAwesomeIcon icon="chevron-right" size="lg" color="#EB0000"/>  
         </button>
@@ -289,8 +426,6 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  login: user => dispatch(login(user)),
-  logout: () => dispatch(logout()),
   update: user => dispatch(update(user))
 })
 

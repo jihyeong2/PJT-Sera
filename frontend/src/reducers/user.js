@@ -2,8 +2,10 @@ const initialState = {
   user: null,
 }
 const user = (state = initialState, action) => {
+  console.log(state, action);
   switch (action.type) {
     case 'LOGIN':
+      console.log(action.user);
       return {user: action.user}
     case 'LOGOUT':
       return {user: null}

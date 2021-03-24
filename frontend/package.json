@@ -31,6 +31,7 @@
     "react-spring": "^8.0.27",
     "react-wordcloud": "^1.2.7",
     "redux": "^4.0.5",
+    "redux-persist": "^6.0.0",
     "styled-components": "^5.2.1",
     "sweetalert2": "^10.15.6",
     "sweetalert2-react-content": "^3.3.1",

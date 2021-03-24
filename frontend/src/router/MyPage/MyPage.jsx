@@ -13,7 +13,7 @@ const MyPage = (props) => {
       <div className={styles.title}>
         마이페이지
       </div>
-      <SkinInfo s/>
+      <SkinInfo />
       <MyPageTabs/>
     </div>
   );

@@ -7,9 +7,10 @@ import './FontAwesome';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducer from './reducers';
-import { login} from './actions';
-const store = createStore(rootReducer);
+import { PersistGate } from 'redux-persist/integration/react';
+import configureStore from './store';
 
+const { store, persistor } = configureStore();
 
 // // 초기 상태를 기록합니다.
 // console.log(store.getState());
@@ -18,19 +19,20 @@ const store = createStore(rootReducer);
 // let unsubscribe = store.subscribe(() =>
 //   console.log(store.getState())
 // );
-let user = {
-  userId : 0,
-  userLoginId: 'unni2',
-  userNickname: '다우니', 
-  userPassword : '12345678',
-  userAge : 26,
-  userPhone : '010-1111-1111',
-  userGender : '여',
-  skinId: '',
-  skinType: '',
-}
+// let user = {
+//   userId : 0,
+//   userLoginId: 'unni2',
+//   userNickname: '다우니', 
+//   userPassword : '12345678',
+//   userAge : 26,
+//   userPhone : '010-1111-1111',
+//   userGender : '여',
+//   skinId: '',
+//   skinType: '',
+// }
 // // 액션들을 보냅니다.
-store.dispatch(login(user));
+// store.dispatch(login(user));
+// store.dispatch(update({...user,userNickname:'지형'}))
 // store.dispatch(update({...user,phone:'010-2222-2222'}));
 // store.dispatch(logout());
 
@@ -41,7 +43,9 @@ store.dispatch(login(user));
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

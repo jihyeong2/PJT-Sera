@@ -4,7 +4,7 @@ server:
     context-path: /api
 spring:
   profiles:
-    active: local
+    active: prod
   jpa:
     properties:
       hibernate:

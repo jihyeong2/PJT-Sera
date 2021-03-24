@@ -101,6 +101,7 @@ const Navbar = ({user,logout}) => {
   }
   if(user===null){
     return (
+      <div className={styles.div}>
       <nav className={styles.navbar}>
         <StyledTabs value={value} onChange={handleChange} aria-label="styled tabs example">
           <StyledTab label="피부 진단" className={styles.tab}/>
@@ -136,9 +137,11 @@ const Navbar = ({user,logout}) => {
         </Popper>
         <SearchModal/>
       </nav>
+      </div>
     )
   }
   return (
+    <div className={styles.div}>
     <nav className={styles.navbar}>
       <StyledTabs value={value} onChange={handleChange} aria-label="styled tabs example">
         <StyledTab label="피부 진단" className={styles.tab}/>
@@ -175,6 +178,7 @@ const Navbar = ({user,logout}) => {
       </Popper>
       <SearchModal/>
     </nav>
+    </div>
   )
 }
 const mapStateToProps = (state) => ({

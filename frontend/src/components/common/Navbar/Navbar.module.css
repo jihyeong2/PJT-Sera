@@ -3,8 +3,12 @@
   position: relative;
   display: flex;
   justify-content: center;
-  margin-left: 30%;
-  /* float: right; */
+  float: right;
+}
+.div::after{
+    clear: both;
+    content: '';
+    display: block;
 }
 .user_btn {
   position: absolute;

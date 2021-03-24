@@ -22,7 +22,7 @@ const Login = () => {
 
   //again
   useEffect(() => {
-    if(((5<=userLoginId) && (userLoginId <= 12)) && !(RegExp.test(userLoginId) || upperCase.test(userLoginId) || regKorean.test(userLoginId))){
+    if(userLoginId.length >= 5){
       setSubmitBorderColor("#FD6C1D");
       setSubmitTxtColor("#FD6C1D");
     }else{
@@ -44,6 +44,11 @@ const Login = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
+    if(submitBorderColor !== "#FD6C1D"){
+      alert("아이디 형식이 올바르지 않습니다(5글자 이상)");
+      return;
+    }
+
     http
       .post("v1/login",
       {
@@ -53,6 +58,7 @@ const Login = () => {
       .then((res) => {
         if (res.data.status) {
           const user = {
+            auth_token: res.data.auth_token,
             userLoginId: res.data.user.userLoginId,
             userNickname: res.data.user.userNickname,
             userPassword: res.data.user.userPassword,
@@ -63,10 +69,10 @@ const Login = () => {
 
           console.log("회원정보: " + JSON.stringify(user));
 
-          //redux
+         
           console.log(res.data.status);
           history.push("/");
-        }else alert("회원정보가 올바르지 않습니다");
+        }else alert(res.data.message);
       })
       .catch((err) => {
         alert(err);
@@ -104,6 +110,7 @@ const Login = () => {
                 .then((res) => {
                   if (res.data.status) {
                     const user = {
+                      auth_token: res.data.auth_token,
                       userLoginId: res.data.user.userLoginId,
                       userNickname: res.data.user.userNickname,
                       userPassword: res.data.user.userPassword,

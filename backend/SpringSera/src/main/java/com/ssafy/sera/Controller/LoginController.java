@@ -1,8 +1,10 @@
 package com.ssafy.sera.Controller;
 
 import com.ssafy.sera.Controller.Request.UserRequest;
+import com.ssafy.sera.Domain.Skin.Skin;
 import com.ssafy.sera.Domain.User.User;
 import com.ssafy.sera.Service.JwtService;
+import com.ssafy.sera.Service.SkinService;
 import com.ssafy.sera.Service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +29,7 @@ import java.util.Map;
 public class LoginController {
     private final JwtService jwtService;
     private final UserService userService;
+    private final SkinService skinService;
 
     public static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
@@ -65,4 +68,40 @@ public class LoginController {
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
 
+    // 카카오로 로그인
+    @PostMapping("/kakao")
+    public ResponseEntity<Map<String, Object>> kakaoLogin(@RequestBody UserRequest userRequest, HttpServletResponse response) {
+        
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        try{
+            User loginUser = userService.findByUserLoginId(userRequest.getUserLoginId());
+            if(loginUser==null){ //회원가입시키고 로그인
+                try{
+                    Skin skin = skinService.findBySkinType(userRequest.getSkinType());
+                    User user = User.createUser(userRequest, skin);
+                    userService.save(user);
+                }catch(IllegalStateException e){
+                    logger.error("SNS 회원가입 실패: {}", e);
+                    resultMap.put("message", e.getMessage());
+                    status = HttpStatus.INTERNAL_SERVER_ERROR;
+                }
+            }
+            String token = jwtService.create(loginUser);
+            logger.trace("로그인 토큰정보 : {}", token);
+            response.setHeader("auth-token", token);
+            resultMap.put("auth-token",token);
+            resultMap.put("status", true);
+            resultMap.put("user", loginUser);
+            resultMap.put("message", "login success");
+            status = HttpStatus.ACCEPTED;
+        }catch(Exception e){
+            logger.error("SNS 로그인 실패 : {}", e);
+            resultMap.put("message", e.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
 }
+

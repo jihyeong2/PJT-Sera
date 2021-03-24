@@ -43,12 +43,13 @@ public class LoginController {
         try{
             User loginUser = userService.findByUserLoginIdAndUserPassword(userRequest.getUserLoginId(), userRequest.getUserPassword());
             if(loginUser!=null){
+                User userInfo = userService.findByUserLoginId(userRequest.getUserLoginId());
                 String token = jwtService.create(loginUser);
                 logger.trace("로그인 토큰정보 : {}", token);
                 response.setHeader("auth-token", token);
                 resultMap.put("auth-token",token);
                 resultMap.put("status", true);
-//                resultMap.put("user", loginUser);
+                resultMap.put("user", userInfo);
                 resultMap.put("message", "login success");
             }
             else{
@@ -77,12 +78,13 @@ public class LoginController {
 
         try{
             User loginUser = userService.findByUserLoginId(userRequest.getUserLoginId());
-            if(loginUser==null){ //회원가입시키고 로그인
-                try{
+            if(loginUser==null) { //회원가입시키고 로그인
+                try {
                     Skin skin = skinService.findBySkinType(userRequest.getSkinType());
                     User user = User.createUser(userRequest, skin);
                     userService.save(user);
-                }catch(IllegalStateException e){
+                    loginUser = user;
+                } catch (IllegalStateException e) {
                     logger.error("SNS 회원가입 실패: {}", e);
                     resultMap.put("message", e.getMessage());
                     status = HttpStatus.INTERNAL_SERVER_ERROR;

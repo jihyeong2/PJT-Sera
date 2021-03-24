@@ -45,17 +45,20 @@ const Login = () => {
     e.preventDefault();
 
     http
-      .get("v1/users/" + userLoginId)
+      .post("v1/login",
+      {
+        userLoginId, userPassword
+      }
+      )
       .then((res) => {
-        if (res.data.status === "success") {
-
+        if (res.data.status) {
           const user = {
-            userLoginId: userLoginId,
-            userNickname: res.data.data.userNickname,
-            userPassword: userPassword,
-            userAge: res.data.data.userAge,
-            userPhone: res.data.data.userPhone,
-            userGender: res.data.data.userGender,
+            userLoginId: res.data.user.userLoginId,
+            userNickname: res.data.user.userNickname,
+            userPassword: res.data.user.userPassword,
+            userAge: res.data.user.userAge,
+            userPhone: res.data.user.userPhone,
+            userGender: res.data.user.userGender,
           };
 
           console.log("회원정보: " + JSON.stringify(user));
@@ -63,11 +66,10 @@ const Login = () => {
           //redux
           console.log(res.data.status);
           history.push("/");
-          
-        } else alert("가입된 회원이 아닙니다.");
+        }else alert("회원정보가 올바르지 않습니다");
       })
       .catch((err) => {
-        alert("가입된 회원이 아닙니다.");
+        alert(err);
       });
   };
 
@@ -101,12 +103,19 @@ const Login = () => {
                 .post("v1/login/kakao", user)
                 .then((res) => {
                   if (res.data.status) {
-                    console.log("로그인 결과: " + JSON.stringify(res));
-                    //redux
+                    const user = {
+                      userLoginId: res.data.user.userLoginId,
+                      userNickname: res.data.user.userNickname,
+                      userPassword: res.data.user.userPassword,
+                      userAge: res.data.user.userAge,
+                      userPhone: res.data.user.userPhone,
+                      userGender: res.data.user.userGender,
+                    };
+
+                    console.log("회원정보 " + JSON.stringify(user));
+
                     //첫 로그인이면 피부타입 검사하러 가기
-                  } else {
-                    alert("로그인에 실패했습니다.");
-                  }
+                  } else alert("카카오 로그인에 실패했습니다.");
                 })
                 .catch((err) => {
                   console.log(err);
@@ -193,13 +202,11 @@ const Login = () => {
             <span className={styles.or_txt}>또는</span>
             <div className={styles.right_line}></div>
           </div>
-          <div className={styles.left_sns}>
-            <div className={styles.kakao}  onClick={kakaoLogin}>
-              <img
-                src={process.env.PUBLIC_URL + "/images/kakao_logo.png"}
-                alt=""
-              />
-            </div>
+          <div className={styles.kakao}  onClick={kakaoLogin}>
+            <img
+               src={process.env.PUBLIC_URL + "/images/kakao_login.png"}
+               alt=""
+            />
           </div>
         </div>
       </Grid>

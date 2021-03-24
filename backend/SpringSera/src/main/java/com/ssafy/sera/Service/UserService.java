@@ -81,4 +81,12 @@ public class UserService {
             findUser.get().setSkinId(skin);
         }
     }
+
+    @Transactional
+    public void updatePersonalColor(String userLoginId, String personalColor){
+        Optional<User> findUser = Optional.ofNullable(userRepository.findByUserLoginId(userLoginId));
+        if(findUser.isPresent()){
+            findUser.get().setPersonalColor(personalColor);
+        }
+    }
 }

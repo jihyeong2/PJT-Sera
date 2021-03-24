@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './review.module.css';
 import ReviewHead from './review_head';
 import ReviewItem from './review_item';
-import SearchBar from '../common/SearchBar/SearchBar';
+import SearchBar from '../../common/SearchBar/SearchBar';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';

@@ -3,7 +3,7 @@ import styles from './youtube.module.css';
 import VideoItem from './youtube_item';
 import Grid from '@material-ui/core/Grid';
 
-const YoutubeList = (props) => {
+const YoutubeList = ({videos, onVideoClick}) => {
     return (
         <div>
             <div className={styles.head}>
@@ -12,10 +12,10 @@ const YoutubeList = (props) => {
             </div>
             <p className={styles.sub}>인기영상으로 상세정보를 알아보세요.</p>
             <Grid className={styles.videos} container spacing={3}>
-                {props.videos.map(video => (
+                {videos.map(video => (
                     <Grid item xs={3} className={styles.youtube_item}>
                         <div>
-                            <VideoItem key={video.id} video={video} />
+                            <VideoItem key={video.id} video={video} onVideoClick={onVideoClick}/>
                         </div>
                     </Grid>
                 ))}

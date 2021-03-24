@@ -10,7 +10,7 @@ import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
-import Ingredient from './ingredient';
+import Ingredient from '../ingredient/ingredient';
 
 const dstyles = (theme) => ({
     root: {
@@ -66,6 +66,12 @@ const Detail = (props) => {
         setOpen(false);
     };
     const [fullWidth, setFullWidth] = React.useState(true);
+
+    const search = "프로바이오틱스 세라마이드 크림";
+    const naver = () => {
+        window.open(`https://search.shopping.naver.com/search/all?query=${search}&cat_id=&frm=NVSHAKW`);
+    };
+
     return(
         <div className={styles.detail_right}>
             <p className={styles.product_category}>스킨케어 세럼</p>
@@ -73,10 +79,9 @@ const Detail = (props) => {
             <p><span className={styles.volume}>60ml /  </span><span className={styles.price}>35,000원</span></p>
             <div className={styles.brand}>
                 <span className={styles.brand_name}>마몽드 (Mamonde)</span>
-                <Button className={styles.naver_go_btn} variant="outlined">
+                <Button className={styles.naver_go_btn} variant="outlined" onClick={naver}>
                 <img className={styles.naver_icon} src={process.env.PUBLIC_URL + '/images/naver_icon.png'} alt="네이버아이콘"/>
                 최저가 검색</Button>
-                <Button className={styles.brand_go_btn} variant="outlined">브랜드몰 가기</Button>
             </div>
             <div className={styles.bar}></div>
             <div className={styles.match_detail}>
@@ -150,6 +155,16 @@ const Detail = (props) => {
                             - 플로랄 바이오틱스와 7겹 세라마이드의 촉촉 보습장벽 듀얼 이펙트 <br /> 
                             - 피부 속 보습은 촉촉하게 채우고 끈적임없이 가볍게 흡수 <br />
                             - 피부에 부담 없는 클린 마일드 포뮬라<br />
+                        </div>
+                    </Grid>
+
+                    <Grid item xs={2}>
+                        <div className={styles.description_name}> 태그 </div>
+                    </Grid>
+                    <Grid item xs={10}>
+                        <div className={styles.description_content}>
+                            <span className={styles.tag}>보습</span> <span className={styles.tag}>겨울쿨톤</span>
+                            <span className={styles.tag}>보습</span> <span className={styles.tag}>겨울쿨톤</span>
                         </div>
                     </Grid>
                 </Grid>

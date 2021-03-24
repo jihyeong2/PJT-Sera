@@ -4,6 +4,8 @@ import Grid from "@material-ui/core/Grid";
 import { useHistory } from "react-router-dom";
 import http from "../../http-common.js";
 
+const { Kakao } = window;
+
 const Login = () => {
   const history = useHistory();
 
@@ -68,6 +70,58 @@ const Login = () => {
         alert("가입된 회원이 아닙니다.");
       });
   };
+
+    //카카오 로그인 
+    const kakaoLogin = () => {
+      Kakao.Auth.login({
+        //kakao auth-token 중 access_token얻기
+        scope: "profile, account_email, gender, age_range",
+        success: function (authObj) {
+          //사용자 정보 얻기
+          Kakao.API.request({
+            url: "/v2/user/me",
+            success: function (res) {
+              const kakao_email = res.kakao_account.email;
+              const kakao_age_range = res.kakao_account.age_range;
+  
+              const user = {
+                userLoginId: kakao_email.substring(0, kakao_email.indexOf("@")),
+                userNickname: res.kakao_account.profile.nickname,
+                userPassword: "",
+                userAge: kakao_age_range.substring(
+                  0,
+                  kakao_age_range.indexOf("~")
+                ),
+                userPhone: "",
+                userGender: res.kakao_account.gender === "female" ? "여" : "남",
+              };
+  
+              // 로그인
+              http
+                .post("v1/login/kakao", user)
+                .then((res) => {
+                  if (res.data.status) {
+                    console.log("로그인 결과: " + JSON.stringify(res));
+                    //redux
+                    //첫 로그인이면 피부타입 검사하러 가기
+                  } else {
+                    alert("로그인에 실패했습니다.");
+                  }
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            },
+            fail: function (error) {
+              alert(JSON.stringify(error));
+            },
+          });
+        },
+        fail: (error) => {
+          console.log(JSON.stringify(error));
+        },
+      });
+    };
 
   return (
     <Grid container spacing={12} className={styles.container}>
@@ -140,15 +194,9 @@ const Login = () => {
             <div className={styles.right_line}></div>
           </div>
           <div className={styles.left_sns}>
-            <div className={styles.kakao}>
+            <div className={styles.kakao}  onClick={kakaoLogin}>
               <img
                 src={process.env.PUBLIC_URL + "/images/kakao_logo.png"}
-                alt=""
-              />
-            </div>
-            <div className={styles.google}>
-              <img
-                src={process.env.PUBLIC_URL + "/images/google_logo.png"}
                 alt=""
               />
             </div>

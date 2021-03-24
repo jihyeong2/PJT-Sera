@@ -95,7 +95,7 @@ def initData():
     data = np.stack(data)
     column = [i for i in element_dict.keys()]
     item_df = pd.DataFrame(data, columns=column, index=item_idexes)
-    print(item_df)
+    # print(item_df)
 
     skin_data = []
     skin_indexes = []
@@ -114,7 +114,7 @@ def initData():
     skin_data = np.stack(skin_data)
     column = [i for i in element_dict.keys()]
     skin_df = pd.DataFrame(skin_data, columns=column, index=skin_indexes)
-    print(skin_df)
+    # print(skin_df)
 
     # print(len(column))
     # print(len(items))
@@ -128,13 +128,6 @@ def test():
 
     print(len(reviews), len(item_ids), len(reviews) / len(item_ids))
 
-def tf_idf():
-    item_df, skin_df = initData()
-    N = skin_df.shape
-    print(N)
-    return 
 
 if __name__ == '__main__':
     initData()
-    # tf_idf()
-    # test()

@@ -3,10 +3,12 @@ package com.ssafy.sera.Controller;
 import com.ssafy.sera.Controller.Request.DibsRequest;
 import com.ssafy.sera.Controller.Request.ItemRequest;
 import com.ssafy.sera.Controller.Request.SearchRequest;
+import com.ssafy.sera.Domain.Category.Category;
 import com.ssafy.sera.Domain.Dibs.Dibs;
 import com.ssafy.sera.Domain.Item.Item;
 import com.ssafy.sera.Domain.Item.ItemDto;
 import com.ssafy.sera.Domain.User.User;
+import com.ssafy.sera.Service.CategoryService;
 import com.ssafy.sera.Service.DibsService;
 import com.ssafy.sera.Service.ItemService;
 import com.ssafy.sera.Service.UserService;
@@ -28,12 +30,15 @@ public class ItemController {
     private final ItemService itemService;
     private final UserService userService;
     private final DibsService dibsService;
+    private final CategoryService categoryService;
     @ApiOperation(value = "아이템 저장", notes = "개발 테스트용", response = BaseResponse.class)
     @PostMapping("/addItem")
     public BaseResponse itemRegister(@RequestBody ItemRequest request){
         BaseResponse response = null;
         try{
             Item item = Item.createItem(request);
+            Category category = categoryService.findByCategoryId(request.getCategoryId());
+            item.setCategoryId(category);
             itemService.save(item);
             response = new BaseResponse("success", item);
         }catch(IllegalStateException e){
@@ -43,7 +48,7 @@ public class ItemController {
     }
 
     // 사용자 아이디값 필요 - user의 찜 목록을 확인할 수 있도록
-    @ApiOperation(value = "아이템 목록 불러오기", notes = "목록은 List의 형태로 반환", response = BaseResponse.class)
+    @ApiOperation(value = "아이템 목록 불러오기", notes = "개발 테스트용", response = BaseResponse.class)
     @GetMapping
     public BaseResponse findItems(){
      BaseResponse response = null;
@@ -97,18 +102,37 @@ public class ItemController {
             List<Item> findItems = itemService.findByItemNameContaining(request.getSearchWord());
             User user = userService.findByUserLoginId(request.getUserLoginId());
             List<Dibs> findUsersDibs = dibsService.findAllByUserId(user);
-            List<ItemDto> nameList = new ArrayList<>();
+            List<ItemDto> products = new ArrayList<>();
             for(Item item : findItems){
-                ItemDto input = new ItemDto(item);
-                for(Dibs dibs : findUsersDibs){
-                    if(item.getItemId() == (dibs.getItemId().getItemId())){
-                        input.setDibsBoolean(true);
+                if(item.getCategoryId().getCategoryLarge().equals(request.getCategoryLarge())){
+                    ItemDto input = new ItemDto(item);
+                    for(Dibs dibs : findUsersDibs){
+                        if(item.getItemId() == dibs.getItemId().getItemId()){
+                            input.setDibsBoolean(true);
+                        }
                     }
+                    products.add(input);
                 }
-                nameList.add(input);
             }
-            response = new BaseResponse("success", nameList);
+            List<List> returnList = new ArrayList<>();
+            returnList.add(products);
+            response = new BaseResponse("success", returnList);
+        }catch(Exception e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
 
+    @GetMapping("/viewProduct")
+    public BaseResponse viewProduct(@RequestBody SearchRequest request){
+        BaseResponse response = null;
+        try{
+            User user = userService.findByUserLoginId(request.getUserLoginId());
+            List<Dibs> findUsersDibs = dibsService.findAllByUserId(user);
+
+
+            
+            response = new BaseResponse("success", "");
         }catch(Exception e){
             response = new BaseResponse("fail", e.getMessage());
         }
@@ -129,6 +153,21 @@ public class ItemController {
             int dibsCount = dibsService.pressDibs(user, item);
             response = new BaseResponse("success", dibsCount);
         }catch(Exception e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+    @PostMapping("/category/{categoryLarge}/{categoryMiddle}/{categorySmall}")
+    public BaseResponse categoryAdd(@PathVariable String categoryLarge,@PathVariable  String categoryMiddle,@PathVariable  String categorySmall){
+        BaseResponse response = null;
+        try{
+            Category category = new Category();
+            category.setCategoryLarge(categoryLarge);
+            category.setCategoryMiddle(categoryMiddle);
+            category.setCategorySmall(categorySmall);
+            categoryService.save(category);
+            response = new BaseResponse("success", category);
+        }catch(IllegalStateException e){
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;

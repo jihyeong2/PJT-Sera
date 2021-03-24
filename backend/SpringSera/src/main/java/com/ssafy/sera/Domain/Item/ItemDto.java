@@ -1,5 +1,6 @@
 package com.ssafy.sera.Domain.Item;
 
+import com.ssafy.sera.Domain.Category.CategoryDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ public class ItemDto {
     private String itemName;
     private String itemImg;
     private String itemBrand;
-    private Long categoryId;
+    private CategoryDto categoryDto;
     private String itemColors;
     private  String itemVolume;
     private String itemDescription;
@@ -30,7 +31,11 @@ public class ItemDto {
         this.itemVolume = item.getItemVolume();
         this.itemDescription = item.getItemDescription();
         if(item.getCategoryId() != null){
-            this.categoryId = item.getCategoryId();
+            categoryDto = new CategoryDto();
+            this.categoryDto.setCategoryId(item.getCategoryId().getCategoryId());
+            this.categoryDto.setCategoryLarge(item.getCategoryId().getCategoryLarge());
+            this.categoryDto.setCategoryMiddle(item.getCategoryId().getCategoryMiddle());
+            this.categoryDto.setCategorySmall(item.getCategoryId().getCategorySmall());
         }
         if(item.getItemTags() != null){
             this.itemTags = item.getItemTags();

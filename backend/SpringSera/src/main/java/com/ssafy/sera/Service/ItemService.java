@@ -17,7 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ItemService {
     private final ItemRepository itemRepository;
-
+    private final CategoryService categoryService;
     /**
      * 상품 저장
      * @param item
@@ -49,6 +49,7 @@ public class ItemService {
      * 아이템 항목 하나 삭제
      * @param itemId
      */
+    @Transactional
     public void deleteItem(Long itemId){
         Optional<Item> deleteItem = Optional.ofNullable(itemRepository.findByItemId(itemId));
         if(deleteItem.isPresent()){
@@ -64,5 +65,4 @@ public class ItemService {
     public List<Item> findByItemNameContaining(String itemName){
         return itemRepository.findByItemNameContaining(itemName);
     }
-
 }

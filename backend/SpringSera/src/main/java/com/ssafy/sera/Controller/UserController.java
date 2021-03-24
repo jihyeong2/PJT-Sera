@@ -1,6 +1,6 @@
 package com.ssafy.sera.Controller;
 
-import com.ssafy.sera.Controller.Request.PasswordRequest;
+import com.ssafy.sera.Controller.Request.ChangePasswordRequest;
 import com.ssafy.sera.Controller.Request.UserRequest;
 import com.ssafy.sera.Domain.Skin.Skin;
 import com.ssafy.sera.Domain.User.User;
@@ -124,7 +124,7 @@ public class UserController {
 
     @ApiOperation(value = "비밀번호 업데이트", notes = "반환되는 데이터는 수정 성공 / 에러 메시지", response = BaseResponse.class)
     @PutMapping("/password")
-    public BaseResponse updatePassword(@ApiParam(value = "패스워드 수정 정보(아이디, 패스워드)")@RequestBody PasswordRequest request) {
+    public BaseResponse updatePassword(@ApiParam(value = "패스워드 수정 정보(아이디, 패스워드)")@RequestBody ChangePasswordRequest request) {
 
         BaseResponse response = null;
         try {

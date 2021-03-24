@@ -2,6 +2,7 @@ package com.ssafy.sera.Domain.Item;
 
 import com.ssafy.sera.Controller.Request.ItemRequest;
 import com.ssafy.sera.Controller.Request.UserRequest;
+import com.ssafy.sera.Domain.Category.Category;
 import com.ssafy.sera.Domain.Dibs.Dibs;
 import com.ssafy.sera.Domain.Skin.Skin;
 import com.ssafy.sera.Domain.User.User;
@@ -24,9 +25,10 @@ public class Item {
     private String itemImg;
     @Column
     private String itemBrand;
-//    카테고리 추가 후 타입 및 연관 관계 수정할 것
-    @Column
-    private Long categoryId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category categoryId;
 
     @Column(columnDefinition = "text")
     private String itemColors;

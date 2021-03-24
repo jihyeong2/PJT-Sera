@@ -1,6 +1,6 @@
 package com.ssafy.sera.Service;
 
-import com.ssafy.sera.Controller.Request.PasswordRequest;
+import com.ssafy.sera.Controller.Request.ChangePasswordRequest;
 import com.ssafy.sera.Controller.Request.UserRequest;
 import com.ssafy.sera.Domain.Skin.Skin;
 import com.ssafy.sera.Domain.User.User;
@@ -62,7 +62,7 @@ public class UserService {
         }
     }
     @Transactional
-    public void updatePassword(PasswordRequest request){
+    public void updatePassword(ChangePasswordRequest request){
         Optional<User> findUser = Optional.ofNullable(userRepository.findByUserLoginId(request.getUserLoginId()));
         if(findUser.isPresent()){
             findUser.get().setUserPassword(request.getUserPassword());

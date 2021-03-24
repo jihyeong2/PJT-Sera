@@ -18,7 +18,7 @@ public class ItemDto {
     private String itemDescription;
     private String itemTags;
     private int dibsCnt;
-    private boolean isDibs = false;
+    private boolean dibsBoolean;
     public ItemDto(Item item){
         this.itemId = item.getItemId();
         this.itemName = item.getItemName();
@@ -36,5 +36,8 @@ public class ItemDto {
             this.itemTags = item.getItemTags();
         }
         this.dibsCnt = item.getDibsCnt();
+    }
+    public void setDibsBoolean(boolean flag){
+        this.dibsBoolean = flag;
     }
 }

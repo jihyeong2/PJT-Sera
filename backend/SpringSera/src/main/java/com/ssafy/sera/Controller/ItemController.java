@@ -3,6 +3,7 @@ package com.ssafy.sera.Controller;
 import com.ssafy.sera.Controller.Request.DibsRequest;
 import com.ssafy.sera.Controller.Request.ItemRequest;
 import com.ssafy.sera.Controller.Request.SearchRequest;
+import com.ssafy.sera.Domain.Dibs.Dibs;
 import com.ssafy.sera.Domain.Item.Item;
 import com.ssafy.sera.Domain.Item.ItemDto;
 import com.ssafy.sera.Domain.User.User;
@@ -14,6 +15,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,9 +33,7 @@ public class ItemController {
     public BaseResponse itemRegister(@RequestBody ItemRequest request){
         BaseResponse response = null;
         try{
-            System.out.println(request.getItemImg() + " " + request.getItemColors() + " " + request.getItemDescription());
             Item item = Item.createItem(request);
-            System.out.println(item.getItemImg() + " " + item.getItemColors() + " " + item.getItemDescription());
             itemService.save(item);
             response = new BaseResponse("success", item);
         }catch(IllegalStateException e){
@@ -53,7 +53,7 @@ public class ItemController {
                  .map(m-> new ItemDto(m))
                  .collect(Collectors.toList());
          response = new BaseResponse("success", collect);
-     }catch(IllegalStateException e){
+     }catch(Exception e){
          response = new BaseResponse("fail", e.getMessage());
      }
      return response;
@@ -72,6 +72,7 @@ public class ItemController {
         }
         return response;
     }
+
     @DeleteMapping("/{itemId}")
     public BaseResponse deleteItem(@PathVariable Long itemId){
         BaseResponse response = null;
@@ -84,21 +85,41 @@ public class ItemController {
         return response;
     }
 
+    /**
+     * 검색하기(현재 진행 상황 - 아이템으로 이름가져오기)
+     * @param request
+     * @return
+     */
     @GetMapping("/search")
     public BaseResponse searchItem(@RequestBody SearchRequest request){
         BaseResponse response = null;
         try{
-            List<Item> findItems = itemService.findByItemNameContaining(request.getSearchWord()); // 아이템 이름으로 가져오기
-            List<ItemDto> collect = findItems.stream()
-                    .map(m-> new ItemDto(m))
-                    .collect(Collectors.toList());
-            response = new BaseResponse("success", collect);
+            List<Item> findItems = itemService.findByItemNameContaining(request.getSearchWord());
+            User user = userService.findByUserLoginId(request.getUserLoginId());
+            List<Dibs> findUsersDibs = dibsService.findAllByUserId(user);
+            List<ItemDto> nameList = new ArrayList<>();
+            for(Item item : findItems){
+                ItemDto input = new ItemDto(item);
+                for(Dibs dibs : findUsersDibs){
+                    if(item.getItemId() == (dibs.getItemId().getItemId())){
+                        input.setDibsBoolean(true);
+                    }
+                }
+                nameList.add(input);
+            }
+            response = new BaseResponse("success", nameList);
+
         }catch(Exception e){
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;
     }
 
+    /**
+     * 찜하기
+     * @param request
+     * @return
+     */
     @GetMapping("/dibs")
     public BaseResponse dibsItem(@RequestBody DibsRequest request){
         BaseResponse response = null;

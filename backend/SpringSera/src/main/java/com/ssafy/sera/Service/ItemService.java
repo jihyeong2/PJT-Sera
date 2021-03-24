@@ -2,6 +2,7 @@ package com.ssafy.sera.Service;
 
 import com.ssafy.sera.Domain.Dibs.Dibs;
 import com.ssafy.sera.Domain.Item.Item;
+import com.ssafy.sera.Domain.Item.ItemDto;
 import com.ssafy.sera.Domain.User.User;
 import com.ssafy.sera.Repository.ItemRepository;
 import lombok.RequiredArgsConstructor;

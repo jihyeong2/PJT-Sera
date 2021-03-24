@@ -19,8 +19,12 @@ public class DibsService {
         return dibsRepository.findAll();
     }
 
-    public Dibs findByUserIdAndItemId(User user, Item item){
-        return dibsRepository.findByUserIdAndItemId(user, item);
+    public Dibs findByUserIdAndItemId(User userId, Item itemId){
+        return dibsRepository.findByUserIdAndItemId(userId, itemId);
+    }
+
+    public List<Dibs> findAllByUserId(User userId){
+        return dibsRepository.findAllByUserId(userId);
     }
 
     @Transactional
@@ -31,7 +35,7 @@ public class DibsService {
             dibsRepository.save(dibs);
             return dibsCount;
         }else{
-            Dibs dibs = new Dibs(user, item);
+            Dibs dibs = dibsRepository.findByUserIdAndItemId(user, item);
             int dibsCount = item.pullDibs();
             dibsRepository.delete(dibs);
             return dibsCount;

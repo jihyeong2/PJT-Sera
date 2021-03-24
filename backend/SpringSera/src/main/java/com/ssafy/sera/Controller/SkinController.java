@@ -42,7 +42,7 @@ public class SkinController {
                     .map(m-> new SkinDto(m))
                     .collect(Collectors.toList());
             response = new BaseResponse("success", collect);
-        }catch(IllegalStateException e){
+        }catch(Exception e){
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;
@@ -54,7 +54,7 @@ public class SkinController {
         try {
             Skin skin = skinService.findBySkinType(skinType);
             response = new BaseResponse("success", skin);
-        }catch(IllegalStateException e){
+        }catch(Exception e){
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;

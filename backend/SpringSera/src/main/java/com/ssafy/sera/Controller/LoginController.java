@@ -1,5 +1,6 @@
 package com.ssafy.sera.Controller;
 
+import com.ssafy.sera.Controller.Request.UserRequest;
 import com.ssafy.sera.Domain.User.User;
 import com.ssafy.sera.Service.JwtService;
 import com.ssafy.sera.Service.UserService;

@@ -1,7 +1,10 @@
 package com.ssafy.sera.Controller;
 
 
+import com.ssafy.sera.Controller.Request.FindPasswordRequest;
+import com.ssafy.sera.Domain.User.User;
 import com.ssafy.sera.Service.AuthService;
+import com.ssafy.sera.Service.UserService;
 import com.ssafy.sera.Util.Validator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,10 +26,12 @@ public class AuthController {
     private final AuthService authService;
     private final Validator validator;
     private static SMSResponse smsResponse;
+    private static UserService userService;
 
-    @ApiOperation(value = "인증번호 요청", notes = "SMS 요청",response = BaseResponse.class)
+    @ApiOperation(value = "인증번호 요청", notes = "마이페이지 / 회원가입 SMS 요청",response = BaseResponse.class)
     @PostMapping
-    public BaseResponse postAuthNumber(@ApiParam(value = "휴대폰 번호") @RequestParam(required = false) String phoneNumber){
+    public BaseResponse postAuthNumber
+            (@ApiParam(value = "휴대폰 번호") @RequestParam(required = false) String phoneNumber){
 
         BaseResponse response = null;
         try{
@@ -44,6 +49,33 @@ public class AuthController {
         }
         return response;
     }
+
+    @ApiOperation(value = "인증번호 요청", notes = "비밀번호 찾기 SMS 요청",response = BaseResponse.class)
+    @PostMapping("/findPassword")
+    public BaseResponse postAuthNumberToFindPassword
+            (@ApiParam(value = "휴대폰 번호") @RequestBody FindPasswordRequest request){
+        BaseResponse response = null;
+        try{
+            User user = userService.findByUserLoginId(request.getUserLoginId());
+            if(user.getUserPhone().equals(request.getUserPhone())){
+                response = new BaseResponse("fail", "일치하지 않음");
+            }else{
+                Random random = new Random();
+                String secret = "";
+                for(int i= 0 ; i < 6; i++){
+                    secret += Integer.toString(random.nextInt(10));
+                }
+                authService.sendSMS(validator.phoneValidator(request.getUserPhone()),secret);
+                smsResponse = new SMSResponse();
+                smsResponse.setCertificateNum(secret);
+                response = new BaseResponse("success", "true");
+            }
+        }catch(Exception e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
 
     @ApiOperation(value = "인증번호 확인", notes = "SMS 요청",response = BaseResponse.class)
     @GetMapping("/{certificateNum}")

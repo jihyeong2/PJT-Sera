@@ -1,5 +1,7 @@
 package com.ssafy.sera.Controller;
 
+import com.ssafy.sera.Controller.Request.PasswordRequest;
+import com.ssafy.sera.Controller.Request.UserRequest;
 import com.ssafy.sera.Domain.Skin.Skin;
 import com.ssafy.sera.Domain.User.User;
 import com.ssafy.sera.Domain.User.UserDto;
@@ -53,7 +55,7 @@ public class UserController {
                     .collect(Collectors.toList());
             response = new BaseResponse("success", collect);
         }
-        catch(IllegalStateException e){
+        catch(Exception e){
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;
@@ -67,7 +69,7 @@ public class UserController {
             UserDto userDto = new UserDto(findUser);
             response = new BaseResponse("success", userDto);
         }
-        catch(IllegalStateException e){
+        catch(Exception e){
             response = new BaseResponse("fail",e.getMessage());
         }
         return response;
@@ -128,7 +130,7 @@ public class UserController {
         try {
             userService.updatePassword(request);
             response = new BaseResponse("success", "수정 성공");
-        } catch (IllegalStateException e) {
+        } catch (Exception e) {
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;
@@ -159,7 +161,7 @@ public class UserController {
             System.out.println(skin.getSkinId()+" "+skin.getSkinType());
             userService.updateSkinType(userLoginId, skin);
             response = new BaseResponse("success", "성공");
-        }catch(IllegalStateException e){
+        }catch(Exception e){
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;

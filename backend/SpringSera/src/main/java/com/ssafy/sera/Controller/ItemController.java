@@ -128,11 +128,8 @@ public class ItemController {
         BaseResponse response = null;
         try{
             User user = userService.findByUserLoginId(request.getUserLoginId());
-            List<Dibs> findUsersDibs = dibsService.findAllByUserId(user);
-
-
-            
-            response = new BaseResponse("success", "");
+            List<List> returnList = itemService.findAllByCategoryLarge(user, request.getCategoryLarge());
+            response = new BaseResponse("success", returnList);
         }catch(Exception e){
             response = new BaseResponse("fail", e.getMessage());
         }

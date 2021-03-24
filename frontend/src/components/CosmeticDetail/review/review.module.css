@@ -1,5 +1,5 @@
-@value color-orange-2, color-grey-2, color-grey-4 from '../../common/style.css';
-@value font-size-30, font-size-26, font-size-20, font-size-18, font-size-16, font-size-14 from '../../common/style.css';
+@value color-orange-2, color-grey-2, color-grey-4 from '../../../common/style.css';
+@value font-size-30, font-size-26, font-size-20, font-size-18, font-size-16, font-size-14 from '../../../common/style.css';
 
 .review_head{
     width: 80%;

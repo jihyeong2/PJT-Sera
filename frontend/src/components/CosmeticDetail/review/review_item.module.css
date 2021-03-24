@@ -1,5 +1,5 @@
-@value color-orange-1, color-red-1, color-yellow-1, color-green-1, color-blue, color-grey-2, color-grey-3, color-grey-4 from '../../common/style.css';
-@value font-size-30, font-size-24, font-size-16, font-size-14 from '../../common/style.css';
+@value color-orange-1, color-red-1, color-yellow-1, color-green-1, color-blue, color-grey-2, color-grey-3, color-grey-4 from '../../../common/style.css';
+@value font-size-30, font-size-24, font-size-16, font-size-14 from '../../../common/style.css';
 
 .review_pro{
 }

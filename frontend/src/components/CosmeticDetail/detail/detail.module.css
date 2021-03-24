@@ -1,6 +1,6 @@
-@value color-orange-1, color-red-1, color-yellow-1, color-green-1, color-blue, color-grey-2, color-grey-3, color-grey-4 from '../../common/style.css';
-@value font-size-40, font-size-18, font-size-16, font-size-14 from '../../common/style.css';
-@value font-weight-regular, font-weight-bold, font-weight-exbold from '../../common/style.css';
+@value color-orange-1, color-red-1, color-yellow-1, color-green-1, color-blue, color-grey-2, color-grey-3, color-grey-4 from '../../../common/style.css';
+@value font-size-40, font-size-18, font-size-16, font-size-14 from '../../../common/style.css';
+@value font-weight-regular, font-weight-bold, font-weight-exbold from '../../../common/style.css';
 
 .detail_left{
     text-align: center;
@@ -93,11 +93,7 @@
     font-weight: 500;
     color: color-grey-2;
 }
-.brand_go_btn{
-    float: right;
-    height: 30px;
-    margin-right: 10px!important;
-}
+
 .naver_go_btn{
     float: right;
     height: 30px;
@@ -181,4 +177,12 @@
 }
 .description_name, .description_content{
     margin-top: 10px;
+}
+.tag{
+    border: 1px solid color-grey-3;
+    color: color-grey-2;
+    font-size: font-size-14;
+    padding: 3px;
+    border-radius: 25px;
+    margin-right: 5px;
 }

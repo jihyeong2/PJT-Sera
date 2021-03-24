@@ -19,13 +19,15 @@ const store = createStore(rootReducer);
 //   console.log(store.getState())
 // );
 let user = {
-  userId : 'unni2',
-  nickName: '다우니',
-  pw : '12345678',
-  pwConfirm : '12345678',
-  age : 26,
-  phone : '010-1111-1111',
-  gender : 'female',
+  userId : 0,
+  userLoginId: 'unni2',
+  userNickname: '다우니', 
+  userPassword : '12345678',
+  userAge : 26,
+  userPhone : '010-1111-1111',
+  userGender : '여',
+  skinId: '',
+  skinType: '',
 }
 // // 액션들을 보냅니다.
 store.dispatch(login(user));

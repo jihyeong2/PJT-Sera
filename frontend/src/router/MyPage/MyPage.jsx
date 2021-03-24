@@ -10,9 +10,9 @@ const MyPage = (props) => {
     <div className={styles.container}>
       <Navbar/>
       <Logo type={1}/>
-      <header className={styles.title}>
+      <div className={styles.title}>
         마이페이지
-      </header>
+      </div>
       <SkinInfo s/>
       <MyPageTabs/>
     </div>

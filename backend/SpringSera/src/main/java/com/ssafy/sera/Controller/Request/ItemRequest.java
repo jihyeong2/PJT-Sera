@@ -1,8 +1,10 @@
 package com.ssafy.sera.Controller.Request;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 @Data
+@ApiModel(value = "아이템 객체 정보", description = "테스트용")
 public class ItemRequest {
     private Long itemId;
     private String itemName;
@@ -11,6 +13,5 @@ public class ItemRequest {
     private String itemColors;
     private String itemVolume;
     private String itemDescription;
-    // 추후 수정할 예정
     private Long categoryId;
 }

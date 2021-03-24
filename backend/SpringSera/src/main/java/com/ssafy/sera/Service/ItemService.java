@@ -69,7 +69,7 @@ public class ItemService {
         return itemRepository.findByItemNameContaining(itemName);
     }
 
-    public List<List> findAllByCategoryLarge(User user, String categoryLarge){
+    public List<List> findAllByCategoryLarge(User user){
         List<List> returnList = new ArrayList<>();
         List<Dibs> findUsersDibs = dibsService.findAllByUserId(user);
         List<Item> findAllItem = itemRepository.findAll();

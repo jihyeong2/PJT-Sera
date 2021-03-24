@@ -139,7 +139,7 @@ const FindPW1 = () => {
               </li>
               <li className={styles.form_input}>
                 <p className={styles.input_ttl}>휴대번호</p>
-                <select>
+                <select className={styles.input_select}>
                   <option value="SKT">SKT</option>
                   <option value="KT">KT</option>
                   <option value="LG">LGU+</option>
@@ -154,7 +154,7 @@ const FindPW1 = () => {
                   maxlength="13"
                 />
                 <input
-                  className={styles.input_btn}
+                  className={styles.input_btn_select}
                   type="button"
                   value="인증번호 전송"
                   onClick={sendSns}

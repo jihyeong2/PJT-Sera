@@ -5,19 +5,17 @@
 .container {
     position: relative;
     width: 100%;
-    height: 100%;
 }
 
 .leftBox {
     position: relative;
     display: inline-block;
     width: 50%;
-    height: 100%;
 }
 
 .leftBox .left_con {
     position: relative;
-    top: 2vh;
+    top: 10vh;
     left: 5vw;
     margin: 0 auto;
     width: 60%;
@@ -27,7 +25,6 @@
 .leftBox .left_con .left_ttl {
     position: relative;
     width: 90%;
-    height: auto;
 }
 
 .leftBox .left_con .left_ttl .ttl_h {
@@ -38,7 +35,7 @@
 
 .leftBox .left_con .left_ttl .ttl_p {
     position: relative;
-    top: -40px;
+    top: 21px;
     font-size: 22px;
     color: color-grey-3;
     font-weight: 700;
@@ -46,7 +43,7 @@
 
 .leftBox .left_con .join_form {
     position: relative;
-    top: -2vh;
+    top: 70px;
     width: 90%;
     height: auto;
 }
@@ -55,7 +52,6 @@
 .leftBox .left_con .join_form .form_ul {
     position: relative;
     width: 100%;
-    height: auto;
 }
 
 .leftBox .left_con .join_form .form_ul .form_input {
@@ -83,7 +79,6 @@
 
 .leftBox .left_con .join_form .form_ul .form_input .input_text {
     position: relative;
-    top:-10px;
     width:82%;
     height: 35px;
     border-top: 0;
@@ -97,7 +92,7 @@
 
 .leftBox .left_con .join_form .form_ul .form_input .input_btn{
     position: relative;
-    top:-8px;
+    top:3px;
     width: 18%;
     height: 36px;
     background-color: #666;
@@ -128,7 +123,7 @@ input::placeholder {
 
 .leftBox .left_con .nextBtn{
     position: relative;
-    top:-18px;
+    top:18vh;
     float:right;
     font-size:18px;
     color:#999;
@@ -139,14 +134,12 @@ input::placeholder {
 .rightBox {
     display: inline-block;
     width: 50%;
-    height: 100%;
     background-color: #fff;
 }
 
 .rightBox .right_con {
     float: left;
     width: 100%;
-    height: 100%;
 }
 
 .rightBox .right_img{

@@ -11,6 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import Ingredient from '../ingredient/ingredient';
+import PersonalColor from '../personal_color/personal_color';
 
 const dstyles = (theme) => ({
     root: {
@@ -64,6 +65,15 @@ const Detail = (props) => {
     };
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const [opens, setOpens] = React.useState(false);
+
+    const handleClickOpens = () => {
+        setOpens(true);
+    };
+    const handleCloses = () => {
+        setOpens(false);
     };
     const [fullWidth, setFullWidth] = React.useState(true);
 
@@ -129,17 +139,17 @@ const Detail = (props) => {
                     </Grid>
                     <Grid item xs={3}>
                         <br></br>
-                        <Button className={styles.tone_btn} variant="outlined" >정보보기</Button>
-                        {/* <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
-                                <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+                        <Button className={styles.tone_btn} variant="outlined" onClick={handleClickOpens}>정보보기</Button>
+                        <Dialog style={{height:'90%',}} fullWidth={fullWidth} maxWidth="lg" onClose={handleCloses} aria-labelledby="customized-dialog-title" open={opens}>
+                                <DialogTitle id="customized-dialog-title" onClose={handleCloses}>
                                     퍼스널컬러 정보
                                 </DialogTitle>
                                 <DialogContent dividers>
                                     <Typography gutterBottom>
-                                    퍼스널컬러 정보
+                                        <PersonalColor />
                                     </Typography>
                                 </DialogContent>
-                            </Dialog> */}
+                            </Dialog>
                     </Grid>
                 </Grid>
             </div>

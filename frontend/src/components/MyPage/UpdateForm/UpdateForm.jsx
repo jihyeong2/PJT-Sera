@@ -3,73 +3,176 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from './UpdateForm.module.css';
 import {connect} from 'react-redux';
 import {login, logout, update} from '../../../actions/index';
+import {updateUser, checkName, deleteUser} from '../../../service/user';
+import Swal from 'sweetalert2';
 
 const UpdateForm = ({user,login,logout,update}) => {
-  console.log(user);
-  let [userInfo,setUserInfo] = useState({...user});
+  const gender={'남':'male','여':'female'};
+  const trueState=true;
+  const falseState=false;
   const nickNameRef=useRef();
   const pwRef=useRef();
   const pwConfirmRef=useRef();
   const ageRef=useRef();
   const phoneRef=useRef();
-  // const genderRef=useRef();
-  // test
+  const [userInfo,setUserInfo] = useState({...user});
+  const [userPasswordConfirm,setPasswordConfirm] = useState(user.userPassword)
+  const [isCheckedName, setIsCheckedName] = useState(true);
+  const [isCheckedPhone, setIsCheckedPhone] = useState(true);
+  console.log(userInfo);
   const handleChange = (e)=>{
     if(e.target==null) return;
     e.preventDefault();
     let value='';
     switch (e.target.name){
-      case 'nickName':
+      case 'userNickname':
         value=nickNameRef.current.value;
+        if(value===user.userNickname){
+          setIsCheckedName(trueState);
+        } else{
+          setIsCheckedName(falseState);
+        }
         break;
-      case 'pw':
+      case 'userPassword':
         value=pwRef.current.value;
         break;
-      case 'pwConfirm':
+      case 'userPasswordConfirm':
         value=pwConfirmRef.current.value;
         break;
-      case 'age':
+      case 'userAge':
         value=ageRef.current.value;
         break;
-      case 'phone':
+      case 'userPhone':
         value=phoneRef.current.value;
+        if(value===userInfo.userPhone){
+          setIsCheckedPhone(trueState);
+        } else{
+          setIsCheckedPhone(falseState);
+        }
         break;
     }
-    setUserInfo(userInfo=>{
-      const updated={
-        ...userInfo,
-        [e.target.name]: value,
-      }
-      return updated;
-    });
+    if(e.target.name!='userPasswordConfirm'){
+      setUserInfo(userInfo=>{
+        const updated={
+          ...userInfo,
+          [e.target.name]: value,
+        }
+        return updated;
+      });
+    } else{
+      setPasswordConfirm(value);
+    }
+
   }
   const onReset = () => {
+    if(userInfo.userGender!=user.userGender){
+      document.querySelector(`#${gender[userInfo.userGender]}`).classList.toggle(styles.gender_button_active);
+      document.querySelector(`#${gender[user.userGender]}`).classList.toggle(styles.gender_button_active);
+    }
     setUserInfo({...user});
-  };
-  const onSubmit = (e) => {
-    update(userInfo);
+    setIsCheckedName(falseState);
+    setIsCheckedPhone(falseState);
   };
   const onClickGender = (e) => {
-    const beforeTarget = document.querySelector(`#${userInfo.gender}`);
+    const beforeTarget = document.querySelector(`#${gender[userInfo.userGender]}`);
     const currTarget = document.querySelector(`#${e.target.id}`);
     beforeTarget.classList.toggle(styles.gender_button_active);
     currTarget.classList.toggle(styles.gender_button_active);
     setUserInfo(userInfo=>{
       const updated={
         ...userInfo,
-        gender:e.target.id,
+        userGender:e.target.innerText,
       }
       return updated;
     });
-  }
+  };
   const onClickCheck = () => {
-
+    checkName(
+      userInfo.userNickname,
+      (res)=>{
+        if(res.status==="success"){
+          Swal.fire({
+            icon: 'success',
+            text: '사용 가능한 이름입니다.',
+            showConfirmButton: false,
+            timer: 2000
+          });
+          setIsCheckedName(trueState);
+        } else{
+          Swal.fire({
+            icon: 'error',
+            text: '이미 존재하는 이름입니다.',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          const tmp=true;
+          setIsCheckedName(falseState);
+        }
+      },
+      (err)=>{
+        console.error(err);
+        setIsCheckedName(falseState);
+      }
+    )
   };
   const onClickPhone = () => {
-
+    // 마이페이지 용 api 나오면 바로 연결
+  };
+  const onSubmit = () => {
+    if(!isCheckedName){
+      Swal.fire({
+        icon: 'error',
+        text: '닉네임 중복확인이 되지 않았습니다.',
+        showConfirmButton: false,
+        timer: 2000
+      });
+      return;
+    }
+    if(!isCheckedPhone){
+      Swal.fire({
+        icon: 'error',
+        text: '휴대폰 인증이 되지 않았습니다.',
+        showConfirmButton: false,
+        timer: 2000
+      });
+      return;
+    }
+    if(userInfo.userPassword!=userPasswordConfirm){
+      Swal.fire({
+        icon: 'error',
+        text: '비밀번호가 일치하지 않습니다.',
+        showConfirmButton: false,
+        timer: 2000
+      });
+      return;
+    }
+    updateUser(
+      userInfo,
+      (res)=>{
+        if(res.status==="success"){
+          Swal.fire({
+            icon: 'success',
+            text: '회원 정보가 수정되었습니다.',
+            showConfirmButton: false,
+            timer: 2000
+          });
+        } else{
+          Swal.fire({
+            icon: 'error',
+            text: '회원 정보 수정에 실패했습니다.',
+            showConfirmButton: false,
+            timer: 2000
+          });
+        }
+      },
+      (err)=>{
+        console.error(err);
+      }
+    );
+    update(userInfo);
   };
   useEffect(()=>{
-    const btn = document.querySelector(`#${userInfo.gender}`);
+    const btn = document.querySelector(`#${gender[userInfo.userGender]}`);
     btn.classList.toggle(styles.gender_button_active);
   },[]);
   return (
@@ -85,7 +188,7 @@ const UpdateForm = ({user,login,logout,update}) => {
             <span className={styles.highlight}> *</span>
           </div>
           <div className={styles.value}>
-            {userInfo.userId}
+            {userInfo.userLoginId}
           </div>
         </div>
         <div className={styles.table_row}>
@@ -94,7 +197,7 @@ const UpdateForm = ({user,login,logout,update}) => {
             <span className={styles.highlight}> *</span>
           </div>
           <div className={styles.value}>
-            <input ref={nickNameRef} type="text" className={styles.input} name="nickName" value={userInfo.nickName} onChange={handleChange}/>
+            <input ref={nickNameRef} type="text" className={styles.input} name="userNickname" value={userInfo.userNickname} onChange={handleChange}/>
             <button className={styles.button} onClick={onClickCheck}>
               중복확인
             </button>
@@ -106,7 +209,7 @@ const UpdateForm = ({user,login,logout,update}) => {
             <span className={styles.highlight}> *</span>
           </div>
           <div className={styles.value}>
-            <input ref={pwRef} type="password" className={styles.input} name="pw" value={userInfo.pw} onChange={handleChange}/>
+            <input ref={pwRef} type="password" className={styles.input} name="userPassword" value={userInfo.userPassword} onChange={handleChange}/>
           </div>
         </div>
         <div className={styles.table_row}>
@@ -115,7 +218,7 @@ const UpdateForm = ({user,login,logout,update}) => {
             <span className={styles.highlight}> *</span>
           </div>
           <div className={styles.value}>
-            <input ref={pwConfirmRef} type="password" className={styles.input} name="pwConfirm" value={userInfo.pwConfirm} onChange={handleChange}/>
+            <input ref={pwConfirmRef} type="password" className={styles.input} name="userPasswordConfirm" value={userPasswordConfirm} onChange={handleChange}/>
           </div>
         </div>
         <div className={styles.table_row}>
@@ -123,7 +226,7 @@ const UpdateForm = ({user,login,logout,update}) => {
             나이
           </div>
           <div className={styles.value}>
-            <input ref={ageRef} type="number" className={styles.input} name="age" value={userInfo.age} onChange={handleChange}/>
+            <input ref={ageRef} type="number" className={styles.input} name="userAge" value={userInfo.userAge} onChange={handleChange}/>
           </div>
         </div>
         <div className={styles.table_row}>
@@ -137,7 +240,7 @@ const UpdateForm = ({user,login,logout,update}) => {
               <option className={styles.option} value="KT">KT</option>
               <option className={styles.option} value="LG">LG</option>
             </select>
-            <input ref={phoneRef} type="text" className={styles.input} name="phone" value={userInfo.phone} onChange={handleChange}/>
+            <input ref={phoneRef} type="text" className={styles.input} name="userPhone" value={userInfo.userPhone} onChange={handleChange}/>
             <button className={styles.button} onClick={onClickPhone}>
               인증번호 발송
             </button>
@@ -148,9 +251,9 @@ const UpdateForm = ({user,login,logout,update}) => {
             성별
           </div>
           <div className={styles.value}>
-            <button id="male" className={styles.gender_button} onClick={onClickGender}>남성</button>
+            <button id="male" className={styles.gender_button} onClick={onClickGender}>남</button>
             {/* <button className={styles.gender_button, styles.gender_button_active}>여성</button> */}
-            <button id="female" className={styles.gender_button} onClick={onClickGender}>여성</button>
+            <button id="female" className={styles.gender_button} onClick={onClickGender}>여</button>
           </div>
         </div>
       </div>

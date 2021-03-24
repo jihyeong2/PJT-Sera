@@ -150,7 +150,6 @@ const Home = (props) => {
       <div className="main__content">
         <section data-title="Home" className="fbx" style={{backgroundColor:'#000000',}}>
           <div className="sec_container">
-            <img src="../../assets/mainz.png" alt=""/>
             <Home1/>
           </div>
         </section>

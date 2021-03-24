@@ -1,5 +1,7 @@
 package com.ssafy.sera.Controller;
 
+import com.ssafy.sera.Controller.Request.ChangePasswordRequest;
+import com.ssafy.sera.Controller.Request.UserRequest;
 import com.ssafy.sera.Domain.Skin.Skin;
 import com.ssafy.sera.Domain.User.User;
 import com.ssafy.sera.Domain.User.UserDto;
@@ -53,7 +55,7 @@ public class UserController {
                     .collect(Collectors.toList());
             response = new BaseResponse("success", collect);
         }
-        catch(IllegalStateException e){
+        catch(Exception e){
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;
@@ -67,7 +69,7 @@ public class UserController {
             UserDto userDto = new UserDto(findUser);
             response = new BaseResponse("success", userDto);
         }
-        catch(IllegalStateException e){
+        catch(Exception e){
             response = new BaseResponse("fail",e.getMessage());
         }
         return response;
@@ -122,13 +124,13 @@ public class UserController {
 
     @ApiOperation(value = "비밀번호 업데이트", notes = "반환되는 데이터는 수정 성공 / 에러 메시지", response = BaseResponse.class)
     @PutMapping("/password")
-    public BaseResponse updatePassword(@ApiParam(value = "패스워드 수정 정보(아이디, 패스워드)")@RequestBody PasswordRequest request) {
+    public BaseResponse updatePassword(@ApiParam(value = "패스워드 수정 정보(아이디, 패스워드)")@RequestBody ChangePasswordRequest request) {
 
         BaseResponse response = null;
         try {
             userService.updatePassword(request);
             response = new BaseResponse("success", "수정 성공");
-        } catch (IllegalStateException e) {
+        } catch (Exception e) {
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;
@@ -149,9 +151,8 @@ public class UserController {
 
     @ApiOperation(value = "사용자 피부 설정", notes = "반환되는 데이터는 성공 / 에러메시지", response =BaseResponse.class)
     @PostMapping("/skin/{userLoginId}/{skinType}")
-    public BaseResponse updateUserSkin(@ApiParam(value = "Skin 정보")
-                                           @PathVariable String userLoginId,
-                                           @PathVariable String skinType){
+    public BaseResponse updateUserSkin(@ApiParam(value = "사용자 로그인 정보") @PathVariable String userLoginId,
+                                       @ApiParam(value = "Skin 정보") @PathVariable String skinType){
         BaseResponse response = null;
         try{
             System.out.println(skinType);
@@ -159,7 +160,21 @@ public class UserController {
             System.out.println(skin.getSkinId()+" "+skin.getSkinType());
             userService.updateSkinType(userLoginId, skin);
             response = new BaseResponse("success", "성공");
-        }catch(IllegalStateException e){
+        }catch(Exception e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+    @ApiOperation(value = "사용자 퍼스널컬러 설정", notes = "반환되는 데이터는 성공 / 에러메시지", response =BaseResponse.class)
+    @PostMapping("/personalColor/{userLoginId}/{personalColor}")
+    public BaseResponse updatePersonalColor(
+            @ApiParam(value = "사용자 로그인 정보") @PathVariable String userLoginId,
+            @ApiParam(value = "퍼스널컬러") @PathVariable String personalColor){
+        BaseResponse response = null;
+        try{
+            userService.updatePersonalColor(userLoginId, personalColor);
+            response = new BaseResponse("success", "성공");
+        }catch(Exception e){
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;

@@ -12,7 +12,7 @@ const SignUp2 = () => {
 
   const [userAge, setUserAge] = useState(""); //나이
   const [userPhone, setUserPhone] = useState(""); //휴대번호
-  const [userGender, setUserGender] = useState("남성"); //성별
+  const [userGender, setUserGender] = useState("남"); //성별
   const [certificateNumber, setCertificateNumber] = useState(""); //인증번호
 
   //style
@@ -178,7 +178,7 @@ const SignUp2 = () => {
                 <p className={styles.input_ttl}>
                   휴대번호<span>*</span>
                 </p>
-                <select>
+                <select className={styles.input_select}>
                   <option value="SKT">SKT</option>
                   <option value="KT">KT</option>
                   <option value="LG">LGU+</option>
@@ -229,7 +229,7 @@ const SignUp2 = () => {
                       className={styles.only_sr}
                       type="radio"
                       name="gender"
-                      value="남성"
+                      value="남"
                       onClick={clickGender}
                       defaultChecked
                     />
@@ -241,7 +241,7 @@ const SignUp2 = () => {
                       className={styles.only_sr}
                       type="radio"
                       name="gender"
-                      value="여성"
+                      value="여"
                       onClick={clickGender}
                     />
                     <label for="woman">여성</label>

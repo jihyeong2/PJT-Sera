@@ -4,6 +4,8 @@ import Grid from "@material-ui/core/Grid";
 import { useHistory } from "react-router-dom";
 import http from "../../http-common.js";
 
+const { Kakao } = window;
+
 const Login = () => {
   const history = useHistory();
 
@@ -20,7 +22,7 @@ const Login = () => {
 
   //again
   useEffect(() => {
-    if(((5<=userLoginId) && (userLoginId <= 12)) && !(RegExp.test(userLoginId) || upperCase.test(userLoginId) || regKorean.test(userLoginId))){
+    if(userLoginId.length >= 5){
       setSubmitBorderColor("#FD6C1D");
       setSubmitTxtColor("#FD6C1D");
     }else{
@@ -42,32 +44,100 @@ const Login = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    http
-      .get("v1/users/" + userLoginId)
-      .then((res) => {
-        if (res.data.status === "success") {
+    if(submitBorderColor !== "#FD6C1D"){
+      alert("아이디 형식이 올바르지 않습니다(5글자 이상)");
+      return;
+    }
 
+    http
+      .post("v1/login",
+      {
+        userLoginId, userPassword
+      }
+      )
+      .then((res) => {
+        if (res.data.status) {
           const user = {
-            userLoginId: userLoginId,
-            userNickname: res.data.data.userNickname,
-            userPassword: userPassword,
-            userAge: res.data.data.userAge,
-            userPhone: res.data.data.userPhone,
-            userGender: res.data.data.userGender,
+            auth_token: res.data.auth_token,
+            userLoginId: res.data.user.userLoginId,
+            userNickname: res.data.user.userNickname,
+            userPassword: res.data.user.userPassword,
+            userAge: res.data.user.userAge,
+            userPhone: res.data.user.userPhone,
+            userGender: res.data.user.userGender,
           };
 
           console.log("회원정보: " + JSON.stringify(user));
 
-          //redux
+         
           console.log(res.data.status);
           history.push("/");
-          
-        } else alert("가입된 회원이 아닙니다.");
+        }else alert(res.data.message);
       })
       .catch((err) => {
-        alert("가입된 회원이 아닙니다.");
+        alert(err);
       });
   };
+
+    //카카오 로그인 
+    const kakaoLogin = () => {
+      Kakao.Auth.login({
+        //kakao auth-token 중 access_token얻기
+        scope: "profile, account_email, gender, age_range",
+        success: function (authObj) {
+          //사용자 정보 얻기
+          Kakao.API.request({
+            url: "/v2/user/me",
+            success: function (res) {
+              const kakao_email = res.kakao_account.email;
+              const kakao_age_range = res.kakao_account.age_range;
+  
+              const user = {
+                userLoginId: kakao_email.substring(0, kakao_email.indexOf("@")),
+                userNickname: res.kakao_account.profile.nickname,
+                userPassword: "",
+                userAge: kakao_age_range.substring(
+                  0,
+                  kakao_age_range.indexOf("~")
+                ),
+                userPhone: "",
+                userGender: res.kakao_account.gender === "female" ? "여" : "남",
+              };
+  
+              // 로그인
+              http
+                .post("v1/login/kakao", user)
+                .then((res) => {
+                  if (res.data.status) {
+                    const user = {
+                      auth_token: res.data.auth_token,
+                      userLoginId: res.data.user.userLoginId,
+                      userNickname: res.data.user.userNickname,
+                      userPassword: res.data.user.userPassword,
+                      userAge: res.data.user.userAge,
+                      userPhone: res.data.user.userPhone,
+                      userGender: res.data.user.userGender,
+                    };
+
+                    console.log("회원정보 " + JSON.stringify(user));
+
+                    //첫 로그인이면 피부타입 검사하러 가기
+                  } else alert("카카오 로그인에 실패했습니다.");
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            },
+            fail: function (error) {
+              alert(JSON.stringify(error));
+            },
+          });
+        },
+        fail: (error) => {
+          console.log(JSON.stringify(error));
+        },
+      });
+    };
 
   return (
     <Grid container spacing={12} className={styles.container}>
@@ -139,19 +209,11 @@ const Login = () => {
             <span className={styles.or_txt}>또는</span>
             <div className={styles.right_line}></div>
           </div>
-          <div className={styles.left_sns}>
-            <div className={styles.kakao}>
-              <img
-                src={process.env.PUBLIC_URL + "/images/kakao_logo.png"}
-                alt=""
-              />
-            </div>
-            <div className={styles.google}>
-              <img
-                src={process.env.PUBLIC_URL + "/images/google_logo.png"}
-                alt=""
-              />
-            </div>
+          <div className={styles.kakao}  onClick={kakaoLogin}>
+            <img
+               src={process.env.PUBLIC_URL + "/images/kakao_login.png"}
+               alt=""
+            />
           </div>
         </div>
       </Grid>

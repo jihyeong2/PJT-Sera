@@ -1,9 +1,9 @@
 .wrapper {
   --color: #1f242d;
   --color-invert: #ffffff;
-  --clip-path: circle(15px at left);
-  --clip-path-hover: circle(70px at left);
-  --clip-path-clicked: circle(100vw at left);
+  --clip-path: circle(70px at left);
+  --clip-path-hover: circle(140px at left);
+  --clip-path-clicked: rect(100vh);
   --duration: 0.4s;
   --timing-function: ease;
   position: relative;
@@ -21,7 +21,7 @@
     clip-path: var(--clip-path);
     transition: clip-path var(--duration) var(--timing-function);
     img {
-      position: fixed;
+      position: absolute;
       background: #c4cbde;
       top: 50%;
       left: 50%;
@@ -120,14 +120,14 @@
       ~ .text {
         --opacity: 0;
         transition: opacity 0.3s var(--timing-function);
-        &::after {
-          clip-path: var(--clip-path-clicked);
-        }
-        > span {
-          &::after {
-            clip-path: var(--clip-path-clicked);
-          }
-        }
+        // &::after {
+        //   clip-path: var(--clip-path-clicked);
+        // }
+        // > span {
+        //   &::after {
+        //     clip-path: var(--clip-path-clicked);
+        //   }
+        // }
       }
     }
   }

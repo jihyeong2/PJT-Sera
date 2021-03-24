@@ -41,7 +41,7 @@ gantt
     발표 PPT 제작: done, t8, 2021-03-16, 3d
     발표 준비 : done,t9, after t8, 1d
     Sub2 발표 : done, t10, 2021-03-19, 1d
-    추가 UI/UX(메인,피부진단,퍼스널컬러): crit, t8, 2021-03-19, 5d
+    추가 UI/UX(메인,피부진단,퍼스널컬러): done, 2021-03-19, 5d
     테스트 시나리오 작성 : active, t14, 2021-03-25, 1d
     와이어프레임 산출물 제작 :  active, t15, 2021-03-25, 1d
     SUB3 중간 발표 PPT 제작 : active, t16, 2021-03-24, 2d
@@ -51,15 +51,17 @@ gantt
     section Frontend
    	회원가입/로그인/비밀번호찾기 페이지 :  done, t1, 2021-03-14, 2d
    	마이페이지 :  done, t2, 2021-03-14, 2d
-   	상품 리스트/디테일 페이지  : active, t3, 2021-03-14, 5d
+   	상품 리스트/디테일 페이지  : crit, t3, 2021-03-22, 4d
     회원가입/로그인/비밀번호찾기 api 연동 : done, t4, after t1,2d
     공통 컴포넌트 UI : done, t7, 2021-03-16, 1d
-    마이페이지 api 연동: active, t5, 2021-03-18, 1d
+    마이페이지 api 연동: done, t5, 2021-03-18, 1d
     Redux : done, t6, 2021-03-17, 1d
   	검색결과 페이지 : done, t11, 2021-03-18, 1d
   	찜 목록 페이지 : done, t12, 2021-03-18, 1d
-  	메인화면: crit, t13, after t8, 3d
-	피부진단 : active, t17, 2021-03-23, 1d
+  	메인화면: active, t13, 2021-03-25, 1d
+	마이페이지 피부진단 UI : crit, t17, 2021-03-24, 1d
+	마이페이지 퍼스널컬러 UI : crit, t18, 2021-03-24, 1d
+	로그인 리덕스 연결 : crit t19, 2021-03-24, 1d
     
     section Backend
   	글로우픽 크롤링 : done, b_t1, 2021-03-15, 6d
@@ -75,8 +77,8 @@ gantt
 	상품 검색 api(Spring):  crit,b_t12, 2021-03-19, 8d
     상품 리스트 & 디테일 조회 api (Django): active, b_t11, after b_t3, 1d
     상품 검색 api (Django): active, b_t13, after b_t11, 1d
-    AWS 배포: crit, b_t13, 2021-03-23, 2d
-    
+    AWS 배포: done, b_t13, 2021-03-23, 2d
+
 ```
 
 ## ✔ Branch 규칙

@@ -17,7 +17,7 @@ public class ItemDto {
     private String itemColors;
     private  String itemVolume;
     private String itemDescription;
-    private String itemTags;
+//    private String itemTags;
     private int dibsCnt;
     private boolean dibsBoolean;
     public ItemDto(Item item){
@@ -37,9 +37,9 @@ public class ItemDto {
             this.categoryDto.setCategoryMiddle(item.getCategoryId().getCategoryMiddle());
             this.categoryDto.setCategorySmall(item.getCategoryId().getCategorySmall());
         }
-        if(item.getItemTags() != null){
-            this.itemTags = item.getItemTags();
-        }
+//        if(item.getItemTags() != null){
+//            this.itemTags = item.getItemTags();
+//        }
         this.dibsCnt = item.getDibsCnt();
     }
     public void setDibsBoolean(boolean flag){

@@ -21,7 +21,7 @@ public class Item {
     private Long itemId;
     @Column
     private String itemName;
-    @Column
+    @Column(columnDefinition = "text")
     private String itemImg;
     @Column
     private String itemBrand;
@@ -30,15 +30,15 @@ public class Item {
     @JoinColumn(name = "category_id")
     private Category categoryId;
 
-    @Column
+    @Column(columnDefinition = "text")
     private String itemColors;
     @Column
     private  String itemVolume;
-    @Column
+    @Column(columnDefinition = "text")
     private String itemDescription;
 //    테그 작성 후 타입 및 연관 관계 수정할 것
-    @Column
-    private String itemTags;
+//    @Column
+//    private String itemTags;
 //    테그 작성 후 타입 및 연관 관계 수정할 것
     @Column(columnDefinition = "INT DEFAULT 0")
     private int dibsCnt;

@@ -46,8 +46,8 @@ public class LoginController {
                 User userInfo = userService.findByUserLoginId(userRequest.getUserLoginId());
                 String token = jwtService.create(loginUser);
                 logger.trace("로그인 토큰정보 : {}", token);
-                response.setHeader("auth-token", token);
-                resultMap.put("auth-token",token);
+                response.setHeader("auth_token", token);
+                resultMap.put("auth_token",token);
                 resultMap.put("status", true);
                 resultMap.put("user", userInfo);
                 resultMap.put("message", "login success");
@@ -92,8 +92,8 @@ public class LoginController {
             }
             String token = jwtService.create(loginUser);
             logger.trace("로그인 토큰정보 : {}", token);
-            response.setHeader("auth-token", token);
-            resultMap.put("auth-token",token);
+            response.setHeader("auth_token", token);
+            resultMap.put("auth_token",token);
             resultMap.put("status", true);
             resultMap.put("user", loginUser);
             resultMap.put("message", "login success");

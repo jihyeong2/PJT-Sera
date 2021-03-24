@@ -13,6 +13,8 @@ import MuiDialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
+import Logo from '../../components/common/Logo/Logo';
+import Navbar from '../../components/common/Navbar/Navbar';
 
 const dstyles = (theme) => ({
     root: {
@@ -84,6 +86,11 @@ const CosmeticDetail = ( ) => {
 
     return (
         <div className={styles.page}>
+          <div className={styles.nav}>
+            <Navbar/>
+            <Logo type={1}/>
+          </div>
+            
             <Grid container spacing={4}>
             <Grid item xs={4} className={styles.detail}>
                 <DetailLeft />

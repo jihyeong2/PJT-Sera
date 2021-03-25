@@ -145,7 +145,7 @@ const UpdateForm = ({user,update}) => {
         showConfirmButton: false,
         timer: 2000
       })
-    } else if(!(userInfo.userPhone !== "" && userInfo.userPhone.length === 13 && userInfo.userPhone[3]==='-' && userInfo.userPhone[8]==='-')){
+    } else if(!(userInfo.userPhone !== "" && userInfo.userPhone.length === 13 && userInfo.userPhone[3]==='-' && userInfo.userPhone[8]==='-') || upperCase.test(userInfo.userPhone) || lowerCase.test(userInfo.userPhone) || regKorean.test(userInfo.userPhone) || RegExp.test(userInfo.userPhone)){
       Swal.fire({
         icon: 'error',
         text: '휴대폰 번호가 형식에 맞지 않습니다.',

@@ -100,6 +100,7 @@ import Home1 from '../../components/Home/home1';
 import Home2 from '../../components/Home/home2';
 import Home3 from '../../components/Home/home3';
 import Home4 from '../../components/Home/home4';
+import Navbar from '../../components/common/Navbar/Navbar';
 const Home = (props) => {
   useEffect(()=>{
     // const fullscreen = document.querySelector('.fullscreen');
@@ -147,6 +148,7 @@ const Home = (props) => {
   },[])
   return(
     <div className="fullscreen">
+      <Navbar/>
       <div className="main__content">
         <section data-title="Home" className="fbx" style={{backgroundColor:'#000000',}}>
           <div className="sec_container">

@@ -25,7 +25,7 @@ const SearchModal = (props) => {
 
   return (
     <div id="t">
-      <Button color="primary" onClick={handleClickOpen}>
+      <Button color="primary" onClick={handleClickOpen} style={{height:'100%'}}>
         <FontAwesomeIcon icon="search" size="lg" color="#666666"/>
       </Button>
       <Dialog

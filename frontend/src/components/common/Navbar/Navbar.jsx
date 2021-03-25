@@ -155,7 +155,7 @@ const Navbar = ({user,logout}) => {
         onClick={handleToggle}
         style={{color: '#666666'}}
       >
-        {user.nickName}님&nbsp;
+        {user.userNickname}님&nbsp;
         <FontAwesomeIcon icon="chevron-down" size="lg"/>
       </Button>
       <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>

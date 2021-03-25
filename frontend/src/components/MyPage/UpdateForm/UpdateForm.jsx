@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {update} from '../../../actions/index';
 import {updateUser, checkName, deleteUser, requestCertify, getCertify} from '../../../service/user';
 import Swal from 'sweetalert2';
+import { useHistory } from 'react-router';
 
 const UpdateForm = ({user,update}) => {
   const gender={'남':'male','여':'female'};
@@ -20,8 +21,15 @@ const UpdateForm = ({user,update}) => {
   const [userPasswordConfirm,setPasswordConfirm] = useState(user.userPassword)
   const [isCheckedName, setIsCheckedName] = useState(true);
   const [certifyNum, setCertifyNum] = useState('');
-  const [isClickedCertify, setisClickedCertify] = useState(false);
+  const [isClickedCertify, setIsClickedCertify] = useState(true);
   const [isCertified, setIscertified] = useState(true);
+  const history = useHistory();
+  const upperCase = /[A-Z]/; //대문자
+  const lowerCase = /[a-z]/;
+  const numberCase = /[0-9]/;
+  const regKorean =  /^[ㄱ-ㅎ가-힣]+$/; //한글 정규식
+  const RegExp =  /[~!@#$%^&*()_+|<>?:{}]/;//특수문자 정규식
+  console.log(userInfo);
   const handleChange = (e)=>{
     if(e.target==null) return;
     e.preventDefault();
@@ -29,7 +37,7 @@ const UpdateForm = ({user,update}) => {
     switch (e.target.name){
       case 'userNickname':
         value=nickNameRef.current.value;
-        if(value===user.userNickname){
+        if(value!='' && 4<=value.length && !RegExp.test(value)){
           setIsCheckedName(trueState);
         } else{
           setIsCheckedName(falseState);
@@ -46,11 +54,16 @@ const UpdateForm = ({user,update}) => {
         break;
       case 'userPhone':
         value=phoneRef.current.value;
-        if(value===userInfo.userPhone){
+        if(value===user.userPhone){
           setIscertified(trueState);
+          setIsClickedCertify(trueState);
         } else{
           setIscertified(falseState);
+          setIsClickedCertify(falseState)
         }
+        console.log(value);
+        console.log(user.userPhone);
+        console.log(isCertified,isClickedCertify)
         break;
       case 'certifyNum':
         value=certifyNumRef.current.value;
@@ -78,7 +91,7 @@ const UpdateForm = ({user,update}) => {
     setUserInfo({...user});
     setIsCheckedName(trueState);
     setIscertified(trueState);
-    setisClickedCertify(falseState);
+    setIsClickedCertify(trueState);
     setCertifyNum('');
   };
   const onClickGender = (e) => {
@@ -93,13 +106,22 @@ const UpdateForm = ({user,update}) => {
       }
       return updated;
     });
+    console.log(e.target.innerText)
   };
   const onClickCheck = () => {
     checkName(
       userInfo.userNickname,
       (res)=>{
         console.log(res);
-        if(res.data.status==="success"){
+        if(userInfo.userNickname!=user.userNickname && res.data.data==="중복입니다"){
+          Swal.fire({
+            icon: 'error',
+            text: '이미 존재하는 이름입니다.',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          setIsCheckedName(falseState);
+        }else{
           Swal.fire({
             icon: 'success',
             text: '사용 가능한 이름입니다.',
@@ -107,15 +129,6 @@ const UpdateForm = ({user,update}) => {
             timer: 2000
           });
           setIsCheckedName(trueState);
-        } else{
-          Swal.fire({
-            icon: 'error',
-            text: '이미 존재하는 이름입니다.',
-            showConfirmButton: false,
-            timer: 2000
-          })
-          const tmp=true;
-          setIsCheckedName(falseState);
         }
       },
       (err)=>{
@@ -132,10 +145,19 @@ const UpdateForm = ({user,update}) => {
         showConfirmButton: false,
         timer: 2000
       })
-    } else {
+    } else if(!(userInfo.userPhone !== "" && userInfo.userPhone.length === 13 && userInfo.userPhone[3]==='-' && userInfo.userPhone[8]==='-')){
+      Swal.fire({
+        icon: 'error',
+        text: '휴대폰 번호가 형식에 맞지 않습니다.',
+        showConfirmButton: false,
+        timer: 2000
+      })
+    }
+    else {
       requestCertify(
         userInfo.userPhone,
         (res)=>{
+          console.log(res);
           if(res.data.status==="success"){
             Swal.fire({
               icon: 'success',
@@ -143,9 +165,9 @@ const UpdateForm = ({user,update}) => {
               showConfirmButton: false,
               timer: 2000
             });
-            setisClickedCertify(trueState);
+            setIsClickedCertify(trueState);
           } else{
-            setisClickedCertify(falseState);
+            setIsClickedCertify(falseState);
             Swal.fire({
               icon: 'error',
               text: `${userInfo.userPhone}의 번호로 인증번호 발송에 실패했습니다.`,
@@ -156,7 +178,7 @@ const UpdateForm = ({user,update}) => {
         },
         (err)=>{
           console.err(err);
-          setisClickedCertify(falseState);
+          setIsClickedCertify(falseState);
           Swal.fire({
             icon: 'error',
             text: `${userInfo.userPhone}의 번호로 인증번호 발송에 실패했습니다.`,
@@ -172,7 +194,8 @@ const UpdateForm = ({user,update}) => {
     getCertify(
       certifyNum,
       (res)=>{
-        if(res.data.status==="success"){
+        console.log(res);
+        if(res.data.data!=="false"){
           Swal.fire({
             icon: 'success',
             text: '성공적으로 인증되었습니다.',
@@ -183,7 +206,7 @@ const UpdateForm = ({user,update}) => {
         } else{
           Swal.fire({
             icon: 'error',
-            text: `${userInfo.userPhone}의 번호로 인증번호 발송에 실패했습니다.`,
+            text: `인증번호가 일치하지 않습니다.`,
             showConfirmButton: false,
             timer: 2000
           });
@@ -203,10 +226,10 @@ const UpdateForm = ({user,update}) => {
     );
   };
   const onSubmit = () => {
-    if(!isCheckedName){
+    if(!isCheckedName || userInfo.userNickname==''){
       Swal.fire({
         icon: 'error',
-        text: '닉네임 중복확인이 되지 않았습니다.',
+        text: '닉네임이 형식에 맞지 않거나, 중복확인이 되지 않았습니다.',
         showConfirmButton: false,
         timer: 2000
       });
@@ -221,10 +244,10 @@ const UpdateForm = ({user,update}) => {
       });
       return;
     }
-    if(userInfo.userPassword!=userPasswordConfirm){
+    if(userInfo.userPassword=='' || userPasswordConfirm =='' || userInfo.userPassword!=userPasswordConfirm || userInfo.userPassword.length<6 || userInfo.userPassword.length>15){
       Swal.fire({
         icon: 'error',
-        text: '비밀번호가 일치하지 않습니다.',
+        text: '비밀번호가 형식에 맞지 않거나, 일치하지 않습니다.',
         showConfirmButton: false,
         timer: 2000
       });
@@ -234,7 +257,7 @@ const UpdateForm = ({user,update}) => {
       userInfo,
       (res)=>{
         console.log(res);
-        if(res.data.status==="success"){
+        if(res.data.data==="수정 성공"){
           Swal.fire({
             icon: 'success',
             text: '회원 정보가 수정되었습니다.',
@@ -283,6 +306,7 @@ const UpdateForm = ({user,update}) => {
                 '',
                 'success'
               );
+              history.push('/login');
             } else{
               Swal.fire(
                 '탈퇴에 실패했습니다.',
@@ -373,7 +397,7 @@ const UpdateForm = ({user,update}) => {
                 인증번호 발송
               </button>
             </div>
-            {
+            {(!isCertified && isClickedCertify) &&
               <div style={{marginTop:'0.5em'}}>
                 <input ref={certifyNumRef} type="text" className={styles.input} name="certifyNum" value={certifyNum} onChange={handleChange}/>
                 <button className={styles.button} onClick={onClickCertify}>
@@ -400,7 +424,7 @@ const UpdateForm = ({user,update}) => {
         </div>
         <ul className={styles.notice_list}>
           <li className={styles.notice}>
-            영문자, 숫자, 특수만자 조합하여 8~12 자리여야 합니다.
+            영문자, 숫자, 특수문자가 조합된 6~15 자리여야 합니다.
           </li>
           <li className={styles.notice}>
             아이디와 4자리 이상 동일하거나, 4자리 이상 반복되는 문자와 숫자는 사용이 불가합니다.

@@ -96,7 +96,7 @@ const SignUp2 = () => {
     }
   };
   
- 
+
   //백에서 인증번호 비교
   const certificate = () => {
     if(certificateNumColor === "#FD6C1D"){
@@ -169,7 +169,7 @@ const SignUp2 = () => {
                   type="text"
                   name="userAge"
                   placeholder="나이를 입력하세요 예)26"
-                  maxlength="2"
+                  maxLength="2"
                   value={userAge}
                   onChange={onChangeUserAge}
                 />
@@ -190,7 +190,7 @@ const SignUp2 = () => {
                   placeholder="ex)010-7123-1815"
                   value={userPhone}
                   onChange={onChangeUserPhone}
-                  maxlength="13"
+                  maxLength="13"
                 />
                 <input
                   className={styles.input_btn_select}
@@ -208,7 +208,7 @@ const SignUp2 = () => {
                   placeholder="발송된 인증번호를 입력해주세요 예)1234"
                   value={certificateNumber}
                   onChange={onChangecertificateNumber}
-                  maxlength="6"
+                  maxLength="6"
                 />
                 <input
                   className={styles.input_btn}
@@ -219,7 +219,7 @@ const SignUp2 = () => {
                 />
               </li>
               <li className={styles.form_input}>
-                <p class={styles.input_ttl}>
+                <p className={styles.input_ttl}>
                   성별<span>*</span>
                 </p>
                 <div className={styles.radio_items}>

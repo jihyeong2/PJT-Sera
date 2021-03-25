@@ -1,17 +1,17 @@
 import React from 'react';
 import styles from './SkinInfo.module.css';
+import {connect} from 'react-redux';
 
-
-const SkinInfo = (props) => {
+const SkinInfo = ({user}) => {
   return (
     <div className={styles.container}>
       <section className={styles.info_box}>
         <div className={styles.info_left}>
           <div className={styles.username}>
-            <span className={styles.name}>다우니</span>
+            <span className={styles.name}>{user.userNickname}</span>
             님의 피부타입
           </div>
-          <div className={styles.user_info}>여성 | 26세</div>
+          <div className={styles.user_info}>{user.userGender} | {user.userAge}</div>
           <ul className={styles.skin_box}>
             <div className={styles.skin_info1}>
               <span className={styles.skin_text}>건조</span>
@@ -39,5 +39,14 @@ const SkinInfo = (props) => {
     </div>
   );
 }
+const mapStateToProps = (state) => ({
+  user: state.user.user,
+})
 
-export default SkinInfo;
+const mapDispatchToProps = (dispatch) => ({
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SkinInfo);

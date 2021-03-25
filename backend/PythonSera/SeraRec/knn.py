@@ -64,7 +64,6 @@ def makeitemDataframe():
     for c in caution:
         specialElement.add(c)
     specialElement = sorted(list(specialElement))
-
     item_vector = []
     item_idx = []
     for item in items:
@@ -95,7 +94,6 @@ def makeReviewVector():
         age = review["age"]//10
         gender = review["gender"]
         score = review["score"]
-        key = tuple([item, age, gender])
         age_gender_score.setdefault(tuple([item, age, gender]), [])
         age_gender_score[tuple([item, age, gender])].append(score)
 
@@ -107,13 +105,30 @@ def makeReviewVector():
         
         review_vec = np.append(review_vec, vector.reshape(1, -1), axis=0)
         items.append(item)
-    index = [i for i in range(review_vec.shape[0])]
-    columns = [i for i in range(item_df.shape[1]+3)]
-    review_df = pd.DataFrame(review_vec, index=index, columns = columns)
-    review_df.to_csv("../crawling/data/GP/review_df.csv")
-    return items
+    np.savetxt('../crawling/data/GP/review_np.txt',review_vec)
+
+def getExistItemReview():
+    path = '../crawling/data/GP/exist_item_review.txt'
+    item_ids = []
+    with open(path, 'r', encoding='utf-8') as f:
+        item_ids = f.read().split(', ')
+    item_ids = set(item_ids)
+    return item_ids
+
+def getReviewDataFrame():
+    path = '../crawling/data/GP/review_df.csv'
+    review_df = pd.read_csv(path)
+    return review_df
+
+def getReviewNumPy():
+    path = '../crawling/data/GP/review_np.txt'
+    review_np = np.loadtxt(path)
+    return review_np
 
 if __name__ == '__main__':
-    # makeitemDataframe()
-    items = makeReviewVector()
-    print(items)
+    makeitemDataframe()
+    # makeReviewVector()
+    # test = getReviewNumPy()
+    # print(test[0:])
+    reviews = loadJsonReview()
+    print(len(reviews))

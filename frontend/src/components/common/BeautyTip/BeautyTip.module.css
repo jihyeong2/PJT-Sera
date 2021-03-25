@@ -1,0 +1,12 @@
+@value font-size-14 from '../../../common/style.css';
+.image {
+  width: font-size-14;
+  margin-right: 0.5em;
+}
+.title {
+  font-size: font-size-14;
+  font-weight: 700;
+}
+.content {
+  font-size: font-size-14;
+}

@@ -1,0 +1,47 @@
+@value color-grey-1, color-orange-3,color-orange-1, color-skin-5, color-white from '../../../common/style.css';
+@value font-size-40, font-size-22, font-size-20, font-size-14 from '../../../common/style.css';
+.container {
+  background-color: color-skin-5;
+  padding: 2em 2em 4em 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.box {
+  background-color: color-white;
+  padding: 2em;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.header {
+  font-size: font-size-22;
+  text-align: center;
+  margin-bottom: 1em;
+}
+.highlight {
+  color: color-orange-1;
+  font-weight: 700;
+}
+.title {
+  font-size: font-size-40;
+  color: color-orange-3;
+  font-weight: 700;
+}
+.info {
+  font-size: font-size-14;
+  color: color-grey-1;
+  /* text-align: center; */
+}
+.box2 {
+  padding: 2em 0;
+  width: 100%;
+}
+.tip_title {
+  border-left: 3px solid color-orange-1;
+  padding-left: 0.5em;
+  font-size: font-size-20;
+  color: color-grey-1;
+  margin-bottom: 1em;
+}

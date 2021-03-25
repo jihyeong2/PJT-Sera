@@ -56,6 +56,7 @@ public class UserService {
             findUser.get().setUserPhone(request.getUserPhone());
             findUser.get().setUserAge(request.getUserAge());
             findUser.get().setUserNickname(request.getUserNickname());
+            findUser.get().setUserGender(request.getUserGender());
         }
         else{
             throw new IllegalStateException("잘못된 유저 아이디입니다.");

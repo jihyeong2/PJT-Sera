@@ -37,11 +37,7 @@ const UpdateForm = ({user,update}) => {
     switch (e.target.name){
       case 'userNickname':
         value=nickNameRef.current.value;
-        if(value!='' && 4<=value.length && !RegExp.test(value)){
-          setIsCheckedName(trueState);
-        } else{
-          setIsCheckedName(falseState);
-        }
+        setIsCheckedName(falseState);
         break;
       case 'userPassword':
         value=pwRef.current.value;
@@ -109,6 +105,16 @@ const UpdateForm = ({user,update}) => {
     console.log(e.target.innerText)
   };
   const onClickCheck = () => {
+    if(userInfo.userNickname=='' && userInfo.userNickname.length>6 && !RegExp.test(userInfo.userNickname)){
+      Swal.fire({
+        icon: 'error',
+        text: '닉네임이 형식이 올바르지 않습니다.',
+        showConfirmButton: false,
+        timer: 2000
+      });
+      setIsCheckedName(falseState);
+      return
+    }
     checkName(
       userInfo.userNickname,
       (res)=>{
@@ -116,7 +122,7 @@ const UpdateForm = ({user,update}) => {
         if(userInfo.userNickname!=user.userNickname && res.data.data==="중복입니다"){
           Swal.fire({
             icon: 'error',
-            text: '이미 존재하는 이름입니다.',
+            text: '이미 존재하는 닉네임입니다.',
             showConfirmButton: false,
             timer: 2000
           })
@@ -124,7 +130,7 @@ const UpdateForm = ({user,update}) => {
         }else{
           Swal.fire({
             icon: 'success',
-            text: '사용 가능한 이름입니다.',
+            text: '사용 가능한 닉네임입니다.',
             showConfirmButton: false,
             timer: 2000
           });
@@ -145,10 +151,10 @@ const UpdateForm = ({user,update}) => {
         showConfirmButton: false,
         timer: 2000
       })
-    } else if(!(userInfo.userPhone !== "" && userInfo.userPhone.length === 13 && userInfo.userPhone[3]==='-' && userInfo.userPhone[8]==='-') || upperCase.test(userInfo.userPhone) || lowerCase.test(userInfo.userPhone) || regKorean.test(userInfo.userPhone) || RegExp.test(userInfo.userPhone)){
+    } else if(userInfo.userPhone === "" || upperCase.test(userInfo.userPhone) || lowerCase.test(userInfo.userPhone) || regKorean.test(userInfo.userPhone) || RegExp.test(userInfo.userPhone)){
       Swal.fire({
         icon: 'error',
-        text: '휴대폰 번호가 형식에 맞지 않습니다.',
+        text: '휴대폰 번호 형식이 올바르지 않습니다.',
         showConfirmButton: false,
         timer: 2000
       })
@@ -226,10 +232,10 @@ const UpdateForm = ({user,update}) => {
     );
   };
   const onSubmit = () => {
-    if(!isCheckedName || userInfo.userNickname==''){
+    if(!isCheckedName || userInfo.userNickname===''){
       Swal.fire({
         icon: 'error',
-        text: '닉네임이 형식에 맞지 않거나, 중복확인이 되지 않았습니다.',
+        text: '닉네임이 형식이 올바르지 않거나, 중복확인이 되지 않았습니다.',
         showConfirmButton: false,
         timer: 2000
       });
@@ -247,7 +253,7 @@ const UpdateForm = ({user,update}) => {
     if(userInfo.userPassword=='' || userPasswordConfirm =='' || userInfo.userPassword!=userPasswordConfirm || userInfo.userPassword.length<6 || userInfo.userPassword.length>15){
       Swal.fire({
         icon: 'error',
-        text: '비밀번호가 형식에 맞지 않거나, 일치하지 않습니다.',
+        text: '비밀번호가 형식이 올바르지 않거나, 일치하지 않습니다.',
         showConfirmButton: false,
         timer: 2000
       });
@@ -413,7 +419,6 @@ const UpdateForm = ({user,update}) => {
           </div>
           <div className={styles.value}>
             <button id="male" className={styles.gender_button} onClick={onClickGender}>남</button>
-            {/* <button className={styles.gender_button, styles.gender_button_active}>여성</button> */}
             <button id="female" className={styles.gender_button} onClick={onClickGender}>여</button>
           </div>
         </div>

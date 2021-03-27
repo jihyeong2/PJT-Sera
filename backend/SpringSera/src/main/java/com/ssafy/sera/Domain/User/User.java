@@ -31,7 +31,7 @@ public class User {
 
     private String userGender;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "skin_id")
     private Skin skinId;
 

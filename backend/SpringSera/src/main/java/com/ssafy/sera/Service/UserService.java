@@ -5,6 +5,7 @@ import com.ssafy.sera.Controller.Request.UserRequest;
 import com.ssafy.sera.Domain.Skin.Skin;
 import com.ssafy.sera.Domain.User.User;
 import com.ssafy.sera.Repository.UserRepository;
+import com.ssafy.sera.Util.Validator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final Validator validator;
     @Transactional
     public User save(User user){
         return userRepository.save(user);
@@ -53,7 +55,9 @@ public class UserService {
         Optional<User> findUser = Optional.ofNullable(userRepository.findByUserLoginId(userLoginId));
         if(findUser.isPresent()) {
             findUser.get().setUserPassword(request.getUserPassword());
-            findUser.get().setUserPhone(request.getUserPhone());
+            if(request.getUserPhone() != null) {
+                findUser.get().setUserPhone(validator.phoneValidator(request.getUserPhone()));
+            }
             findUser.get().setUserAge(request.getUserAge());
             findUser.get().setUserNickname(request.getUserNickname());
             findUser.get().setUserGender(request.getUserGender());

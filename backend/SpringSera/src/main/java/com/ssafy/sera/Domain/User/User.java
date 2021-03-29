@@ -37,6 +37,7 @@ public class User {
 
     private String personalColor;
 
+    @Column(columnDefinition = "TEXT")
     private String userImg;
 
     public static User createUser(UserRequest userRequest, Skin skin){

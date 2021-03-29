@@ -69,7 +69,7 @@ section {
   max-width: 100%;
   margin: 0 auto;
   /* padding: 140px 0; */
-  color: #fff;
+  /* color: #fff; */
 }
 .right .sec_container {
   text-align: right;
@@ -96,7 +96,7 @@ h2 {
   margin-bottom: 40px;
 }
 
-@media only screen and (min-width: 1025px) {
+@media only screen and (min-width: 200px) {
   .fullscreen {
     height: 100vh;
     overflow: hidden;
@@ -129,21 +129,21 @@ h2 {
     transform: translateY(-50%);
     padding: 20px 0;
     /* border-radius: 35px; */
-    -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.07),
-      0 7px 14px rgba(0, 0, 0, 0.14);
+    /* -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.07),
+      0 7px 14px rgba(0, 0, 0, 0.14); */
     /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.07), 0 7px 14px rgba(0, 0, 0, 0.14); */
   }
   .sec_button {
     position: relative;
-    width: 40px;
+    width: 20px;
     height: 36px;
     cursor: pointer;
   }
   .sec_button::after {
     content: "";
     position: absolute;
-    width: 14px;
-    height: 14px;
+    width: 7px;
+    height: 7px;
     left: 10px;
     top: 8px;
     border: 3px solid #404040;

@@ -8,7 +8,6 @@ import Navbar from '../../components/common/Navbar/Navbar';
 const Home = (props) => {
   const [isWhite, setIsWhite] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
-  console.log(isClicked,isWhite);
   useEffect(()=>{
     const sections = document.querySelectorAll('section');
     const content = document.querySelector('.main__content');
@@ -51,6 +50,15 @@ const Home = (props) => {
       // content.style.transform = 'translateY(-'+ count*100 +'vh)';
       document.querySelector('.sec_button.active').classList.remove('active');
       buttons[count].classList.add('active');
+      document.querySelector('.sec_container.show') && document.querySelector('.sec_container.show').classList.remove('show');
+      if(count===1){
+        document.querySelector('.first').classList.add('show');
+        console.log(document.querySelector('.first'));
+      } else if(count===2){
+        document.querySelector('.second').classList.add('show');
+      } else{
+        document.querySelector('.third').classList.add('show');
+      }
       if(isClicked){
         if(count===0) setIsWhite(true);
         else setIsWhite(false);
@@ -74,23 +82,23 @@ const Home = (props) => {
         <Navbar white={isWhite}/>
       </div>
       <div className="main__content">
-        <section data-title="Home" className="fbx" style={{backgroundColor:'#FFFFFF',}}>
+        <section className="fbx" style={{backgroundColor:'#FFFFFF',}}>
           <div className="sec_container">
             <Home1 onClickImage={onClickImage}/>
           </div>
         </section>
-        <section data-title="Services" className="fbx" style={{backgroundColor:'#FFFFFF'}}>
-          <div className="sec_container">
+        <section className="fbx" style={{backgroundColor:'#FFFFFF'}}>
+          <div className="first sec_container no_show_left">
             <Home2/>
           </div>
         </section>
-        <section data-title="Contact us" className="fbx" style={{backgroundColor:'#FFFFFF'}}>
-          <div className="sec_container">
+        <section className="fbx" style={{backgroundColor:'#F7F7F7'}}>
+          <div className="second sec_container no_show_right">
             <Home3/>
           </div>
         </section>
-        <section data-title="Contact us" className="fbx" style={{backgroundColor:'#FFFFFF'}}>
-          <div className="sec_container">
+        <section className="fbx" style={{backgroundColor:'#FFF4EE'}}>
+          <div className="third sec_container no_show_left">
             <Home4/>
           </div>
         </section>

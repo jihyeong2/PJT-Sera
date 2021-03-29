@@ -66,6 +66,7 @@ section {
 
 .sec_container {
   width: 100vw;
+  transition: all 500ms ease-in;
   max-width: 100%;
   margin: 0 auto;
   /* padding: 140px 0; */
@@ -95,7 +96,20 @@ h2 {
   line-height: 1.7;
   margin-bottom: 40px;
 }
-
+.no_show_left {
+  opacity: 0;
+  transform: translateX(-150px);
+  transition: all 1.2s ease-in-out;
+}
+.no_show_right {
+  opacity: 0;
+  transform: translateX(150px);
+  transition: all 1.2s ease-in-out;
+}
+.show {
+  opacity: 1;
+  transform: translateX(0);
+}
 @media only screen and (min-width: 200px) {
   .fullscreen {
     height: 100vh;

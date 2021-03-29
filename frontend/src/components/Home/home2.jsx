@@ -1,5 +1,6 @@
 import { Grid } from '@material-ui/core';
 import React, {useState} from 'react';
+import Elements from '../common/SkinHexagon/Elements';
 import SkinHexagon from '../common/SkinHexagon/SkinHexagon';
 import SkinHexagonInfo from '../common/SkinHexagon/SkinHexagonInfo';
 import styles from './home2.module.css';
@@ -31,10 +32,9 @@ const Home2 = (props) => {
         </Grid>
         <Grid item xs={4}>
           <SkinHexagonInfo currTag={currTag}/>
+          <Elements currTag={currTag}/>
         </Grid>
       </Grid>
-
-      
     </div>
   );
 }

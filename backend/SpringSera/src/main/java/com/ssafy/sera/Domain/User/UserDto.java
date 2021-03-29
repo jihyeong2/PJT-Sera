@@ -19,6 +19,7 @@ public class UserDto {
     private String userPhone;
     private String userGender;
     private SkinDto skinDto;
+    private String userImg;
     public UserDto(User user){
         this.userId = user.getUserId();
         this.userLoginId = user.getUserLoginId();
@@ -31,6 +32,9 @@ public class UserDto {
             skinDto = new SkinDto();
             this.skinDto.setSkinId(user.getSkinId().getSkinId());
             this.skinDto.setSkinType(user.getSkinId().getSkinType());
+        }
+        if(user.getUserImg()!= null){
+            this.userImg = user.getUserImg();
         }
     }
 

@@ -17,7 +17,7 @@ const initialState = {
     eyes: '회색, 검은색',
     accessory: '실버, 진주, 실크, 큐빅',
     fit_color: '파랑과 흰색이 섞인 밝고 부드러운 색',
-    palette:['#F8E8F2','#F6D1E2','#EFADC9','#E27594','#E24F6B','#E24F6B','#F4EBDC','#F6F1AF','#BEDBBD','#57B9A2','#1F9875','#5C7476','#D8EEFB','#1F8C64','#90B1DA','#C4B6D9','#7F77AA','#8D97A1'],
+    palette:['#F8E8F2','#F6D1E2','#EFADC9','#E27594','#E24F6B','#B88D89','#F4EBDC','#F6F1AF','#BEDBBD','#57B9A2','#1F9875','#5C7476','#D8EEFB','#1F8C64','#90B1DA','#C4B6D9','#7F77AA','#8D97A1'],
   },
   '가을웜':{
     english:'FALL WARM',

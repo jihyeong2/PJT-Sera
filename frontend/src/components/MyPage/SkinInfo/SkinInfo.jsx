@@ -2,7 +2,9 @@ import React from 'react';
 import styles from './SkinInfo.module.css';
 import {connect} from 'react-redux';
 
-const SkinInfo = ({user}) => {
+const SkinInfo = ({user,skin,color}) => {
+  console.log(skin);
+  console.log(color);
   return (
     <div className={styles.container}>
       <section className={styles.info_box}>
@@ -41,6 +43,8 @@ const SkinInfo = ({user}) => {
 }
 const mapStateToProps = (state) => ({
   user: state.user.user,
+  skin: state.skin,
+  color: state.color,
 })
 
 const mapDispatchToProps = (dispatch) => ({

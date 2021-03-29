@@ -1,100 +1,4 @@
-// // import React from 'react';
-// // import styles from './Home.module.css';
-// // import Logo from '../../components/common/Logo/Logo';
-// // import Navbar from '../../components/common/Navbar/Navbar';
-// // const Home = (props) => {
-// //   return(
-// //     <div className={styles.container}>
-// //       <Navbar/>
-// //       <Logo type={1}/>
-// //     </div>
-// //   );
-// // };
-// // export default Home;
-// // import React from "react";
-// // import ScrollableContainer from "react-full-page-scroll";
-
-// // const PageComponent = ({children}) => {
-// //   return (<div>{children}</div>)
-// // }
-
-// // function Home() {
-// //   const ZoomInScrollOut = batch(StickyIn(), FadeIn(), ZoomIn());
-// //   const FadeUp = batch(Fade(), Move(), Sticky());
-// //   return (
-// //     <ScrollableContainer animationTime={1000}>
-// //       <PageComponent>
-// //         Page One
-// //       </PageComponent>
-// //       <PageComponent>Page Two</PageComponent>
-// //       <PageComponent>Page Three</PageComponent>
-// //     </ScrollableContainer>
-// //   );
-// // }
-
-// // export default Home;
-// import React from "react";
-
-// import { Animator, ScrollContainer, ScrollPage, batch, Fade, FadeIn, Move, MoveIn, MoveOut, Sticky, StickyIn, ZoomIn } from "react-scroll-motion";
-// import * as Scroll from 'react-scroll';
-// import { Link, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
-// import Home1 from '../../components/Home/home2';
-// import Home2 from '../../components/Home/home2';
-// import Home3 from '../../components/Home/home3';
-// import Home4 from '../../components/Home/home4';
-// function Home() {
-//   // const ZoomInScrollOut = batch(StickyIn(), FadeIn(), ZoomIn());
-//   // const FadeUp = batch(Fade(), Move(), Sticky());
-//   return (
-//     // <ScrollContainer>
-//     //   <ScrollPage page={0}>
-//     //     <Animator animation={batch(Fade(), Sticky(), MoveOut(0, -200))}>
-//     //       <span style={{ fontSize: "3em" }}>Home 😀</span>
-//     //     </Animator>
-//     //   </ScrollPage>
-//     //   <ScrollPage page={1}>
-//     //     <Animator animation={ZoomInScrollOut}>
-//     //       <span style={{ fontSize: "3em" }}>Home1 ✨</span>
-//     //     </Animator>
-//     //   </ScrollPage>
-//     //   <ScrollPage page={2}>
-//     //     <Animator animation={FadeUp}>
-//     //       <span style={{ fontSize: "3em" }}>Home2 ⛅️</span>
-//     //     </Animator>
-//     //   </ScrollPage>
-//     //   <ScrollPage page={3}>
-//     //     <div >
-//     //       <span style={{ fontSize: "3em" }}>
-//     //         <Animator animation={MoveIn(1000, 0)}>Home3 🙋🏻‍♀️</Animator>
-//     //       </span>
-//     //     </div>
-//     //   </ScrollPage>
-//     //   <ScrollPage page={4}>
-//     //     <Animator animation={batch(Fade(), Sticky())}>
-//     //       <span style={{ fontSize: "3em" }}>Home4</span>
-//     //     </Animator>
-//     //   </ScrollPage>
-//     // </ScrollContainer>
-//     <div>
-//       <Element name="home1" className="element">
-//         <Home1/>
-//       </Element>
-//       <Element name="home1" className="element">
-//         <Home2/>
-//       </Element>
-//       <Element name="home1" className="element">
-//         <Home3/>
-//       </Element>
-//       <Element name="home1" className="element">
-//         <Home4/>
-//       </Element>
-//     </div>
-//   );
-// }
-
-
-// export default Home;
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './test.css';
 import Home1 from '../../components/Home/home1';
 import Home2 from '../../components/Home/home2';
@@ -102,8 +6,10 @@ import Home3 from '../../components/Home/home3';
 import Home4 from '../../components/Home/home4';
 import Navbar from '../../components/common/Navbar/Navbar';
 const Home = (props) => {
+  const [isWhite, setIsWhite] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
+  console.log(isClicked,isWhite);
   useEffect(()=>{
-    // const fullscreen = document.querySelector('.fullscreen');
     const sections = document.querySelectorAll('section');
     const content = document.querySelector('.main__content');
     let spin_value = 0;
@@ -118,7 +24,7 @@ const Home = (props) => {
         scroll_content(spin_value);
       });
     }
-    window.addEventListener('mousewheel', function(e) {
+    function wheelEvent(e) {
       if ( can_scroll ) {
         can_scroll = false;
         if ( e.deltaY > 0 ) {
@@ -133,7 +39,8 @@ const Home = (props) => {
       setTimeout(function() {
         can_scroll = true;
       }, 560);
-    });
+    }
+    window.addEventListener('mousewheel', wheelEvent);
     function scroll_content( count ) {
       content.setAttribute('style', '\
         -webkit-transform: translateY(-'+ count*100 +'vh);\
@@ -144,34 +51,51 @@ const Home = (props) => {
       // content.style.transform = 'translateY(-'+ count*100 +'vh)';
       document.querySelector('.sec_button.active').classList.remove('active');
       buttons[count].classList.add('active');
+      if(isClicked){
+        if(count===0) setIsWhite(true);
+        else setIsWhite(false);
+      } else{
+        setIsWhite(false);
+      }
     }
-  },[])
+    return () => {
+      window.removeEventListener('mousewheel',wheelEvent);
+    }
+  },[isClicked]);
+  const onClickImage = () => {
+    console.log(document.querySelector('.section_navigation').style);
+    document.querySelector('.section_navigation').style.cssText='opacity: 1;';
+    setIsClicked(true);
+    setIsWhite(true);
+  };
   return(
     <div className="fullscreen">
-      <Navbar/>
+      <div style={{width:'80%'}}>
+        <Navbar white={isWhite}/>
+      </div>
       <div className="main__content">
-        <section data-title="Home" className="fbx" style={{backgroundColor:'#000000',}}>
+        <section data-title="Home" className="fbx" style={{backgroundColor:'#FFFFFF',}}>
           <div className="sec_container">
-            <Home1/>
+            <Home1 onClickImage={onClickImage}/>
           </div>
         </section>
-        <section data-title="Services" className="fbx" style={{backgroundColor:'#000000'}}>
+        <section data-title="Services" className="fbx" style={{backgroundColor:'#FFFFFF'}}>
           <div className="sec_container">
             <Home2/>
           </div>
         </section>
-        <section data-title="Contact us" className="fbx" style={{backgroundColor:'#000000'}}>
+        <section data-title="Contact us" className="fbx" style={{backgroundColor:'#FFFFFF'}}>
           <div className="sec_container">
             <Home3/>
           </div>
         </section>
-        <section data-title="Contact us" className="fbx" style={{backgroundColor:'#000000'}}>
+        <section data-title="Contact us" className="fbx" style={{backgroundColor:'#FFFFFF'}}>
           <div className="sec_container">
             <Home4/>
           </div>
         </section>
       </div>
-      <div className="section_navigation">
+      <div className="section_navigation" style={{opacity:0,}}>
         <div className="sec_button"></div>
         <div className="sec_button"></div>
         <div className="sec_button"></div>

@@ -1,17 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './home1.scss';
+import Logo from '../common/Logo/Logo';
+import mainImg from '../../assets/mainz.png';
 const Home1 = (props) => {
+  const [typeNum,setTypeNum] = useState(1);
+  // console.log(props);
+  const onClick = (e) =>{
+    if(e.target.checked){
+      setTypeNum(3);
+      props.onClickImage();
+    } else{
+      setTypeNum(1);
+    }
+  }
   return (
       <div class="wrapper">
-        <input type="checkbox"/>
+        <Logo type={typeNum} style={{float:'left',}}/>
+        <input type="checkbox" onClick={onClick}/>
         <div class="video">
-          {/* <img src="../../assets/mainz.png" alt="사진"/> */}
-          <img src="https://cdn.pixabay.com/photo/2016/09/06/18/22/visitors-1649815_960_720.jpg" alt="사진"/>
-          {/* <video src="https://www.robmillsarchitects.com/files/land/city/RMA_Web_land_city_1.mp4" loop muted autoplay></video> */}
+          <img src={mainImg} alt="사진"/>
         </div>
-        <div class="text">
-          <span data-text="Watch the video"></span>
-        </div>
+        {/* <div class="text">
+          <span data-text="Click Me fdsajklfdjskalfjdslkk"></span>
+        </div> */}
       </div>
   );
 }

@@ -14,7 +14,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 const SearchModal = (props) => {
   const [open, setOpen] = React.useState(false);
-
+  const isWhite = props.white;
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -26,7 +26,7 @@ const SearchModal = (props) => {
   return (
     <div id="t">
       <Button color="primary" onClick={handleClickOpen} style={{height:'100%'}}>
-        <FontAwesomeIcon icon="search" size="lg" color="#666666"/>
+        <FontAwesomeIcon icon="search" size="lg" color={isWhite ? "#FFFFFF" : "#666666"}/>
       </Button>
       <Dialog
       style={{height:'50%',}}

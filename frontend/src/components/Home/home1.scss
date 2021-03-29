@@ -1,16 +1,17 @@
 .wrapper {
   --color: #1f242d;
   --color-invert: #ffffff;
-  --clip-path: circle(70px at left);
-  --clip-path-hover: circle(140px at left);
-  --clip-path-clicked: rect(100vh);
-  --duration: 0.4s;
+  --clip-path: circle(260px at -200px);
+  --clip-path-hover: circle(300px at -200px);
+  --clip-path-clicked: rect(100%);
+  --duration: 1s;
   --timing-function: ease;
   position: relative;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   width: 100%;
+  background-color: #ffdbc7;
   .video {
     height: 100vh;
     overflow: hidden;
@@ -27,6 +28,8 @@
       left: 50%;
       min-width: 100%;
       min-height: 100%;
+      max-width: 100vw;
+      max-height: 100vh;
       width: auto;
       height: auto;
       transform: translate(-50%, -50%);
@@ -78,11 +81,11 @@
     }
   }
   input {
-    width: 220px;
-    height: 40px;
+    width: 50%;
+    height: 500px;
     margin: auto;
     position: absolute;
-    left: 0;
+    // left: 0;
     right: 0;
     border-radius: 40px;
     z-index: 2;
@@ -111,8 +114,8 @@
       }
     }
     &:checked {
-      width: 100%;
-      height: 100%;
+      width: 0;
+      height: 0;
       border-radius: 0;
       ~ .video {
         clip-path: var(--clip-path-clicked);

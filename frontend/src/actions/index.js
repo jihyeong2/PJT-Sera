@@ -11,3 +11,11 @@ export const update = (user) => ({
   type: 'UPDATE',
   user,
 })
+
+export const getSkinType = () => ({
+  type: 'GET_SKIN_TYPE',
+})
+
+export const getPersonalColor = () => ({
+  type: 'GET_PERSONAL_COLOR',
+})

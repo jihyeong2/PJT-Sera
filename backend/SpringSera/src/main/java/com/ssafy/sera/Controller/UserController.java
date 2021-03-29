@@ -150,7 +150,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "사용자 피부 설정", notes = "반환되는 데이터는 성공 / 에러메시지", response =BaseResponse.class)
-    @PostMapping("/skin/{userLoginId}/{skinType}")
+    @PutMapping("/skin/{userLoginId}/{skinType}")
     public BaseResponse updateUserSkin(@ApiParam(value = "사용자 로그인 정보") @PathVariable String userLoginId,
                                        @ApiParam(value = "Skin 정보") @PathVariable String skinType){
         BaseResponse response = null;
@@ -166,13 +166,25 @@ public class UserController {
         return response;
     }
     @ApiOperation(value = "사용자 퍼스널컬러 설정", notes = "반환되는 데이터는 성공 / 에러메시지", response =BaseResponse.class)
-    @PostMapping("/personalColor/{userLoginId}/{personalColor}")
+    @PutMapping("/personalColor/{userLoginId}/{personalColor}")
     public BaseResponse updatePersonalColor(
             @ApiParam(value = "사용자 로그인 정보") @PathVariable String userLoginId,
             @ApiParam(value = "퍼스널컬러") @PathVariable String personalColor){
         BaseResponse response = null;
         try{
             userService.updatePersonalColor(userLoginId, personalColor);
+            response = new BaseResponse("success", "성공");
+        }catch(Exception e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+    @ApiOperation(value = "사용자 이미지 설정", notes = "개발 테스트용", response =BaseResponse.class)
+    @PutMapping("/userImg/{userLoginId}/{userImg}")
+    public BaseResponse updateUserImg(@PathVariable String userLoginId,@PathVariable String userImg){
+        BaseResponse response = null;
+        try{
+            userService.updateUserImg(userLoginId, userImg);
             response = new BaseResponse("success", "성공");
         }catch(Exception e){
             response = new BaseResponse("fail", e.getMessage());

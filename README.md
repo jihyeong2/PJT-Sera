@@ -42,11 +42,11 @@ gantt
     발표 준비 : done,t9, after t8, 1d
     Sub2 발표 : done, t10, 2021-03-19, 1d
     추가 UI/UX(메인,피부진단,퍼스널컬러): done, 2021-03-19, 5d
-    테스트 시나리오 작성 : active, t14, 2021-03-25, 1d
-    와이어프레임 산출물 제작 :  active, t15, 2021-03-25, 1d
-    SUB3 중간 발표 PPT 제작 : active, t16, 2021-03-24, 2d
-    SUB3 중간 발표 : active, t17, 2021-03-26, 1d
-
+    테스트 시나리오 작성 : done, t14, 2021-03-25, 1d
+    와이어프레임 산출물 제작 :  crit, t15, 2021-03-25, 1d
+    SUB3 중간 발표 PPT 제작 : done, t16, 2021-03-24, 2d
+    SUB3 중간 발표 : done, t17, 2021-03-26, 1d
+	SUB3 최종 발표 : active, 2021-04-09, 1d
 
     section Frontend
    	회원가입/로그인/비밀번호찾기 페이지 :  done, t1, 2021-03-14, 2d
@@ -58,10 +58,16 @@ gantt
     Redux : done, t6, 2021-03-17, 1d
   	검색결과 페이지 : done, t11, 2021-03-18, 1d
   	찜 목록 페이지 : done, t12, 2021-03-18, 1d
-  	메인화면: active, t13, 2021-03-25, 1d
-	마이페이지 피부진단 UI : crit, t17, 2021-03-24, 1d
-	마이페이지 퍼스널컬러 UI : crit, t18, 2021-03-24, 1d
-	로그인 리덕스 연결 : crit t19, 2021-03-24, 1d
+  	메인화면: crit, t13, 2021-03-25, 4d
+	마이페이지 피부진단 UI : done, t17, 2021-03-24, 1d
+	마이페이지 퍼스널컬러 UI : done, t18, 2021-03-24, 1d
+	피부진단 & 퍼스널 컬러 리덕스 : done, 2021-03-25, 6h
+	SNS 로그인 UI & api 연동 : done, 2021-03-25, 1d
+	로그인 리덕스 연결 : done, t19, 2021-03-24, 1d
+	피부 진단 수정 모달 : active, after t13, 1d
+	퍼스널 컬러 수정 모달 : active, after t13, 1d
+	피부 진단 페이지 (소개, 설문, skip, 도움말, 결과) : 
+	퍼스널 컬러 페이지 (진단, 결과) : 
     
     section Backend
   	글로우픽 크롤링 : done, b_t1, 2021-03-15, 6d
@@ -71,13 +77,15 @@ gantt
     비밀번호 SMS 인증 : done, b_t6, 2021-03-16, 1d
     회원정보 CRUD : done, b_t7, 2021-03-15, 1d
     Swagger : done, b_t8, after b_t6, 1d
-    CF 추천 알고리즘 : crit, b_t3, 2021-03-14, 11d
-    상품 리스트 & 디테일 조회 api (Spring): crit, b_t9, 2021-03-19,6d
-    리뷰 CRUD api (Spring): active, b_t10, 2021-03-24, 2d
-	상품 검색 api(Spring):  crit,b_t12, 2021-03-19, 8d
+    CF 추천 알고리즘 : done, b_t3, 2021-03-14, 11d
     상품 리스트 & 디테일 조회 api (Django): active, b_t11, after b_t3, 1d
     상품 검색 api (Django): active, b_t13, after b_t11, 1d
+    리뷰 CRUD api (Spring) : active, 2021-03-29, 3d
+    퍼스널 컬러 api (Django) : active, 2021-03-29, 3d
+    피부 진단 결과 반영 (Spring) : done, 2021-03-26,1d
     AWS 배포: done, b_t13, 2021-03-23, 2d
+    SNS 로그인 api : done, 2021-03-24, 1d
+    유저 DB 이미지 컬럼 추가 : active, 2021-03-29,2d
 
 ```
 

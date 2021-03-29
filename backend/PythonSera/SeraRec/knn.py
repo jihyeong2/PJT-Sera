@@ -2,6 +2,8 @@ from database import *
 from cbf import *
 import tqdm
 import pandas as pd
+from sklearn.neighbors import NearestNeighbors
+
 def selectSpecialElement():
     connect, curs = connectMySQL()
     query = """SELECT distinct element_korean_name FROM helpful INNER JOIN element USING(element_id)"""
@@ -53,7 +55,35 @@ def selectElementByItem():
         item_element = json.load(f)
     return item_element
 
-def makeitemDataframe():
+def makeSkinVector():
+    helpful, caution = selectSpecialElement()
+    specialElement = set()
+    for h in helpful:
+        specialElement.add(h)
+    for c in caution:
+        specialElement.add(c)
+    specialElement = sorted(list(specialElement))
+    skin_vector = []
+    connect, curs = connectMySQL()
+    for i in tqdm.tqdm(range(1,17)):
+        query = """SELECT element_korean_name FROM helpful INNER JOIN element USING(element_id) WHERE skin_id = %s"""
+        curs.execute(query,(i))
+        helpful_elements = curs.fetchall()
+        query = """SELECT element_korean_name FROM caution INNER JOIN element USING(element_id) WHERE skin_id = %s"""
+        curs.execute(query, (i))
+        caution_elements = curs.fetchall()
+
+        vector = np.zeros(len(specialElement))
+        for e in helpful_elements:
+            vector[specialElement.index(e[0])] = 2
+        for e in caution_elements:
+            vector[specialElement.index(e[0])] = -2
+        skin_vector.append(vector)
+    connect.close()
+    data = np.stack(skin_vector)
+    np.save('../crawling/data/GP/skin_np', data)
+
+def makeitemVector():
     items = selectAllItem()
     helpful, caution = selectSpecialElement()
     item_element = selectElementByItem()
@@ -64,7 +94,6 @@ def makeitemDataframe():
     for c in caution:
         specialElement.add(c)
     specialElement = sorted(list(specialElement))
-
     item_vector = []
     item_idx = []
     for item in items:
@@ -78,15 +107,12 @@ def makeitemDataframe():
         item_vector.append(vector)
         item_idx.append(item_id)
     data = np.stack(item_vector)
-    column = [i for i in range(len(specialElement))]
-    item_df = pd.DataFrame(data, columns=column, index=item_idx)
-    # print(item_df)
-    return item_df
+    np.save('../crawling/data/GP/item_np', data)
 
 def makeReviewVector():
-    item_df = makeitemDataframe()
+    item_df = getItemNumpy()
     reviews = loadJsonReview()
-
+    item_idx = getItemIdx()
     gender_dic = {"남":1, "여":-1}
     age_gender_score = {}
 
@@ -95,25 +121,112 @@ def makeReviewVector():
         age = review["age"]//10
         gender = review["gender"]
         score = review["score"]
-        key = tuple([item, age, gender])
         age_gender_score.setdefault(tuple([item, age, gender]), [])
         age_gender_score[tuple([item, age, gender])].append(score)
 
-    items = []
-    review_vec = np.empty((0, item_df.shape[1]+3), dtype=float)
+    items = {}
+    review_vec = np.empty((0, item_df.shape[1] + 3), dtype=float)
+    idx = 0
     for (item, age, sex), scores in tqdm.tqdm(age_gender_score.items()):
-        vector = item_df.loc[[item],:].values[0]
+        vector = item_df[item_idx[item],:]
         vector = np.append(vector, np.array([age, gender_dic[sex], sum(scores)/len(scores)]))
-        
         review_vec = np.append(review_vec, vector.reshape(1, -1), axis=0)
-        items.append(item)
-    index = [i for i in range(review_vec.shape[0])]
-    columns = [i for i in range(item_df.shape[1]+3)]
-    review_df = pd.DataFrame(review_vec, index=index, columns = columns)
-    review_df.to_csv("../crawling/data/GP/review_df.csv")
-    return items
+        items[idx] = item
+        idx += 1
+    np.save('../crawling/data/GP/review_np', review_vec)
+    with open('../crawling/data/GP/review_item.json', 'w', encoding="utf-8") as of:
+        json.dump(items, of, ensure_ascii=False, indent="\t")
+
+def makeVector():
+    item_np = getItemNumpy()
+    review_np = getReviewNumPy()
+    review_idx = getReviewItemIdx()
+    item_idx = getItemIdx()
+    review_item_idx = set()
+    for review_id, reveiw_item in review_idx.items():
+        review_item_idx.add(reveiw_item)
+    add_item = []
+    for item_id in item_idx.keys():
+        if item_id in review_item_idx: continue
+        add_item.append(item_id)
+    vec = review_np
+    start_idx = len(review_idx)
+    for id in tqdm.tqdm(add_item):
+        vector = item_np[item_idx[id],:]
+        vector = np.append(vector, np.array([3, 0, 5]))
+        vec = np.append(vec, vector.reshape(1, -1), axis=0)
+        review_idx[start_idx] = id
+        start_idx += 1
+    np.save('../crawling/data/GP/vec_np', vec)
+    with open('../crawling/data/GP/vec_idx.json', 'w', encoding="utf-8") as of:
+        json.dump(review_idx, of, ensure_ascii=False, indent="\t")
+
+def getItemNumpy():
+    path = '../crawling/data/GP/item_np.npy'
+    item_np = np.load(path)
+    return item_np
+
+def getReviewNumPy():
+    path = '../crawling/data/GP/review_np.npy'
+    review_np = np.load(path)
+    return review_np
+
+def getVectorNumPy():
+    path = '../crawling/data/GP/vec_np.npy'
+    vec_np = np.load(path)
+    return vec_np
+
+def getReviewItemIdx():
+    path = '../crawling/data/GP/review_item.json'
+    reveiw_item_json = {}
+    with open(path, 'r', encoding='utf-8') as f:
+        reveiw_item_json = json.load(f)
+    return reveiw_item_json
+
+def getItemIdx():
+    items = selectAllItem()
+    item_id_dict = {}
+    for i, item in enumerate(items):
+        item_id_dict[item[0]] = i
+    return item_id_dict
+
+def getVecIdx():
+    path = '../crawling/data/GP/vec_idx.json'
+    vec_idx = {}
+    with open(path, 'r', encoding='utf-8') as f:
+        vec_idx = json.load(f)
+    return vec_idx
+
+def getSkinNumpy():
+    path = '../crawling/data/GP/skin_np.npy'
+    skin_np = np.load(path)
+    return skin_np
+
+def knn(user):
+    vec_np = getVectorNumPy()
+    review_np = getReviewNumPy()
+    skin_np = getSkinNumpy()
+    vec_idx = getVecIdx()
+    input = skin_np[user['skinType']-1,:]
+    age = user['age'] // 10
+    gender = -1 if user['gender'] == '여' else 1
+    input = np.append(input, np.array([age,gender,5]))
+    neigh = NearestNeighbors(n_neighbors=100)
+    neigh.fit(vec_np)
+    rec_items = []
+    rec_dist = []
+    result = neigh.kneighbors([input])
+    for i, index in enumerate(result[1][0]):
+        if vec_idx[str(index)] not in rec_items:
+            rec_items.append(vec_idx[str(index)])
+            rec_dist.append(result[0][0][i])
+    return rec_items
+
+def updateVector():
+    makeSkinVector()
+    makeitemVector()
+    makeReviewVector()
+    makeVector()
 
 if __name__ == '__main__':
-    # makeitemDataframe()
-    items = makeReviewVector()
-    print(items)
+    print(knn({'skinType': 1, 'age': 25, 'gender': '여'}))

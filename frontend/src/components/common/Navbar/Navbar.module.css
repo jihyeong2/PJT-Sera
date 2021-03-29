@@ -1,14 +1,16 @@
-@value font-size-14, color-grey-2 from '../../../common/style.css';
+@value font-size-14, color-grey-2, color-white from '../../../common/style.css';
 .navbar {
   position: relative;
   display: flex;
   justify-content: center;
+  background: transparent;
   float: right;
+  z-index: 100;
 }
-.div::after{
-    clear: both;
-    content: '';
-    display: block;
+.div::after {
+  clear: both;
+  content: "";
+  display: block;
 }
 .user_btn {
   position: absolute;

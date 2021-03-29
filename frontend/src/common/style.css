@@ -13,11 +13,13 @@
 @value color-green-2: #C6DC9B;
 @value color-green-3: #748AA2;
 @value color-blue: #616BAD;
+@value color-blue-2: #F0EFFF;
 @value color-grey-1: #333333;
 @value color-grey-2: #666666;
 @value color-grey-3: #999999;
 @value color-grey-4: #CCCCCC;
 @value color-grey-5: #F8F8F8;
+@value color-grey-6: #F8F8FB;
 @value color-orange-1: #FD6C1D;
 @value color-orange-2: #F29765;
 @value color-orange-3: #FFDBC7;
@@ -27,6 +29,7 @@
 @value color-skin-2: #F1DACC;
 @value color-skin-3: #F7E6DC;
 @value color-skin-4: #FAEEE7;
+@value color-skin-5: #FFEFE7;
 
 /* Font Family 
   ex) 
@@ -38,6 +41,7 @@
 @value font-myeong: 'Nanum Myeongjo', serif;
 
 /* Font Size */
+@value font-size-10: 10px;
 @value font-size-12: 12px;
 @value font-size-14: 14px;
 @value font-size-16: 16px;

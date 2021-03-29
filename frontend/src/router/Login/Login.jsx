@@ -3,10 +3,11 @@ import styles from "./Login.module.css";
 import Grid from "@material-ui/core/Grid";
 import { useHistory } from "react-router-dom";
 import http from "../../http-common.js";
-
+import {login} from '../../actions/index';
+import {connect} from 'react-redux';
 const { Kakao } = window;
 
-const Login = () => {
+const Login = ({login}) => {
   const history = useHistory();
 
   const [userLoginId, setUserLoginId] = useState(""); //아이디
@@ -69,9 +70,10 @@ const Login = () => {
 
           console.log("회원정보: " + JSON.stringify(user));
 
-         
-          console.log(res.data.status);
-          history.push("/");
+        
+          console.log(res);
+          login(res.data.user);
+          history.push("/mypage");
         }else alert(res.data.message);
       })
       .catch((err) => {
@@ -89,25 +91,27 @@ const Login = () => {
           Kakao.API.request({
             url: "/v2/user/me",
             success: function (res) {
-              const kakao_email = res.kakao_account.email;
-              const kakao_age_range = res.kakao_account.age_range;
+              console.log(res);
+              // const kakao_email = res.kakao_account.email;
+              // const kakao_age_range = res.kakao_account.age_range;
   
               const user = {
-                userLoginId: kakao_email.substring(0, kakao_email.indexOf("@")),
-                userNickname: res.kakao_account.profile.nickname,
+                userLoginId: Object.keys(res.kakao_account).includes('email') ? res.kakao_account.email.substring(0, res.kakao_account.email.indexOf("@")) : '',
+                userNickname: Object.keys(res.kakao_account).includes('nickname') ? res.kakao_account.nickname : '',
                 userPassword: "",
-                userAge: kakao_age_range.substring(
+                userAge: Object.keys(res.kakao_account).includes('age_range') ? res.kakao_account.age_range.substring(
                   0,
-                  kakao_age_range.indexOf("~")
-                ),
+                  res.kakao_account.age_range.indexOf("~")
+                ) : '',
                 userPhone: "",
-                userGender: res.kakao_account.gender === "female" ? "여" : "남",
+                userGender: Object.keys(res.kakao_account).includes('gender') ? res.kakao_account.gender === "female" ? "여" : "남" : '남',
               };
   
               // 로그인
               http
                 .post("v1/login/kakao", user)
                 .then((res) => {
+                  console.log(res);
                   if (res.data.status) {
                     const user = {
                       auth_token: res.data.auth_token,
@@ -118,8 +122,9 @@ const Login = () => {
                       userPhone: res.data.user.userPhone,
                       userGender: res.data.user.userGender,
                     };
-
                     console.log("회원정보 " + JSON.stringify(user));
+                    login(res.data.user);
+                    history.push("/mypage");
 
                     //첫 로그인이면 피부타입 검사하러 가기
                   } else alert("카카오 로그인에 실패했습니다.");
@@ -229,5 +234,15 @@ const Login = () => {
     </Grid>
   );
 };
+const mapStateToProps = (state) => ({
+  user: state.user.user,
+})
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  login: user => dispatch(login(user))
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login)

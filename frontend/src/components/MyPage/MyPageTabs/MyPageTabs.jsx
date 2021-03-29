@@ -7,6 +7,8 @@ import Tab from '@material-ui/core/Tab';
 // import Typography from '@material-ui/core/Typography';
 // import Box from '@material-ui/core/Box';
 import UpdateForm from '../UpdateForm/UpdateForm';
+import SkinResult from '../SkinResult/SkinResult';
+import ColorResult from '../ColorResult/ColorResult';
 // import styles from './MyPageTabs.module.css';
 
 function TabPanel(props) {
@@ -93,10 +95,10 @@ export default function NavTabs() {
         <UpdateForm/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Page Two
+        <SkinResult/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Page Three
+        <ColorResult/>
       </TabPanel>
     </div>
   );

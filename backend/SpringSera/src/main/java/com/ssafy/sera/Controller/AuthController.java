@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 @Api
@@ -25,14 +27,13 @@ import java.util.Random;
 public class AuthController {
     private final AuthService authService;
     private final Validator validator;
-    private static SMSResponse smsResponse;
-    private static UserService userService;
+    private final UserService userService;
+    private static List<SMSResponse> smsResponses = new ArrayList<>();
 
     @ApiOperation(value = "인증번호 요청", notes = "마이페이지 / 회원가입 SMS 요청",response = BaseResponse.class)
     @PostMapping
     public BaseResponse postAuthNumber
             (@ApiParam(value = "휴대폰 번호") @RequestParam(required = false) String phoneNumber){
-
         BaseResponse response = null;
         try{
             Random random = new Random();
@@ -40,9 +41,12 @@ public class AuthController {
             for(int i= 0 ; i < 6; i++){
                 secret += Integer.toString(random.nextInt(10));
             }
-            authService.sendSMS(validator.phoneValidator(phoneNumber),secret);
-            smsResponse = new SMSResponse();
-            smsResponse.setCertificateNum(secret);
+//            authService.sendSMS(validator.phoneValidator(phoneNumber),secret);
+            if(40 <= smsResponses.size()){
+                smsResponses.remove(0);
+            }
+            smsResponses.add(new SMSResponse(secret));
+            System.out.println(secret);
             response = new BaseResponse("success", "true");
         }catch(Exception e){
             response = new BaseResponse("fail", e.getMessage());
@@ -57,7 +61,9 @@ public class AuthController {
         BaseResponse response = null;
         try{
             User user = userService.findByUserLoginId(request.getUserLoginId());
-            if(user.getUserPhone().equals(request.getUserPhone())){
+            System.out.println(user.getUserLoginId());
+            System.out.println(request.getUserPhone());
+            if(!user.getUserPhone().equals(request.getUserPhone())){
                 response = new BaseResponse("fail", "일치하지 않음");
             }else{
                 Random random = new Random();
@@ -65,9 +71,11 @@ public class AuthController {
                 for(int i= 0 ; i < 6; i++){
                     secret += Integer.toString(random.nextInt(10));
                 }
-                authService.sendSMS(validator.phoneValidator(request.getUserPhone()),secret);
-                smsResponse = new SMSResponse();
-                smsResponse.setCertificateNum(secret);
+//                authService.sendSMS(validator.phoneValidator(request.getUserPhone()),secret);
+                if(40 <= smsResponses.size()){
+                    smsResponses.remove(0);
+                }
+                smsResponses.add(new SMSResponse(secret));
                 response = new BaseResponse("success", "true");
             }
         }catch(Exception e){
@@ -82,10 +90,14 @@ public class AuthController {
     public BaseResponse GetAuthResult(@ApiParam(value = "인증번호")@PathVariable String certificateNum){
         BaseResponse response = null;
         try{
-            if(certificateNum.equals(smsResponse.getCertificateNum())){
-                response = new BaseResponse("success","true");
-            }
-            else{
+            if(!smsResponses.isEmpty()){
+                for(SMSResponse sms : smsResponses){
+                    if(sms.getCertificateNum().equals(certificateNum)){
+                        smsResponses.remove(sms);
+                        response = new BaseResponse("success","true");
+                        return response;
+                    }
+                }
                 response = new BaseResponse("success", "false");
             }
         }catch(Exception e){

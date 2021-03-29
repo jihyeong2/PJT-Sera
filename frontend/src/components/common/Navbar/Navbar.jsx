@@ -17,28 +17,28 @@ import {connect} from 'react-redux';
 import {logout} from '../../../actions/index';
 import { useHistory } from 'react-router';
 
-const StyledTabs = withStyles({
-  indicator: {
-    display: 'none',
-  },
-})((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />);
-
-const StyledTab = withStyles((theme) => ({
-  root: {
-    textTransform: 'none',
-    color: '#666666',
-    fontWeight: theme.typography.fontWeightRegular,
-    fontSize: theme.typography.pxToRem(15),
-    marginRight: theme.spacing(1),
-    '&:focus': {
-      color: '#FD6C1D',
-      opacity: 1,
+const Navbar = ({user,logout,white}) => {
+  // console.log(white);
+  const StyledTabs = withStyles({
+    indicator: {
+      display: 'none',
     },
-  },
-}))((props) => <Tab disableRipple {...props} />);
+  })((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />);
 
-const Navbar = ({user,logout}) => {
-  const [value, setValue] = React.useState(0);
+  const StyledTab = withStyles((theme) => ({
+    root: {
+      textTransform: 'none',
+      color: white ? '#FFFFFF' : '#666666',
+      fontWeight: 700,
+      fontSize: theme.typography.pxToRem(15),
+      marginRight: theme.spacing(1),
+      '&:focus': {
+        color: '#FD6C1D',
+        opacity: 1,
+      },
+    },
+  }))((props) => <Tab disableRipple {...props} />);
+    const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -113,7 +113,7 @@ const Navbar = ({user,logout}) => {
           aria-controls={open ? 'menu-list-grow' : undefined}
           aria-haspopup="true"
           onClick={handleToggle}
-          style={{color: '#666666'}}
+          style={{color: white ?  '#FFFFFF' : '#666666'}}
         >
           비회원 &nbsp;
           <FontAwesomeIcon icon="chevron-down" size="lg"/>
@@ -153,9 +153,9 @@ const Navbar = ({user,logout}) => {
         aria-controls={open ? 'menu-list-grow' : undefined}
         aria-haspopup="true"
         onClick={handleToggle}
-        style={{color: '#666666'}}
+        style={{color: white ?  '#FFFFFF' : '#666666'}}
       >
-        {user.nickName}님&nbsp;
+        {user.userNickname}님&nbsp;
         <FontAwesomeIcon icon="chevron-down" size="lg"/>
       </Button>
       <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
@@ -176,7 +176,7 @@ const Navbar = ({user,logout}) => {
           </Grow>
         )}
       </Popper>
-      <SearchModal/>
+      <SearchModal white={white}/>
     </nav>
     </div>
   )

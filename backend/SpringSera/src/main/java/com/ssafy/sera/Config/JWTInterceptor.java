@@ -23,7 +23,7 @@ public class JWTInterceptor implements HandlerInterceptor {
         if(request.getMethod().equals("OPTIONS")){
             return true;
         }else{
-            String token = request.getHeader("auth-token");
+            String token = request.getHeader("auth_token");
             if(token != null && token.length() > 0){
                 jwtService.checkTokenValid(token);
                 logger.info("토큰 사용 가능 : {}", token);

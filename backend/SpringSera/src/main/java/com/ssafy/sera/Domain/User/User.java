@@ -37,6 +37,8 @@ public class User {
 
     private String personalColor;
 
+    private String userImg;
+
     public static User createUser(UserRequest userRequest, Skin skin){
         User userInput = new User();
         userInput.setUserLoginId(userRequest.getUserLoginId());

@@ -179,4 +179,16 @@ public class UserController {
         }
         return response;
     }
+    @ApiOperation(value = "사용자 이미지 설정", notes = "개발 테스트용", response =BaseResponse.class)
+    @PutMapping("/userImg/{userLoginId}/{userImg}")
+    public BaseResponse updateUserImg(@PathVariable String userLoginId,@PathVariable String userImg){
+        BaseResponse response = null;
+        try{
+            userService.updateUserImg(userLoginId, userImg);
+            response = new BaseResponse("success", "성공");
+        }catch(Exception e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
 }

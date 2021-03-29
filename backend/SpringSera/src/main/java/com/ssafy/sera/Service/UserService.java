@@ -94,4 +94,11 @@ public class UserService {
             findUser.get().setPersonalColor(personalColor);
         }
     }
+    @Transactional
+    public void updateUserImg(String userLoginId,String userImg){
+        Optional<User> findUser = Optional.ofNullable(userRepository.findByUserLoginId(userLoginId));
+        if(findUser.isPresent()){
+            findUser.get().setUserImg(userImg);
+        }
+    }
 }

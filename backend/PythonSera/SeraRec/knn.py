@@ -206,9 +206,8 @@ def getSkinNumpy():
     skin_np = np.load(path)
     return skin_np
 
-def knn(user):
+def knn(user, category_large=None, category_middle = None):
     vec_np = getVectorNumPy()
-    review_np = getReviewNumPy()
     skin_np = getSkinNumpy()
     vec_idx = getVecIdx()
     input = skin_np[user['skinType']-1,:]
@@ -217,6 +216,10 @@ def knn(user):
     input = np.append(input, np.array([age,gender,5]))
     neigh = NearestNeighbors(n_neighbors=100)
     neigh.fit(vec_np)
+    # if(category_large == None and category_middle == None):
+    #     neigh.fit(vec_np)
+    # elif (category_large != None and category_middle == None):
+    #     data_np = np.append(vec, vector.reshape(1, -1), axis=0)
     rec_items = []
     rec_dist = []
     result = neigh.kneighbors([input])

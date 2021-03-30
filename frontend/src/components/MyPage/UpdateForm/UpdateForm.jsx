@@ -29,7 +29,6 @@ const UpdateForm = ({user,update}) => {
   const numberCase = /[0-9]/;
   const regKorean =  /^[ㄱ-ㅎ가-힣]+$/; //한글 정규식
   const RegExp =  /[~!@#$%^&*()_+|<>?:{}]/;//특수문자 정규식
-  console.log(userInfo);
   const handleChange = (e)=>{
     if(e.target==null) return;
     e.preventDefault();
@@ -57,9 +56,6 @@ const UpdateForm = ({user,update}) => {
           setIscertified(falseState);
           setIsClickedCertify(falseState)
         }
-        console.log(value);
-        console.log(user.userPhone);
-        console.log(isCertified,isClickedCertify)
         break;
       case 'certifyNum':
         value=certifyNumRef.current.value;
@@ -102,7 +98,6 @@ const UpdateForm = ({user,update}) => {
       }
       return updated;
     });
-    console.log(e.target.innerText)
   };
   const onClickCheck = () => {
     if(userInfo.userNickname=='' && userInfo.userNickname.length>6 && !RegExp.test(userInfo.userNickname)){
@@ -118,7 +113,6 @@ const UpdateForm = ({user,update}) => {
     checkName(
       userInfo.userNickname,
       (res)=>{
-        console.log(res);
         if(userInfo.userNickname!=user.userNickname && res.data.data==="중복입니다"){
           Swal.fire({
             icon: 'error',
@@ -138,7 +132,6 @@ const UpdateForm = ({user,update}) => {
         }
       },
       (err)=>{
-        console.error(err);
         setIsCheckedName(falseState);
       }
     )
@@ -163,7 +156,6 @@ const UpdateForm = ({user,update}) => {
       requestCertify(
         userInfo.userPhone,
         (res)=>{
-          console.log(res);
           if(res.data.status==="success"){
             Swal.fire({
               icon: 'success',
@@ -200,7 +192,6 @@ const UpdateForm = ({user,update}) => {
     getCertify(
       certifyNum,
       (res)=>{
-        console.log(res);
         if(res.data.data!=="false"){
           Swal.fire({
             icon: 'success',
@@ -262,7 +253,6 @@ const UpdateForm = ({user,update}) => {
     updateUser(
       userInfo,
       (res)=>{
-        console.log(res);
         if(res.data.data==="수정 성공"){
           Swal.fire({
             icon: 'success',

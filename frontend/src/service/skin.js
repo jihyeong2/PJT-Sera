@@ -1,7 +1,9 @@
 import http from '../http-common';
 
-function setSkin((userId,skinType,success,fail)=>{
-  http.post(`v1/users/skin/${userId}/${skinType}`)
+function setSkin(userLoginId,skinType,success,fail){
+  http.put(`v1/users/skin/${userLoginId}/${skinType}`)
   .then(success)
   .catch(fail)
-});
+};
+
+export default setSkin;

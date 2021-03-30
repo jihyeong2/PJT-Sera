@@ -2,14 +2,20 @@ import React from 'react';
 import styles from './ColorResult.module.css';
 import image from '../../../assets/mainz.png';
 import { Grid } from '@material-ui/core';
+import {connect} from 'react-redux';
 import BeautyTip from '../../common/BeautyTip/BeautyTip';
 import ColorPalette from '../../common/Pallette/ColorPalette';
-const ColorResult = (props) => {
+const ColorResult = ({user,color}) => {
   return(
     <div className={styles.container}>
       <div className={styles.header}>
         당신의 퍼스널 컬러는 <br/>
-        <span className={styles.highlight}>봄 웜</span> 입니다.
+        <span 
+          className={styles.highlight}
+          style={{color:`${color[user.personalColor].color}`}}
+        >
+          {user.personalColor.slice(0,user.personalColor.length-1)} {user.personalColor[user.personalColor.length-1]}  
+        </span> 입니다.
       </div>
       <div className={styles.box}>
         <Grid className={styles.table} container spacing={3}>
@@ -25,10 +31,14 @@ const ColorResult = (props) => {
               alignItems="center"
             >
               <Grid item xs={12}>
-                <span className={styles.title}>SPRING WARM</span>
+                <span style={{color:`${color[user.personalColor].color}`}} className={styles.title}>{
+                  color[user.personalColor].english
+                }</span>
               </Grid>
               <Grid item xs={12}>
-                <span className={styles.info}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex nemo quam laboriosam culpa dolores porro hic maiores minima nam neque, iure explicabo ab animi illo doloremque! Fugiat porro ullam mollitia?</span>
+                <div className={styles.info_box}>
+                  <span className={styles.info}>{color[user.personalColor].desc}</span>
+                </div>
               </Grid>
             </Grid>
           </Grid>
@@ -40,13 +50,13 @@ const ColorResult = (props) => {
             <div className={styles.tip_title}>
               나의 <span style={{fontWeight:'700'}}>뷰티 Tip</span>
             </div>
-            <BeautyTip/>
+            <BeautyTip currTag={user.personalColor}/>
           </Grid>
           <Grid item xs={6}>
             <div className={styles.tip_title}>
               나의 <span style={{fontWeight:'700'}}>컬러 플레이스</span>
             </div>
-            <ColorPalette/>
+            <ColorPalette currTag={user.personalColor}/>
           </Grid>        
         </Grid>
       </div>
@@ -55,4 +65,15 @@ const ColorResult = (props) => {
   )
 };
 
-export default ColorResult;
+const mapStateToProps = (state) => ({
+  user: state.user.user,
+  color: state.color,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ColorResult);

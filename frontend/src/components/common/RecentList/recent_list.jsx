@@ -1,6 +1,6 @@
 import React from 'react';
 
-const recent_list = (props) => {
+const RecentList = (props) => {
     return(
         <>
             최근본 목록 제작할거임
@@ -8,4 +8,4 @@ const recent_list = (props) => {
     );
 }
 
-export default recent_list;
+export default RecentList;

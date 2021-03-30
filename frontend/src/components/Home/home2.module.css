@@ -1,6 +1,6 @@
 @value font-size-40, color-grey-1 from '../../common/style.css';
 .container {
-  width: 85%;
+  width: 80%;
   margin: auto;
 }
 .text_box {

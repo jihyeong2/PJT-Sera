@@ -1,5 +1,5 @@
 @value font-size-40, color-grey-1, font-size-12, font-size-10 from '../../common/style.css';
-@value color-white, color-orange-1, font-size-14, color-grey-2, color-blue-2  from '../../common/style.css';
+@value color-white, color-orange-1, font-size-16, font-size-14, color-grey-2, color-blue-2  from '../../common/style.css';
 .container {
   width: 80%;
   margin: auto;
@@ -20,7 +20,7 @@
 }
 .profile_name {
   padding: 1em;
-  font-size: font-size-12;
+  font-size: font-size-14;
   text-align: center;
 }
 .box {
@@ -86,11 +86,11 @@
   margin: 0.5em;
 }
 .label {
-  font-size: font-size-14;
+  font-size: font-size-16;
   font-weight: 700;
 }
 .value {
-  font-size: font-size-12;
+  font-size: font-size-14;
 }
 .vertical {
   flex-direction: column;

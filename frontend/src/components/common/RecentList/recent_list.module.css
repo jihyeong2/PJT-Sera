@@ -1,0 +1,13 @@
+
+.recent_btn {
+    display: inline-block;
+    position: fixed;
+    bottom: 0;
+    right: 10%;
+    width: 200px;
+    height: 50px;
+    background: #333333;
+    text-align: center;
+    color: white;
+    line-height: 50px;
+  }

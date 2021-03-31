@@ -45,21 +45,6 @@ const ProductNav = (props) => {
         </ButtonGroup>
         </div>
         <div className={styles.filtering}>
-            <div className={styles.left_filter}>
-                <select name="" id="" className={styles.select} >
-                        <option className={styles.option} value="none">나이</option>
-                        <option className={styles.option} value="10">10대</option>
-                        <option className={styles.option} value="20">20대</option>
-                        <option className={styles.option} value="30-40">30/40대</option>
-                        <option className={styles.option} value="50-60">50/60대</option>
-                        <option className={styles.option} value="60이상">60이상</option>
-                    </select>
-                    <select name="" id="" className={styles.select} >
-                        <option className={styles.option} value="none">성별   </option>
-                        <option className={styles.option} value="남자">남자</option>
-                        <option className={styles.option} value="여자">여자</option>
-                </select>
-            </div>
             <div className={styles.right_check}>
                 <FormControl className={classes.formControl}>
                 <InputLabel id="demo-simple-select-label">정렬기준</InputLabel>
@@ -72,7 +57,6 @@ const ProductNav = (props) => {
                             <MenuItem value={2}>가격 높은 순</MenuItem>
                             <MenuItem value={3}>별점순</MenuItem>
                             <MenuItem value={4}>리뷰 개수 순</MenuItem>
-                            <MenuItem value={5}>찜한 순</MenuItem>
                     </Select>
                 </FormControl>
             </div>

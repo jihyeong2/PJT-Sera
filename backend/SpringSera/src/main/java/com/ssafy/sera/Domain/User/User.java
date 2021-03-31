@@ -1,12 +1,15 @@
 package com.ssafy.sera.Domain.User;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ssafy.sera.Controller.Request.UserRequest;
 import com.ssafy.sera.Domain.Skin.Skin;
+import com.ssafy.sera.Domain.review.Review;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -39,6 +42,10 @@ public class User {
 
     @Column(columnDefinition = "TEXT")
     private String userImg;
+
+    @JsonBackReference
+    @OneToMany(mappedBy="user")
+    private List<Review> reviewList;
 
     public static User createUser(UserRequest userRequest, Skin skin){
         User userInput = new User();

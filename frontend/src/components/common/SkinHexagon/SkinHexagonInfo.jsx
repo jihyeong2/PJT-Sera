@@ -3,7 +3,7 @@ import styles from './SkinHexagonInfo.module.css';
 import {connect} from 'react-redux';
 const SkinHexagonInfo = ({skin,currTag}) => {
   return (
-    <>
+    <div style={{display:'flex',flexDirection:'column'}}>
       <div className={styles.skintype} style={{color:`${skin.type[currTag].color}`}}>
         {currTag}
       </div>
@@ -22,7 +22,7 @@ const SkinHexagonInfo = ({skin,currTag}) => {
         )
       })}
       </div>
-    </>
+    </div>
   );
 };
 

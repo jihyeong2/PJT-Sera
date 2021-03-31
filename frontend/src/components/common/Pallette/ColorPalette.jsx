@@ -4,7 +4,6 @@ import { Grid } from '@material-ui/core';
 import {connect} from 'react-redux';
 
 const ColorPalette = ({currTag,color}) => {
-  console.log(color[currTag].palette);
   return(
     <div className={styles.container}>
       <div className={styles.palette}>

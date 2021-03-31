@@ -1,7 +1,7 @@
 @value color-grey-1, color-orange-3,color-orange-1, color-skin-5, color-white from '../../../common/style.css';
 @value font-size-40, font-size-22, font-size-20, font-size-14 from '../../../common/style.css';
 .container {
-  background-color: color-skin-5;
+  background-color: color-white;
   padding: 2em 2em 4em 2em;
   display: flex;
   flex-direction: column;
@@ -28,6 +28,10 @@
   font-size: font-size-40;
   color: color-orange-3;
   font-weight: 700;
+}
+.info_box {
+  width: 60%;
+  margin: auto;
 }
 .info {
   font-size: font-size-14;

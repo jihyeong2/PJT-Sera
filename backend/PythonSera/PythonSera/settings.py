@@ -25,7 +25,7 @@ SECRET_KEY = 'cvxdo7@jqt5@^%t23*5b_=j^rh$5#axll9r9it+8@c6euhuzzh'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,9 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'cosmetics_API',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -69,7 +73,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'PythonSera.wsgi.application'
 
-
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:8080',
+    'http://127.0.0.1:8080'
+)
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 

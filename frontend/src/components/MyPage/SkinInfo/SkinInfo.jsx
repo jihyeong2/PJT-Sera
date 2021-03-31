@@ -15,7 +15,6 @@ import {update} from '../../../actions/index';
 import Swal from 'sweetalert2';
 import setSkin from '../../../service/skin';
 import setColor from '../../../service/color';
-import { data } from 'jquery';
 
 const dstyles = (theme) => ({
     root: {

@@ -55,7 +55,7 @@ const SkinInfo = ({user,skin,color,update}) => {
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
   const [fullWidth, setFullWidth] = React.useState(true);
-  const [currTag,setCurrTag] = useState(user.skinId.skinType!==null ? user.skinId.skinType : 'OSPT');
+  const [currTag,setCurrTag] = useState(user.skinId!==null ? user.skinId.skinType : 'OSPT');
   const [clickedColor,setClickedColor] = useState(user.personalColor);
   const onChangeTag2 = (tag) => {
     setCurrTag(tag);
@@ -200,7 +200,7 @@ const SkinInfo = ({user,skin,color,update}) => {
         </div>
         <div className={styles.info_right}>
           {
-            user.skinId.skinType !==null ? 
+            user.skinId !==null ? 
             <div className={styles.skin_type} style={{border:`2px solid ${skin.type[user.skinId.skinType].color}`,color:`${skin.type[user.skinId.skinType].color}`}}>
               {user.skinId.skinType}
             </div>

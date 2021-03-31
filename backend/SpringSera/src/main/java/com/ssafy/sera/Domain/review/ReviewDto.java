@@ -1,9 +1,7 @@
 package com.ssafy.sera.Domain.review;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ssafy.sera.Controller.Request.ReviewRequest;
-import com.ssafy.sera.Domain.Item.Item;
-import com.ssafy.sera.Domain.User.User;
+import com.ssafy.sera.Domain.Item.ItemDto;
+import com.ssafy.sera.Domain.User.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,8 +13,8 @@ import java.util.Date;
 public class ReviewDto {
     private Long reviewId;
     private String reviewImg;
-//    private Item item;
-//    private User user;
+    private ItemDto item;
+    private UserDto user;
     private Date writeDate;
     private String reviewGoodContent;
     private String reviewBadContent;
@@ -26,8 +24,14 @@ public class ReviewDto {
     public ReviewDto(Review review){
         this.reviewId = review.getReviewId();
         this.reviewImg = review.getReviewImg();
-//        this.item = review.getItem();
-//        this.user = review.getUser();
+        if(review.getUser() != null){
+            user = new UserDto();
+            this.user.setUserLoginId(review.getUser().getUserLoginId());
+        }
+        if(review.getItem() != null){
+            item = new ItemDto();
+            this.item.setItemId(review.getItem().getItemId());
+        }
         this.writeDate = review.getWriteDate();
         this.reviewGoodContent = review.getReviewGoodContent();
         this.reviewBadContent = review.getReviewBadContent();

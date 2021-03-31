@@ -1,6 +1,9 @@
 package com.ssafy.sera.Service;
 
+import com.ssafy.sera.Controller.Request.ReviewRequest;
+import com.ssafy.sera.Controller.Request.UserRequest;
 import com.ssafy.sera.Domain.Item.Item;
+import com.ssafy.sera.Domain.User.User;
 import com.ssafy.sera.Domain.review.Review;
 import com.ssafy.sera.Domain.review.ReviewDto;
 import com.ssafy.sera.Repository.ReviewRepository;
@@ -10,12 +13,12 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ReviewService {
     private final ReviewRepository reviewRepository;
-    private final Validator validator;
 
     /**
      * 리뷰 등록하기
@@ -32,5 +35,42 @@ public class ReviewService {
      */
     public List<ReviewDto> findByItem(Item item) {
         return reviewRepository.findByItem(item);
+    }
+
+    /**
+     * 현재 리뷰 상세정보 가져오기
+     * @return
+     */
+    public Review findByReviewId(Long reviewId) { return reviewRepository.findByReviewId(reviewId);}
+
+
+    /**
+     * 현재 리뷰 수정하기
+     * @return
+     */
+    @Transactional
+    public void updateReview(ReviewRequest request) {
+        Optional<Review> findReview = Optional.ofNullable(reviewRepository.findByReviewId(request.getReviewId()));
+        if(findReview.isPresent()) {
+            findReview.get().setReviewImg(request.getReviewImg());
+            findReview.get().setWriteDate(request.getWriteDate());
+            findReview.get().setReviewGoodContent(request.getReviewGoodContent());
+            findReview.get().setReviewBadContent(request.getReviewBadContent());
+            findReview.get().setReviewScore(request.getReviewScore());
+        }
+        else{
+            throw new IllegalStateException("존재하지 않는 리뷰입니다.");
+        }
+    }
+    /**
+     * 현재 리뷰 삭제하기
+     * @return
+     */
+    @Transactional
+    public void deleteReview(Long reviewId) {
+        Optional<Review> deleteReview = Optional.ofNullable(reviewRepository.findByReviewId(reviewId));
+        if(deleteReview.isPresent()){
+            reviewRepository.delete(deleteReview.get());
+        }
     }
 }

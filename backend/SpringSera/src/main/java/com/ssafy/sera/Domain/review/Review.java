@@ -46,15 +46,18 @@ public class Review implements Serializable {
     @Column(nullable = false)
     private Long helpCnt;
 
-    public static Review createReview(ReviewRequest reviewRequest, User user, Item item){
+    public static Review createReview(ReviewRequest reviewRequest){
         Review reviewInput = new Review();
         reviewInput.setReviewImg(reviewRequest.getReviewImg());
-        reviewInput.setItem(item);
-        reviewInput.setUser(user);
         reviewInput.setWriteDate(reviewRequest.getWriteDate());
         reviewInput.reviewGoodContent = reviewRequest.getReviewGoodContent();
         reviewInput.setReviewBadContent(reviewRequest.getReviewBadContent());
         reviewInput.setHelpCnt(reviewRequest.getHelpCnt());
         return reviewInput;
+    }
+
+    @PrePersist
+    private void onCreate(){
+        this.writeDate = new Date();
     }
 }

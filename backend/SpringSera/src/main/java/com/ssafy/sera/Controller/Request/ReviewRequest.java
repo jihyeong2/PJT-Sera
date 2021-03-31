@@ -8,12 +8,12 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-@ApiModel(value = "리뷰 정보", description = "리뷰 CRUD에 사용")
+@ApiModel(value = "리뷰 정보", description = "클라이언트측에서 보내주는 리뷰객체 정보")
 public class ReviewRequest {
     private Long reviewId;
     private String reviewImg;
-    private Item item;
-    private User user;
+    private Long itemId;
+    private String userLoginId;
     private Date writeDate;
     private String reviewGoodContent;
     private String reviewBadContent;

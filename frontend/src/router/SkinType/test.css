@@ -1,0 +1,46 @@
+.c1,
+.c2 {
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  background: aqua;
+  position: absolute;
+}
+.c1 {
+  left: 20px;
+  top: 50px;
+}
+.connect1 {
+  position: absolute;
+  right: -80px;
+  top: 130px;
+  background: orange;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+.connect1::before,
+.connect1::after {
+  content: "";
+  display: block;
+  background: orange;
+  height: 10px;
+  position: absolute;
+  z-index: -1;
+}
+.connect1::before {
+  width: 200px;
+  top: -20px;
+  left: -180px;
+  transform: rotate(20deg);
+}
+.connect1::after {
+  width: 200px;
+  right: -160px;
+  top: 70px;
+  transform: rotate(35deg);
+}
+.c2 {
+  left: 300px;
+  top: 180px;
+}

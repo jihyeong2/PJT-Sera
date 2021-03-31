@@ -1,6 +1,6 @@
 @value color-orange-4,color-orange-1,color-grey-3,color-white,color-yellow-1,color-yellow-2 from '../../../common/style.css';
 @value color-orange-5,color-red-3,color-red-2,color-green-2,color-green-3 from '../../../common/style.css';
-@value font-size-22 from '../../../common/style.css';
+@value font-size-22, font-size-20, font-size-14 from '../../../common/style.css';
 @value font-weight-bold from '../../../common/style.css';
 @value border-rad-circle, color-red-4 from '../../../common/style.css';
 .container {
@@ -65,7 +65,7 @@
 .info_right {
   display: flex;
 }
-.info_right .skin_type {
+.skin_type {
   font-size: font-size-22;
   font-weight: 700;
   background-color: color-white;
@@ -76,9 +76,9 @@
   height: 100px;
   text-align: center;
   line-height: 100px;
-  margin-right: 1em;
+  /* margin-right: 1em; */
 }
-.info_right .color_type {
+.color_type {
   font-size: font-size-22;
   font-weight: 700;
   color: color-white;
@@ -89,4 +89,47 @@
   height: 100px;
   text-align: center;
   line-height: 100px;
+  margin-left: 1em;
+}
+.edit_btn {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  display: flex;
+  align-items: flex-end;
+}
+.modal_container {
+  width: 80%;
+  padding: 1em 2em 0 2em;
+  margin: auto;
+}
+.modal_header {
+  display: flex;
+  padding-top: 1em;
+  padding-bottom: 4em;
+}
+.modal_title {
+  font-size: font-size-20;
+  font-weight: 700;
+  padding-left: 0.25em;
+}
+.modal_subtitle {
+  font-size: font-size-14;
+  padding-left: 0.25em;
+}
+.modal_content {
+  display: flex;
+}
+.submit_box {
+  display: flex;
+  justify-content: center;
+}
+.submit_btn {
+  display: inline-block;
+  background-color: transparent;
+  border: 1px solid color-orange-1;
+  color: color-orange-1;
+  font-size: font-size-20;
+  padding: 0.5em 3em;
+  border-radius: 2em;
 }

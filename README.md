@@ -64,10 +64,10 @@ gantt
 	피부진단 & 퍼스널 컬러 리덕스 : done, 2021-03-25, 6h
 	SNS 로그인 UI & api 연동 : done, 2021-03-25, 1d
 	로그인 리덕스 연결 : done, t19, 2021-03-24, 1d
-	피부 진단 수정 모달 : active, after t13, 1d
-	퍼스널 컬러 수정 모달 : active, after t13, 1d
-	피부 진단 페이지 (소개, 설문, skip, 도움말, 결과) : 
-	퍼스널 컬러 페이지 (진단, 결과) : 
+	피부 진단 수정 모달 : done, after t13, 1d
+	퍼스널 컬러 수정 모달 : done, after t13, 1d
+	피부 진단 페이지 (소개, 설문, skip, 도움말, 결과) : crit, t20, 2021-03-31, 1d
+	퍼스널 컬러 페이지 (진단, 결과) : active, t21, after t20, 1d
     
     section Backend
   	글로우픽 크롤링 : done, b_t1, 2021-03-15, 6d
@@ -78,10 +78,10 @@ gantt
     회원정보 CRUD : done, b_t7, 2021-03-15, 1d
     Swagger : done, b_t8, after b_t6, 1d
     CF 추천 알고리즘 : done, b_t3, 2021-03-14, 11d
-    상품 리스트 & 디테일 조회 api (Django): active, b_t11, after b_t3, 1d
+    상품 리스트 & 디테일 조회 api (Django): active, b_t11, 2021-03-30, 2d
     상품 검색 api (Django): active, b_t13, after b_t11, 1d
     리뷰 CRUD api (Spring) : active, 2021-03-29, 3d
-    퍼스널 컬러 api (Django) : active, 2021-03-29, 3d
+    퍼스널 컬러 api (Django) : active, after b_t13, 1d
     피부 진단 결과 반영 (Spring) : done, 2021-03-26,1d
     AWS 배포: done, b_t13, 2021-03-23, 2d
     SNS 로그인 api : done, 2021-03-24, 1d

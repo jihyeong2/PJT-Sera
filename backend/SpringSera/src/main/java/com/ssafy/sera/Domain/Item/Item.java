@@ -6,11 +6,14 @@ import com.ssafy.sera.Domain.Category.Category;
 import com.ssafy.sera.Domain.Dibs.Dibs;
 import com.ssafy.sera.Domain.Skin.Skin;
 import com.ssafy.sera.Domain.User.User;
+import com.ssafy.sera.Domain.review.Review;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -26,7 +29,7 @@ public class Item {
     @Column
     private String itemBrand;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "category_id")
     private Category categoryId;
 
@@ -42,6 +45,9 @@ public class Item {
 //    테그 작성 후 타입 및 연관 관계 수정할 것
     @Column(columnDefinition = "INT DEFAULT 0")
     private int dibsCnt;
+
+    @OneToMany(mappedBy="item")
+    private List<Review> reviewList = new ArrayList<Review>();
 
     public static Item createItem(ItemRequest itemRequest){
         Item itemInput = new Item();

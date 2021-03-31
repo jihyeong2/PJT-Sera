@@ -1,5 +1,6 @@
 package com.ssafy.sera.Domain.review;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ssafy.sera.Controller.Request.ReviewRequest;
 import com.ssafy.sera.Domain.Item.Item;
 import com.ssafy.sera.Domain.User.User;
@@ -20,12 +21,13 @@ public class Review implements Serializable {
     @Column(columnDefinition = "TEXT")
     private String reviewImg;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="item_id")
     private Item item; //게시글-상품과의 관계: N:1
 
-
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user; //게시글-회원과의 관계: N:1
 

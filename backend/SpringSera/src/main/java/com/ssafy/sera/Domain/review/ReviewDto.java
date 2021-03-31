@@ -15,8 +15,8 @@ import java.util.Date;
 public class ReviewDto {
     private Long reviewId;
     private String reviewImg;
-    private Item item;
-    private User user;
+//    private Item item;
+//    private User user;
     private Date writeDate;
     private String reviewGoodContent;
     private String reviewBadContent;
@@ -26,8 +26,8 @@ public class ReviewDto {
     public ReviewDto(Review review){
         this.reviewId = review.getReviewId();
         this.reviewImg = review.getReviewImg();
-        this.item = review.getItem();
-        this.user = review.getUser();
+//        this.item = review.getItem();
+//        this.user = review.getUser();
         this.writeDate = review.getWriteDate();
         this.reviewGoodContent = review.getReviewGoodContent();
         this.reviewBadContent = review.getReviewBadContent();

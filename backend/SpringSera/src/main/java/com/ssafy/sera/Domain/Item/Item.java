@@ -1,5 +1,7 @@
 package com.ssafy.sera.Domain.Item;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ssafy.sera.Controller.Request.ItemRequest;
 import com.ssafy.sera.Controller.Request.UserRequest;
 import com.ssafy.sera.Domain.Category.Category;
@@ -46,6 +48,7 @@ public class Item {
     @Column(columnDefinition = "INT DEFAULT 0")
     private int dibsCnt;
 
+    @JsonBackReference
     @OneToMany(mappedBy="item")
     private List<Review> reviewList = new ArrayList<Review>();
 

@@ -1,5 +1,6 @@
 package com.ssafy.sera.Domain.User;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ssafy.sera.Controller.Request.UserRequest;
 import com.ssafy.sera.Domain.Skin.Skin;
 import com.ssafy.sera.Domain.review.Review;
@@ -42,6 +43,7 @@ public class User {
     @Column(columnDefinition = "TEXT")
     private String userImg;
 
+    @JsonBackReference
     @OneToMany(mappedBy="user")
     private List<Review> reviewList;
 

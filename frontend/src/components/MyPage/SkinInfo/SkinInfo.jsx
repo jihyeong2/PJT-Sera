@@ -78,11 +78,12 @@ const SkinInfo = ({user,skin,color,update}) => {
       user.userLoginId,
       currTag,
       (res)=>{
-        console.log(res);
         if (res.data.data ==="성공"){
           const tmp = {...user};
-          tmp.skinId.skinId=skin.type[currTag].id;
-          tmp.skinId.skinType=currTag;
+          tmp.skinId={
+            skinId:skin.type[currTag].id,
+            skinType:currTag
+          }
           update(tmp);
           handleClose();
           Swal.fire({
@@ -236,7 +237,7 @@ const SkinInfo = ({user,skin,color,update}) => {
                     </Grid>
                   </Grid>
                   <div className={styles.submit_box}>
-                    <button onClick={onSubmitSkin} className={styles.submit_btn}>수정완료</button>
+                    <button onClick={onSubmitSkin} className={styles.submit_btn}>수정 완료</button>
                   </div>
                 </div>
               </DialogContent>
@@ -281,7 +282,7 @@ const SkinInfo = ({user,skin,color,update}) => {
                     </Grid>
                   </Grid>
                   <div className={styles.submit_box}>
-                    <button onClick={onSubmitColor} className={styles.submit_btn}>수정완료</button>
+                    <button onClick={onSubmitColor} className={styles.submit_btn}>수정 완료</button>
                   </div>
                 </div>
               </DialogContent>

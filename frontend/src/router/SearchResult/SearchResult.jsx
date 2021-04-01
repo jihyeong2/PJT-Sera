@@ -2,7 +2,6 @@ import React, {useCallback, useEffect, useState} from 'react';
 import styles from './SearchResult.module.css';
 import { useParams } from 'react-router';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -43,16 +42,8 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
 const SearchResult = (props) => {
   const params=useParams();
-  const classes = useStyles();
   const [currTab,setCurrTab] = useState(1);
   const [idx,setIdx] = useState(12);
   const [idx2,setIdx2] = useState(12);
@@ -68,6 +59,7 @@ const SearchResult = (props) => {
     let clientHeight = document.documentElement.clientHeight;
     if(currTab==1){ // 상품명 결과 탭일 때 무한스크롤
       if (scrollTop + clientHeight + 2 >= scrollHeight){
+        console.log(idx);
         setIdx(idx+12);
         setProducts(products.concat(data.slice(idx,idx+12)));
       }
@@ -86,9 +78,9 @@ const SearchResult = (props) => {
 
   const onClick = (e) => {
     if(e.target.innerText==='상품명 결과'){
-      setCurrTab(currTab+1);
+      setCurrTab(1);
     } else{
-      setCurrTab(currTab+1);
+      setCurrTab(2);
     }
   };
 

@@ -13,6 +13,10 @@ import CosmeticDetail from './router/CosmeticDetail/CosmeticDetail';
 import SkinType from './router/SkinType/SkinType';
 import PersonalColor from './router/PersonalColor/PersonalColor';
 import SearchResult from './router/SearchResult/SearchResult'
+import Skip from './router/SkinType/Skip';
+import Result from './router/SkinType/Result';
+import Survey from './router/SkinType/Survey';
+import React from 'react';
 function App() {
   return (
     <div className={styles.app}>
@@ -28,7 +32,18 @@ function App() {
           <Route path="/mypick" component={MyPick}/>
           <Route path="/list" component={CosmeticList}/>
           <Route path="/detail/:id" component={CosmeticDetail}/>
-          <Route path="/skintype" component={SkinType}/>
+          <Route 
+            path="/skin/"
+            render={props=>(
+              <React.Fragment>
+                <Route exact path={`${props.match.url}`} component={SkinType}/>
+                <Route exact path={`${props.match.url}/type`} component={Skip}/>
+                <Route exact path={`${props.match.url}/survey`} component={Survey}/>
+                <Route exact path={`${props.match.url}/result`} component={Result}/>
+              </React.Fragment>
+            )}
+          />
+
           <Route path="/personal_color" component={PersonalColor}/>
           <Route path="/search/:name" component={SearchResult}/>
         </Switch>

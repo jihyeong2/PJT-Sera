@@ -3,6 +3,10 @@ import argparse
 import os
 import matplotlib.pyplot as plt
 
+def main(imgpath):
+    personal_color.analysis(imgpath)
+
+"""
 def main():
     # 인자값 받을 인스턴스 생성
     parser = argparse.ArgumentParser(description = 'Please input your image.')
@@ -30,7 +34,7 @@ def main():
         imgs = os.listdir(dirpath)
         for imgpath in imgs:
             #print(os.path.join(dirpath, imgpath))
-            personal_color.analysis(os.path.join(dirpath, imgpath))
+            personal_color.analysis(os.path.join(dirpath, imgpath))"""
 
 if __name__ == '__main__':
-    main()
+    main('./img.JPG')

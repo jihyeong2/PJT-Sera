@@ -47,6 +47,7 @@ const dstyles = (theme) => ({
     },
   }))(MuiDialogContent);
 const SkinType = (props) => {
+  console.log('type');
   const trueState=true;
   const [open, setOpen] = React.useState(false);
   const [fullWidth, setFullWidth] = React.useState(true);

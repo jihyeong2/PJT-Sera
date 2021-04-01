@@ -5,7 +5,6 @@ import styles from './ProductList.module.css';
 import Product from './Product';
 const ProductList = ({products}) => {
   
-  
   return (
     <Grid className={styles.products} container spacing={5}>
         {products.map((product) => (

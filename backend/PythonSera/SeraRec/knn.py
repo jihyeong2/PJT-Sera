@@ -1,3 +1,4 @@
+# from database import *
 from SeraRec.database import *
 import tqdm
 import pandas as pd
@@ -153,7 +154,7 @@ def makeVector():
     start_idx = len(review_idx)
     for id in tqdm.tqdm(add_item):
         vector = item_np[item_idx[id],:]
-        vector = np.append(vector, np.array([3, 0, 5]))
+        vector = np.append(vector, np.array([3, 0, 0]))
         vec = np.append(vec, vector.reshape(1, -1), axis=0)
         review_idx[start_idx] = id
         start_idx += 1
@@ -162,7 +163,8 @@ def makeVector():
         json.dump(review_idx, of, ensure_ascii=False, indent="\t")
 
 def getItemNumpy():
-    path = '../crawling/data/GP/item_np.npy'
+    # path = '../crawling/data/GP/item_np.npy'
+    path = './crawling/data/GP/item_np.npy'
     item_np = np.load(path)
     return item_np
 
@@ -210,24 +212,95 @@ def knn(user, category_large=None, category_middle = None):
     vec_np = getVectorNumPy()
     skin_np = getSkinNumpy()
     vec_idx = getVecIdx()
+    vec_item = {}
+    for idx, id in vec_idx.items():
+        vec_item[id] = int(idx)
     input = skin_np[user['skinType']-1,:]
     age = user['age'] // 10
     gender = -1 if user['gender'] == '여' else 1
+
     input = np.append(input, np.array([age,gender,5]))
     neigh = NearestNeighbors(n_neighbors=100)
-    neigh.fit(vec_np)
-    # if(category_large == None and category_middle == None):
-    #     neigh.fit(vec_np)
-    # elif (category_large != None and category_middle == None):
-    #     data_np = np.append(vec, vector.reshape(1, -1), axis=0)
+    data_idx = {}
+    data_np = np.empty((0, vec_np.shape[1]), dtype=float)
+    if(category_large == None and category_middle == None):
+        data_np = vec_np
+        data_idx = vec_idx
+    else:
+        connect, curs = connectMySQL()
+        item_idx = []
+        if (category_large != None and category_middle == None):
+            query = """SELECT item_id FROM item INNER JOIN category USING(category_id) WHERE category_large=%s"""
+            curs.execute(query, (category_large))
+            item_ids = curs.fetchall()   
+        elif (category_large != None and category_middle != None):
+            query = """SELECT item_id FROM item INNER JOIN category USING(category_id) WHERE category_large=%s AND category_middle=%s"""
+            curs.execute(query, (category_large, category_middle))
+            item_ids = curs.fetchall()
+        connect.close()
+        for i, item in enumerate(item_ids):
+            item_idx.append(vec_item[item[0]])
+            data_idx[str(i)] = item[0]
+        data_np = vec_np[item_idx,:]
+    neigh.fit(data_np)
     rec_items = []
-    rec_dist = []
+    rec_correctRate = []
     result = neigh.kneighbors([input])
+    input[-1] = 1
     for i, index in enumerate(result[1][0]):
-        if vec_idx[str(index)] not in rec_items:
-            rec_items.append(vec_idx[str(index)])
-            rec_dist.append(result[0][0][i])
-    return rec_items
+        if data_idx[str(index)] not in rec_items:
+            rec_items.append(data_idx[str(index)])
+            correct_vec = data_np[index,:] * input
+            rec_correctRate.append(calCorrectRate(correct_vec,'knn'))
+    return rec_items, rec_correctRate
+
+def nomal(items, user):
+    item_np = getItemNumpy()
+    skin_np = getSkinNumpy()
+    item_idx = getItemIdx()
+    input = skin_np[user['skin_id']-1,:]
+    data = []
+    fields = ['item_id', 'item_name', 'item_img', 'item_brand','category_id','item_colors','item_volume','item_price','item_description','dibs_cnt',]
+    category_fields = ['category_id', 'category_large', 'category_middle', 'category_small']
+    for item in items[:100]:
+        item_json = {}
+        item_json = {}
+        for (d, f) in zip(item[:10], fields):
+            item_json[f] = d
+        for (d, f) in zip(item[10:], category_fields):
+            item_json[f] = d
+        correct_vec = item_np[item_idx[item_json['item_id']],:] * input
+        item_json['correct_rate'] = calCorrectRate(correct_vec)
+        data.append(item_json)
+    return data
+
+# 일치율 계산
+def calCorrectRate(vec, type=None):
+    # 벡터에서 아이템과 스킨타입 곱하기 -> 양수 (도움) 음수 (주의) 수식에 넣어서 계산
+    help = 0
+    caution = 0
+    review_score = 0
+    if type == 'knn':
+        for i in range(vec.shape[0]-3):
+            if vec[i] > 0:
+                help += 1
+            elif vec[i] < 0:
+                caution += 1
+        review_score = vec[-1]*20
+    else:
+        for i in range(vec.shape[0]):
+            if vec[i] > 0:
+                help += 1
+            elif vec[i] < 0:
+                caution += 1
+    
+    # print(help, caution)
+    result = 0
+    if help + caution != 0: result = (help - caution) / (help + caution) * 100
+
+    result = (result+review_score)/2
+    if result < 0: result = 0
+    return result
 
 def updateVector():
     makeSkinVector()
@@ -236,4 +309,5 @@ def updateVector():
     makeVector()
 
 if __name__ == '__main__':
-    print(knn({'skinType': 1, 'age': 25, 'gender': '여'}))
+    # print(knn({'skinType': 1, 'age': 25, 'gender': '여'}))
+    makeVector()

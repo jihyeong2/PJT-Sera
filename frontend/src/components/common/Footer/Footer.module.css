@@ -1,6 +1,7 @@
 @value color-grey-1,color-grey-2, font-size-12 from '../../../common/style.css';
 
 .footer {
+  width: 100%;
   background-color: color-grey-1;
   padding: 3em;
 }

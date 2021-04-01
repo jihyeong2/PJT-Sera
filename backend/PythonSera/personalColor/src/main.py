@@ -1,10 +1,10 @@
-from personal_color_analysis import personal_color
+from personalColor.src.personal_color_analysis import personal_color
 import argparse
 import os
 import matplotlib.pyplot as plt
 
 def main(imgpath):
-    personal_color.analysis(imgpath)
+    return personal_color.analysis(imgpath)
 
 """
 def main():

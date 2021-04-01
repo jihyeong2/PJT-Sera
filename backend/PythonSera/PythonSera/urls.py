@@ -20,5 +20,6 @@ from rest_framework import permissions
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('v1/', include('cosmetics_API.urls'))
+    path('v1/items/', include('cosmetics_API.urls')),
+    path('v1/personal/', include('personal_API.urls'))
 ]

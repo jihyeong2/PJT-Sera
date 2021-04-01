@@ -72,7 +72,7 @@ const Skip = ({user,skin,update}) => {
               container
               direction="column"
             >
-          <div className={styles.header}>
+            <div className={styles.header}>
               <div className={styles.box}>
                 <div className={styles.title}>피부타입 선택</div>
                 <div className={styles.subtitle}>당신이 알고있는 타입을 하나 선택하세요.</div>

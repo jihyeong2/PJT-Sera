@@ -7,7 +7,7 @@ import RecentList from '../../components/common/RecentList/recent_list';
 import ProductNav from '../../components/CosmeticList/product_nav';
 import styles from './CosmeticList.module.css'
 const CosmeticList = (props) => {
-  // const [products, setProducts] = ustState([]);
+  // const [products, setProducts] = useState([]);
   // useEffect(()=>{
   //   처음에 페이지가 렌더링 될 때 api를 요청해서 모든 데이터를 다 받아온다고 ㅊ이면
   //   axios.뭐시기해서
@@ -16,15 +16,19 @@ const CosmeticList = (props) => {
   //   }
   // })
   return (
-    <div className={styles.containar}>
+      <div className={styles.containar}>
       <Navbar/>
       <Logo type={1}/>
+      <React.StrictMode>
       <ProductNav />
+      </React.StrictMode>
+      
       {/* <ProductList 	products={products}/>
       이렇게 그냥 내려주면 돼
       그러면ProductList는 products라는 이름으로 내려준 데이터 쓸수있어 */}
       <RecentList />
     </div>
+    
   );
 } 
 // 백요청이 먼저였어??,,,임의로 보여지는줄..그 폼이

@@ -1,4 +1,4 @@
-@value color-orange-2, color-grey-2, color-grey-4 from '../../common/style.css';
+@value color-orange-2, color-grey-2, color-grey-3, color-grey-4 from '../../common/style.css';
 
 .left_filter{
     display: inline-block;
@@ -31,8 +31,7 @@
     border-radius: 30px!important;
     margin-right: 10px!important;
     margin-top: 30px!important;
-    background-color: rgb(241, 241, 241)!important;
-    color: color-grey-2!important;
+    box-shadow: none!important;
 }
 .bar{
     border-top: 1px solid rgb(241, 241, 241);
@@ -44,4 +43,7 @@
 }
 .click_nav{
     text-align: center;
+}
+.num{
+    color : color-grey-3;
 }

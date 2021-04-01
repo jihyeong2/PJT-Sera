@@ -1,4 +1,4 @@
-@value font-size-14, font-size-20 from '../../common/style.css';
+@value font-size-14, font-size-20, font-size-30 from '../../common/style.css';
 @value color-grey-1, color-grey-2, color-orange-1 from '../../common/style.css';
 .container {
   width: 80%;
@@ -15,14 +15,12 @@
   padding-bottom: 4em;
 }
 .title {
-  font-size: font-size-20;
+  font-size: font-size-30;
   font-weight: 700;
-  padding-left: 0.25em;
   color: color-grey-1;
 }
 .subtitle {
   font-size: font-size-14;
-  padding-left: 0.25em;
   color: color-grey-2;
 }
 .submit_box {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import styles from './Result.module.css';
+import styles from './result.module.css';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';

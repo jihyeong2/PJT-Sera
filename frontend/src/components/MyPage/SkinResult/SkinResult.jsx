@@ -5,7 +5,7 @@ import styles from './SkinResult.module.css';
 import {connect} from 'react-redux';
 const SkinResult = ({user,skin}) => {
   return(
-    <>
+    <div>
       {user.skinId && 
         <div className={styles.container}>
           <div className={styles.box}>
@@ -24,7 +24,7 @@ const SkinResult = ({user,skin}) => {
           </div>
         </div>
       }
-    </>
+    </div>
   );
 };
 

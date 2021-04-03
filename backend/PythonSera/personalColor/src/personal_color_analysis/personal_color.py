@@ -1,10 +1,11 @@
 import cv2
 import numpy as np
-from personal_color_analysis import tone_analysis
-from personal_color_analysis.detect_face import DetectFace
-from personal_color_analysis.color_extract import DominantColors
+from personalColor.src.personal_color_analysis import tone_analysis
+from personalColor.src.personal_color_analysis.detect_face import DetectFace
+from personalColor.src.personal_color_analysis.color_extract import DominantColors
 from colormath.color_objects import LabColor, sRGBColor, HSVColor
 from colormath.color_conversions import convert_color
+from urllib.request import urlopen
 
 def analysis(imgpath):
     #######################################
@@ -37,8 +38,8 @@ def analysis(imgpath):
         Lab_b.append(float(format(lab.lab_b,".2f")))
         hsv_s.append(float(format(hsv.hsv_s,".2f"))*100)
 
-    print('Lab_b[skin, eyebrow, eye]',Lab_b)
-    print('hsv_s[skin, eyebrow, eye]',hsv_s)
+    # print('Lab_b[skin, eyebrow, eye]',Lab_b)
+    # print('hsv_s[skin, eyebrow, eye]',hsv_s)
     #######################################
     #      Personal color Analysis        #
     #######################################
@@ -55,4 +56,5 @@ def analysis(imgpath):
         else:
             tone = '겨울쿨톤(winter)'
     # Print Result
-    print('{}의 퍼스널 컬러는 {}입니다.'.format(imgpath, tone))
+    # print('{}의 퍼스널 컬러는 {}입니다.'.format(imgpath, tone))
+    return tone

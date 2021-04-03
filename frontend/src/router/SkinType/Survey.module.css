@@ -1,0 +1,73 @@
+@value font-size-30,font-size-14, font-size-16 from '../../common/style.css';
+@value color-orange-1, color-grey-1, color-grey-2, color-pink-1, color-white from '../../common/style.css';
+.container {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+.logo_box {
+  padding: 1em 0 3em 0;
+}
+.header {
+  margin-bottom: 2em;
+}
+.header .title {
+  font-size: font-size-30;
+  font-weight: 700;
+  color: color-grey-1;
+}
+.header .subtitle {
+  font-size: font-size-14;
+  color: color-grey-2;
+}
+.rule_box {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.rule {
+  flex-basis: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #eccaca;
+  padding: 0.5em 0;
+  border-radius: 0.25em;
+}
+.rule_img {
+  width: 95%;
+  background-color: color-white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 0.25em;
+  border-top-right-radius: 0.25em;
+}
+.rule_img img {
+  width: 100px;
+  height: 100px;
+}
+.rule_text {
+  font-size: font-size-16;
+  color: color-grey-2;
+  padding: 1em;
+  text-align: center;
+}
+.btn_box {
+  display: flex;
+  justify-content: flex-end;
+}
+.btn_box button {
+  border: none;
+  background-color: transparent;
+  font-size: font-size-16;
+  padding: 1em;
+}
+.btn_back {
+  color: color-grey-1;
+}
+.btn_next {
+  color: color-orange-1;
+}

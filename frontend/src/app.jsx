@@ -21,22 +21,23 @@ function App() {
     <div className={styles.app}>
       <BrowserRouter>
         <Switch>
-          <Route exact path="/" component={Home}/>
-          <Route path="/login" component={Login}/>
-          <Route path="/signup1" component={SignUp1}/>
-          <Route path="/signup2" component={SignUp2}/>
-          <Route path="/findpw1" component={FindPW1}/>
-          <Route path="/findpw2" component={FindPW2}/>
-          <Route path="/mypage" component={MyPage}/>
-          <Route path="/mypick" component={MyPick}/>
-          <Route path="/list" component={CosmeticList}/>
-          <Route path="/detail/:id" component={CosmeticDetail}/>
-          <Route path="/skin" component={SkinType}/>
-          <Route path="/skin/type" component={Skip}/>
-          <Route path="/skin/survey" component={Survey}/>
-          <Route path="/skin/result" component={Result}/>
-          <Route path="/personal_color" component={PersonalColor}/>
-          <Route path="/search/:name" component={SearchResult}/>
+          <Route exact path="/" component={Home} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup1" component={SignUp1} />
+          <Route path="/signup2" component={SignUp2} />
+          <Route path="/findpw1" component={FindPW1} />
+          <Route path="/findpw2" component={FindPW2} />
+          <Route path="/mypage" component={MyPage} />
+          <Route path="/mypick" component={MyPick} />
+          <Route path="/list" component={CosmeticList} />
+          <Route path="/detail/:id" component={CosmeticDetail} />
+          <Route path="/skin" component={SkinType} />
+          <Route path="/skin/type" component={Skip} />
+          <Route path="/skin/survey" component={Survey} />
+          <Route path="/skin/result" component={Result} />
+          <Route path="/personal_color" component={PersonalColor} />
+          <Route path="/search/:name" component={SearchResult} />
+
         </Switch>
       </BrowserRouter>
     </div>

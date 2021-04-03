@@ -17,6 +17,7 @@ import Skip from './router/SkinType/Skip';
 import Result from './router/SkinType/Result';
 import Survey from './router/SkinType/Survey';
 import React from 'react';
+import PersonalColorResult from './router/PersonalColor/PersonalColorResult';
 function App() {
   return (
     <div className={styles.app}>
@@ -44,7 +45,15 @@ function App() {
             )}
           />
 
-          <Route path="/personal_color" component={PersonalColor}/>
+          <Route 
+            path="/personal_color"
+            render={props=>(
+              <React.Fragment>
+                <Route exact path={`${props.match.url}`} component={PersonalColor}/>
+                <Route exact path={`${props.match.url}/result`} component={PersonalColorResult}/>
+              </React.Fragment>
+            )}
+          />
           <Route path="/search/:name" component={SearchResult}/>
         </Switch>
       </BrowserRouter>

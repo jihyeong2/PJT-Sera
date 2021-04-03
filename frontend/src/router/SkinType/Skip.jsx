@@ -62,7 +62,7 @@ const Skip = ({user,skin,update}) => {
 
   }
   return(
-    <div>
+    <div style={{position:'relative', paddingBottom:'180px', minHeight:"100vh"}}>
       <div className={styles.container}>
         <Navbar/>
         <Logo type={1}/>

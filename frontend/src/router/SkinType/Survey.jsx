@@ -315,7 +315,7 @@ const Survey = ({user,skin,update}) => {
     }
   },[])
   return(
-    <>
+    <div style={{position:'relative', paddingBottom:'180px', minHeight:"100vh"}}>
       <div className={styles.container}>
         <Navbar/>
         <div className={styles.logo_box}>
@@ -380,7 +380,7 @@ const Survey = ({user,skin,update}) => {
         </div>
       </div>
       <Footer/>
-    </>
+    </div>
   );
 }
 const mapStateToProps = (state) => ({

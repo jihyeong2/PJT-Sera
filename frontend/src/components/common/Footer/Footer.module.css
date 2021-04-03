@@ -2,8 +2,11 @@
 
 .footer {
   width: 100%;
+  height: 180px;
   background-color: color-grey-1;
   padding: 3em;
+  position: absolute;
+  bottom: 0;
 }
 .text {
   text-align: center;

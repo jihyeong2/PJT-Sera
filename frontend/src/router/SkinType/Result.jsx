@@ -83,7 +83,7 @@ const Result = ({user,skin}) => {
     a[1].style.cssText="justify-content: center;"
   },[])
   return(
-    <div>
+    <div style={{position:'relative', paddingBottom:'180px', minHeight:"100vh"}}>
       <div className={styles.container}>
         <Navbar/>
         <Logo type={1}/>

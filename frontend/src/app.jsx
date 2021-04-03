@@ -16,28 +16,45 @@ import SearchResult from './router/SearchResult/SearchResult'
 import Skip from './router/SkinType/Skip';
 import Result from './router/SkinType/Result';
 import Survey from './router/SkinType/Survey';
+import React from 'react';
+import PersonalColorResult from './router/PersonalColor/PersonalColorResult';
 function App() {
   return (
     <div className={styles.app}>
       <BrowserRouter>
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/login" component={Login} />
-          <Route path="/signup1" component={SignUp1} />
-          <Route path="/signup2" component={SignUp2} />
-          <Route path="/findpw1" component={FindPW1} />
-          <Route path="/findpw2" component={FindPW2} />
-          <Route path="/mypage" component={MyPage} />
-          <Route path="/mypick" component={MyPick} />
-          <Route path="/list" component={CosmeticList} />
-          <Route path="/detail/:id" component={CosmeticDetail} />
-          <Route path="/skin" component={SkinType} />
-          <Route path="/skin/type" component={Skip} />
-          <Route path="/skin/survey" component={Survey} />
-          <Route path="/skin/result" component={Result} />
-          <Route path="/personal_color" component={PersonalColor} />
-          <Route path="/search/:name" component={SearchResult} />
+          <Route exact path="/" component={Home}/>
+          <Route path="/login" component={Login}/>
+          <Route path="/signup1" component={SignUp1}/>
+          <Route path="/signup2" component={SignUp2}/>
+          <Route path="/findpw1" component={FindPW1}/>
+          <Route path="/findpw2" component={FindPW2}/>
+          <Route path="/mypage" component={MyPage}/>
+          <Route path="/mypick" component={MyPick}/>
+          <Route path="/list" component={CosmeticList}/>
+          <Route path="/detail/:id" component={CosmeticDetail}/>
+          <Route 
+            path="/skin/"
+            render={props=>(
+              <React.Fragment>
+                <Route exact path={`${props.match.url}`} component={SkinType}/>
+                <Route exact path={`${props.match.url}/type`} component={Skip}/>
+                <Route exact path={`${props.match.url}/survey`} component={Survey}/>
+                <Route exact path={`${props.match.url}/result`} component={Result}/>
+              </React.Fragment>
+            )}
+          />
 
+          <Route 
+            path="/personal_color"
+            render={props=>(
+              <React.Fragment>
+                <Route exact path={`${props.match.url}`} component={PersonalColor}/>
+                <Route exact path={`${props.match.url}/result`} component={PersonalColorResult}/>
+              </React.Fragment>
+            )}
+          />
+          <Route path="/search/:name" component={SearchResult}/>
         </Switch>
       </BrowserRouter>
     </div>

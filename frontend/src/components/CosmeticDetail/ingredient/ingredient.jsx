@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './ingredient.module.css';
 import Grid from '@material-ui/core/Grid';
-import IngredientItem from './ingredient_item';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import {connect} from 'react-redux';
 
@@ -38,29 +37,33 @@ const Ingredient = ({user, product}) => {
             <div className={styles.ingredients}>
             
             <Grid container spacing={6}>
-                    <Grid item xs={6} >
-                        <IngredientItem />
+                        {
+                            product.ingredient_elements.map ( element => ( 
+                                <>
+                                    <Grid item xs={6} >
+                                    <div className={styles.in_detail} key={product.id}>
+                                        <Grid container spacing={2}>
+                                            <Grid item xs={2} >
+                                                <div className={styles.in_img}>
+                                                    {/* 유저 피부타입 불러와서 맞는 성분은 초록색, 안맞는 성분은 빨강으로 할거임 👲🏻 */}
+                                                    <img className={styles.water_green_content} src={process.env.PUBLIC_URL + '/images/waterdrop_orange.png'} alt="그린"/>
+                                                </div>
+                                            </Grid>
+                                            <Grid item xs={10} >
+                                                <div className={styles.in_content}>
+                                                    <p className={styles.in_title}>{element.element_korean_name}</p>
+                                                    <p className={styles.in_description}>{element.element_english_name} <br/> {element.element_purpose}</p>
+                                                </div>
+                                            </Grid>
+                                        </Grid>
+                                    </div>
+                                    <div className={styles.bar}></div>  
+                                    </Grid>
+                                </>
+                            ))
+                        }
                     </Grid>
-                    <Grid item xs={6} >
-                        <IngredientItem />
-                    </Grid>
-                </Grid>
-                <Grid container spacing={6}>
-                    <Grid item xs={6} >
-                        <IngredientItem />
-                    </Grid>
-                    <Grid item xs={6} >
-                        <IngredientItem />
-                    </Grid>
-                </Grid>
-                <Grid container spacing={6}>
-                    <Grid item xs={6} >
-                        <IngredientItem />
-                    </Grid>
-                    <Grid item xs={6} >
-                        <IngredientItem />
-                    </Grid>
-                </Grid>
+                
             </div>
         </div>                                 
     );

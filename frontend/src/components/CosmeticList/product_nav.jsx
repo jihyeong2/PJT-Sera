@@ -132,13 +132,11 @@ const ProductNav = ({user}) => {
             (menuTab == 0 || menuTab == 4) && (<></>) // 전체, 향수는 하위분류 없음
         }
         {
-            menuTab == 1 && ( // 맞춤 - 맞춤에서 남성은 유저정보 가져와서 남성일때만 탭 표시
+            menuTab == 1 && ( 
                 <div className={styles.click_nav}>
                     <ButtonGroup variant="text" aria-label="text primary button group">
-                        <Button><span style={selectList==="스킨케어" ? selectStyle : startStyle} onClick={changeList}>스킨케어</span> &nbsp;<span className={styles.num}>(<span>8</span>)</span></Button>
-                        <Button><span style={selectList==="메이크업" ? selectStyle : startStyle} onClick={changeList} onClick={changeList}>메이크업</span> &nbsp;<span className={styles.num}>(<span>8</span>)</span></Button>
-                        <Button><span style={selectList==="향수" ? selectStyle : startStyle} onClick={changeList} onClick={changeList}>향수</span> &nbsp;<span className={styles.num}>(<span>8</span>)</span></Button>
-                        <Button><span style={selectList==="남성" ? selectStyle : startStyle} onClick={changeList} onClick={changeList}>남성</span> &nbsp;<span className={styles.num}>(<span>8</span>)</span></Button> 
+                        <Button><span style={selectList==="맞는상품" ? selectStyle : startStyle} onClick={changeList}>스킨케어</span> &nbsp;<span className={styles.num}>(<span>8</span>)</span></Button>
+                        <Button><span style={selectList==="안맞는상품" ? selectStyle : startStyle} onClick={changeList} onClick={changeList}>메이크업</span> &nbsp;<span className={styles.num}>(<span>8</span>)</span></Button>
                     </ButtonGroup>
                 </div>
             )

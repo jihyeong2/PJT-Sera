@@ -17,6 +17,8 @@ import Logo from '../../components/common/Logo/Logo';
 import Navbar from '../../components/common/Navbar/Navbar';
 import { DialogContent } from '@material-ui/core';
 import axios from "axios";
+import http from "../../http-common.js";
+import {connect} from 'react-redux';
 
 const dstyles = (theme) => ({
   root: {
@@ -49,13 +51,13 @@ const DialogTitle = withStyles(dstyles)((props) => {
   );
 });
 
-const CosmeticDetail = () => {
+const CosmeticDetail = ({user}) => {
     const [product, setProduct] = useState(null);
-
+    // 아이템 가져오기 + 유튜브 불러오기 
     const getItem = () => {
         axios({
             method: 'GET',
-            url: `http://localhost:8000/v1/items/4`,
+            url: `http://localhost:8000/v1/items/${user.userId}/4`,
             headers:{
               "Content-type": "application/json",
             }
@@ -82,16 +84,36 @@ const CosmeticDetail = () => {
             console.error(err);
           })
     }
-      
     
-
     const [videos, setVideos] = useState([]);
-    // const reviews;
+
     const [selectedVideo, setSelectedVideo] = useState(null);
     const selectVideo = (video) => {
         setOpen(true);
         setSelectedVideo(video); // 선택된 비디오로 업뎃 
     };
+
+    // 리뷰 가져오기 
+    const [review, setReview] = useState([]);
+
+    const getReview = () => {
+        http({
+            method: 'GET',
+            url: `v1/review/list/4`,
+            headers:{
+              "Content-type": "application/json",
+            }
+          })
+          .then(res=>{
+              console.log("리뷰데이터");
+            console.log(res.data.data);
+            setReview(res.data.data);
+          })
+          .catch(err=>{
+              console.log("리뷰 에러");
+            console.error(err);
+          })
+    }
     // const onCreateReview = (val) => {
       
     // }
@@ -101,6 +123,7 @@ const CosmeticDetail = () => {
     // }
     useEffect(() => {
       getItem();
+      getReview();
     }, []); // 마운트가 되었을 때만 호출
 
   const [open, setOpen] = React.useState(false);
@@ -149,11 +172,17 @@ const CosmeticDetail = () => {
             <div className={styles.bar}></div>
             <Grid item xs={12} className={styles.review}>
                 {/* <Review onCreateReview={onCreateReview}/> */}
-                <Review />
+                <Review product={product} review={review} />
             </Grid>
             </Grid>
         </div>
     );
   }
 
-export default CosmeticDetail;
+// export default CosmeticDetail;
+const mapStateToProps = (state) => ({
+  user: state.user.user,
+})
+export default connect(
+  mapStateToProps,
+)(CosmeticDetail);

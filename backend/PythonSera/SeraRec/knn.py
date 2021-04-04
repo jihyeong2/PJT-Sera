@@ -4,6 +4,7 @@ import tqdm
 import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 import numpy as np
+import collections
 
 def selectSpecialElement():
     connect, curs = connectMySQL()
@@ -32,6 +33,26 @@ def selectAllItem():
     connect.close()
 
     return items
+
+def selectItemTag(item_id):
+    connect, curs = connectMySQL()
+    query = """SELECT tag_name FROM item_tag INNER JOIN tag USING(tag_id) WHERE item_id = %s"""
+    curs.execute(query, (item_id))
+    tags = curs.fetchall()
+    connect.close()
+    result = []
+    for tag in tags:
+        result.append(tag[0])
+    return sorted(result)
+
+def selectDibs(user_id, item_id):
+    connect, curs = connectMySQL()
+    query = """SELECT dibs_id FROM dibs WHERE user_id=1=%s AND item_id=%s"""
+    curs.execute(query, (user_id,item_id))
+    tags = curs.fetchone()
+    connect.close()
+    if tags is None: return False
+    return True
 
 def writeElementByItem():
     connect, curs = connectMySQL()
@@ -208,7 +229,7 @@ def getSkinNumpy():
     skin_np = np.load(path)
     return skin_np
 
-def knn(user, category_large=None, category_middle = None):
+def knn(neighbor_cnt, user, category_large=None, category_middle = None):
     vec_np = getVectorNumPy()
     skin_np = getSkinNumpy()
     vec_idx = getVecIdx()
@@ -220,7 +241,7 @@ def knn(user, category_large=None, category_middle = None):
     gender = -1 if user['gender'] == '여' else 1
 
     input = np.append(input, np.array([age,gender,5]))
-    neigh = NearestNeighbors(n_neighbors=100)
+    neigh = NearestNeighbors(n_neighbors=neighbor_cnt)
     data_idx = {}
     data_np = np.empty((0, vec_np.shape[1]), dtype=float)
     if(category_large == None and category_middle == None):
@@ -246,15 +267,16 @@ def knn(user, category_large=None, category_middle = None):
     rec_items = []
     rec_correctRate = []
     result = neigh.kneighbors([input])
-    input[-1] = 1
+    input[-1] = input[-2] = input[-3] = 0
     for i, index in enumerate(result[1][0]):
         if data_idx[str(index)] not in rec_items:
             rec_items.append(data_idx[str(index)])
             correct_vec = data_np[index,:] * input
-            rec_correctRate.append(calCorrectRate(correct_vec,'knn'))
+            help_cnt, caution_cnt = calCorrectRate(correct_vec,'knn')
+            rec_correctRate.append([help_cnt, caution_cnt])
     return rec_items, rec_correctRate
 
-def nomal(items, user):
+def normal(items, user):
     item_np = getItemNumpy()
     skin_np = getSkinNumpy()
     item_idx = getItemIdx()
@@ -264,43 +286,50 @@ def nomal(items, user):
     category_fields = ['category_id', 'category_large', 'category_middle', 'category_small']
     for item in items[:100]:
         item_json = {}
-        item_json = {}
         for (d, f) in zip(item[:10], fields):
             item_json[f] = d
         for (d, f) in zip(item[10:], category_fields):
             item_json[f] = d
         correct_vec = item_np[item_idx[item_json['item_id']],:] * input
-        item_json['correct_rate'] = calCorrectRate(correct_vec)
+        help_cnt, caution_cnt = calCorrectRate(correct_vec)
+        item_json['help_cnt'] = help_cnt
+        item_json['caution_cnt'] = caution_cnt
+        item_json['rating'] = help_cnt - caution_cnt
+        item_json['tags'] = selectItemTag(item[0])
+        item_json['dibs'] = selectDibs(user['user_id'], item[0])
+        data.append(item_json)
+    return data
+
+def correct(items, user):
+    item_np = getItemNumpy()
+    skin_np = getSkinNumpy()
+    item_idx = getItemIdx()
+    input = skin_np[user['skin_id']-1,:]
+    data = []
+    fields = ['item_id', 'item_name', 'item_img', 'item_brand','category_id','item_colors','item_volume','item_price','item_description','dibs_cnt',]
+    category_fields = ['category_id', 'category_large', 'category_middle', 'category_small']
+    input_np = input * item_np
+    for item in items:
+        item_json = {}
+        for (d, f) in zip(item[:10], fields):
+            item_json[f] = d
+        for (d, f) in zip(item[10:], category_fields):
+            item_json[f] = d
+        help_cnt, caution_cnt = calCorrectRate(input_np[item_idx[item[0]],:])
+        item_json['help_cnt'] = help_cnt
+        item_json['caution_cnt'] = caution_cnt
+        item_json['rating'] = help_cnt - caution_cnt
+        item_json['tags'] = selectItemTag(item[0])
+        item_json['dibs'] = selectDibs(user['user_id'], item[0])
         data.append(item_json)
     return data
 
 # 일치율 계산
 def calCorrectRate(vec, type=None):
-    # 벡터에서 아이템과 스킨타입 곱하기 -> 양수 (도움) 음수 (주의) 수식에 넣어서 계산
-    help = 0
-    caution = 0
-    review_score = 0
-    if type == 'knn':
-        for i in range(vec.shape[0]-3):
-            if vec[i] > 0:
-                help += 1
-            elif vec[i] < 0:
-                caution += 1
-        review_score = vec[-1]*20
-    else:
-        for i in range(vec.shape[0]):
-            if vec[i] > 0:
-                help += 1
-            elif vec[i] < 0:
-                caution += 1
-    
-    # print(help, caution)
-    result = 0
-    if help + caution != 0: result = (help - caution) / (help + caution) * 100
-
-    result = (result+review_score)/2
-    if result < 0: result = 0
-    return result
+    count = collections.Counter(vec)
+    help_cnt = count[4]
+    caution_cnt = count[-4]
+    return help_cnt, caution_cnt
 
 def updateVector():
     makeSkinVector()

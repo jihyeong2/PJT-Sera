@@ -72,7 +72,7 @@ public class LoginController {
     // 카카오로 로그인
     @PostMapping("/kakao")
     public ResponseEntity<Map<String, Object>> kakaoLogin(@RequestBody UserRequest userRequest, HttpServletResponse response) {
-        
+
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
 
@@ -80,7 +80,7 @@ public class LoginController {
             User loginUser = userService.findByUserLoginId(userRequest.getUserLoginId());
             if(loginUser==null) { //회원가입시키고 로그인
                 try {
-                    Skin skin = skinService.findBySkinType(userRequest.getSkinType());
+                    Skin skin = skinService.findBySkinType(userRequest.getSkinId().getSkinType());
                     User user = User.createUser(userRequest, skin);
                     userService.save(user);
                     loginUser = user;
@@ -106,4 +106,3 @@ public class LoginController {
         return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
 }
-

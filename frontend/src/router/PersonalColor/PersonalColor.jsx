@@ -8,10 +8,13 @@ import Footer from '../../components/common/Footer/Footer';
 import {setColor, colorTest} from '../../service/color';
 import {connect} from 'react-redux';
 import {update} from '../../actions/index';
+import { useHistory } from 'react-router';
+import Swal from 'sweetalert2';
 
 const PersonalColor = ({user,color}) => {
   const [prevImg, setPrevImg] = useState(profile);
   const [imgFile, setImgFile] = useState(null);
+  const history = useHistory();
   const onUploadImage = (e) => {
     const input = document.querySelector('#file_route');
     if (e.target.files && e.target.files[0]){
@@ -31,7 +34,17 @@ const PersonalColor = ({user,color}) => {
     colorTest(
       formData,
       (res)=>{
+        console.log(user);
         console.log(res);
+        const tmp = {...user};
+        // update(tmp);
+        // Swal.fire({
+        //   icon: 'success',
+        //   text: `${user.userNickname}님의 피부타입은 ${result}입니다.`,
+        //   showConfirmButton: false,
+        //   timer: 1500
+        // });
+        history.push("/personal_color/result");
       },
       (err)=>{
         console.log(err);

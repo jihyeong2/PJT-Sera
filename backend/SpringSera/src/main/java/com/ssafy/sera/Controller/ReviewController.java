@@ -1,14 +1,13 @@
 package com.ssafy.sera.Controller;
 
+import com.ssafy.sera.Controller.Request.DibsRequest;
+import com.ssafy.sera.Controller.Request.GoodReviewRequest;
 import com.ssafy.sera.Controller.Request.ReviewRequest;
 import com.ssafy.sera.Domain.Item.Item;
 import com.ssafy.sera.Domain.User.User;
 import com.ssafy.sera.Domain.review.Review;
 import com.ssafy.sera.Domain.review.ReviewDto;
-import com.ssafy.sera.Service.ItemService;
-import com.ssafy.sera.Service.ReviewService;
-import com.ssafy.sera.Service.S3Service;
-import com.ssafy.sera.Service.UserService;
+import com.ssafy.sera.Service.*;
 import com.ssafy.sera.Util.Validator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Api
 @CrossOrigin(origins = "*")
@@ -30,6 +30,7 @@ public class ReviewController {
     private final ItemService itemService;
     private final UserService userService;
     private final S3Service s3Service;
+    private final GoodReviewService grs;
     private final Validator validator;
 
     @ApiOperation(value = "리뷰 작성", notes = "리뷰 작성 성공시 BaseResponse에 data값으로 '성공적으로 작성' 설정 후 반환", response = BaseResponse.class)
@@ -62,8 +63,12 @@ public class ReviewController {
         BaseResponse response = null;
         try{
             Item item = itemService.findByItemId(itemId);
-            List<ReviewDto> reviewList  = reviewService.findByItem(item);
-            response = new BaseResponse("success", reviewList);
+            List<Review> reviewList  = reviewService.findByItem(item);
+            List<ReviewDto> collect = reviewList.stream()
+                    .map(m-> new ReviewDto(m))
+                    .collect(Collectors.toList());
+
+            response = new BaseResponse("success", collect);
         }
         catch(Exception e){
             response = new BaseResponse("fail", e.getMessage());
@@ -112,12 +117,15 @@ public class ReviewController {
     }
 
 
-    @ApiOperation(value = "리뷰 도움 추가", notes = "반환되는 데이터는 수정 성공 / 에러 메시지", response = BaseResponse.class)
-    @PutMapping("/help/{userLoginId}/{reviewId}")
-    public BaseResponse modifyHelpCnt(@ApiParam(value = "로그인한 아이디") @PathVariable String userLoginId, @ApiParam(value = "리뷰 아이디")@PathVariable Long reviewId){
+    @ApiOperation(value = "리뷰 도움 수 업데이트(클릭 이벤트)", notes = "도움 수 업데이트 성공시 도움수 반환 / 에러 메시지", response = BaseResponse.class)
+    @PutMapping("/help/{request}")
+    public BaseResponse modifyHelpCnt(@ApiParam(value = "도움 객체")@RequestBody GoodReviewRequest request){
         BaseResponse response = null;
         try {
-            response = new BaseResponse("success", "삭제 성공");
+            User user = userService.findByUserLoginId(request.getUserLoginId());
+            Review review = reviewService.findByReviewId(request.getReviewId());
+            long helpCnt = grs.pressHelp(user, review);
+            response = new BaseResponse("success", helpCnt);
         } catch (IllegalStateException e) {
             response = new BaseResponse("fail", e.getMessage());
         }

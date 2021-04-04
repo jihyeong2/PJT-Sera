@@ -29,7 +29,7 @@ spring:
 spring:
   profiles: prod
   datasource:
-    url: jdbc:mysql://seradb.c8joeykpqvdy.ap-northeast-2.rds.amazonaws.com:3306/seraDB?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://seradb.c8joeykpqvdy.ap-northeast-2.rds.amazonaws.com:3306/seraDB?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
     username: admin
     password: ssafyB202SERA
     driver-class-name: com.mysql.jdbc.Driver

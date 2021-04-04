@@ -32,7 +32,7 @@ const Detail = ({product}) => {
         </div>
         
         <div className={styles.icon}>
-            231<span className={styles.heart_icon}><FontAwesomeIcon  icon={['far', 'heart']} size="lg" color="red" /></span>
+            {product.dibs_cnt} &nbsp;<span className={styles.heart_icon}><FontAwesomeIcon  icon={['far', 'heart']} size="lg" color="red" /></span>
             {/* <FontAwesomeIcon icon={['fas', 'heart']} size="2x" color="red"/> */}
         </div>
     </div>   

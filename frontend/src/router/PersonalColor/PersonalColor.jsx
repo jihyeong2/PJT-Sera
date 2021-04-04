@@ -1,26 +1,42 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import Logo from '../../components/common/Logo/Logo';
 import Navbar from '../../components/common/Navbar/Navbar';
 import styles from './PersonalColor.module.css';
 import profile from '../../assets/profile.png';
 import Footer from '../../components/common/Footer/Footer';
-const PersonalColor = (props) => {
-  const [imgFile, setImgFile] = useState(profile);
+import {setColor, colorTest} from '../../service/color';
+import {connect} from 'react-redux';
+import {update} from '../../actions/index';
+
+const PersonalColor = ({user,color}) => {
+  const [prevImg, setPrevImg] = useState(profile);
+  const [imgFile, setImgFile] = useState(null);
   const onUploadImage = (e) => {
     const input = document.querySelector('#file_route');
     if (e.target.files && e.target.files[0]){
       let reader = new FileReader();
       reader.onload=function(event){
-        setImgFile(event.target.result);
+        setPrevImg(event.target.result);
         input.value=e.target.files[0].name;
       }
       reader.readAsDataURL(e.target.files[0]);
+      setImgFile(e.target.files[0]);
     }
-    console.log(e.target.files);
   };
-  const onSubmit = (e) => {
-
+  const onSubmit = () => {
+    const formData = new FormData();
+    formData.append("file", imgFile);
+    formData.append("user_id", user.userId);
+    colorTest(
+      formData,
+      (res)=>{
+        console.log(res);
+      },
+      (err)=>{
+        console.log(err);
+      }
+    )
   };
   return(
     <div style={{position:'relative', paddingBottom:'180px', minHeight:"100vh"}}>
@@ -93,7 +109,7 @@ const PersonalColor = (props) => {
             </div>
           </div>
           <div className={styles.test_right}>
-            <img className={styles.img} src={imgFile} alt=""/>
+            <img className={styles.img} src={prevImg} alt=""/>
             <div className={styles.img_back}></div>
             <button className={styles.test_btn} onClick={onSubmit}>
               퍼스널컬러 테스트 Go!
@@ -106,4 +122,16 @@ const PersonalColor = (props) => {
   );
 };
 
-export default PersonalColor;
+const mapStateToProps = (state) => ({
+  user: state.user.user,
+  color: state.color,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  update: (user) => dispatch(update(user)),
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PersonalColor);

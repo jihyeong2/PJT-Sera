@@ -105,6 +105,14 @@ def itemListCorrect(request, user_id, category_large=None):
     data = correct(user, category_large = category_large)
     return JsonResponse({'item_list': data}, json_dumps_params={'ensure_ascii': False})
 
+@api_view(['GET'])
+def itemListCorrectCheck(request, user_id, type, category_large=None):
+    connect, curs = connectMySQL()
+    user = selectUser(user_id)
+    connect.close()
+    data = correct(user, category_large = category_large, type=type)
+    return JsonResponse({'item_list': data}, json_dumps_params={'ensure_ascii': False})
+
 @csrf_exempt
 def DibsItem(request, user_id, item_id):
     result = False

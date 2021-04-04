@@ -279,17 +279,17 @@ def knn(neighbor_cnt, user, category_large=None, category_middle = None):
     neigh = NearestNeighbors(n_neighbors=neighbor_cnt)
     data_idx = {}
     data_np = np.empty((0, vec_np.shape[1]), dtype=float)
-    if(category_large == None and category_middle == None):
+    if category_large is None and category_middle is None:
         data_np = vec_np
         data_idx = vec_idx
     else:
         connect, curs = connectMySQL()
         item_idx = []
-        if (category_large != None and category_middle == None):
+        if category_large is not None and category_middle is None:
             query = """SELECT item_id FROM item INNER JOIN category USING(category_id) WHERE category_large=%s"""
             curs.execute(query, (category_large))
             item_ids = curs.fetchall()   
-        elif (category_large != None and category_middle != None):
+        elif category_large is not None and category_middle is not None:
             query = """SELECT item_id FROM item INNER JOIN category USING(category_id) WHERE category_large=%s AND category_middle=%s"""
             curs.execute(query, (category_large, category_middle))
             item_ids = curs.fetchall()
@@ -379,7 +379,7 @@ def sort(user, type=None, subType=None, category_large=None, category_middle = N
     high = """ORDER BY CAST(REPLACE(REPLACE(item_price, '원',''),',','') AS UNSIGNED) DESC, helpful_cnt-caution_cnt DESC 
             limit 100"""
     if type == 'price':
-        if category_large != None and category_middle == None:
+        if category_large is not None and category_middle is None:
             query = """SELECT i.*,c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
                     WHERE si.skin_id = %s AND c.category_large = %s AND i.item_price != '가격미정' """
             if subType == 'low':
@@ -388,7 +388,7 @@ def sort(user, type=None, subType=None, category_large=None, category_middle = N
             else:
                 query += high
                 curs.execute(query, (user['skin_id'], category_large))
-        elif category_large != None and category_middle != None:
+        elif category_large is not None and category_middle is not None:
             query = """SELECT i.*,c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
                     WHERE si.skin_id = %s AND c.category_large = %s AND c.category_middle = %s AND i.item_price != '가격미정' """
             if subType == 'low':
@@ -407,13 +407,13 @@ def sort(user, type=None, subType=None, category_large=None, category_middle = N
                 query += high
                 curs.execute(query, (user['skin_id']))
     elif type == 'reviewCnt':
-        if category_large != None and category_middle == None:
+        if category_large is not None and category_middle is None:
             query = """SELECT i.*,c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
                     WHERE si.skin_id = %s AND c.category_large = %s
                     ORDER BY (SELECT COUNT(*) FROM review WHERE item_id=i.item_id) DESC, helpful_cnt-caution_cnt DESC 
                     LIMIT 100 """
             curs.execute(query, (user['skin_id'], category_large))
-        elif category_large != None and category_middle != None:
+        elif category_large is not None and category_middle is None:
             query = """SELECT i.*,c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
                     WHERE si.skin_id = %s AND c.category_large = %s AND c.category_middle = %s
                     ORDER BY (SELECT COUNT(*) FROM review WHERE item_id=i.item_id) DESC, helpful_cnt-caution_cnt DESC 
@@ -426,13 +426,13 @@ def sort(user, type=None, subType=None, category_large=None, category_middle = N
                         LIMIT 100 """
             curs.execute(query, (user['skin_id']))
     elif type == 'score':
-        if category_large != None and category_middle == None:
+        if category_large is not None and category_middle is None:
             query = """SELECT i.*,c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
                     WHERE si.skin_id = %s AND c.category_large = %s
                     ORDER BY (SELECT AVG(review_score) FROM review WHERE item_id=i.item_id GROUP BY item_id) DESC, helpful_cnt-caution_cnt DESC 
                     LIMIT 100 """
             curs.execute(query, (user['skin_id'], category_large))
-        elif category_large != None and category_middle != None:
+        elif category_large is not None and category_middle is not None:
             query = """SELECT i.*,c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
                     WHERE si.skin_id = %s AND c.category_large = %s AND c.category_middle = %s
                     ORDER BY (SELECT AVG(review_score) FROM review WHERE item_id=i.item_id GROUP BY item_id) DESC, helpful_cnt-caution_cnt DESC 
@@ -465,19 +465,43 @@ def sort(user, type=None, subType=None, category_large=None, category_middle = N
     connect.close()
     return data
 
-def correct(user, category_large = None):
+def correct(user, category_large = None, type=None):
     connect, curs = connectMySQL()
-    if category_large == None:
-        query = """SELECT i.*,c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
-                    WHERE si.skin_id = %s
-                    ORDER BY si.helpful_cnt - si.caution_cnt DESC
-                    LIMIT 100 """
+    if category_large is None:
+        if type is None:
+            query = """SELECT i.*,c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
+                        WHERE si.skin_id = %s
+                        ORDER BY si.helpful_cnt - si.caution_cnt DESC
+                        LIMIT 100 """
+        else:
+            if type == 'helpful':
+                query = """SELECT i.*,c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
+                            WHERE si.skin_id = %s AND si.caution_cnt = 0
+                            ORDER BY si.helpful_cnt DESC
+                            LIMIT 100 """
+            else:
+                query = """SELECT i.*,c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
+                            WHERE si.skin_id = %s
+                            ORDER BY si.caution_cnt DESC
+                            LIMIT 100 """
         curs.execute(query, (user['skin_id']))
     else:
-        query = """SELECT i.*,c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
-                    WHERE si.skin_id = %s AND c.category_large = %s
-                    ORDER BY si.helpful_cnt - si.caution_cnt DESC
-                    LIMIT 100 """
+        if type is None:
+            query = """SELECT i.*,c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
+                        WHERE si.skin_id = %s AND c.category_large = %s
+                        ORDER BY si.helpful_cnt - si.caution_cnt DESC
+                        LIMIT 100 """
+        else:
+            if type == 'helpful':
+                query = """SELECT i.*,c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
+                        WHERE si.skin_id = %s AND c.category_large = %s AND si.caution_cnt = 0
+                        ORDER BY si.helpful_cnt DESC
+                        LIMIT 100 """
+            else:
+                query = """SELECT i.*,c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
+                            WHERE si.skin_id = %s AND c.category_large = %s
+                            ORDER BY si.caution_cnt DESC
+                            LIMIT 100 """
         curs.execute(query, (user['skin_id'], category_large))
     items = curs.fetchall()
     data = []

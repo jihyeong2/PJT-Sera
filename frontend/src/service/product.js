@@ -17,7 +17,7 @@ function setHate(user_id,item_id,success,fail){
   .catch(fail)
 }
 function getLikeList(user_id,success,fail){
-  httpDjango.delete(`v1/items/dibs/${user_id}`)
+  httpDjango.get(`v1/items/dibs/${user_id}`)
   .then(success)
   .catch(fail)
 }

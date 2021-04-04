@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import DetailLeft from '../../components/CosmeticDetail/detail/detail_left';
 import DetailRight from '../../components/CosmeticDetail/detail/detail_right';
 import Youtube from '../../components/CosmeticDetail/youtube/youtube_list';
@@ -15,6 +15,10 @@ import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import Logo from '../../components/common/Logo/Logo';
 import Navbar from '../../components/common/Navbar/Navbar';
+import { DialogContent } from '@material-ui/core';
+import axios from "axios";
+import http from "../../http-common.js";
+import {connect} from 'react-redux';
 
 const dstyles = (theme) => ({
   root: {
@@ -47,84 +51,138 @@ const DialogTitle = withStyles(dstyles)((props) => {
   );
 });
 
-const DialogContent = withStyles((theme) => ({
-  root: {
-    padding: theme.spacing(2),
-  },
-}))(MuiDialogContent);
+const CosmeticDetail = ({user}) => {
+    const [product, setProduct] = useState(null);
+    // 아이템 가져오기 + 유튜브 불러오기 
+    const getItem = () => {
+        axios({
+            method: 'GET',
+            url: `http://localhost:8000/v1/items/${user.userId}/4`,
+            headers:{
+              "Content-type": "application/json",
+            }
+          })
+          .then(res=>{
+              console.log("데이터");
+            console.log(res.data);
+            setProduct(res.data);
 
-const CosmeticDetail = () => {
-  const [videos, setVideos] = useState([]);
-  const [selectedVideo, setSelectedVideo] = useState(null);
+            const requestOptions = {
+              method: 'GET',
+              redirect: 'follow'
+            };
+            fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${res.data.item_name}&type=video&order=viewCount&maxResults=8&key=AIzaSyAIAN4fWbhQxYcuLU-cnjAGihX695m5azE`, requestOptions)
+            .then(response => response.json()) // 보기좋은 json 형식
+            .then(result => result.items.map(item => ({...item, id:item.id.videoId}))) // 그대로 하는데 id만 object가 아니라 videoId로 덮어주는 작업
+            .then(items => setVideos(items)) // 그 비디오 아이템들로 업뎃
+            .catch(error => console.log('error', error));
+            console.log("dha?")
+          console.log(product);
+          })
+          .catch(err=>{
+              console.log("에러");
+            console.error(err);
+          })
+    }
+    
+    const [videos, setVideos] = useState([]);
 
-  const selectVideo = (video) => {
-    setOpen(true);
-    setSelectedVideo(video); // 선택된 비디오로 업뎃 
-  };
-
-  useEffect(() => {
-    const search = "입생로랑틴트";
-    const requestOptions = {
-      method: 'GET',
-      redirect: 'follow'
+    const [selectedVideo, setSelectedVideo] = useState(null);
+    const selectVideo = (video) => {
+        setOpen(true);
+        setSelectedVideo(video); // 선택된 비디오로 업뎃 
     };
 
-    fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${search}&type=video&order=viewCount&maxResults=8&key=AIzaSyAIAN4fWbhQxYcuLU-cnjAGihX695m5azE`, requestOptions)
-      .then(response => response.json()) // 보기좋은 json 형식
-      .then(result => result.items.map(item => ({ ...item, id: item.id.videoId }))) // 그대로 하는데 id만 object가 아니라 videoId로 덮어주는 작업
-      .then(items => setVideos(items)) // 그 비디오 아이템들로 업뎃
-      .catch(error => console.log('error', error));
-  }, []); // 마운트가 되었을 때만 호출
+    // 리뷰 가져오기 
+    const [review, setReview] = useState([]);
+
+    const getReview = () => {
+        http({
+            method: 'GET',
+            url: `v1/review/list/4`,
+            headers:{
+              "Content-type": "application/json",
+            }
+          })
+          .then(res=>{
+              console.log("리뷰데이터");
+            console.log(res.data.data);
+            setReview(res.data.data);
+          })
+          .catch(err=>{
+              console.log("리뷰 에러");
+            console.error(err);
+          })
+    }
+    // const onCreateReview = (val) => {
+      
+    // }
+    // const onChangeReview = (reviewId,val) => {
+
+    //   set
+    // }
+    useEffect(() => {
+      getItem();
+      getReview();
+    }, []); // 마운트가 되었을 때만 호출
 
   const [open, setOpen] = React.useState(false);
 
   const handleClose = () => {
     setOpen(false);
   };
+  
+    const [fullWidth, setFullWidth] = React.useState(true);
+    if(!product) return null; 
 
-  const [fullWidth, setFullWidth] = React.useState(true);
+    return (
+        <div className={styles.page}>
+          <div className={styles.nav}>
+            <Navbar/>
+            <Logo type={1}/>
+          </div>
+            
+            <Grid container spacing={4}>
+            <Grid item xs={4} className={styles.detail}>
+                <DetailLeft product={product} />
+            </Grid>
+            <Grid item xs={8} className={styles.detail}>
+                <DetailRight product={product} />
+            </Grid>
+            <Grid item xs={12} className={styles.youtube}>
+                
+                {
+                    selectedVideo && (
+                        <Dialog style={{height:'100%',}} fullWidth={fullWidth} maxWidth="lg" onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+                                <DialogTitle  id="customized-dialog-title" onClose={handleClose}>
+                                  <div className={styles.name}>
+                                      <img className={styles.youtube_icon} src={process.env.PUBLIC_URL + '/images/youtube_icon.png'} alt="유튜브아이콘"/>
+                                      <span className={styles.title}> 유튜브 재생 </span>   
+                                  </div>
+                                </DialogTitle>
+                                <DialogContent dividers>
+                                    <YoutubeDetail video={selectedVideo}/>
+                                </DialogContent>
+                            </Dialog>
+                    )
+                    
+                }
+                <Youtube videos={videos} onVideoClick={selectVideo}/>
+            </Grid>
+            <div className={styles.bar}></div>
+            <Grid item xs={12} className={styles.review}>
+                {/* <Review onCreateReview={onCreateReview}/> */}
+                <Review product={product} review={review} />
+            </Grid>
+            </Grid>
+        </div>
+    );
+  }
 
-  return (
-    <div className={styles.page}>
-      <div className={styles.nav}>
-        <Navbar />
-        <Logo type={1} />
-      </div>
-
-      <Grid container spacing={4}>
-        <Grid item xs={4} className={styles.detail}>
-          <DetailLeft />
-        </Grid>
-        <Grid item xs={8} className={styles.detail}>
-          <DetailRight />
-        </Grid>
-        <Grid item xs={12} className={styles.youtube}>
-
-          {
-            selectedVideo && (
-              <Dialog style={{ height: '100%', }} fullWidth={fullWidth} maxWidth="lg" onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
-                <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                  <div className={styles.name}>
-                    <img className={styles.youtube_icon} src={process.env.PUBLIC_URL + '/images/youtube_icon.png'} alt="유튜브아이콘" />
-                    <span className={styles.title}> 유튜브 재생 </span>
-                  </div>
-                </DialogTitle>
-                <DialogContent dividers>
-                  <YoutubeDetail video={selectedVideo} />
-                </DialogContent>
-              </Dialog>
-            )
-
-          }
-          <Youtube videos={videos} onVideoClick={selectVideo} />
-        </Grid>
-        <div className={styles.bar}></div>
-        <Grid item xs={12} className={styles.review}>
-          <Review />
-        </Grid>
-      </Grid>
-    </div>
-  );
-}
-
-export default CosmeticDetail;
+// export default CosmeticDetail;
+const mapStateToProps = (state) => ({
+  user: state.user.user,
+})
+export default connect(
+  mapStateToProps,
+)(CosmeticDetail);

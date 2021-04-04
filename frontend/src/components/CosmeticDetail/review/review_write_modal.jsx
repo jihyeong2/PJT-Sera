@@ -6,7 +6,7 @@ import Box from '@material-ui/core/Box';
 import http from "../../../http-common.js";
 
 //★props내려준후 수정예정
-const ReviewWrite = (props) => {
+const ReviewWrite = ({product}) => {
 
     const [fileName, setFileName] = useState("파일을 선택해주세요");
     const [imageFile, setImageFile] = useState("");

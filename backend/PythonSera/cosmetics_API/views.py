@@ -50,12 +50,12 @@ def itemListRecom(request, user_id, category_large=None, category_middle=None):
 
 # 화장품 디테일
 @api_view(['GET'])
-def item_one(request, item_id):
+def item_one(request, user_id, item_id):
+    user = selectUser(user_id)
     connect, curs = connectMySQL()
     query = """SELECT i.*, c.* FROM item i INNER JOIN category c USING(category_id) WHERE item_id=%s"""
     curs.execute(query,(item_id))
     item = curs.fetchone()
-    connect.close()
     fields = ['item_id', 'item_name', 'item_img', 'item_brand','category_id','item_colors','item_volume','item_price','item_description','dibs_cnt',]
     category_fields = ['category_id', 'category_large', 'category_middle', 'category_small']
     item_json = {}
@@ -63,6 +63,13 @@ def item_one(request, item_id):
         item_json[f] = d
     for (d, f) in zip(item[10:], category_fields):
         item_json[f] = d
+    item_json['tags'] = selectItemTag(item[0], connect, curs)
+    item_json['dibs'] = selectDibs(user['user_id'], item[0], connect, curs)
+    best_elements, worst_elements, ingredient_elements = selectElementForDetail(item[0], user['skin_id'], connect, curs)
+    item_json['best_elements'] = best_elements
+    item_json['worst_elements'] = worst_elements
+    item_json['ingredient_elements'] = ingredient_elements
+    connect.close()
     return JsonResponse(item_json, json_dumps_params={'ensure_ascii': False})
     
 # 가격 순 정렬
@@ -161,7 +168,6 @@ def itemListCorrect(request, user_id, category_large=None):
     data = correct(items, user)
     data = sorted(data, key=lambda x: x['rating'], reverse=True)
     for item in data[:100]:
-        item['tags'] = selectItemTag(item['item_id'], connect, curs)
         item['dibs'] = selectDibs(user['user_id'], item['item_id'], connect, curs)
     connect.close()
     return JsonResponse({'item_list': data[:100]}, json_dumps_params={'ensure_ascii': False})
@@ -243,21 +249,7 @@ def makeRecomItemList(item_cnt, items, rates, user):
         item_json['help_cnt'] = rate[0]
         item_json['caution_cnt'] = rate[1]
         item_json['rating'] = rate[0] - rate[1]
-        item_json['tags'] = selectItemTag(item[0], connect, curs)
         item_json['dibs'] = selectDibs(user['user_id'], item[0], connect, curs)
         data.append(item_json)
     connect.close()
     return data
-
-# 사용자 정보 가져오기
-def selectUser(user_id):
-    connect, curs = connectMySQL()
-    query = """SELECT * FROM user WHERE user_id = %s"""
-    curs.execute(query, (user_id))
-    user = curs.fetchone()
-    connect.close()
-    user_info = {}
-    feilds = ['user_id', 'user_login_id', 'user_password', 'user_nickname', 'user_age', 'user_phone', 'user_gender', 'skin_id', 'personal_color', 'user_img']
-    for (feild, info) in zip(feilds, user):
-        user_info[feild] = info
-    return user_info

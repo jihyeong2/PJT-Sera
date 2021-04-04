@@ -52,3 +52,24 @@
   color: color-grey-1;
   margin-bottom: 1em;
 }
+.btn_box {
+  padding: 2.5em;
+  display: flex;
+  justify-content: center;
+}
+.reset_btn {
+  border: none;
+  background-color: transparent;
+  margin: 0 1em;
+  padding: 0 1em;
+  font-size: font-size-14;
+}
+.finish_btn {
+  background-color: transparent;
+  margin: 0 1em;
+  padding: 0 1em;
+  font-size: font-size-14;
+  color: color-orange-1;
+  border: 1px solid color-orange-1;
+  border-radius: 1em;
+}

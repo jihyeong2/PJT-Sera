@@ -34,7 +34,7 @@ public class UserController {
         BaseResponse response = null;
         try{
             request.setUserPhone(validator.phoneValidator(request.getUserPhone()));
-            Skin  skin = skinService.findBySkinType(request.getSkinType());
+            Skin  skin = skinService.findBySkinType(request.getSkinId().getSkinType());
             User user = User.createUser(request, skin);
             userService.save(user);
             response = new BaseResponse("success", "성공적으로 가입");

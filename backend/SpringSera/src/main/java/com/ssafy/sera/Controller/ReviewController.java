@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,12 +59,13 @@ public class ReviewController {
     }
 
     @ApiOperation(value = "현재 상품에 작성된 전체 리뷰목록 조회", notes = "List 형식으로 반환", response = BaseResponse.class)
-    @GetMapping("/list/{itemId}")
-    public BaseResponse findAllReview(@ApiParam(value = "상품 아이디")@PathVariable Long itemId){
+    @GetMapping("/list/{itemId}/{userLoginId}")
+    public BaseResponse findAllReview(@ApiParam(value = "상품 아이디")@PathVariable Long itemId, @ApiParam(value = "로그인 아이디")@PathVariable String userLoginId){
         BaseResponse response = null;
         try{
             Item item = itemService.findByItemId(itemId);
-            List<Review> reviewList  = reviewService.findByItem(item);
+            User user = userService.findByUserLoginId(userLoginId);
+            List<Review> reviewList  = reviewService.findByItem(user, item);
             List<ReviewDto> collect = reviewList.stream()
                     .map(m-> new ReviewDto(m))
                     .collect(Collectors.toList());

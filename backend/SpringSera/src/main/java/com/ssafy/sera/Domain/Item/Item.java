@@ -54,6 +54,7 @@ public class Item {
 
     public static Item createItem(ItemRequest itemRequest){
         Item itemInput = new Item();
+        itemInput.setItemId(itemRequest.getItemId());
         itemInput.setItemName(itemRequest.getItemName());
         itemInput.setItemImg(itemRequest.getItemImg());
         itemInput.setItemBrand(itemRequest.getItemBrand());

@@ -3,13 +3,15 @@ import React, { useState } from 'react';
 
 import styles from './ProductList.module.css';
 import Product from './Product';
-const ProductList = ({products}) => {
-  
+const ProductList = ({products, handleHeart}) => {
+  const onHandleHeart = (item_id,idx) => {
+    handleHeart(item_id,idx);
+  };
   return (
     <Grid className={styles.products} container spacing={5}>
-        {products.map((product) => (
+        {products.map((product,idx) => (
           <Grid key={product.item_id} item xs={3} className={styles.product}>
-              <Product key={product.item_id} product={product}/>
+              <Product key={product.item_id} index={idx} product={product} handleHeart={onHandleHeart}/>
           </Grid>
         ))}
     </Grid>

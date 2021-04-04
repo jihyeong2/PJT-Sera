@@ -65,11 +65,9 @@ const ReviewItem = (props) => {
                 <Grid item xs={1}>
                     <div>
                          <ThumbUpIcon className={styles.like_icon}/>
-                         <ThumbDownIcon className={styles.unlike_icon}/>
                     </div>
                     <div className={styles.des}>
-                      <span className={styles.help}>도움</span>
-                      <span>신고</span>
+                      <span className={styles.help}>도움 </span>(<span>8</span>)
                     </div>
                    
                 </Grid>

@@ -27,7 +27,8 @@ def personalColorTest(request):
     s3_client.put_object(
         Body = file.read(), Bucket=AWS_STORAGE_BUCKET_NAME, Key=key, Metadata={ "ContentType": file.content_type}
     )
-    uri = 'https://%s.s3.%s.amazonaws.com/%s'%(AWS_STORAGE_BUCKET_NAME,AWS_REGION, key)
+    uri = 'https://%s.s3.%s.amazonaws.com/%s' % (AWS_STORAGE_BUCKET_NAME, AWS_REGION, key)
+    result_url = ''
     # uri = ''
     try:
         result = main(uri)
@@ -37,7 +38,8 @@ def personalColorTest(request):
         curs.execute(query, (result, uri, user_id))
         connect.commit()
         connect.close()
+        result_url = uri
     except:
         result = False
-    return JsonResponse({'personal_color': result }, json_dumps_params={'ensure_ascii': False})
+    return JsonResponse({'personal_color': result , 'user_img' : result_url}, json_dumps_params={'ensure_ascii': False})
 

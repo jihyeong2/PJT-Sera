@@ -1,5 +1,6 @@
 package com.ssafy.sera.Controller.Request;
 
+import com.ssafy.sera.Domain.Skin.SkinDto;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
@@ -15,6 +16,7 @@ public class UserRequest {
     private int userAge;
     private String userPhone;
     private String userGender;
-    private String skinId;
-    private String skinType;
+    private SkinDto skinId;
+//    private String skinId;
+//    private String skinType;
 }

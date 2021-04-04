@@ -3,7 +3,9 @@ from cosmetics_API import views
 
 urlpatterns = [
     path('', views.itemList),
-    path('<int:item_id>', views.item_one),
+    path('<int:user_id>/<int:item_id>', views.item_one),
+    path('dibs/<int:user_id>', views.DibsItemList),
+    path('dibs/<int:user_id>/<int:item_id>', views.DibsItem),
     path('recom/<int:user_id>', views.itemListRecom),
     path('recom/<int:user_id>/<str:category_large>', views.itemListRecom),
     path('recom/<int:user_id>/<str:category_large>/<str:category_middle>', views.itemListRecom),

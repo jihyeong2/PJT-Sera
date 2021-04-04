@@ -10,7 +10,7 @@ import Dialog from "@material-ui/core/Dialog";
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid } from '@material-ui/core';
+import baubau from '../../assets/baubau.png';
 const dstyles = (theme) => ({
     root: {
       margin: 0,
@@ -96,20 +96,25 @@ const SkinType = (props) => {
               <DialogTitle id="customized-dialog-title" onClose={handleClose}/>
               <DialogContent>
                 <div className={styles.modal_container}>
-                  <Grid container>
-                    <Grid item xs={6}>
-                      <div style={{position:'relative'}}>
-                        <div className={styles.c1}>바우만 피부타입<br/>테스트</div>
-                        <div className={styles.c2}>오일지수<br/>진단</div>
-                        <div className={styles.c3}>민감성<br/>진단</div>
-                        <div className={styles.c4}>색소성<br/>진단</div>
-                        <div className={styles.c5}>주름<br/>진단</div>
-                      </div>
-                    </Grid>
-                    <Grid item xs={6}>
-
-                    </Grid>
-                  </Grid>
+                  <div className={styles.baubau}>
+                    <img src={baubau} alt=""/>
+                  </div>
+                  <div className={styles.bau_desc}>
+                    <div className={[styles.bau_title, styles.bold_text].join(' ')}>
+                      "바우만 피부타입 테스트"
+                    </div>
+                    <div className={styles.bau_content}>
+                      미국 마이애미 대학교수인 레슬리 바우만 박사는
+                      <span className={styles.bold_text}>오일지수 진단, 민감성 진단, 색소 진단, 주름 및 탄력 집단</span>을 통해
+                      새로운 16가지의 피부 유형을 제시했습니다.
+                    </div>
+                    <div className={styles.bau_content}>
+                      이는 피부 교과서에도 실린 분류법으로
+                      가장 과학적인 피부타입 분류법으로 인정받고 있고,&nbsp;
+                      <span className={styles.highlight}>SERA</span>는 바우만 피부타입 테스트를 응용하여
+                      피부타입 테스트를 제공합니다.
+                    </div>
+                  </div>
                 </div>
               </DialogContent>
           </Dialog>

@@ -85,6 +85,33 @@ def selectUser(user_id):
         user_info[feild] = info
     return user_info
 
+def selectElementForDetail(item_id,skin_id, connect, curs):
+    query = """SELECT e.*, CASE WHEN element_id IN (SELECT element_id FROM helpful WHERE skin_id=%s)
+                            THEN 1
+                            WHEN element_id IN (SELECT element_id FROM caution WHERE skin_id=%s)
+                            THEN -1
+                            ELSE 0
+                            END as correct
+                FROM element e INNER JOIN item_element ie USING(element_id) WHERE ie.item_id = % s """
+    curs.execute(query, (skin_id, skin_id, item_id))
+    elements = curs.fetchall()
+    best_elements = []
+    worst_elements = []
+    ingredient_elements = []
+    if len(elements) > 0:
+        feilds = ['element_id', 'element_korean_name', 'element_english_name', 'element_purpose', 'element_level', 'correct']
+        for e in elements:
+            element_json = {}
+            for (i, f) in zip(e, feilds):
+                element_json[f] = i
+            if element_json['correct'] == 1:
+                best_elements.append(element_json)
+            elif element_json['correct'] == -1:
+                worst_elements.append(element_json)
+            else:
+                ingredient_elements.append(element_json)
+    return best_elements, worst_elements, ingredient_elements
+
 def makeSkinVector():
     helpful, caution = selectSpecialElement()
     specialElement = set()
@@ -304,7 +331,6 @@ def normal(items, user):
         item_json['help_cnt'] = help_cnt
         item_json['caution_cnt'] = caution_cnt
         item_json['rating'] = help_cnt - caution_cnt
-        item_json['tags'] = selectItemTag(item[0], connect, curs)
         item_json['dibs'] = selectDibs(user['user_id'], item[0], connect, curs)
         data.append(item_json)
     connect.close()
@@ -330,6 +356,7 @@ def correct(items, user):
         item_json['help_cnt'] = help_cnt
         item_json['caution_cnt'] = caution_cnt
         item_json['rating'] = help_cnt - caution_cnt
+        item_json['dibs'] = selectDibs(user['user_id'], item[0], connect, curs)
         data.append(item_json)
     connect.close()
     return data

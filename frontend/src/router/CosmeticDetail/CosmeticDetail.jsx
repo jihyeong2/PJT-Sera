@@ -100,12 +100,7 @@ const CosmeticDetail = () => {
     //   set
     // }
     useEffect(() => {
-
       getItem();
-
-      
-    
-
     }, []); // 마운트가 되었을 때만 호출
 
   const [open, setOpen] = React.useState(false);
@@ -116,6 +111,7 @@ const CosmeticDetail = () => {
   
     const [fullWidth, setFullWidth] = React.useState(true);
     if(!product) return null; 
+
     return (
         <div className={styles.page}>
           <div className={styles.nav}>

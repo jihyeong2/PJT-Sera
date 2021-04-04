@@ -14,7 +14,7 @@ import { Grid } from '@material-ui/core';
 import {update} from '../../../actions/index';
 import Swal from 'sweetalert2';
 import setSkin from '../../../service/skin';
-import setColor from '../../../service/color';
+import {setColor} from '../../../service/color';
 
 const dstyles = (theme) => ({
     root: {

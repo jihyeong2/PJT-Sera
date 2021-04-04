@@ -157,9 +157,12 @@ def itemListCorrect(request, user_id, category_large=None):
         query = """SELECT i.*, c.* FROM item i INNER JOIN category c USING(category_id)"""
         curs.execute(query)
     items = curs.fetchall()
-    connect.close()
     data = correct(items, user)
-    data = sorted(data, key=lambda x:x['rating'], reverse=True)
+    data = sorted(data, key=lambda x: x['rating'], reverse=True)
+    for item in data[:100]:
+        item['tags'] = selectItemTag(item['item_id'], connect, curs)
+        item['dibs'] = selectDibs(user['user_id'], item['item_id'], connect, curs)
+    connect.close()
     return JsonResponse({'item_list': data[:100]}, json_dumps_params={'ensure_ascii': False})
 
 # 리스트 만들기
@@ -180,8 +183,8 @@ def makeRecomItemList(item_cnt, items, rates, user):
         item_json['help_cnt'] = rate[0]
         item_json['caution_cnt'] = rate[1]
         item_json['rating'] = rate[0] - rate[1]
-        item_json['tags'] = selectItemTag(item[0])
-        item_json['dibs'] = selectDibs(user['user_id'], item[0])
+        item_json['tags'] = selectItemTag(item[0], connect, curs)
+        item_json['dibs'] = selectDibs(user['user_id'], item[0], connect, curs)
         data.append(item_json)
     connect.close()
     return data

@@ -14,7 +14,7 @@ const Elements = ({skin,currTag}) => {
           </div>
           <div className={styles.content}>
             <Grid container justify="center" spacing={1}>
-              {skin.type[currTag].good.map(item=>{
+              {skin.type[currTag].good.slice(0,3).map(item=>{
                 return(
                   <Grid key={`${item}green`} item xs={4}>
                     <img className={styles.img} src={dropGreen} alt=""/>
@@ -31,7 +31,7 @@ const Elements = ({skin,currTag}) => {
           </div>
           <div className={styles.content}>
             <Grid container justify="center" spacing={1}>
-              {skin.type[currTag].bad.map(item=>{
+              {skin.type[currTag].bad.slice(0,3).map(item=>{
                 return(
                   <Grid key={`${item}red`} item xs={4}>
                     <img className={styles.img} src={dropRed} alt=""/>

@@ -11,6 +11,10 @@ import Navbar from '../../components/common/Navbar/Navbar';
 import Logo from '../../components/common/Logo/Logo';
 import Footer from '../../components/common/Footer/Footer';
 import { useHistory } from 'react-router';
+import {getCorrectProducts,setHate,setLike} from '../../service/product';
+import dropGreen from '../../assets/waterdrop_green.png';
+import dropRed from '../../assets/waterdrop_red.png';
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -49,6 +53,11 @@ const Result = ({user,skin}) => {
   const [value2, setValue2] = useState(0);
   const [currTab, setCurrTab] = useState(1);
   const [currTab2, setCurrTab2] = useState(1);
+  const [products1, setProducts1] = useState([]);
+  const [products2, setProducts2] = useState([]);
+  const [products3, setProducts3] = useState([]);
+  const [products4, setProducts4] = useState([]);
+  console.log(products1);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -70,7 +79,7 @@ const Result = ({user,skin}) => {
     }
   };
   const onClickPlus = () => {
-
+    history.push('/list');
   };
   const onClickReset = () => {
     history.push('/skin');
@@ -78,9 +87,181 @@ const Result = ({user,skin}) => {
   const onClickFinish = () => {
     history.push('/');
   };
+  const onHandleHeart1 = (item_id,idx) => {
+    if(!products1[idx].dibs){ // 좋아요
+      setLike(
+        user.userId,
+        item_id,
+        (res)=>{
+          const tmp = products1.map(product => {
+            if(product.item_id != item_id) return product;
+            else return {...product, dibs: true, dibs_cnt: product.dibs_cnt+1};
+          })
+          setProducts1(tmp);
+        },
+        (err)=>{
+          console.error(err);
+        }
+      )
+    } else{ // 싫어요
+      setHate(
+        user.userId,
+        item_id,
+        (res)=>{
+          const tmp = products1.map(product => {
+            if(product.item_id != item_id) return product;
+            else return {...product, dibs: false, dibs_cnt: product.dibs_cnt-1};
+          })
+          setProducts1(tmp);
+        },
+        (err)=>{
+          console.error(err);
+        }
+      )
+    }
+  }
+  const onHandleHeart2 = (item_id,idx) => {
+    if(!products2[idx].dibs){ // 좋아요
+      setLike(
+        user.userId,
+        item_id,
+        (res)=>{
+          const tmp = products2.map(product => {
+            if(product.item_id != item_id) return product;
+            else return {...product, dibs: true, dibs_cnt: product.dibs_cnt+1};
+          })
+          setProducts2(tmp);
+        },
+        (err)=>{
+          console.error(err);
+        }
+      )
+    } else{ // 싫어요
+      setHate(
+        user.userId,
+        item_id,
+        (res)=>{
+          const tmp = products2.map(product => {
+            if(product.item_id != item_id) return product;
+            else return {...product, dibs: false, dibs_cnt: product.dibs_cnt-1};
+          })
+          setProducts2(tmp);
+        },
+        (err)=>{
+          console.error(err);
+        }
+      )
+    }
+  }
+  const onHandleHeart3 = (item_id,idx) => {
+    if(!products3[idx].dibs){ // 좋아요
+      setLike(
+        user.userId,
+        item_id,
+        (res)=>{
+          const tmp = products3.map(product => {
+            if(product.item_id != item_id) return product;
+            else return {...product, dibs: true, dibs_cnt: product.dibs_cnt+1};
+          })
+          setProducts3(tmp);
+        },
+        (err)=>{
+          console.error(err);
+        }
+      )
+    } else{ // 싫어요
+      setHate(
+        user.userId,
+        item_id,
+        (res)=>{
+          const tmp = products3.map(product => {
+            if(product.item_id != item_id) return product;
+            else return {...product, dibs: false, dibs_cnt: product.dibs_cnt-1};
+          })
+          setProducts3(tmp);
+        },
+        (err)=>{
+          console.error(err);
+        }
+      )
+    }
+  }
+  const onHandleHeart4 = (item_id,idx) => {
+    if(!products4[idx].dibs){ // 좋아요
+      setLike(
+        user.userId,
+        item_id,
+        (res)=>{
+          const tmp = products4.map(product => {
+            if(product.item_id != item_id) return product;
+            else return {...product, dibs: true, dibs_cnt: product.dibs_cnt+1};
+          })
+          setProducts4(tmp);
+        },
+        (err)=>{
+          console.error(err);
+        }
+      )
+    } else{ // 싫어요
+      setHate(
+        user.userId,
+        item_id,
+        (res)=>{
+          const tmp = products4.map(product => {
+            if(product.item_id != item_id) return product;
+            else return {...product, dibs: false, dibs_cnt: product.dibs_cnt-1};
+          })
+          setProducts4(tmp);
+        },
+        (err)=>{
+          console.error(err);
+        }
+      )
+    }
+  }
   useEffect(()=>{
     const a = document.querySelectorAll('.MuiTabs-flexContainer');
     a[1].style.cssText="justify-content: center;"
+    getCorrectProducts(
+      user.userId,
+      "스킨케어",
+      (res)=>{
+        setProducts1(res.data.item_list.slice(0,4));
+      },
+      (err)=>{
+        console.error(err);
+      }
+    )
+    getCorrectProducts(
+      user.userId,
+      "메이크업",
+      (res)=>{
+        setProducts2(res.data.item_list.slice(0,4));
+      },
+      (err)=>{
+        console.error(err);
+      }
+    )
+    getCorrectProducts(
+      user.userId,
+      "남성 화장품",
+      (res)=>{
+        setProducts3(res.data.item_list.slice(0,4));
+      },
+      (err)=>{
+        console.error(err);
+      }
+    )
+    getCorrectProducts(
+      user.userId,
+      "향수",
+      (res)=>{
+        setProducts4(res.data.item_list.slice(0,4));
+      },
+      (err)=>{
+        console.error(err);
+      }
+    )
   },[])
   return(
     <div style={{position:'relative', paddingBottom:'180px', minHeight:"100vh"}}>
@@ -153,10 +334,32 @@ const Result = ({user,skin}) => {
               </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-
+              <div className={styles.elements_box}>
+                {skin.type[user.skinId.skinType].good.map(item => {
+                  return(
+                    <div key={item} className={styles.element_box}>
+                      <div className={styles.img_box}>
+                        <img className={styles.img} src={dropGreen} alt=""/>
+                      </div>
+                      <div className={styles.element}>{item}</div>
+                    </div>
+                  )
+                })}
+              </div>
             </TabPanel>
             <TabPanel value={value} index={1}>
-
+              <div className={styles.elements_box}>
+                {skin.type[user.skinId.skinType].bad.map(item => {
+                  return(
+                    <div key={item} className={styles.element_box}>
+                      <div className={styles.img_box}>
+                        <img className={styles.img} src={dropRed} alt=""/>
+                      </div>
+                      <div className={styles.element}>{item}</div>
+                    </div>
+                  )
+                })}
+              </div>
             </TabPanel>
           </div>
         </div>
@@ -165,7 +368,7 @@ const Result = ({user,skin}) => {
             <Tabs value={value2} onChange={handleChange2} aria-label="simple tabs example">
               <Tab onClick={onClick2} label="스킨케어" {...a11yProps(0)} />
               <Tab onClick={onClick2} label="메이크업" {...a11yProps(1)} />
-              <Tab onClick={onClick2} label="남성" {...a11yProps(2)} />
+              <Tab onClick={onClick2} label="남성 화장품" {...a11yProps(2)} />
               <Tab onClick={onClick2} label="향수" {...a11yProps(3)} />
             </Tabs>
           </AppBar>
@@ -174,16 +377,16 @@ const Result = ({user,skin}) => {
             <button onClick={onClickPlus} className={styles.recommends_plus}>더보기 &gt;</button>
           </div>
           <TabPanel value={value2} index={0}>
-            스킨케어
+            <ProductList products={products1} handleHeart={onHandleHeart1}/>
           </TabPanel>
           <TabPanel value={value2} index={1}>
-            메이크업
+            <ProductList products={products2} handleHeart={onHandleHeart2}/>
           </TabPanel>
           <TabPanel value={value2} index={2}>
-            향수
+            <ProductList products={products3} handleHeart={onHandleHeart3}/>
           </TabPanel>
           <TabPanel value={value2} index={3}>
-            남성
+            <ProductList products={products4} handleHeart={onHandleHeart4}/>
           </TabPanel>
         </div>
         <div className={styles.btn_box}>

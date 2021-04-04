@@ -12,7 +12,9 @@ import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import Ingredient from '../ingredient/ingredient';
 import PersonalColor from '../personal_color/personal_color';
-import ReviewModify from '../review/review_modify_modal';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import {connect} from 'react-redux';
+// import ReviewModify from '../review/review_modify_modal';
 
 const dstyles = (theme) => ({
     root: {
@@ -58,7 +60,7 @@ const DialogActions = withStyles((theme) => ({
     },
 }))(MuiDialogActions);
 
-const Detail = (props) => {
+const Detail = ({user, color, skin, product}) => {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -78,34 +80,37 @@ const Detail = (props) => {
     };
     const [fullWidth, setFullWidth] = React.useState(true);
 
-    const search = "프로바이오틱스 세라마이드 크림";
-    const naver = () => {
-        window.open(`https://search.shopping.naver.com/search/all?query=${search}&cat_id=&frm=NVSHAKW`);
-    };
+    
+
+        const naver = () => {
+            window.open(`https://search.shopping.naver.com/search/all?query=${product.item_name}&cat_id=&frm=NVSHAKW`);
+        };
 
     return (
         <div className={styles.detail_right}>
-            <p className={styles.product_category}>스킨케어 세럼</p>
-            <p className={styles.product_name}>프로바이오틱스 세라마이드 크림</p>
-            <p><span className={styles.volume}>60ml /  </span><span className={styles.price}>35,000원</span></p>
+            <p className={styles.product_category}>{product.category_large}
+            <ArrowForwardIosIcon fontSize="small" /> {product.category_middle} </p>
+            <p className={styles.product_name}>{product.item_name}</p> 
+            <p><span className={styles.volume}>{product.item_volume} /  </span><span className={styles.price}>{product.item_price}</span></p>
             <div className={styles.brand}>
-                <span className={styles.brand_name}>마몽드 (Mamonde)</span>
+                <span className={styles.brand_name}>{product.item_brand}</span>
                 <Button className={styles.naver_go_btn} variant="outlined" onClick={naver}>
                     <img className={styles.naver_icon} src={process.env.PUBLIC_URL + '/images/naver_icon.png'} alt="네이버아이콘" />
                 최저가 검색</Button>
             </div>
             <div className={styles.bar}></div>
-            <div className={styles.match_detail}>
+                <div className={styles.match_detail}>
                 <Grid container spacing={1}>
-                    <Grid item xs={2} >
-                        <div className={styles.circle_percent}>80%</div>
-                    </Grid>
-                    <Grid item xs={7} >
-                        <div className={styles.result}>
-                            <br></br>
-                            <span className={styles.test_result}>ORNT</span>인
-                                <span className={styles.nickname}> 지니</span>님과 성분이
-                                <span className={styles.test_percent}> 80%</span> 일치합니다.
+                        <Grid item xs={2} >
+                            {/* 넘어오는 값으로 색상 변경하기 , 데이터 변경하기 👩🏻 */}
+                            <div style={{backgroundColor:'#AF3131'}} className={styles.circle_percent}>👎🏻</div>
+                        </Grid>
+                        <Grid item xs={7} >
+                            <div className={styles.result}>
+                                <br></br>
+                                <span style={{color:`${skin.type[user.skinId.skinType].color}`}} className={styles.test_result}>{user.skinId.skinType}</span>인
+                                <span className={styles.nickname}>{user.userNickname}</span>님과
+                                <span className={styles.test_percent}>잘 맞지 않아요.</span> 
                             </div>
                     </Grid>
                     <Grid item xs={3}>
@@ -115,45 +120,46 @@ const Detail = (props) => {
                             <DialogTitle id="customized-dialog-title" onClose={handleClose}>
                                 성분결과
                                 </DialogTitle>
-                            <DialogContent dividers>
-                                <Ingredient />
-                            </DialogContent>
-                        </Dialog>
+                                <DialogContent dividers>
+                                    <Ingredient product={product} />
+                                </DialogContent>
+                            </Dialog>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </div>
+                </div>
+            
             <div className={styles.bar}></div>
-            <div className={styles.tone_detail}>
-                <Grid container spacing={1}>
-                    <Grid item xs={2} >
-                        <div className={styles.tone_circle}>
-                            <div>가을</div>
-                            <div>웜</div>
-                        </div>
-                    </Grid>
-                    <Grid item xs={7} >
-                        <div className={styles.tone_result}>
+                <div className={styles.tone_detail}>
+                    <Grid container spacing={1}>
+                        <Grid item xs={2} >
+                            <div style={{backgroundColor:`${color[user.personalColor].color}`}} className={styles.tone_circle}>
+                                <div>{user.personalColor.split(' ')[0]}</div>
+                                <div>{user.personalColor.split(' ')[1]}</div>
+                            </div>
+                        </Grid>
+                        <Grid item xs={7} >
+                            <div className={styles.tone_result}>
+                                <br></br>
+                                <span className={styles.nickname}> {user.userNickname}</span>님은 
+                                <span style={{color:`${color[user.personalColor].color}`}} className={styles.test_tone}> 가을웜톤</span> 입니다.
+                            </div>
+                        </Grid>
+                        <Grid item xs={3}>
                             <br></br>
-                            <span className={styles.nickname}> 지니</span>님은
-                            <span className={styles.test_tone}> 가을웜톤</span> 입니다.
-                        </div>
+                            <Button className={styles.tone_btn} variant="outlined" onClick={handleClickOpens}>정보보기</Button>
+                            <Dialog style={{ height: '90%', }} fullWidth={fullWidth} maxWidth="lg" onClose={handleCloses} aria-labelledby="customized-dialog-title" open={opens}>
+                                <DialogTitle id="customized-dialog-title" onClose={handleCloses}>
+                                    퍼스널컬러 정보
+                                    </DialogTitle>
+                                <DialogContent dividers>
+                                    <Typography gutterBottom>
+                                        <PersonalColor />
+                                    </Typography>
+                                </DialogContent>
+                            </Dialog>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={3}>
-                        <br></br>
-                        <Button className={styles.tone_btn} variant="outlined" onClick={handleClickOpens}>정보보기</Button>
-                        <Dialog style={{ height: '90%', }} fullWidth={fullWidth} maxWidth="lg" onClose={handleCloses} aria-labelledby="customized-dialog-title" open={opens}>
-                            <DialogTitle id="customized-dialog-title" onClose={handleCloses}>
-                                퍼스널컬러 정보
-                                </DialogTitle>
-                            <DialogContent dividers>
-                                <Typography gutterBottom>
-                                    <PersonalColor />
-                                </Typography>
-                            </DialogContent>
-                        </Dialog>
-                    </Grid>
-                </Grid>
-            </div>
+                </div>
             <div className={styles.bar}></div>
             <div className={styles.detail}>
                 <Grid container spacing={2}>
@@ -162,26 +168,36 @@ const Detail = (props) => {
                     </Grid>
                     <Grid item xs={10}>
                         <div className={styles.description_content}>
-                            바를수록 건강해지는 유산균 발효용액 보습장벽 마일드 크림 <br />
-                            - 플로랄 바이오틱스와 7겹 세라마이드의 촉촉 보습장벽 듀얼 이펙트 <br />
-                            - 피부 속 보습은 촉촉하게 채우고 끈적임없이 가볍게 흡수 <br />
-                            - 피부에 부담 없는 클린 마일드 포뮬라<br />
+                            {product.item_description}
                         </div>
                     </Grid>
 
-                    <Grid item xs={2}>
-                        <div className={styles.description_name}> 태그 </div>
-                    </Grid>
-                    <Grid item xs={10}>
-                        <div className={styles.description_content}>
-                            <span className={styles.tag}>보습</span> <span className={styles.tag}>겨울쿨톤</span>
-                            <span className={styles.tag}>보습</span> <span className={styles.tag}>겨울쿨톤</span>
-                        </div>
-                    </Grid>
+                    { product.tags != null && 
+                        <>
+                        <Grid item xs={2}>
+                            <div className={styles.description_name}> 태그 </div>
+                        </Grid>
+                        <Grid item xs={10}>
+                            <div className={styles.description_content}>
+                                {
+                                    product.tags.map (tag=> ( <span className={styles.tag} key={product.id}>{tag}</span>))
+                                }
+                            </div>
+                        </Grid>
+                        </>
+                    }
                 </Grid>
             </div>
         </div>
     );
 }
 
-export default Detail;
+// export default Detail;
+const mapStateToProps = (state) => ({
+    user: state.user.user,
+    color: state.color,
+    skin : state.skin 
+  })
+  export default connect(
+    mapStateToProps,
+  )(Detail);

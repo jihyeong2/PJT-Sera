@@ -23,7 +23,10 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 
-const Review = (props) => {
+// const Review = ({onCreateReview}) => {
+const Review = ({product, review}) => {
+    console.log("리뷰 넘어왔니? "+review);
+    console.log(review[0].reviewBadContent);
     const classes = useStyles();
     const [type, setType] = React.useState('');
 
@@ -38,12 +41,15 @@ const Review = (props) => {
     const handleChange_radio = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked });
       };
-
+    // const onCreateReview = (val) =>{
+    //     onCreateReview(val);
+    // }
     // const [value, setValue] = React.useState(2);
     return(
         <div>
             <div className={styles.review_title}>REVIEW</div>
-            <ReviewHead />
+            {/* <ReviewHead onCreateReview={onCreateReview}/> */}
+            <ReviewHead product={product} />
             <div className={styles.bar}></div>
             <div className={styles.search_bar}>
                 <SearchBar />

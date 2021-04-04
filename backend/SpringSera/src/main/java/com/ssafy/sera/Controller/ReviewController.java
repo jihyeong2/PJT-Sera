@@ -3,9 +3,7 @@ package com.ssafy.sera.Controller;
 import com.ssafy.sera.Controller.Request.DibsRequest;
 import com.ssafy.sera.Controller.Request.GoodReviewRequest;
 import com.ssafy.sera.Controller.Request.ReviewRequest;
-import com.ssafy.sera.Domain.GoodReview.GoodReview;
 import com.ssafy.sera.Domain.Item.Item;
-import com.ssafy.sera.Domain.Item.ItemDto;
 import com.ssafy.sera.Domain.User.User;
 import com.ssafy.sera.Domain.review.Review;
 import com.ssafy.sera.Domain.review.ReviewDto;
@@ -69,6 +67,7 @@ public class ReviewController {
             List<ReviewDto> collect = reviewList.stream()
                     .map(m-> new ReviewDto(m))
                     .collect(Collectors.toList());
+
             response = new BaseResponse("success", collect);
         }
         catch(Exception e){

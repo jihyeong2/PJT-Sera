@@ -86,7 +86,7 @@ public class ReviewService {
         if(deleteReview.isPresent()){
             reviewRepository.delete(deleteReview.get());
             //s3 이미지 삭제
-            if(deleteReview.get().getReviewImg()!=null) s3Service.delete(deleteReview.get().getReviewImg());
+            if(deleteReview.get().getReviewImg().length()>=5) s3Service.delete(deleteReview.get().getReviewImg());
         }
     }
 
@@ -97,5 +97,9 @@ public class ReviewService {
     @Transactional
     public GoodReview findHelpMark(User userId, Review reviewId){
         return reviewRepository.findHelpMark(userId, reviewId);
+    }
+
+    public List<String> findPhotoRecent(Item item) {
+        return reviewRepository.findPhotoRecent(item);
     }
 }

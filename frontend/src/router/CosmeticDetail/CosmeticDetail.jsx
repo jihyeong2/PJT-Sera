@@ -55,7 +55,7 @@ const CosmeticDetail = () => {
     const getItem = () => {
         axios({
             method: 'GET',
-            url: `http://localhost:8000/v1/items/15`,
+            url: `http://localhost:8000/v1/items/4`,
             headers:{
               "Content-type": "application/json",
             }

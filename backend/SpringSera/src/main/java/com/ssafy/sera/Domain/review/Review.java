@@ -60,4 +60,14 @@ public class Review implements Serializable {
     private void onCreate(){
         this.writeDate = new Date();
     }
+
+
+    public long pushCnt(){
+        this.helpCnt += 1;
+        return this.helpCnt;
+    }
+    public long pullCnt(){
+        this.helpCnt -= 1;
+        return this.helpCnt;
+    }
 }

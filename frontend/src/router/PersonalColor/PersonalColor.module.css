@@ -1,0 +1,145 @@
+@value font-size-30, font-size-22, font-size-16, font-size-14, font-size-12 from '../../common/style.css';
+@value color-skin-6, color-orange-1, color-orange-4, color-grey-1, color-grey-2, color-grey-4, color-grey-7,color-grey-8 color-pink-1, color-white from '../../common/style.css';
+.bold_text {
+  font-weight: 700;
+}
+.highlight {
+  color: color-orange-1;
+}
+.container {
+  width: 80%;
+  min-height: 100%;
+  margin: auto;
+}
+.logo_box {
+  padding: 1em 0 3em 0;
+}
+.header {
+  margin-bottom: 2em;
+}
+.header .title {
+  font-size: font-size-30;
+  font-weight: 700;
+  color: color-grey-1;
+}
+.guide_box {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 2em;
+  background-color: color-orange-4;
+}
+.guide_left {
+}
+.guide_left_title {
+  font-size: font-size-22;
+  color: color-grey-1;
+}
+.guide_left_text {
+  font-size: font-size-14;
+  color: color-grey-2;
+}
+.guide_right {
+  display: flex;
+}
+.guide_step {
+  display: flex;
+  padding: 1em;
+  justify-content: center;
+  align-items: center;
+}
+.guide_step_text {
+  font-size: font-size-14;
+  padding: 0 1em;
+}
+.test_box {
+  width: 100%;
+  display: flex;
+  padding: 2em 0 4em 0;
+}
+.test_left {
+  flex-basis: 50%;
+}
+.test_title {
+  color: color-grey-1;
+  font-size: font-size-22;
+  text-align: center;
+}
+.test_input_box {
+  padding: 1em 0;
+}
+.file_route {
+  border: 2px solid color-grey-4;
+  font-size: font-size-14;
+  padding-left: 0.5em;
+  flex-basis: 85%;
+  /* max-width: 300px; */
+}
+.test_input {
+  background-color: color-grey-7;
+  cursor: pointer;
+  border: 2px solid color-grey-4;
+  font-size: font-size-12;
+  display: block;
+  flex-basis: 15%;
+  text-align: center;
+  color: color-grey-1;
+  /* max-width: 80px; */
+}
+.test_input_box input[type="file"] {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+}
+.test_input_guide {
+  font-size: font-size-12;
+}
+.desc_box {
+  width: 100%;
+  padding: 2em;
+  background-color: color-grey-8;
+  font-size: font-size-14;
+}
+.desc_box div:nth-child(2n + 1) {
+  padding-bottom: 0.5em;
+}
+.desc_box div:nth-child(2n + 3) {
+  padding-left: 0.5em;
+}
+.test_right {
+  flex-basis: 50%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.img {
+  display: block;
+  width: 200px;
+  height: 200px;
+}
+.img_back {
+  width: 200px;
+  height: 200px;
+  background-color: color-skin-6;
+  position: absolute;
+  z-index: -1;
+  transform: translate(10%, -10%);
+}
+.test_btn {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border: none;
+  background-color: color-orange-1;
+  color: color-white;
+  font-size: font-size-16;
+  padding: 0.7em 2em;
+  border-radius: 2em;
+}

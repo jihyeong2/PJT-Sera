@@ -15,44 +15,39 @@ import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import Logo from '../../components/common/Logo/Logo';
 import Navbar from '../../components/common/Navbar/Navbar';
+import { DialogContent } from '@material-ui/core';
 import axios from "axios";
 
 const dstyles = (theme) => ({
-    root: {
-      margin: 0,
-      padding: theme.spacing(2),
-    },
-    closeButton: {
-      position: 'absolute',
-      right: theme.spacing(1),
-      top: theme.spacing(1),
-      color: theme.palette.grey[500],
-    },
-    dialogPaper: {
-        minHeight: '80vh',
-        maxHeight: '80vh',
-    },
-  });
+  root: {
+    margin: 0,
+    padding: theme.spacing(2),
+  },
+  closeButton: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
+  },
+  dialogPaper: {
+    minHeight: '80vh',
+    maxHeight: '80vh',
+  },
+});
 
 const DialogTitle = withStyles(dstyles)((props) => {
-    const { children, classes, onClose, ...other } = props;
-    return (
-      <MuiDialogTitle disableTypography className={classes.root} {...other}>
-        <Typography variant="h6">{children}</Typography>
-        {onClose ? (
-          <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
-            <CloseIcon />
-          </IconButton>
-        ) : null}
-      </MuiDialogTitle>
-    );
-  });
-  
-  const DialogContent = withStyles((theme) => ({
-    root: {
-      padding: theme.spacing(2),
-    },
-  }))(MuiDialogContent);
+  const { children, classes, onClose, ...other } = props;
+  return (
+    <MuiDialogTitle disableTypography className={classes.root} {...other}>
+      <Typography variant="h6">{children}</Typography>
+      {onClose ? (
+        <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </MuiDialogTitle>
+  );
+});
 
 const CosmeticDetail = () => {
     const [product, setProduct] = useState(null);
@@ -113,12 +108,12 @@ const CosmeticDetail = () => {
 
     }, []); // 마운트가 되었을 때만 호출
 
-    const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
-    const handleClose = () => {
-        setOpen(false);
-    };
-
+  const handleClose = () => {
+    setOpen(false);
+  };
+  
     const [fullWidth, setFullWidth] = React.useState(true);
     if(!product) return null; 
     return (
@@ -165,4 +160,4 @@ const CosmeticDetail = () => {
     );
   }
 
-  export default CosmeticDetail;
+export default CosmeticDetail;

@@ -1,14 +1,59 @@
 import React from 'react';
 import styles from './review.module.css';
 import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
-import { ImageAspectRatioTwoTone } from '@material-ui/icons';
+import Dialog from '@material-ui/core/Dialog';
 import { useHistory } from "react-router-dom";
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import Typography from '@material-ui/core/Typography';
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import MuiDialogContent from '@material-ui/core/DialogContent';
+import ReviewWrite from "./review_write_modal";
+
+
+const dstyles = (theme) => ({
+    root: {
+        margin: 0,
+        padding: theme.spacing(2),
+    },
+    closeButton: {
+        position: 'absolute',
+        right: theme.spacing(1),
+        top: theme.spacing(1),
+        color: theme.palette.grey[500],
+    },
+    dialogPaper: {
+        minHeight: '80vh',
+        maxHeight: '80vh',
+    },
+});
+
+const DialogTitle = withStyles(dstyles)((props) => {
+    const { children, classes, onClose, ...other } = props;
+    return (
+        <MuiDialogTitle disableTypography className={classes.root} {...other}>
+            <Typography variant="h6">{children}</Typography>
+            {onClose ? (
+                <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+                    <CloseIcon />
+                </IconButton>
+            ) : null}
+        </MuiDialogTitle>
+    );
+});
+
+const DialogContent = withStyles((theme) => ({
+    root: {
+        padding: theme.spacing(2),
+    },
+}))(MuiDialogContent);
 
 // const ReviewHead = ({onCreateReview}) => {
-const ReviewHead = () => {
+const ReviewHead = ({product}) => {
     // const [value, setValue] = React.useState(2);
     // const onSubmit = ()=>{
         
@@ -16,9 +61,15 @@ const ReviewHead = () => {
     // }
     const history = useHistory();
 
-    const showWriteModal = () => {
-        
-    }
+    const [fullWidth, setFullWidth] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     return (
         <div className={styles.review_head} >
@@ -35,7 +86,15 @@ const ReviewHead = () => {
                 </Grid>
                 <Grid item xs={4}>
                     <p className={styles.review_btn_title}>리뷰를 써보세요.</p>
-                    <Button className={styles.review_btn} variant="contained" onClick={showWriteModal}>리뷰작성</Button>
+                    <Button className={styles.review_btn} variant="contained" onClick={handleClickOpen} >리뷰작성</Button>
+                    <Dialog style={{ height: '90%', }} fullWidth={fullWidth} maxWidth="lg" onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+                            <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+                                리뷰작성
+                                </DialogTitle>
+                                <DialogContent dividers>
+                                    <ReviewWrite product={product} />
+                                </DialogContent>
+                        </Dialog>
                 </Grid>
             </Grid>
         </div>

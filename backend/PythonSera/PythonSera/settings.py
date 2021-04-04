@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'cosmetics_API',
     'corsheaders',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -76,7 +77,9 @@ WSGI_APPLICATION = 'PythonSera.wsgi.application'
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:8080',
-    'http://127.0.0.1:8080'
+    'http://127.0.0.1:8080',
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
 )
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -126,3 +129,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+AWS_ACCESS_KEY_ID = "AKIAXZ73MP3UHZUFQVPZ" # 액세스 키
+AWS_SECRET_ACCESS_KEY = "2X2qnKc9jnMB3zVMYgsSRmVsZzzSu363AGa3pRQH" # 비밀 액세스 키
+
+AWS_REGION = "ap-northeast-2" # AWS 지역
+
+AWS_STORAGE_BUCKET_NAME = "sera-s3" # 버킷 이름
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (
+    AWS_STORAGE_BUCKET_NAME, AWS_REGION)

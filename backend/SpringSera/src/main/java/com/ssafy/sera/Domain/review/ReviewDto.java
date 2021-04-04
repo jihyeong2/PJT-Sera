@@ -1,6 +1,7 @@
 package com.ssafy.sera.Domain.review;
 
 import com.ssafy.sera.Domain.Item.ItemDto;
+import com.ssafy.sera.Domain.Skin.SkinDto;
 import com.ssafy.sera.Domain.User.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +28,14 @@ public class ReviewDto {
         if(review.getUser() != null){
             user = new UserDto();
             this.user.setUserLoginId(review.getUser().getUserLoginId());
+            this.user.setUserAge(review.getUser().getUserAge());
+            this.user.setUserNickname(review.getUser().getUserNickname());
+            this.user.setUserGender(review.getUser().getUserGender());
+            if(this.user.getSkinDto() != null){
+                this.user.setSkinDto(new SkinDto());
+                this.user.getSkinDto().setSkinId(user.getSkinDto().getSkinId());
+                this.user.getSkinDto().setSkinType(user.getSkinDto().getSkinType());
+            }
         }
         if(review.getItem() != null){
             item = new ItemDto();

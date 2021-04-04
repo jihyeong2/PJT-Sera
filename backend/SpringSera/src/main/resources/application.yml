@@ -32,7 +32,19 @@ spring:
     url: jdbc:mysql://seradb.c8joeykpqvdy.ap-northeast-2.rds.amazonaws.com:3306/seraDB?serverTimezone=UTC&characterEncoding=UTF-8
     username: admin
     password: ssafyB202SERA
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: validate
+--- # AWS S3
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIAV4C36BHFEEJUSSMI
+      secretKey: 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
+    s3:
+      bucket: myserabucket
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false

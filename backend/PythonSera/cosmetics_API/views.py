@@ -6,6 +6,7 @@ from cosmetics_API.models import Item
 from SeraRec.database import *
 from SeraRec.knn import *
 import tqdm
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 knn_neighbor_cnt = 100
@@ -164,6 +165,65 @@ def itemListCorrect(request, user_id, category_large=None):
         item['dibs'] = selectDibs(user['user_id'], item['item_id'], connect, curs)
     connect.close()
     return JsonResponse({'item_list': data[:100]}, json_dumps_params={'ensure_ascii': False})
+
+@csrf_exempt
+def DibsItem(request, user_id, item_id):
+    result = False
+    if request.method == 'PUT':
+        connect, curs = connectMySQL()
+        query = """SELECT * FROM dibs WHERE user_id = %s AND item_id=%s"""
+        curs.execute(query, (user_id, item_id))
+        check = curs.fetchone()
+        result = False
+        if check == None:
+            result = True
+            query = """INSERT INTO dibs (user_id, item_id)
+                    VALUES(%s, %s) """
+            curs.execute(query, (user_id, item_id))
+            connect.commit()
+            query = """SELECT count(*) FROM dibs WHERE item_id=%s"""
+            curs.execute(query, (item_id))
+            cnt = int(curs.fetchone()[0])
+            query = """UPDATE item SET dibs_cnt=%s
+                    WHERE item_id = %s """
+            curs.execute(query, (cnt, item_id))
+            connect.commit()
+        connect.close()
+    elif request.method == 'DELETE':
+        connect, curs = connectMySQL()
+        query = """SELECT * FROM dibs WHERE user_id = %s AND item_id=%s"""
+        curs.execute(query, (user_id, item_id))
+        check = curs.fetchone()
+        result = False
+        if check != None:
+            result = True
+            query = """DELETE FROM dibs
+                    WHERE user_id=%s AND item_id=%s"""
+            curs.execute(query, (user_id, item_id))
+            connect.commit()
+            query = """SELECT count(*) FROM dibs WHERE item_id=%s"""
+            curs.execute(query, (item_id))
+            cnt = int(curs.fetchone()[0])
+            query = """UPDATE item SET dibs_cnt=%s
+                    WHERE item_id = %s """
+            curs.execute(query, (cnt, item_id))
+            connect.commit()
+        connect.close()
+    return JsonResponse({'success': result}, json_dumps_params={'ensure_ascii': False})
+
+@api_view(['GET'])
+def DibsItemList(request, user_id):
+    user = selectUser(user_id)
+    connect, curs = connectMySQL()
+    query = """SELECT i.*, c.* FROM item i INNER JOIN category c USING(category_id)
+                WHERE i.item_id in (SELECT item_id FROM dibs WHERE user_id=%s)"""
+    curs.execute(query, (user_id))
+    items = curs.fetchall()
+    data = []
+    if len(items) > 0:
+        data = normal(items, user)
+    connect.close()
+    return JsonResponse({'item_list': data}, json_dumps_params={'ensure_ascii': False})
 
 # 리스트 만들기
 def makeRecomItemList(item_cnt, items, rates, user):

@@ -2,6 +2,7 @@ package com.ssafy.sera.Controller;
 
 import com.ssafy.sera.Controller.Request.ReviewRequest;
 import com.ssafy.sera.Domain.Item.Item;
+import com.ssafy.sera.Domain.Item.ItemDto;
 import com.ssafy.sera.Domain.User.User;
 import com.ssafy.sera.Domain.review.Review;
 import com.ssafy.sera.Domain.review.ReviewDto;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Api
 @CrossOrigin(origins = "*")
@@ -62,8 +64,11 @@ public class ReviewController {
         BaseResponse response = null;
         try{
             Item item = itemService.findByItemId(itemId);
-            List<ReviewDto> reviewList  = reviewService.findByItem(item);
-            response = new BaseResponse("success", reviewList);
+            List<Review> reviewList  = reviewService.findByItem(item);
+            List<ReviewDto> collect = reviewList.stream()
+                    .map(m-> new ReviewDto(m))
+                    .collect(Collectors.toList());
+            response = new BaseResponse("success", collect);
         }
         catch(Exception e){
             response = new BaseResponse("fail", e.getMessage());

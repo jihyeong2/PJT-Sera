@@ -34,7 +34,7 @@ public class ReviewService {
      * 현재 아이템의 전체 리뷰 목록 가져오기
      * @return
      */
-    public List<ReviewDto> findByItem(Item item) {
+    public List<Review> findByItem(Item item) {
         return reviewRepository.findByItem(item);
     }
 

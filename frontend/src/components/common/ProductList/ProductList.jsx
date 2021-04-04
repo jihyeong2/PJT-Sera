@@ -8,8 +8,8 @@ const ProductList = ({products}) => {
   return (
     <Grid className={styles.products} container spacing={5}>
         {products.map((product) => (
-          <Grid key={product.id} item xs={3} className={styles.product}>
-              <Product key={product.id} product={product}/>
+          <Grid key={product.item_id} item xs={3} className={styles.product}>
+              <Product key={product.item_id} product={product}/>
           </Grid>
         ))}
     </Grid>

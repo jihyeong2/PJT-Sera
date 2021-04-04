@@ -3,9 +3,9 @@ package com.ssafy.sera.Controller;
 
 import com.ssafy.sera.Controller.Request.FindPasswordRequest;
 import com.ssafy.sera.Domain.User.User;
-import com.ssafy.sera.Service.AuthService;
 import com.ssafy.sera.Service.UserService;
 import com.ssafy.sera.Util.Validator;
+import com.ssafy.sera.Service.AuthService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -41,7 +41,7 @@ public class AuthController {
             for(int i= 0 ; i < 6; i++){
                 secret += Integer.toString(random.nextInt(10));
             }
-//            authService.sendSMS(validator.phoneValidator(phoneNumber),secret);
+            authService.sendSMS(validator.phoneValidator(phoneNumber),secret);
             if(40 <= smsResponses.size()){
                 smsResponses.remove(0);
             }
@@ -71,7 +71,7 @@ public class AuthController {
                 for(int i= 0 ; i < 6; i++){
                     secret += Integer.toString(random.nextInt(10));
                 }
-//                authService.sendSMS(validator.phoneValidator(request.getUserPhone()),secret);
+                authService.sendSMS(validator.phoneValidator(request.getUserPhone()),secret);
                 if(40 <= smsResponses.size()){
                     smsResponses.remove(0);
                 }

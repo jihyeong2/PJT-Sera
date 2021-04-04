@@ -1,15 +1,21 @@
 import React from 'react';
 import styles from './PersonalColorResult.module.css';
-import {useState} from 'react';
 import Logo from '../../components/common/Logo/Logo';
 import Navbar from '../../components/common/Navbar/Navbar';
 import Footer from '../../components/common/Footer/Footer';
 import {connect} from 'react-redux';
-import image from '../../assets/mainz.png';
 import { Grid } from '@material-ui/core';
 import BeautyTip from '../../components/common/BeautyTip/BeautyTip';
 import ColorPalette from '../../components/common/Pallette/ColorPalette';
+import { useHistory } from 'react-router';
 const PersonalColorResult = ({user,color}) => {
+  const history = useHistory();
+  const onClickReset = () => {
+    history.push('/personal_color');
+  }
+  const onClickFinish = () => {
+    history.push('/');
+  }  
   return (
     <div style={{position:'relative', paddingBottom:'180px', minHeight:"100vh"}}>
       <div className={styles.container}>
@@ -33,27 +39,29 @@ const PersonalColorResult = ({user,color}) => {
           <div className={styles.box}>
             <Grid className={styles.table} container spacing={3}>
               <Grid item xs={5}>
-                <img style={{maxWidth:'100%',minHeight:'100%',objectFit:'cover'}} className={styles.image} src={image} alt=""/>
+                <img style={{maxWidth:'100%',minHeight:'100%',objectFit:'cover'}} className={styles.image} src={user.userImg} alt=""/>
               </Grid>
               <Grid item xs={7}>
-                <Grid 
-                  container
-                  spacing={3}
-                  direction="column"
-                  justify="center"
-                  alignItems="center"
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection:'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height:'100%',
+                  }}
                 >
-                  <Grid item xs={12}>
+                  <div>
                     <div style={{color:`${color[user.personalColor].color}`}} className={styles.color_box_title}>
                       {color[user.personalColor].english}
                     </div>
-                  </Grid>
-                  <Grid item xs={12}>
+                  </div>
+                  <div>
                     <div className={styles.info_box}>
                       <span className={styles.info}>{color[user.personalColor].desc}</span>
                     </div>
-                  </Grid>
-                </Grid>
+                  </div>
+                </div>
               </Grid>
             </Grid>
           </div>
@@ -73,6 +81,10 @@ const PersonalColorResult = ({user,color}) => {
               </Grid>        
             </Grid>
           </div>          
+        </div>
+        <div className={styles.btn_box}>
+          <button onClick={onClickReset} className={styles.reset_btn}>&lt;&lt; 재검사하기</button>
+          <button onClick={onClickFinish} className={styles.finish_btn}>완료</button>
         </div>
       </div>
       <Footer/>

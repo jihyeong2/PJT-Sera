@@ -24,7 +24,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 // const Review = ({onCreateReview}) => {
-const Review = () => {
+const Review = ({product, review}) => {
+    console.log("리뷰 넘어왔니? "+review);
+    console.log(review[0].reviewBadContent);
     const classes = useStyles();
     const [type, setType] = React.useState('');
 
@@ -47,6 +49,7 @@ const Review = () => {
         <div>
             <div className={styles.review_title}>REVIEW</div>
             {/* <ReviewHead onCreateReview={onCreateReview}/> */}
+            <ReviewHead product={product} />
             <div className={styles.bar}></div>
             <div className={styles.search_bar}>
                 <SearchBar />

@@ -172,15 +172,16 @@ const Detail = ({user, color, skin, product}) => {
                         </div>
                     </Grid>
 
-                    { product.tag != null && 
+                    { product.tags != null && 
                         <>
                         <Grid item xs={2}>
                             <div className={styles.description_name}> 태그 </div>
                         </Grid>
                         <Grid item xs={10}>
                             <div className={styles.description_content}>
-                                <span className={styles.tag}>보습</span> <span className={styles.tag}>겨울쿨톤</span>
-                                <span className={styles.tag}>보습</span> <span className={styles.tag}>겨울쿨톤</span>
+                                {
+                                    product.tags.map (tag=> ( <span className={styles.tag} key={product.id}>{tag}</span>))
+                                }
                             </div>
                         </Grid>
                         </>

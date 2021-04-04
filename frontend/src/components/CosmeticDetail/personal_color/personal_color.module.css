@@ -1,4 +1,4 @@
-@value font-size-28, font-size-18 from '../../../common/style.css';
+@value font-size-28, font-size-20, font-size-18,font-size-14 from '../../../common/style.css';
 @value color-orange-1, color-grey-2, color-grey-4 from '../../../common/style.css';
 
 
@@ -17,6 +17,12 @@
     color: color-orange-1;
     font-weight: 600;
 }
+.you{
+    margin-bottom: 0px;
+}
+.you2{
+    margin-top: 0px;
+}
 .box{
     border: 1px solid color-grey-4;
     padding: 10px;
@@ -26,7 +32,10 @@
 }
 .color{
     width: 80%;
-    line-height: 180px;
+    font-weight: 600;
+    font-size: font-size-28;
+    margin: 0 auto;
+    margin-top: 30px;
 }
 .des{
     width: 80%;
@@ -34,16 +43,27 @@
     margin: 0 auto;
     text-align: left;
     line-height: 30px;
-    font-size: font-size-18;
+    font-size: font-size-14;
 }
 .text{
     margin-top: 10px;
     color: color-grey-2;
 }
 .tip{
-    border: 2px solid tomato;
     margin-bottom: 20px;
+
 }
 .place{
-    border: 2px solid steelblue;
+    height: 300px;
+}
+.titles{
+    font-size: font-size-20;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+.boxs{
+    display: inline-block;
+    border-left: 5px solid color-orange-1;
+    height: 28px;
+    width: 5px;
 }

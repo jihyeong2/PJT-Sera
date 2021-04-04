@@ -11,6 +11,7 @@ import Navbar from '../../components/common/Navbar/Navbar';
 import Logo from '../../components/common/Logo/Logo';
 import Footer from '../../components/common/Footer/Footer';
 import { useHistory } from 'react-router';
+import {getCorrectProducts} from '../../service/product';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -49,6 +50,11 @@ const Result = ({user,skin}) => {
   const [value2, setValue2] = useState(0);
   const [currTab, setCurrTab] = useState(1);
   const [currTab2, setCurrTab2] = useState(1);
+  const [products1, setProducts1] = useState([]);
+  const [products2, setProducts2] = useState([]);
+  const [products3, setProducts3] = useState([]);
+  const [products4, setProducts4] = useState([]);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -81,6 +87,46 @@ const Result = ({user,skin}) => {
   useEffect(()=>{
     const a = document.querySelectorAll('.MuiTabs-flexContainer');
     a[1].style.cssText="justify-content: center;"
+    getCorrectProducts(
+      user.userId,
+      "스킨케어",
+      (res)=>{
+        setProducts1(res.data.item_list.slice(0,4));
+      },
+      (err)=>{
+        console.error(err);
+      }
+    )
+    getCorrectProducts(
+      user.userId,
+      "메이크업",
+      (res)=>{
+        setProducts2(res.data.item_list.slice(0,4));
+      },
+      (err)=>{
+        console.error(err);
+      }
+    )
+    getCorrectProducts(
+      user.userId,
+      "남성 화장품",
+      (res)=>{
+        setProducts3(res.data.item_list.slice(0,4));
+      },
+      (err)=>{
+        console.error(err);
+      }
+    )
+    getCorrectProducts(
+      user.userId,
+      "향수",
+      (res)=>{
+        setProducts4(res.data.item_list.slice(0,4));
+      },
+      (err)=>{
+        console.error(err);
+      }
+    )
   },[])
   return(
     <div style={{position:'relative', paddingBottom:'180px', minHeight:"100vh"}}>
@@ -165,7 +211,7 @@ const Result = ({user,skin}) => {
             <Tabs value={value2} onChange={handleChange2} aria-label="simple tabs example">
               <Tab onClick={onClick2} label="스킨케어" {...a11yProps(0)} />
               <Tab onClick={onClick2} label="메이크업" {...a11yProps(1)} />
-              <Tab onClick={onClick2} label="남성" {...a11yProps(2)} />
+              <Tab onClick={onClick2} label="남성 화장품" {...a11yProps(2)} />
               <Tab onClick={onClick2} label="향수" {...a11yProps(3)} />
             </Tabs>
           </AppBar>
@@ -174,16 +220,16 @@ const Result = ({user,skin}) => {
             <button onClick={onClickPlus} className={styles.recommends_plus}>더보기 &gt;</button>
           </div>
           <TabPanel value={value2} index={0}>
-            스킨케어
+            <ProductList products={products1}/>
           </TabPanel>
           <TabPanel value={value2} index={1}>
-            메이크업
+            <ProductList products={products2}/>
           </TabPanel>
           <TabPanel value={value2} index={2}>
-            향수
+            <ProductList products={products3}/>
           </TabPanel>
           <TabPanel value={value2} index={3}>
-            남성
+            <ProductList products={products4}/>
           </TabPanel>
         </div>
         <div className={styles.btn_box}>

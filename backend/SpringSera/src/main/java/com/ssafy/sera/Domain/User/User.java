@@ -49,6 +49,7 @@ public class User {
 
     public static User createUser(UserRequest userRequest, Skin skin){
         User userInput = new User();
+        userInput.userId = userRequest.getUserId();
         userInput.setUserLoginId(userRequest.getUserLoginId());
         userInput.setUserPassword(userRequest.getUserPassword());
         userInput.setUserNickname(userRequest.getUserNickname());

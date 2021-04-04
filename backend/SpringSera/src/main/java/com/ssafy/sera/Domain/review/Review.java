@@ -46,6 +46,9 @@ public class Review implements Serializable {
     @Column(nullable = false)
     private Long helpCnt;
 
+    @Transient
+    private int helpMark; //도움 여부(1:도움, 0:도움x)
+
     public static Review createReview(ReviewRequest reviewRequest){
         Review reviewInput = new Review();
         reviewInput.setReviewImg(reviewRequest.getReviewImg());
@@ -59,5 +62,15 @@ public class Review implements Serializable {
     @PrePersist
     private void onCreate(){
         this.writeDate = new Date();
+    }
+
+
+    public long pushCnt(){
+        this.helpCnt += 1;
+        return this.helpCnt;
+    }
+    public long pullCnt(){
+        this.helpCnt -= 1;
+        return this.helpCnt;
     }
 }

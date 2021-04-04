@@ -49,5 +49,6 @@ public class ReviewDto {
         this.reviewBadContent = review.getReviewBadContent();
         this.reviewScore = review.getReviewScore();
         this.helpCnt = review.getHelpCnt();
+        this.helpMark = review.getHelpMark();
     }
 }

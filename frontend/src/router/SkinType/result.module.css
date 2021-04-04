@@ -119,6 +119,7 @@
 }
 .items_box {
   flex-basis: 40%;
+  padding: 0 2em;
 }
 .recommends_desc_box {
   display: flex;
@@ -158,4 +159,30 @@
   border: 1px solid color-orange-1;
   border-radius: 1em;
 }
-/* a */
+.elements_box {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  overflow-y: scroll;
+}
+.element_box {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.5em;
+  border-bottom: 1px solid color-grey-2;
+}
+.img_box {
+  flex-basis: 50%;
+}
+.img {
+  width: 50px;
+  height: 50px;
+}
+.element {
+  flex-basis: 50%;
+  font-size: font-size-14;
+  text-align: center;
+}

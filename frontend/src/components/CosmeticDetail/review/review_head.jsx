@@ -4,10 +4,16 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
+import { ImageAspectRatioTwoTone } from '@material-ui/icons';
 import { useHistory } from "react-router-dom";
 
-const ReviewHead = (props) => {
+// const ReviewHead = ({onCreateReview}) => {
+const ReviewHead = () => {
     // const [value, setValue] = React.useState(2);
+    // const onSubmit = ()=>{
+        
+    //     onCreateReview(review);
+    // }
     const history = useHistory();
 
     const showWriteModal = () => {

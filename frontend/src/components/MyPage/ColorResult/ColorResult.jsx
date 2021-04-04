@@ -22,27 +22,29 @@ const ColorResult = ({user,color}) => {
           <div className={styles.box}>
             <Grid className={styles.table} container spacing={3}>
               <Grid item xs={5}>
-                <img style={{maxWidth:'100%',minHeight:'100%',objectFit:'cover'}} className={styles.image} src={image} alt=""/>
+                <img style={{maxWidth:'100%',minHeight:'100%',objectFit:'cover'}} className={styles.image} src={user.userImg} alt=""/>
               </Grid>
               <Grid item xs={7}>
-                <Grid 
-                  container
-                  spacing={3}
-                  direction="column"
-                  justify="center"
-                  alignItems="center"
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection:'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height:'100%',
+                  }}
                 >
-                  <Grid item xs={12}>
+                  <div>
                     <span style={{color:`${color[user.personalColor].color}`}} className={styles.title}>{
                       color[user.personalColor].english
                     }</span>
-                  </Grid>
-                  <Grid item xs={12}>
+                  </div>
+                  <div>
                     <div className={styles.info_box}>
                       <span className={styles.info}>{color[user.personalColor].desc}</span>
                     </div>
-                  </Grid>
-                </Grid>
+                  </div>
+                </div>
               </Grid>
             </Grid>
           </div>

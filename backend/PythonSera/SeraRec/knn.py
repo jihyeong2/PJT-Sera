@@ -34,23 +34,19 @@ def selectAllItem():
 
     return items
 
-def selectItemTag(item_id):
-    connect, curs = connectMySQL()
+def selectItemTag(item_id, connect, curs):
     query = """SELECT tag_name FROM item_tag INNER JOIN tag USING(tag_id) WHERE item_id = %s"""
     curs.execute(query, (item_id))
     tags = curs.fetchall()
-    connect.close()
     result = []
     for tag in tags:
         result.append(tag[0])
     return sorted(result)
 
-def selectDibs(user_id, item_id):
-    connect, curs = connectMySQL()
+def selectDibs(user_id, item_id, connect, curs):
     query = """SELECT dibs_id FROM dibs WHERE user_id=1=%s AND item_id=%s"""
     curs.execute(query, (user_id,item_id))
     tags = curs.fetchone()
-    connect.close()
     if tags is None: return False
     return True
 
@@ -284,6 +280,7 @@ def normal(items, user):
     data = []
     fields = ['item_id', 'item_name', 'item_img', 'item_brand','category_id','item_colors','item_volume','item_price','item_description','dibs_cnt',]
     category_fields = ['category_id', 'category_large', 'category_middle', 'category_small']
+    connect, curs = connectMySQL()
     for item in items[:100]:
         item_json = {}
         for (d, f) in zip(item[:10], fields):
@@ -295,9 +292,10 @@ def normal(items, user):
         item_json['help_cnt'] = help_cnt
         item_json['caution_cnt'] = caution_cnt
         item_json['rating'] = help_cnt - caution_cnt
-        item_json['tags'] = selectItemTag(item[0])
-        item_json['dibs'] = selectDibs(user['user_id'], item[0])
+        item_json['tags'] = selectItemTag(item[0], connect, curs)
+        item_json['dibs'] = selectDibs(user['user_id'], item[0], connect, curs)
         data.append(item_json)
+    connect.close()
     return data
 
 def correct(items, user):
@@ -309,6 +307,7 @@ def correct(items, user):
     fields = ['item_id', 'item_name', 'item_img', 'item_brand','category_id','item_colors','item_volume','item_price','item_description','dibs_cnt',]
     category_fields = ['category_id', 'category_large', 'category_middle', 'category_small']
     input_np = input * item_np
+    connect, curs = connectMySQL()
     for item in items:
         item_json = {}
         for (d, f) in zip(item[:10], fields):
@@ -319,9 +318,8 @@ def correct(items, user):
         item_json['help_cnt'] = help_cnt
         item_json['caution_cnt'] = caution_cnt
         item_json['rating'] = help_cnt - caution_cnt
-        item_json['tags'] = selectItemTag(item[0])
-        item_json['dibs'] = selectDibs(user['user_id'], item[0])
         data.append(item_json)
+    connect.close()
     return data
 
 # 일치율 계산

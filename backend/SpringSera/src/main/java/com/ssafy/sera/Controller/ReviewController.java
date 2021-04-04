@@ -7,6 +7,7 @@ import com.ssafy.sera.Domain.review.Review;
 import com.ssafy.sera.Domain.review.ReviewDto;
 import com.ssafy.sera.Service.ItemService;
 import com.ssafy.sera.Service.ReviewService;
+import com.ssafy.sera.Service.S3Service;
 import com.ssafy.sera.Service.UserService;
 import com.ssafy.sera.Util.Validator;
 import io.swagger.annotations.Api;
@@ -14,30 +15,39 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Api
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/v1/reviews")
+@RequestMapping("/v1/review")
 @RequiredArgsConstructor
 public class ReviewController {
     private final ReviewService reviewService;
     private final ItemService itemService;
     private final UserService userService;
+    private final S3Service s3Service;
     private final Validator validator;
 
     @ApiOperation(value = "리뷰 작성", notes = "리뷰 작성 성공시 BaseResponse에 data값으로 '성공적으로 작성' 설정 후 반환", response = BaseResponse.class)
     @PostMapping
-    public BaseResponse writeReview(@ApiParam(value = "리뷰 객체") @RequestBody ReviewRequest request){
+    public BaseResponse writeReview(@ApiParam(value = "리뷰 객체", required=true) @RequestPart ReviewRequest request, @ApiParam(value = "사진 파일", required=false) @RequestPart(value = "file", required=true) MultipartFile file) throws IOException {
         BaseResponse response = null;
+
         try{
             Review review = Review.createReview(request);
             User user = userService.findByUserLoginId(request.getUserLoginId());
             Item item = itemService.findByItemId(request.getItemId());
+            if(file!=null) {
+                String review_img = s3Service.upload(file); //s3에 업로드
+                review.setReviewImg(review_img);
+            }
             review.setUser(user);
             review.setItem(item);
+
             reviewService.save(review);
             response = new BaseResponse("success", "성공적으로 작성");
         }catch(IllegalStateException e){
@@ -62,7 +72,7 @@ public class ReviewController {
     }
 
     @ApiOperation(value = "현재 리뷰 상세정보 조회", notes = "ReviewDto 형식으로 반환", response = BaseResponse.class)
-    @PostMapping("/detail/{reviewId}")
+    @GetMapping("/detail/{reviewId}")
     public BaseResponse detailReview(@ApiParam(value = "리뷰 아이디")@PathVariable Long reviewId){
         BaseResponse response = null;
         try{
@@ -78,7 +88,6 @@ public class ReviewController {
     @ApiOperation(value = "리뷰 수정", notes = "반환되는 데이터는 수정 성공 / 에러 메시지", response = BaseResponse.class)
     @PutMapping
     public BaseResponse updateReview(@ApiParam(value = "리뷰 객체") @RequestBody ReviewRequest request) {
-        System.out.println("===================="+request.getReviewGoodContent());
         BaseResponse response = null;
         try {
             reviewService.updateReview(request);
@@ -103,5 +112,16 @@ public class ReviewController {
     }
 
 
+    @ApiOperation(value = "리뷰 도움 추가", notes = "반환되는 데이터는 수정 성공 / 에러 메시지", response = BaseResponse.class)
+    @PutMapping("/help/{userLoginId}/{reviewId}")
+    public BaseResponse modifyHelpCnt(@ApiParam(value = "로그인한 아이디") @PathVariable String userLoginId, @ApiParam(value = "리뷰 아이디")@PathVariable Long reviewId){
+        BaseResponse response = null;
+        try {
+            response = new BaseResponse("success", "삭제 성공");
+        } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
 
 }

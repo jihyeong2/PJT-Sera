@@ -7,6 +7,10 @@ from SeraRec.database import *
 from SeraRec.knn import *
 import tqdm
 # Create your views here.
+
+knn_neighbor_cnt = 100
+recom_item_cnt = 50
+
 # 전체 화장품 리스트
 @api_view(['GET'])
 def itemList(request):
@@ -29,33 +33,18 @@ def itemList(request):
     
 # 전체 화장품 추천 리스트
 @api_view(['GET'])
-def itemListRecom(request, user_id):
+def itemListRecom(request, user_id, category_large=None, category_middle=None):
     user = selectUser(user_id)
     user_info = {'age' : user['user_age'], 'gender' : user['user_gender'], 'skinType' : user['skin_id']}
-    items, rates = knn(user_info)
-    data = makeRecomItemList(items, rates)
-    sum = 0
-    for i in data:
-        sum += i['correct_rate']
-    print(sum/len(data))
-    return JsonResponse({'item_list': data}, json_dumps_params={'ensure_ascii': False})
-
-# 대분류 카테고리 화장품 추천 리스트
-@api_view(['GET'])
-def itemListRecomCategoryLarge(request, user_id, category_large):
-    user = selectUser(user_id)
-    user_info = {'age' : user['user_age'], 'gender' : user['user_gender'], 'skinType' : user['skin_id']}
-    items, rates = knn(user_info,category_large=category_large)
-    data = makeRecomItemList(items, rates)
-    return JsonResponse({'item_list': data}, json_dumps_params={'ensure_ascii': False})
-    
-# 중분류 카테고리 화장품 추천 리스트
-@api_view(['GET'])
-def itemListRecomCategoryMiddle(request, user_id, category_large, category_middle):
-    user = selectUser(user_id)
-    user_info = {'age' : user['user_age'], 'gender' : user['user_gender'], 'skinType' : user['skin_id']}
-    items, rates = knn(user_info,category_large=category_large, category_middle=category_middle)
-    data = makeRecomItemList(items, rates)
+    items = []
+    rates = []
+    if category_large != None and category_middle == None:
+        items, rates = knn(knn_neighbor_cnt,user_info,category_large=category_large)
+    elif category_large != None and category_middle != None:
+        items, rates = knn(knn_neighbor_cnt,user_info,category_large=category_large, category_middle=category_middle)
+    else:
+        items, rates = knn(knn_neighbor_cnt,user_info)
+    data = makeRecomItemList(recom_item_cnt, items, rates, user)
     return JsonResponse({'item_list': data}, json_dumps_params={'ensure_ascii': False})
 
 # 화장품 디테일
@@ -97,10 +86,10 @@ def itemSortPrice(request, user_id, category_large=None, category_middle=None, s
     data = []
     if sort_type == 0:
         items = sorted(items, key=lambda x: int(x[7][:-1].replace(',', '').strip()))
-        data = nomal(items, user)
+        data = normal(items, user)
     else:
         items = sorted(items, key=lambda x: int(x[7][:-1].replace(',', '').strip()), reverse=True)
-        data = nomal(items, user)
+        data = normal(items, user)
     # data = makeSortItemList(items, user)
     return JsonResponse({'item_list': data}, json_dumps_params={'ensure_ascii': False})
 
@@ -125,7 +114,7 @@ def itemSortScore(request, user_id, category_large=None, category_middle=None):
     items = curs.fetchall()
     connect.close()
     user = selectUser(user_id)
-    data = nomal(items, user)
+    data = normal(items, user)
     # data = makeSortItemList(items)
     return JsonResponse({'item_list': data}, json_dumps_params={'ensure_ascii': False})
 
@@ -150,17 +139,36 @@ def itemSortReviewCnt(request, user_id, category_large=None, category_middle = N
     items = curs.fetchall()
     connect.close()
     user = selectUser(user_id)
-    data = nomal(items, user)
+    data = normal(items, user)
     # data = makeSortItemList(items)
     return JsonResponse({'item_list': data}, json_dumps_params={'ensure_ascii': False})
 
+# 맞춤 화장품 리스트( 도움 성분 개수 순 )
+@api_view(['GET'])
+def itemListCorrect(request, user_id, category_large=None):
+    connect, curs = connectMySQL()
+    user = selectUser(user_id)
+    if category_large != None:
+        query = """SELECT i.*, c.* FROM item i INNER JOIN category c USING(category_id)
+                    WHERE category_id IN (SELECT category_id FROM category WHERE category_large=%s)
+                """
+        curs.execute(query,(category_large))
+    else:
+        query = """SELECT i.*, c.* FROM item i INNER JOIN category c USING(category_id)"""
+        curs.execute(query)
+    items = curs.fetchall()
+    connect.close()
+    data = correct(items, user)
+    data = sorted(data, key=lambda x:x['rating'], reverse=True)
+    return JsonResponse({'item_list': data[:100]}, json_dumps_params={'ensure_ascii': False})
+
 # 리스트 만들기
-def makeRecomItemList(items, rates):
+def makeRecomItemList(item_cnt, items, rates, user):
     data = []
     fields = ['item_id', 'item_name', 'item_img', 'item_brand','category_id','item_colors','item_volume','item_price','item_description','dibs_cnt',]
     category_fields = ['category_id', 'category_large', 'category_middle', 'category_small']
     connect, curs = connectMySQL()
-    for item_id, rate in tqdm.tqdm(zip(items[:50], rates[:50])):
+    for item_id, rate in tqdm.tqdm(zip(items[:item_cnt], rates[:item_cnt])):
         query = """SELECT i.*, c.* FROM item i INNER JOIN category c USING(category_id) WHERE item_id=%s"""
         curs.execute(query, (item_id))
         item = curs.fetchone()
@@ -169,7 +177,11 @@ def makeRecomItemList(items, rates):
             item_json[f] = d
         for (d, f) in zip(item[10:], category_fields):
             item_json[f] = d
-        item_json['correct_rate'] = rate
+        item_json['help_cnt'] = rate[0]
+        item_json['caution_cnt'] = rate[1]
+        item_json['rating'] = rate[0] - rate[1]
+        item_json['tags'] = selectItemTag(item[0])
+        item_json['dibs'] = selectDibs(user['user_id'], item[0])
         data.append(item_json)
     connect.close()
     return data
@@ -186,4 +198,3 @@ def selectUser(user_id):
     for (feild, info) in zip(feilds, user):
         user_info[feild] = info
     return user_info
-

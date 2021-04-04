@@ -65,7 +65,7 @@ public class ReviewController {
         try{
             Item item = itemService.findByItemId(itemId);
             User user = userService.findByUserLoginId(userLoginId);
-            List<Review> reviewList  = reviewService.findByItem(user, item);
+            List<Review> reviewList  = reviewService.findByItem(user,  item);
             List<ReviewDto> collect = reviewList.stream()
                     .map(m-> new ReviewDto(m))
                     .collect(Collectors.toList());
@@ -119,7 +119,7 @@ public class ReviewController {
     }
 
 
-    @ApiOperation(value = "리뷰 도움 수 업데이트(클릭 이벤트)", notes = "도움 수 업데이트 성공시 도움수 반환 / 에러 메시지", response = BaseResponse.class)
+    @ApiOperation(value = "리뷰 좋아요 업데이트(클릭 이벤트)", notes = "좋아요 성공시 추가면 1, 빼면 0 반환 / 에러 메시지", response = BaseResponse.class)
     @PutMapping("/help/{request}")
     public BaseResponse modifyHelpCnt(@ApiParam(value = "도움 객체")@RequestBody GoodReviewRequest request){
         BaseResponse response = null;
@@ -130,6 +130,76 @@ public class ReviewController {
             response = new BaseResponse("success", helpCnt);
         } catch (IllegalStateException e) {
             response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    @ApiOperation(value = "사진리뷰 최신순 8장 가져오기", notes = "ReviewDto 형식으로 반환", response = BaseResponse.class)
+    @GetMapping("/list/photo/{itemId}")
+    public BaseResponse photoReview(@ApiParam(value = "상품 아이디")@PathVariable Long itemId){
+        BaseResponse response = null;
+        try{
+            Item item = itemService.findByItemId(itemId);
+            List<String> photoList = reviewService.findPhotoRecent(item);
+
+            response = new BaseResponse("success", photoList);
+        }catch(IllegalStateException e){
+            response = new BaseResponse("fail",e.getMessage());
+        }
+        return response;
+    }
+
+
+    @ApiOperation(value = "리뷰리스트 최신순 정렬 가져오기", notes = "ReviewDto 형식으로 반환", response = BaseResponse.class)
+    @GetMapping("/list/recent/{itemId}/{userLoginId}")
+    public BaseResponse recentReviewList(@ApiParam(value = "상품 아이디")@PathVariable Long itemId, @ApiParam(value = "로그인 아이디")@PathVariable String userLoginId){
+        BaseResponse response = null;
+        try{
+            Item item = itemService.findByItemId(itemId);
+            User user = userService.findByUserLoginId(userLoginId);
+            List<Review> reviewList = reviewService.findRecentList(user, item);
+            List<ReviewDto> collect = reviewList.stream()
+                    .map(m-> new ReviewDto(m))
+                    .collect(Collectors.toList());
+            response = new BaseResponse("success", collect);
+        }catch(IllegalStateException e){
+            response = new BaseResponse("fail",e.getMessage());
+        }
+        return response;
+    }
+
+    @ApiOperation(value = "리뷰리스트 도움 많은 순 정렬 가져오기", notes = "ReviewDto 형식으로 반환", response = BaseResponse.class)
+    @GetMapping("/list/help/{itemId}/{userLoginId}")
+    public BaseResponse helpReviewList(@ApiParam(value = "상품 아이디")@PathVariable Long itemId, @ApiParam(value = "로그인 아이디")@PathVariable String userLoginId){
+        BaseResponse response = null;
+        try{
+            Item item = itemService.findByItemId(itemId);
+            User user = userService.findByUserLoginId(userLoginId);
+            List<Review> reviewList = reviewService.findHelpList(user, item);
+            List<ReviewDto> collect = reviewList.stream()
+                    .map(m-> new ReviewDto(m))
+                    .collect(Collectors.toList());
+            response = new BaseResponse("success", collect);
+        }catch(IllegalStateException e){
+            response = new BaseResponse("fail",e.getMessage());
+        }
+        return response;
+    }
+
+    @ApiOperation(value = "리뷰리스트 별점순 정렬 가져오기", notes = "ReviewDto 형식으로 반환", response = BaseResponse.class)
+    @GetMapping("/list/score/{itemId}/{userLoginId}")
+    public BaseResponse scoreReviewList(@ApiParam(value = "상품 아이디")@PathVariable Long itemId, @ApiParam(value = "로그인 아이디")@PathVariable String userLoginId){
+        BaseResponse response = null;
+        try{
+            Item item = itemService.findByItemId(itemId);
+            User user = userService.findByUserLoginId(userLoginId);
+            List<Review> reviewList = reviewService.findScoreList(user, item);
+            List<ReviewDto> collect = reviewList.stream()
+                    .map(m-> new ReviewDto(m))
+                    .collect(Collectors.toList());
+            response = new BaseResponse("success", collect);
+        }catch(IllegalStateException e){
+            response = new BaseResponse("fail",e.getMessage());
         }
         return response;
     }

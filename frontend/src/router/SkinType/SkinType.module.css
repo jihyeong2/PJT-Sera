@@ -1,4 +1,4 @@
-@value color-orange-3, color-orange-6, color-white from '../../common/style.css';
+@value color-orange-1, color-orange-3, color-orange-6, color-white, color-grey-2 from '../../common/style.css';
 @value font-size-14, font-size-16, font-size-65,font-size-24, font-size-18 from '../../common/style.css';
 .container {
   width: 100vw;
@@ -64,8 +64,36 @@
   padding-top: 1.5em;
   border: none;
 }
-.c1 {
-  position: absolute;
-  width: 100px;
-  height: 100px;
+.modal_container {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+.baubau {
+  flex-basis: 40%;
+  padding: 0 2em;
+}
+.bau_desc {
+  padding: 0 2em;
+  display: flex;
+  flex-basis: 60%;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.bau_title {
+  font-size: font-size-24;
+  padding: 0.5em 0;
+  border-bottom: 2px solid color-orange-1;
+}
+.bau_content {
+  font-size: font-size-14;
+  padding: 1em 0;
+}
+.bold_text {
+  font-weight: 700;
+}
+.highlight {
+  color: color-orange-1;
 }

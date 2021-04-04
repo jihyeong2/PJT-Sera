@@ -46,6 +46,9 @@ public class Review implements Serializable {
     @Column(nullable = false)
     private Long helpCnt;
 
+    @Transient
+    private int helpMark; //도움 여부(1:도움, 0:도움x)
+
     public static Review createReview(ReviewRequest reviewRequest){
         Review reviewInput = new Review();
         reviewInput.setReviewImg(reviewRequest.getReviewImg());

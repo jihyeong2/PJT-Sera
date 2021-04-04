@@ -22,6 +22,7 @@ public class ReviewDto {
     private String reviewBadContent;
     private int reviewScore;
     private Long helpCnt;
+    private int helpMark; //도움 여부(눌렀으면 1, 안눌렀으면 0)
 
     public ReviewDto(Review review){
         this.reviewId = review.getReviewId();

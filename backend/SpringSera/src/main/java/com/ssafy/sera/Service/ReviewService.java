@@ -19,6 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ReviewService {
     private final ReviewRepository reviewRepository;
+    private final S3Service s3Service;
 
     /**
      * 리뷰 등록하기
@@ -33,7 +34,7 @@ public class ReviewService {
      * 현재 아이템의 전체 리뷰 목록 가져오기
      * @return
      */
-    public List<ReviewDto> findByItem(Item item) {
+    public List<Review> findByItem(Item item) {
         return reviewRepository.findByItem(item);
     }
 
@@ -57,6 +58,9 @@ public class ReviewService {
             findReview.get().setReviewGoodContent(request.getReviewGoodContent());
             findReview.get().setReviewBadContent(request.getReviewBadContent());
             findReview.get().setReviewScore(request.getReviewScore());
+            if(findReview.get().getReviewImg()!=null){
+
+            }
         }
         else{
             throw new IllegalStateException("존재하지 않는 리뷰입니다.");
@@ -71,6 +75,8 @@ public class ReviewService {
         Optional<Review> deleteReview = Optional.ofNullable(reviewRepository.findByReviewId(reviewId));
         if(deleteReview.isPresent()){
             reviewRepository.delete(deleteReview.get());
+            //s3 이미지 삭제
+            if(deleteReview.get().getReviewImg()!=null) s3Service.delete(deleteReview.get().getReviewImg());
         }
     }
 }

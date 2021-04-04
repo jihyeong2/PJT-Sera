@@ -16,6 +16,8 @@ configurations {
 
 repositories {
 	mavenCentral()
+	//aws s3
+	maven { url 'https://repo.spring.io/libs-milestone'}
 }
 
 dependencies {
@@ -28,6 +30,12 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
+	// AWS S3
+	compile('org.springframework.cloud:spring-cloud-starter-aws')
+
+	// handlebars
+	compile 'pl.allegro.tech.boot:handlebars-spring-boot-starter:0.3.0'
+
 	runtimeOnly 'com.h2database:h2'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'mysql:mysql-connector-java'
@@ -39,6 +47,14 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 }
+
+//aws s3
+dependencyManagement {
+	imports {
+		mavenBom 'org.springframework.cloud:spring-cloud-aws:2.0.0.RC2'
+	}
+}
+//aws s3
 
 test {
 	useJUnitPlatform()

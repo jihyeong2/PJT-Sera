@@ -20,11 +20,11 @@ def is_warm(lab_b, a):
     body_part = ['skin', 'eyebrow', 'eye']
     for i in range(3):
         warm_dist += abs(lab_b[i] - warm_b_std[i]) * a[i]
-        #print(body_part[i],"의 warm 기준값과의 거리")
-        #print(abs(lab_b[i] - warm_b_std[i]))
+        print(body_part[i],"의 warm 기준값과의 거리")
+        print(abs(lab_b[i] - warm_b_std[i]))
         cool_dist += abs(lab_b[i] - cool_b_std[i]) * a[i]
-        #print(body_part[i],"의 cool 기준값과의 거리")
-        #print(abs(lab_b[i] - cool_b_std[i]))
+        print(body_part[i],"의 cool 기준값과의 거리")
+        print(abs(lab_b[i] - cool_b_std[i]))
     if(warm_dist <= cool_dist):
         return 1 #warm
     else:

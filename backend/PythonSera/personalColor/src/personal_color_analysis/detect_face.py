@@ -5,17 +5,21 @@ import numpy as np
 import dlib
 import cv2
 import matplotlib.pyplot as plt
+import urllib.request
 
 class DetectFace:
-    def __init__(self, image):
+    def __init__(self, url):
         # initialize dlib's face detector (HOG-based)
         # and then create the facial landmark predictor
         self.detector = dlib.get_frontal_face_detector()
-        self.predictor = dlib.shape_predictor('../res/shape_predictor_68_face_landmarks.dat')
+        self.predictor = dlib.shape_predictor('./personalColor/res/shape_predictor_68_face_landmarks.dat')
 
         #face detection part
-        self.img = cv2.imread(image)
-        #if self.img.shape[0]>500:
+        # self.img = cv2.imread(image)
+        resp = urllib.request.urlopen(url)
+        image = np.asarray(bytearray(resp.read()), dtype=np.uint8)
+        self.img = cv2.imdecode(image, -1) #cv2.IMREAD_COLOR
+        # if self.img.shape[0]>500:
         #    self.img = cv2.resize(self.img, dsize=(0,0), fx=0.8, fy=0.8)
 
         # init face parts

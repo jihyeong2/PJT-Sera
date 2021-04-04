@@ -248,16 +248,3 @@ def makeRecomItemList(item_cnt, items, rates, user):
         data.append(item_json)
     connect.close()
     return data
-
-# 사용자 정보 가져오기
-def selectUser(user_id):
-    connect, curs = connectMySQL()
-    query = """SELECT * FROM user WHERE user_id = %s"""
-    curs.execute(query, (user_id))
-    user = curs.fetchone()
-    connect.close()
-    user_info = {}
-    feilds = ['user_id', 'user_login_id', 'user_password', 'user_nickname', 'user_age', 'user_phone', 'user_gender', 'skin_id', 'personal_color', 'user_img']
-    for (feild, info) in zip(feilds, user):
-        user_info[feild] = info
-    return user_info

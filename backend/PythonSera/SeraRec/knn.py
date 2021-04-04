@@ -73,6 +73,18 @@ def selectElementByItem():
         item_element = json.load(f)
     return item_element
 
+def selectUser(user_id):
+    connect, curs = connectMySQL()
+    query = """SELECT * FROM user WHERE user_id = %s"""
+    curs.execute(query, (user_id))
+    user = curs.fetchone()
+    connect.close()
+    user_info = {}
+    feilds = ['user_id', 'user_login_id', 'user_password', 'user_nickname', 'user_age', 'user_phone', 'user_gender', 'skin_id', 'personal_color', 'user_img']
+    for (feild, info) in zip(feilds, user):
+        user_info[feild] = info
+    return user_info
+
 def makeSkinVector():
     helpful, caution = selectSpecialElement()
     specialElement = set()

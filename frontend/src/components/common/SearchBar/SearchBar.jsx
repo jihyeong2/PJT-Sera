@@ -25,7 +25,7 @@ const SearchBar = (props) => {
       });
       return
     }
-    history.push()
+    history.push(`/search/${inputCategory}/${inputVal}`);
   };
   const onKeyUpEnter = (e) => {
     if(e.key!=="Enter") return;
@@ -41,7 +41,7 @@ const SearchBar = (props) => {
       </div>
       <div className={styles.container}>
         <select ref={selectRef} name="" id="" className={styles.select}>
-          <option className={styles.option} value="none">카테고리</option>
+          <option className={styles.option} value="전체">전체</option>
           <option className={styles.option} value="스킨케어">스킨케어</option>
           <option className={styles.option} value="메이크업">메이크업</option>
           <option className={styles.option} value="향수">향수</option>

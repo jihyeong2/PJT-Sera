@@ -4,6 +4,7 @@
 .review_pro{
 }
 .review_content{
+    margin-bottom: 80px;
 }
 .star_rate{
     display: inline-block;
@@ -26,12 +27,6 @@
 }
 .like_icon{
     cursor: pointer;
-    color: color-blue;
-    margin-left: 7px;
-}
-.unlike_icon{
-    cursor: pointer;
-    color: color-red-1;
     margin-left: 7px;
 }
 .des{
@@ -77,12 +72,9 @@
     height: 130px;
     line-height: 100px;
     padding: 10px;
-    border-radius:50%;
     text-align: center;
     font-size: font-size-30;
     font-weight: 600;
-    color: color-green-1;
-    border: 3px solid color-green-1;
 }
 .review_pro{
     margin-left: 15%;

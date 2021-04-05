@@ -2,23 +2,15 @@ import os, json, pymysql, re
 path = '../crawling/data/GP/output/'
 
 def loadJsonItem():
-    file_list = os.listdir(path)
     items = []
-
-    for file_name in file_list:
-        if 'item' in file_name:
-            with open(path + '/' + file_name, 'r', encoding='utf-8') as f:
-                items += json.load(f)
+    with open(path + '/item_json.json', 'r', encoding='utf-8') as f:
+        items = json.load(f)
     return items
 
 def loadJsonReview():
-    file_list = os.listdir(path)
     reviews = []
-
-    for file_name in file_list:
-        if 'review' in file_name:
-            with open(path + '/' + file_name, 'r', encoding='utf-8') as f:
-                reviews += json.load(f)
+    with open(path + '/review_json.json', 'r', encoding='utf-8') as f:
+        reviews = json.load(f)
     return reviews
 
 def loadSkinType():

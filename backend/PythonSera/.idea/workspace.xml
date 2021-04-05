@@ -1,18 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4a55084d-0971-4c2d-8082-5f075eb54215" name="Default Changelist" comment="" />
+    <list default="true" id="4a55084d-0971-4c2d-8082-5f075eb54215" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/CosmeticDetail/review/review.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/components/CosmeticDetail/review/review.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/CosmeticDetail/review/review.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/components/CosmeticDetail/review/review.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/CosmeticDetail/review/review_item.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/CosmeticDetail/review/review_item.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/components/CosmeticDetail/review/review_item.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/CosmeticDetail/review/review_modify_modal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/components/CosmeticDetail/review/review_modify_modal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/CosmeticDetail/youtube/youtube_list.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/components/CosmeticDetail/youtube/youtube_list.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/router/CosmeticDetail/CosmeticDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/router/CosmeticDetail/CosmeticDetail.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/yarn.lock" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="-1039238009">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.2" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="3" />
-    <option name="y" value="37" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="2" />
+    <option name="y" value="36" />
     <option name="width" value="1750" />
     <option name="height" value="970" />
   </component>
@@ -52,7 +75,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="a8f12e12-cb6a-4466-b3b3-a7aaeac0b84c" name="Default Changelist" comment="" />
+      <changelist id="4a55084d-0971-4c2d-8082-5f075eb54215" name="Default Changelist" comment="" />
       <created>1617525322544</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -63,7 +86,7 @@
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16192994" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14540648" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -74,7 +97,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.50852275" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.2911932" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />

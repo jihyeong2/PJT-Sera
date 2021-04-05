@@ -16,15 +16,15 @@ const SearchBar = (props) => {
   const inputRef= useRef();
   const selectRef= useRef();
   const handleSearch = (inputVal, inputCategory) => {
-    if(!lowerCase.test(inputVal) || !upperCase.test(inputVal) || !koreanCase(inputVal) || !specialCase.test(inputVal)){
-      Swal.fire({
-        icon: 'error',
-        text: '검색어를 입력해주세요.',
-        showConfirmButton: false,
-        timer: 1500
-      });
-      return
-    }
+    // if(!lowerCase.test(inputVal) || !upperCase.test(inputVal) || !koreanCase(inputVal) || !specialCase.test(inputVal)){
+    //   Swal.fire({
+    //     icon: 'error',
+    //     text: '검색어를 입력해주세요.',
+    //     showConfirmButton: false,
+    //     timer: 1500
+    //   });
+    //   return
+    // }
     history.push(`/search/${inputCategory}/${inputVal}`);
   };
   const onKeyUpEnter = (e) => {

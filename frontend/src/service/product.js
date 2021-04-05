@@ -1,7 +1,12 @@
 import httpDjango from '../http-django';
 
-function getCorrectProducts(user_id, category_large,success,fail){
-  httpDjango.get(`v1/items/correct/${user_id}/${category_large}`)
+function getHelpfulProducts(user_id,success,fail){
+  httpDjango.get(`v1/items/correct/helpful/${user_id}`)
+  .then(success)
+  .catch(fail)
+}
+function getCautionProducts(user_id,success,fail){
+  httpDjango.get(`v1/items/correct/caution${user_id}`)
   .then(success)
   .catch(fail)
 }
@@ -21,4 +26,4 @@ function getLikeList(user_id,success,fail){
   .then(success)
   .catch(fail)
 }
-export {getCorrectProducts, setLike, setHate, getLikeList};
+export {getHelpfulProducts, getCautionProducts, setLike, setHate, getLikeList};

@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import pymysql
+import boto3
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -130,11 +132,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-AWS_ACCESS_KEY_ID = "AKIAXZ73MP3UHZUFQVPZ" # 액세스 키
-AWS_SECRET_ACCESS_KEY = "2X2qnKc9jnMB3zVMYgsSRmVsZzzSu363AGa3pRQH" # 비밀 액세스 키
+AWS_ACCESS_KEY_ID = "AKIAV4C36BHFEEJUSSMI" # 액세스 키
+AWS_SECRET_ACCESS_KEY = "0TK5JoTenCDpdU2vAMBMksMKN0JC2zRzMfDkzgpl" # 비밀 액세스 키
 
 AWS_REGION = "ap-northeast-2" # AWS 지역
 
-AWS_STORAGE_BUCKET_NAME = "sera-s3" # 버킷 이름
+AWS_STORAGE_BUCKET_NAME = "myserabucket" # 버킷 이름
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (
     AWS_STORAGE_BUCKET_NAME, AWS_REGION)
+
+connect = pymysql.connect(host='sera.czh6yt8bx4v6.ap-northeast-2.rds.amazonaws.com', user='admin', password='ssafyB202SERA', db='seraDB', charset='utf8mb4')
+curs = connect.cursor()
+
+s3_client = boto3.client('s3', aws_access_key_id= AWS_ACCESS_KEY_ID, aws_secret_access_key= AWS_SECRET_ACCESS_KEY)

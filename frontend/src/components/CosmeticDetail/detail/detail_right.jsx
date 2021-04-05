@@ -110,7 +110,9 @@ const Detail = ({user, color, skin, product}) => {
                                 <br></br>
                                 <span style={{color:`${skin.type[user.skinId.skinType].color}`}} className={styles.test_result}>{user.skinId.skinType}</span>인
                                 <span className={styles.nickname}>{user.userNickname}</span>님과
-                                <span className={styles.test_percent}>잘 맞지 않아요.</span> 
+                                {product.rating<0 && <span className={styles.test_percent}> 잘 맞지 않아요 👎🏻</span> }
+                                {product.rating>0 && <span className={styles.test_percent}> 잘 맞아요 👍🏻</span> }
+                                 {product.rating==0 && <span className={styles.test_percent}> 보통이에요 🤏🏻</span> }
                             </div>
                     </Grid>
                     <Grid item xs={3}>
@@ -141,7 +143,7 @@ const Detail = ({user, color, skin, product}) => {
                             <div className={styles.tone_result}>
                                 <br></br>
                                 <span className={styles.nickname}> {user.userNickname}</span>님은 
-                                <span style={{color:`${color[user.personalColor].color}`}} className={styles.test_tone}> 가을웜톤</span> 입니다.
+                                <span style={{color:`${color[user.personalColor].color}`}} className={styles.test_tone}>{user.personalColor}톤</span> 입니다.
                             </div>
                         </Grid>
                         <Grid item xs={3}>
@@ -180,7 +182,7 @@ const Detail = ({user, color, skin, product}) => {
                         <Grid item xs={10}>
                             <div className={styles.description_content}>
                                 {
-                                    product.tags.map (tag=> ( <span className={styles.tag} key={product.id}>{tag}</span>))
+                                    product.tags.map (tag=> ( <div className={styles.tag} key={product.id}>{tag}</div>))
                                 }
                             </div>
                         </Grid>

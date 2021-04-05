@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -98,7 +99,14 @@ public class ReviewService {
     }
 
     public List<String> findPhotoRecent(Item item) {
-        return reviewRepository.findPhotoRecent(item);
+        int cnt = 0;
+        List<String> totalImgList = reviewRepository.findPhotoRecent(item);
+        List<String> top8ImgList = new ArrayList<>();
+        while(++cnt < 9){
+            if(cnt > totalImgList.size()) break;
+            top8ImgList.add(totalImgList.get(cnt));
+        }
+        return top8ImgList;
     }
 
     public List<Review> findRecentList(User user, Item item) {

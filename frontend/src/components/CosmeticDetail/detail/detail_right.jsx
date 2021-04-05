@@ -102,8 +102,9 @@ const Detail = ({user, color, skin, product}) => {
                 <div className={styles.match_detail}>
                 <Grid container spacing={1}>
                         <Grid item xs={2} >
-                            {/* 넘어오는 값으로 색상 변경하기 , 데이터 변경하기 👩🏻 */}
-                            <div style={{backgroundColor:'#AF3131'}} className={styles.circle_percent}>👎🏻</div>
+                            {product.rating<0 && <div style={{backgroundColor:'#AF3131'}} className={styles.circle_percent}></div>}
+                            {product.rating>0 && <div style={{backgroundColor:'#4E9157'}} className={styles.circle_percent}>👍🏻</div>}
+                            {product.rating==0 && <div style={{backgroundColor:'#FAC56A'}} className={styles.circle_percent}>🤏🏻</div>}
                         </Grid>
                         <Grid item xs={7} >
                             <div className={styles.result}>
@@ -134,10 +135,22 @@ const Detail = ({user, color, skin, product}) => {
                 <div className={styles.tone_detail}>
                     <Grid container spacing={1}>
                         <Grid item xs={2} >
-                            <div style={{backgroundColor:`${color[user.personalColor].color}`}} className={styles.tone_circle}>
-                                <div>{user.personalColor.split(' ')[0]}</div>
-                                <div>{user.personalColor.split(' ')[1]}</div>
-                            </div>
+                            {
+                                user.personalColor.split('')[0] == "봄" && (
+                                    <div style={{backgroundColor:`${color[user.personalColor].color}`}} className={styles.tone_circle}>
+                                        <div>{user.personalColor.split('')[0]}</div>
+                                        <div>{user.personalColor.split('')[1]}</div>
+                                    </div>
+                                )
+                            }
+                            {
+                                user.personalColor.split('')[0] != "봄" && (
+                                    <div style={{backgroundColor:`${color[user.personalColor].color}`}} className={styles.tone_circle}>
+                                        <div>{user.personalColor.split(' ')[0]}</div>
+                                        <div>{user.personalColor.split(' ')[1]}</div>
+                                    </div>
+                                )
+                            }
                         </Grid>
                         <Grid item xs={7} >
                             <div className={styles.tone_result}>

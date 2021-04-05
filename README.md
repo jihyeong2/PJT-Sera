@@ -169,7 +169,8 @@ https://blog.ull.im/engineering/2019/03/10/logs-on-git.html 대로 메시지
 
 ### ERD
 
-![ERD](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/a6bdb043-83da-4938-9a92-e87227f8cce0/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210323%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210323T011727Z&X-Amz-Expires=86400&X-Amz-Signature=f4fa2282ffe2ad3e9a7bf9386162f02debfcd8dbd12e43dbcb37e5ef90bbd1d5&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
+![image](/uploads/4e876635a389f2962b61334fcc5956d9/image.png)
+
 
 ### 화면 정의서
 

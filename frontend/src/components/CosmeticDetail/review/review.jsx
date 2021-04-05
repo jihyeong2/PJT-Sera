@@ -184,7 +184,7 @@ const Review = ({product, review, user, skin, picture}) => {
                                         <div className={styless.review_content}>
                                             <div>
                                                 <Box className={styless.star_rate} component="fieldset" mb={3} borderColor="transparent">
-                                                    <Rating name="read-only" value={4} readOnly />
+                                                    <Rating name="read-only" value={review.reviewScore} readOnly />
                                                 </Box>
                                                 <span className={styles.date}>{ moment(review.writeDate).format('YYYY-MM-DD')}</span> &nbsp;
                                                 {

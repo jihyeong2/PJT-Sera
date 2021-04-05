@@ -823,8 +823,8 @@ const ProductNav = ({user}) => {
             menuTab == 1 && ( 
                 <div className={styles.click_nav}>
                     <ButtonGroup variant="text" aria-label="text primary button group">
-                        <Button><span style={selectList==="맞는상품" ? selectStyle : startStyle} onClick={changeList}>맞는상품</span> &nbsp;<span className={styles.num}>(<span>8</span>)</span></Button>
-                        <Button><span style={selectList==="안맞는상품" ? selectStyle : startStyle} onClick={changeList}>안맞는상품</span> &nbsp;<span className={styles.num}>(<span>8</span>)</span></Button>
+                        <Button><span style={selectList==="맞는상품" ? selectStyle : startStyle} onClick={changeList}>맞는상품</span></Button>
+                        <Button><span style={selectList==="안맞는상품" ? selectStyle : startStyle} onClick={changeList}>안맞는상품</span></Button>
                     </ButtonGroup>
                 </div>
             )
@@ -833,9 +833,9 @@ const ProductNav = ({user}) => {
             menuTab == 2 && ( //스킨케어
                 <div className={styles.click_nav}>
                     <ButtonGroup variant="text" aria-label="text primary button group">
-                        <Button><span style={selectList==="스킨케어" ? selectStyle : startStyle} onClick={changeList}>스킨케어</span>&nbsp;<span className={styles.num}>(<span>8</span>)</span></Button>
-                        <Button><span style={selectList==="선케어" ? selectStyle : startStyle} onClick={changeList}>선케어</span>&nbsp;<span className={styles.num}>(<span>8</span>)</span></Button>
-                        <Button><span style={selectList==="클랜징" ? selectStyle : startStyle} onClick={changeList}>클랜징</span>&nbsp;<span className={styles.num}>(<span>8</span>)</span></Button>
+                        <Button><span style={selectList==="스킨케어" ? selectStyle : startStyle} onClick={changeList}>스킨케어</span></Button>
+                        <Button><span style={selectList==="선케어" ? selectStyle : startStyle} onClick={changeList}>선케어</span></Button>
+                        <Button><span style={selectList==="클랜징" ? selectStyle : startStyle} onClick={changeList}>클랜징</span></Button>
                     </ButtonGroup>
                 </div>
             )
@@ -844,10 +844,10 @@ const ProductNav = ({user}) => {
             menuTab == 3 && ( //메이크업
                 <div className={styles.click_nav}>
                     <ButtonGroup variant="text" aria-label="text primary button group">
-                        <Button><span style={selectList==="페이스메이크업" ? selectStyle : startStyle} onClick={changeList}>페이스메이크업</span>&nbsp;<span className={styles.num}>(<span>8</span>)</span></Button>
-                        <Button><span style={selectList==="립메이크업" ? selectStyle : startStyle} onClick={changeList}>립메이크업</span>&nbsp;<span className={styles.num}>(<span>8</span>)</span></Button>
-                        <Button><span style={selectList==="아이메이크업" ? selectStyle : startStyle} onClick={changeList}>아이메이크업</span>&nbsp;<span className={styles.num}>(<span>8</span>)</span></Button>
-                        <Button><span style={selectList==="컨투어링" ? selectStyle : startStyle} onClick={changeList}>컨투어링</span>&nbsp;<span className={styles.num}>(<span>8</span>)</span></Button>
+                        <Button><span style={selectList==="페이스메이크업" ? selectStyle : startStyle} onClick={changeList}>페이스메이크업</span></Button>
+                        <Button><span style={selectList==="립메이크업" ? selectStyle : startStyle} onClick={changeList}>립메이크업</span></Button>
+                        <Button><span style={selectList==="아이메이크업" ? selectStyle : startStyle} onClick={changeList}>아이메이크업</span></Button>
+                        <Button><span style={selectList==="컨투어링" ? selectStyle : startStyle} onClick={changeList}>컨투어링</span></Button>
                     </ButtonGroup>
                 </div>
             )
@@ -856,10 +856,10 @@ const ProductNav = ({user}) => {
             menuTab == 5 && ( // 남성
                 <div className={styles.click_nav}>
                     <ButtonGroup variant="text" aria-label="text primary button group">
-                        <Button><span style={selectList==="스킨케어" ? selectStyle : startStyle} onClick={changeList}>스킨케어</span>&nbsp;<span className={styles.num}>(<span>8</span>)</span></Button>
-                        <Button><span style={selectList==="메이크업" ? selectStyle : startStyle} onClick={changeList} onClick={changeList}>메이크업</span>&nbsp;<span className={styles.num}>(<span>8</span>)</span></Button>
-                        <Button><span style={selectList==="클랜징" ? selectStyle : startStyle} onClick={changeList}>클랜징</span>&nbsp;<span className={styles.num}>(<span>8</span>)</span></Button>
-                        <Button><span style={selectList==="쉐이빙" ? selectStyle : startStyle} onClick={changeList}>쉐이빙</span>&nbsp;<span className={styles.num}>(<span>8</span>)</span></Button>
+                        <Button><span style={selectList==="스킨케어" ? selectStyle : startStyle} onClick={changeList}>스킨케어</span></Button>
+                        <Button><span style={selectList==="메이크업" ? selectStyle : startStyle} onClick={changeList} onClick={changeList}>메이크업</span></Button>
+                        <Button><span style={selectList==="클랜징" ? selectStyle : startStyle} onClick={changeList}>클랜징</span></Button>
+                        <Button><span style={selectList==="쉐이빙" ? selectStyle : startStyle} onClick={changeList}>쉐이빙</span></Button>
                     </ButtonGroup>
                 </div>
             )

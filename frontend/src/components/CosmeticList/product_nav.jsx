@@ -21,6 +21,14 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
+  /** 📑 리스트 흐름 메모 
+products는 탭을 클릭할 때 마다 계속 바뀜
+selectedTab은 대분류 탭 (전체 맞춤 스킨케어 메이크업 향수 남성)
+selectedTab2는 중분류 탭
+그래서 대분류탭을 클릭했을 때 이벤트가 changeColor
+중분류 탭을 클릭했을 때 이벤트가 changeList
+정렬기준 바뀌었을때 이벤트가 handleChange
+   */
 const ProductNav = ({user}) => {
     const [menuTab, setMenu] = useState(0);
     const [selectedTab, setTab] = useState("✔ 전체"); 

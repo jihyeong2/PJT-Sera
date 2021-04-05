@@ -34,21 +34,31 @@ def selectAllItem():
 
     return items
 
-def selectItemTag(item_id, connect, curs):
+def selectItemTag(item_id):
+    connect, curs = connectMySQL()
     query = """SELECT tag_name FROM item_tag INNER JOIN tag USING(tag_id) WHERE item_id = %s"""
     curs.execute(query, (item_id))
     tags = curs.fetchall()
     result = []
     for tag in tags:
         result.append(tag[0])
+    connect.close()
     return sorted(result)
 
-def selectDibs(user_id, item_id, connect, curs):
+def selectDibs(user_id, item_id, connect=None, curs=None):
+    close = False
+    if connect is None and curs is None:
+        close = True
+        connect, curs = connectMySQL()
     query = """SELECT dibs_id FROM dibs WHERE user_id=1=%s AND item_id=%s"""
     curs.execute(query, (user_id,item_id))
     tags = curs.fetchone()
-    if tags is None: return False
-    return True
+    result = True
+    if tags is None:
+        result = False
+    if close:
+        connect.close()
+    return result
 
 def writeElementByItem():
     connect, curs = connectMySQL()
@@ -85,7 +95,8 @@ def selectUser(user_id):
         user_info[feild] = info
     return user_info
 
-def selectElementForDetail(item_id,skin_id, connect, curs):
+def selectElementForDetail(item_id, skin_id):
+    connect, curs = connectMySQL()
     query = """SELECT e.*, CASE WHEN element_id IN (SELECT element_id FROM helpful WHERE skin_id=%s)
                             THEN 1
                             WHEN element_id IN (SELECT element_id FROM caution WHERE skin_id=%s)
@@ -95,6 +106,7 @@ def selectElementForDetail(item_id,skin_id, connect, curs):
                 FROM element e INNER JOIN item_element ie USING(element_id) WHERE ie.item_id = % s """
     curs.execute(query, (skin_id, skin_id, item_id))
     elements = curs.fetchall()
+    connect.close()
     best_elements = []
     worst_elements = []
     ingredient_elements = []
@@ -336,7 +348,7 @@ def search(user, keyword):
             for (d, f) in zip(item[14:], etc):
                 item_json[f] = d
             item_json['rating'] = item_json['helpful_cnt'] - item_json['caution_cnt']
-            item_json['dibs'] = selectDibs(user['user_id'], item[0], connect, curs)
+            item_json['dibs'] = selectDibs(user['user_id'], item[0], connect=connect, curs=curs)
             result_item_name.append(item_json)
     else:
         result_item_name = []
@@ -365,7 +377,7 @@ def search(user, keyword):
                 for (d, f) in zip(item[14:], etc):
                     item_json[f] = d
                 item_json['rating'] = item_json['helpful_cnt'] - item_json['caution_cnt']
-                item_json['dibs'] = selectDibs(user['user_id'], item[0], connect, curs)
+                item_json['dibs'] = selectDibs(user['user_id'], item[0], connect=connect, curs=curs)
                 result_item_element[e[1]].append(item_json)
     else:
         result_item_element = {}
@@ -447,63 +459,52 @@ def sort(user, type=None, subType=None, category_large=None, category_middle = N
 
     items = curs.fetchall()
     data = []
-    fields = ['item_id', 'item_name', 'item_img', 'item_brand','category_id','item_colors','item_volume','item_price','item_description','dibs_cnt',]
-    category_fields = ['category_id', 'category_large', 'category_middle', 'category_small']
-    etc = ['helpful_cnt','caution_cnt']
-    for item in items:
-        item_json = {}
-        for (d, f) in zip(item[:10], fields):
-            item_json[f] = d
-        for (d, f) in zip(item[10:14], category_fields):
-            item_json[f] = d
-        for (d, f) in zip(item[14:], etc):
-            item_json[f] = d
-        item_json['rating'] = item_json['helpful_cnt'] - item_json['caution_cnt']
-        item_json['dibs'] = selectDibs(user['user_id'], item[0], connect, curs)
-        data.append(item_json)
-    
+    data = makeItemList(items, user, connect, curs)
     connect.close()
     return data
 
 def correct(user, category_large = None, type=None):
     connect, curs = connectMySQL()
     if category_large is None:
-        if type is None:
+        if type == 'helpful':
             query = """SELECT i.*,c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
                         WHERE si.skin_id = %s
-                        ORDER BY si.helpful_cnt - si.caution_cnt DESC
+                        ORDER BY si.helpful_cnt DESC, si.caution_cnt ASC
                         LIMIT 100 """
         else:
-            if type == 'helpful':
-                query = """SELECT i.*,c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
-                            WHERE si.skin_id = %s AND si.caution_cnt = 0
-                            ORDER BY si.helpful_cnt DESC
-                            LIMIT 100 """
-            else:
-                query = """SELECT i.*,c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
-                            WHERE si.skin_id = %s
-                            ORDER BY si.caution_cnt DESC
-                            LIMIT 100 """
+            query = """SELECT i.*,c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
+                        WHERE si.skin_id = %s
+                        ORDER BY si.caution_cnt DESC, si.helpful_cnt ASC
+                        LIMIT 100 """
         curs.execute(query, (user['skin_id']))
     else:
-        if type is None:
+        if type == 'helpful':
+            query = """SELECT i.*,c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
+                    WHERE si.skin_id = %s AND c.category_large = %s AND si.caution_cnt = 0
+                    ORDER BY si.helpful_cnt DESC, si.caution_cnt ASC
+                    LIMIT 100 """
+        else:
             query = """SELECT i.*,c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
                         WHERE si.skin_id = %s AND c.category_large = %s
-                        ORDER BY si.helpful_cnt - si.caution_cnt DESC
+                        ORDER BY si.caution_cnt DESC, si.helpful_cnt ASC
                         LIMIT 100 """
-        else:
-            if type == 'helpful':
-                query = """SELECT i.*,c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
-                        WHERE si.skin_id = %s AND c.category_large = %s AND si.caution_cnt = 0
-                        ORDER BY si.helpful_cnt DESC
-                        LIMIT 100 """
-            else:
-                query = """SELECT i.*,c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
-                            WHERE si.skin_id = %s AND c.category_large = %s
-                            ORDER BY si.caution_cnt DESC
-                            LIMIT 100 """
         curs.execute(query, (user['skin_id'], category_large))
     items = curs.fetchall()
+    data = makeItemList(items, user, connect, curs)
+    connect.close()
+    return data
+
+def dibsItemList(user):
+    connect, curs = connectMySQL()
+    query = """SELECT i.*, c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
+            WHERE si.skin_id = %s AND item_id in (SELECT item_id FROM dibs WHERE user_id = %s)"""
+    curs.execute(query, (user['skin_id'], user['user_id']))
+    items = curs.fetchall()
+    data = makeItemList(items, user, connect, curs)
+    connect.close()
+    return data
+
+def makeItemList(items, user, connect, curs):
     data = []
     fields = ['item_id', 'item_name', 'item_img', 'item_brand','category_id','item_colors','item_volume','item_price','item_description','dibs_cnt',]
     category_fields = ['category_id', 'category_large', 'category_middle', 'category_small']
@@ -519,7 +520,6 @@ def correct(user, category_large = None, type=None):
         item_json['rating'] = item_json['helpful_cnt'] - item_json['caution_cnt']
         item_json['dibs'] = selectDibs(user['user_id'], item[0], connect, curs)
         data.append(item_json)
-    connect.close()
     return data
 
 # 일치율 계산
@@ -530,8 +530,6 @@ def calCorrectRate(vec, type=None):
     return help_cnt, caution_cnt
 
 def updateVector():
-    makeSkinVector()
-    makeitemVector()
     makeReviewVector()
     makeVector()
 
@@ -557,5 +555,6 @@ def insertItemSkin():
 
 if __name__ == '__main__':
     # print(knn({'skinType': 1, 'age': 25, 'gender': '여'}))
-    makeVector()
+    # makeVector()
+    updateVector()
     # insertItemSkin()

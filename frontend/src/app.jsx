@@ -55,8 +55,7 @@ function App() {
               </React.Fragment>
             )}
           />
-          <Route path="/search/:name" component={SearchResult}/>
-          <Route path="/reviewchart" component={ReviewChart}/>
+          <Route path="/search/:category/:name" component={SearchResult}/>
         </Switch>
       </BrowserRouter>
     </div>

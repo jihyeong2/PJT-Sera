@@ -86,7 +86,7 @@ public class ReviewService {
         if(deleteReview.isPresent()){
             reviewRepository.delete(deleteReview.get());
             //s3 이미지 삭제
-            if(deleteReview.get().getReviewImg()!=null) s3Service.delete(deleteReview.get().getReviewImg());
+            if(deleteReview.get().getReviewImg().length()>=5) s3Service.delete(deleteReview.get().getReviewImg());
         }
     }
 
@@ -97,5 +97,42 @@ public class ReviewService {
     @Transactional
     public GoodReview findHelpMark(User userId, Review reviewId){
         return reviewRepository.findHelpMark(userId, reviewId);
+    }
+
+    public List<String> findPhotoRecent(Item item) {
+        return reviewRepository.findPhotoRecent(item);
+    }
+
+    public List<Review> findRecentList(User user, Item item) {
+        List<Review> reviewList = reviewRepository.findRecentList(item);
+        for(Review r : reviewList){
+            System.out.println(user.getUserLoginId()+", "+r.getItem().getItemId());
+            System.out.println("시발"+reviewRepository.findHelpMark(user, r));
+            if(reviewRepository.findHelpMark(user, r) != null) r.setHelpMark(1);
+            else r.setHelpMark(0);
+        }
+        return reviewList;
+    }
+
+    public List<Review> findHelpList(User user, Item item) {
+        List<Review> reviewList = reviewRepository.findHelpList(item);
+        for(Review r : reviewList){
+            System.out.println(user.getUserLoginId()+", "+r.getItem().getItemId());
+            System.out.println("시발"+reviewRepository.findHelpMark(user, r));
+            if(reviewRepository.findHelpMark(user, r) != null) r.setHelpMark(1);
+            else r.setHelpMark(0);
+        }
+        return reviewList;
+    }
+
+    public List<Review> findScoreList(User user, Item item) {
+        List<Review> reviewList = reviewRepository.findScoreList(item);
+        for(Review r : reviewList){
+            System.out.println(user.getUserLoginId()+", "+r.getItem().getItemId());
+            System.out.println("시발"+reviewRepository.findHelpMark(user, r));
+            if(reviewRepository.findHelpMark(user, r) != null) r.setHelpMark(1);
+            else r.setHelpMark(0);
+        }
+        return reviewList;
     }
 }

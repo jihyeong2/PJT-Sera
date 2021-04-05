@@ -75,80 +75,25 @@ def item_one(request, user_id, item_id):
 # 가격 순 정렬
 @api_view(['GET'])
 def itemSortPrice(request, user_id, category_large=None, category_middle=None, sort_type=None):
-    connect, curs = connectMySQL()
-    if category_large != None and category_middle == None:
-        query = """SELECT i.*, c.* FROM item i INNER JOIN category c USING(category_id)
-                WHERE category_id IN(SELECT category_id FROM category WHERE category_large = % s) AND i.item_price != '가격미정' """
-        curs.execute(query,(category_large))
-    elif category_large != None and category_middle != None:
-        query = """SELECT i.*, c.* FROM item i INNER JOIN category c USING(category_id)
-                 WHERE category_id IN (SELECT category_id FROM category WHERE category_large=%s and category_middle=%s) AND i.item_price != '가격미정'"""
-        curs.execute(query,(category_large, category_middle))
-    else:
-        query = """SELECT i.*, c.* FROM item i INNER JOIN category c USING(category_id)
-                 WHERE i.item_price != '가격미정'"""
-        curs.execute(query)
-    items = curs.fetchall()
-    connect.close()
     user = selectUser(user_id)
-    data = []
     if sort_type == 0:
-        items = sorted(items, key=lambda x: int(x[7][:-1].replace(',', '').strip()))
-        data = normal(items, user)
+        data = sort(user, type='price', subType='low', category_large=category_large, category_middle=category_middle)
     else:
-        items = sorted(items, key=lambda x: int(x[7][:-1].replace(',', '').strip()), reverse=True)
-        data = normal(items, user)
-    # data = makeSortItemList(items, user)
+        data = sort(user, type='price', subType='high', category_large=category_large, category_middle=category_middle)
     return JsonResponse({'item_list': data}, json_dumps_params={'ensure_ascii': False})
 
 # 별점 순
 @api_view(['GET'])
 def itemSortScore(request, user_id, category_large=None, category_middle=None):
-    connect, curs = connectMySQL()
-    if category_large != None and category_middle == None:
-        query = """SELECT i.*, c.*, IFNULL((SELECT avg(review_score) FROM review r WHERE i.item_id = r.item_id),0) as score FROM item i INNER JOIN category c USING(category_id)
-                    WHERE category_id IN (SELECT category_id FROM category WHERE category_large=%s)
-                    ORDER BY score desc """
-        curs.execute(query,(category_large))
-    elif category_large != None and category_middle != None:
-        query = """SELECT i.*, c.*, IFNULL((SELECT avg(review_score) FROM review r WHERE i.item_id = r.item_id),0) as score FROM item i INNER JOIN category c USING(category_id)
-                WHERE category_id IN (SELECT category_id FROM category WHERE category_large=%s AND category_middle=%s)
-                ORDER BY score desc """
-        curs.execute(query,(category_large, category_middle))
-    else:
-        query = """SELECT i.*, c.*, IFNULL((SELECT avg(review_score) FROM review r WHERE i.item_id = r.item_id),0) as score FROM item i INNER JOIN category c USING(category_id)
-                ORDER BY score desc """
-        curs.execute(query)
-    items = curs.fetchall()
-    connect.close()
     user = selectUser(user_id)
-    data = normal(items, user)
-    # data = makeSortItemList(items)
+    data = sort(user, type='score', category_large=category_large, category_middle=category_middle)
     return JsonResponse({'item_list': data}, json_dumps_params={'ensure_ascii': False})
 
 # 리뷰 개수 순
 @api_view(['GET'])
 def itemSortReviewCnt(request, user_id, category_large=None, category_middle = None):
-    connect, curs = connectMySQL()
-    if category_large != None and category_middle == None:
-        query = """SELECT i.*, c.*, (SELECT count(*) FROM review r WHERE i.item_id = r.item_id) as count FROM item i INNER JOIN category c USING(category_id)
-                    WHERE category_id IN (SELECT category_id FROM category WHERE category_large=%s)
-                    ORDER BY count desc """
-        curs.execute(query,(category_large))
-    elif category_large != None and category_middle != None:
-        query = """SELECT i.*, c.*, (SELECT count(*) FROM review r WHERE i.item_id = r.item_id) as count FROM item i INNER JOIN category c USING(category_id)
-                WHERE category_id IN (SELECT category_id FROM category WHERE category_large=%s AND category_middle=%s)
-                ORDER BY count desc """
-        curs.execute(query,(category_large, category_middle))
-    else:
-        query = """SELECT i.*, c.*, (SELECT count(*) FROM review r WHERE i.item_id = r.item_id) as count FROM item i INNER JOIN category c USING(category_id)
-                ORDER BY count desc """
-        curs.execute(query)
-    items = curs.fetchall()
-    connect.close()
     user = selectUser(user_id)
-    data = normal(items, user)
-    # data = makeSortItemList(items)
+    data = sort(user, type='reviewCnt', category_large=category_large, category_middle=category_middle)
     return JsonResponse({'item_list': data}, json_dumps_params={'ensure_ascii': False})
 
 # 맞춤 화장품 리스트( 도움 성분 개수 순 )
@@ -156,21 +101,17 @@ def itemSortReviewCnt(request, user_id, category_large=None, category_middle = N
 def itemListCorrect(request, user_id, category_large=None):
     connect, curs = connectMySQL()
     user = selectUser(user_id)
-    if category_large != None:
-        query = """SELECT i.*, c.* FROM item i INNER JOIN category c USING(category_id)
-                    WHERE category_id IN (SELECT category_id FROM category WHERE category_large=%s)
-                """
-        curs.execute(query,(category_large))
-    else:
-        query = """SELECT i.*, c.* FROM item i INNER JOIN category c USING(category_id)"""
-        curs.execute(query)
-    items = curs.fetchall()
-    data = correct(items, user)
-    data = sorted(data, key=lambda x: x['rating'], reverse=True)
-    for item in data[:100]:
-        item['dibs'] = selectDibs(user['user_id'], item['item_id'], connect, curs)
     connect.close()
-    return JsonResponse({'item_list': data[:100]}, json_dumps_params={'ensure_ascii': False})
+    data = correct(user, category_large = category_large)
+    return JsonResponse({'item_list': data}, json_dumps_params={'ensure_ascii': False})
+
+@api_view(['GET'])
+def itemListCorrectCheck(request, user_id, type, category_large=None):
+    connect, curs = connectMySQL()
+    user = selectUser(user_id)
+    connect.close()
+    data = correct(user, category_large = category_large, type=type)
+    return JsonResponse({'item_list': data}, json_dumps_params={'ensure_ascii': False})
 
 @csrf_exempt
 def DibsItem(request, user_id, item_id):

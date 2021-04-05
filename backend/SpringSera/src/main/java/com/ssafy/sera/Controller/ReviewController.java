@@ -118,7 +118,7 @@ public class ReviewController {
 
 
     @ApiOperation(value = "리뷰 좋아요 업데이트(클릭 이벤트)", notes = "좋아요 성공시 추가면 1, 빼면 0 반환 / 에러 메시지", response = BaseResponse.class)
-    @PutMapping("/help/{request}")
+    @PutMapping("/help")
     public BaseResponse modifyHelpCnt(@ApiParam(value = "도움 객체")@RequestBody GoodReviewRequest request){
         BaseResponse response = null;
         try {

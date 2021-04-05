@@ -4,26 +4,40 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Detail = ({ product }) => {
     console.log(product);
-    // const [heart, setHeart] = useState(null);
 
-    // const getHeart = () => {
-    //     axios({
-    //         method: 'GET',
-    //         url: `http://localhost:8000/v1/items/15`,
-    //         headers:{
-    //           "Content-type": "application/json",
-    //         }
-    //       })
-    //       .then(res=>{
-    //           console.log("데이터");
-    //         console.log(res.data);
-    //       })
-    //       .catch(err=>{
-    //           console.log("에러");
-    //         console.error(err);
-    //       })
+    // const onHandleHeart = (item_id,idx) =>{
+    //     if(!products[idx].dibs){ //좋아요
+    //         setLike(
+    //             user.userId,
+    //             item_id,
+    //             (res)=>{
+    //                 const tmp = products.map(product=>{
+    //                     if(product.item_id != item_id) return product;
+    //                     else return {...product, dibs: true, dibs_cnt: product.dibs_cnt+1}
+    //                 })
+    //                 setProducts(tmp);
+    //             },
+    //             (err)=>{
+    //                 console.error(err);
+    //             }
+    //         )
+    //     } else{ //싫어요
+    //         setHate(
+    //             user.userId,
+    //             item_id,
+    //             (res)=>{
+    //                 const tmp = products.map(product=>{
+    //                     if(product.item_id != item_id) return product;
+    //                     else return {...product, dibs: false, dibs_cnt: product.dibs_cnt-1}
+    //                 })
+    //                 setProducts(tmp);
+    //             },
+    //             (err)=>{
+    //                 console.error(err);
+    //             }
+    //         )
+    //     }
     // }
-
 
     return (
         <div className={styles.detail_left}>
@@ -35,8 +49,17 @@ const Detail = ({ product }) => {
                 </div>
 
             <div className={styles.icon}>
-                {product.dibs_cnt} &nbsp;<span className={styles.heart_icon}><FontAwesomeIcon icon={['far', 'heart']} size="lg" color="red" /></span>
-                {/* <FontAwesomeIcon icon={['fas', 'heart']} size="2x" color="red"/> */}
+                {product.dibs_cnt}&nbsp;
+                {
+                    product.dibs == false && (
+                        <span className={styles.heart_icon}><FontAwesomeIcon icon={['far', 'heart']} size="lg" color="red" /></span>
+                    )
+                }
+                {
+                    product.dibs == true && (
+                        <span className={styles.heart_icon}><FontAwesomeIcon icon={['fas', 'heart']} size="2x" color="red"/></span>
+                    )
+                }
             </div>
         </div>
     )

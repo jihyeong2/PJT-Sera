@@ -1,6 +1,5 @@
 package com.ssafy.sera.Controller;
 
-import com.ssafy.sera.Controller.Request.DibsRequest;
 import com.ssafy.sera.Controller.Request.GoodReviewRequest;
 import com.ssafy.sera.Controller.Request.ReviewRequest;
 import com.ssafy.sera.Domain.Item.Item;
@@ -16,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;

@@ -19,6 +19,7 @@ import { DialogContent } from '@material-ui/core';
 import axios from "axios";
 import http from "../../http-common.js";
 import {connect} from 'react-redux';
+import { useParams } from 'react-router';
 
 const dstyles = (theme) => ({
   root: {
@@ -53,11 +54,12 @@ const DialogTitle = withStyles(dstyles)((props) => {
 
 const CosmeticDetail = ({user}) => {
     const [product, setProduct] = useState(null);
+    const param = useParams();
     // 아이템 가져오기 + 유튜브 불러오기 
     const getItem = () => {
         axios({
             method: 'GET',
-            url: `http://localhost:8000/v1/items/${user.userId}/4`,
+            url: `http://localhost:8000/v1/items/${user.userId}/${param.id}`,
             headers:{
               "Content-type": "application/json",
             }

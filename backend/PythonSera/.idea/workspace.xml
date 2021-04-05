@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4a55084d-0971-4c2d-8082-5f075eb54215" name="Default Changelist" comment="" />
+    <list default="true" id="4a55084d-0971-4c2d-8082-5f075eb54215" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/components/CosmeticList/product_nav.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/components/CosmeticList/product_nav.jsx" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +119,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14540648" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />

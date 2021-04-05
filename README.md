@@ -7,19 +7,19 @@
 
 
 
-##  팀원 역할
+##  👨‍💻 팀원 역할
 
 | 팀원   | 역할 | 비고                                          |
 | ------ | ---- | --------------------------------------------- |
 | 김지형 | 팀장 | 프론트엔드 개발, GIT마스터, 화면정의서        |
 | 백정현 | 팀원 | 백엔드 개발, QA(Jira관리), 로고 디자인        |
-| 유진이 | 팀원 | 풀스택 개발, QA(Jira관리), UX/UI 디자인       |
-| 정다운 | 팀원 | 프론트엔드 테크리더, 화면정의서, UX/UI 디자인 |
+| 유진이 | 팀원 | 프론트엔드 테크리더, QA(Jira관리), UX/UI 디자인       |
+| 정다운 | 팀원 | 풀스택 개발, 화면정의서, UX/UI 디자인 |
 | 정혜지 | 팀원 | 백엔드 테크리더, 화면정의서                   |
 
 
 
-##  기술 스택
+## 📑 기술 스택
 
 ![HTML](https://img.shields.io/badge/HTML5----green?logo=HTML5)![CSS3](https://img.shields.io/badge/CCS3----green?logo=CSS3)![PostCSS](https://img.shields.io/badge/PostCSS----green?logo=PostCSS)![Javascript](https://img.shields.io/badge/JavaScript-ES6+-green?logo=javascript) ![React](https://img.shields.io/badge/React-v17.0.1-green?logo=react) ![React-Router](https://img.shields.io/badge/ReactRouter-v5-green?logo=react-router)
 
@@ -27,7 +27,7 @@
 
 
 
-## Gantt Chart
+## 📑 Gantt Chart
 
 ```mermaid
 gantt
@@ -98,7 +98,7 @@ gantt
 
 ```
 
-## ✔ Branch 규칙
+## 📑 Branch 규칙
 
 ```bash
 develop/feature/기능명
@@ -106,7 +106,7 @@ develop/feature/기능명
 
 
 
-## **✔** 커밋 메시지
+## 📑 커밋 메시지
 
 📌 하나의 기능 완성되면 한번에 커밋
 
@@ -127,7 +127,7 @@ https://blog.ull.im/engineering/2019/03/10/logs-on-git.html 대로 메시지
 
 
 
-## ✔ Code Style
+## 📑 Code Style
 
 | FrontEnd                                                     | BackEnd                                                      |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -159,31 +159,52 @@ https://blog.ull.im/engineering/2019/03/10/logs-on-git.html 대로 메시지
 
 
 
-## 기능
+## 📑 기능
 
 
 
-## 산출물
+## 📑 산출물
 
 
 
-### ERD
+### ✔ ERD
 
-![ERD](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/a6bdb043-83da-4938-9a92-e87227f8cce0/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210323%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210323T011727Z&X-Amz-Expires=86400&X-Amz-Signature=f4fa2282ffe2ad3e9a7bf9386162f02debfcd8dbd12e43dbcb37e5ef90bbd1d5&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22)
-
-### 화면 정의서
+![image](/uploads/4e876635a389f2962b61334fcc5956d9/image.png)
 
 
 
-### 와이어프레임
+### ✔ 와이어프레임
 
+![슬라이드1](/uploads/222fb3fe552cc2037311e2f81e7daef2/슬라이드1.PNG)
 
+![슬라이드2](/uploads/76b74c0a42ad52f8b246a1a70a28ca33/슬라이드2.PNG)
 
+![슬라이드4](/uploads/a3b279748040c13373e4fae2c0b7e53c/슬라이드4.PNG)
 
+![슬라이드3](/uploads/fa04fc3ef82134c5ad732637f1beb0ef/슬라이드3.PNG)
 
+![슬라이드5](/uploads/4dc68009d1fa9ee37c317f620f1dd5dc/슬라이드5.PNG)
 
+![슬라이드6](/uploads/55b21ce1d798df336838ebfec9ccd052/슬라이드6.PNG)
 
+![슬라이드7](/uploads/2f99035f9c4b6505933e62a61eba18d1/슬라이드7.PNG)
 
+![슬라이드8](/uploads/24b836cc79af2168aa282d15bd2f31f8/슬라이드8.PNG)
 
+![슬라이드10](/uploads/f8d160cc8c4c43cf5129214479a1aadd/슬라이드10.PNG)
+
+![슬라이드9](/uploads/e29032267d2ef3f3067a64341a256aee/슬라이드9.PNG)
+
+![슬라이드11](/uploads/b9753f141dea24511826f2224a0f5b0e/슬라이드11.PNG)
+
+![슬라이드12](/uploads/d948827154f162368646e0cf15c7fcea/슬라이드12.PNG)
+
+![슬라이드13](/uploads/c3547b039f5c179b57392720526cde8f/슬라이드13.PNG)
+
+![슬라이드14](/uploads/92b7c85c5395d46cf66cf385cfcb4b15/슬라이드14.PNG)
+
+![슬라이드15](/uploads/26211ff0ddfe9a2462e99eed68858ad5/슬라이드15.PNG)
+
+![슬라이드16](/uploads/e32b9b970d32abe738c68f3f30879796/슬라이드16.PNG)
 
 

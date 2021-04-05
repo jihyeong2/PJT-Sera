@@ -11,7 +11,6 @@ from SeraRec.database import *
 # 퍼스널 컬러 진단
 @api_view(['POST'])
 def personalColorTest(request):
-    s3_client = boto3.client('s3', aws_access_key_id= AWS_ACCESS_KEY_ID, aws_secret_access_key= AWS_SECRET_ACCESS_KEY)
     file = request.data.get('file')
     user_id = request.data.get('user_id')
     user_id = int(user_id)

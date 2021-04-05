@@ -1,4 +1,5 @@
 import os, json, pymysql, re
+from PythonSera.settings import connect, curs
 path = '../crawling/data/GP/output/'
 
 def loadJsonItem():
@@ -120,15 +121,8 @@ def loadCategory():
     # print("\n".join([" - ".join(tmp) for tmp in category_dic]))
     return category_dic
 
-def connectMySQL():
-    connect = pymysql.connect(host='seradb.c8joeykpqvdy.ap-northeast-2.rds.amazonaws.com', user='admin', password='ssafyB202SERA', db='seraDB', charset='utf8mb4')
-    curs = connect.cursor()
-
-    return connect, curs
-
 def insertItems():
     items = loadJsonItem()
-    connect, curs = connectMySQL()
     
     query = """DELETE FROM item"""
     curs.execute(query)
@@ -150,21 +144,17 @@ def insertItems():
         print(str(i+1)+'/'+str(len(items)))
         
     connect.commit()
-    connect.close()
 
 def insertCategories():
     category_dic = loadCategory()
-    connect, curs = connectMySQL()
     for category in category_dic:
         query = """INSERT INTO category (category_large, category_middle, category_small)
                 VALUES(%s, %s, %s) """
         curs.execute(query, (category[0], category[1], category[2]))        
     connect.commit()
-    connect.close()
 
 def insertSkinType():
     skinType = loadSkinType()
-    connect, curs = connectMySQL()
 
     for skin in skinType:
         query = """INSERT INTO skin (skin_type)
@@ -172,11 +162,9 @@ def insertSkinType():
         curs.execute(query, (skin['skinType']))
 
     connect.commit()
-    connect.close()
 
 def insertElement():
     elements = loadElement()
-    connect, curs = connectMySQL()
 
     query = """DELETE FROM element"""
     curs.execute(query)
@@ -189,17 +177,15 @@ def insertElement():
         print(str(i+1)+'/'+str(len(elements)))
 
     connect.commit()
-    connect.close()
 
 def insertItemByElement():
     items = loadJsonItem()
-    connect, curs = connectMySQL()
 
     # query = """DELETE FROM item_element"""
     # curs.execute(query)
     # connect.commit()
     
-    for i, item in enumerate(items[36316:]):
+    for i, item in enumerate(items):
         query = """SELECT item_id FROM item WHERE item_id = %s"""
         curs.execute(query, (item['id']))
         item_id = curs.fetchone()
@@ -274,11 +260,10 @@ def insertItemByElement():
                 return
         print(str(i+1)+'/'+str(len(items))+' '+str(item_id[0]))
         connect.commit()
-    connect.close()
+        
 
 def insertHelpful():
     skins = loadSkinType()
-    connect, curs = connectMySQL()
 
     for skin in skins:
         query = """SELECT skin_id FROM skin WHERE skin_type = %s"""
@@ -332,11 +317,9 @@ def insertHelpful():
                     print(e)
                     continue
         connect.commit()
-    connect.close()
 
 def insertCaution():
     skins = loadSkinType()
-    connect, curs = connectMySQL()
 
     for skin in skins:
         query = """SELECT skin_id FROM skin WHERE skin_type = %s"""
@@ -390,11 +373,9 @@ def insertCaution():
                     print(e)
                     continue
         connect.commit()
-    connect.close()
 
 def insertTag():
     items = loadJsonItem()
-    connect, curs = connectMySQL()
     tags = set()
     for item in items:
         [tags.add(t) for t in item['tags']]
@@ -404,11 +385,9 @@ def insertTag():
     for t in tags:
         curs.execute(query,(t))
     connect.commit()
-    connect.close()
 
 def insertItemTag():
     items = loadJsonItem()
-    connect, curs = connectMySQL()
     query = """INSERT INTO item_tag (item_id, tag_id)
             VALUES (%s,%s)"""
     for i, item in enumerate(items[28022:]):
@@ -423,17 +402,16 @@ def insertItemTag():
             curs.execute(query, (item_id[0], tag_id[0]))
         connect.commit()
         print(str(i+1)+'/'+str(len(items))+' '+str(item['id']))
-    connect.close()
 
 if __name__ == '__main__':
     # insertCategories()
     # insertItems()
     # insertSkinType()
     # insertElement()
-    # insertItemByElement()
+    insertItemByElement()
     # insertHelpful()
     # insertCaution()
     # insertTag()
     # insertItemTag()
     # loadCategory()
-    print('database')
+    # print('database')

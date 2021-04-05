@@ -11,7 +11,6 @@ from SeraRec.database import *
 # 퍼스널 컬러 진단
 @api_view(['POST'])
 def personalColorTest(request):
-    s3_client = boto3.client('s3', aws_access_key_id= AWS_ACCESS_KEY_ID, aws_secret_access_key= AWS_SECRET_ACCESS_KEY)
     file = request.data.get('file')
     user_id = request.data.get('user_id')
     user_id = int(user_id)
@@ -32,12 +31,10 @@ def personalColorTest(request):
     # uri = ''
     try:
         result = main(uri)
-        connect, curs = connectMySQL()
         result = result.split('톤')[0]
         query = """UPDATE user SET personal_color=%s, user_img=%s WHERE user_id=%s"""
         curs.execute(query, (result, uri, user_id))
         connect.commit()
-        connect.close()
         result_url = uri
     except:
         result = False

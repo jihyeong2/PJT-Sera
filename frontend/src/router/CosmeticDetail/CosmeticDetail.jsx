@@ -16,9 +16,10 @@ import Typography from '@material-ui/core/Typography';
 import Logo from '../../components/common/Logo/Logo';
 import Navbar from '../../components/common/Navbar/Navbar';
 import { DialogContent } from '@material-ui/core';
-import axios from "axios";
 import http from "../../http-common.js";
+import httpd from "../../http-django";
 import {connect} from 'react-redux';
+import { useParams } from 'react-router';
 
 const dstyles = (theme) => ({
   root: {
@@ -53,11 +54,12 @@ const DialogTitle = withStyles(dstyles)((props) => {
 
 const CosmeticDetail = ({user}) => {
     const [product, setProduct] = useState(null);
+    const param = useParams();
     // 아이템 가져오기 + 유튜브 불러오기 
     const getItem = () => {
-        axios({
+      httpd({
             method: 'GET',
-            url: `http://localhost:8000/v1/items/${user.userId}/4`,
+            url: `v1/items/${user.userId}/${param.id}`,
             headers:{
               "Content-type": "application/json",
             }
@@ -99,21 +101,44 @@ const CosmeticDetail = ({user}) => {
     const getReview = () => {
         http({
             method: 'GET',
-            url: `v1/review/list/4/${user.userLoginId}`,
+            url: `v1/review/list/${param.id}/${user.userLoginId}`,
             headers:{
               "Content-type": "application/json",
             }
           })
           .then(res=>{
-              console.log("리뷰데이터");
+              console.log("리뷰 리스트 데이터");
             console.log(res.data.data);
             setReview(res.data.data);
           })
           .catch(err=>{
-              console.log("리뷰 에러");
+              console.log("리뷰 리스트 에러");
             console.error(err);
           })
     }
+
+    // 최신 사진 가져오기
+    const [picture, setPicture] = useState([]);
+
+    const getPicture = () => {
+        http({
+            method: 'GET',
+            url: `v1/review/list/photo/${param.id}`,
+            headers:{
+              "Content-type": "application/json",
+            }
+          })
+          .then(res=>{
+              console.log("최신 사진 데이터");
+            console.log(res.data.data);
+            setPicture(res.data.data);
+          })
+          .catch(err=>{
+              console.log("최신 사진 에러");
+            console.error(err);
+          })
+    }
+
     // const onCreateReview = (val) => {
       
     // }
@@ -124,6 +149,7 @@ const CosmeticDetail = ({user}) => {
     useEffect(() => {
       getItem();
       getReview();
+      getPicture();
     }, []); // 마운트가 되었을 때만 호출
 
   const [open, setOpen] = React.useState(false);
@@ -172,7 +198,7 @@ const CosmeticDetail = ({user}) => {
             <div className={styles.bar}></div>
             <Grid item xs={12} className={styles.review}>
                 {/* <Review onCreateReview={onCreateReview}/> */}
-                <Review product={product} review={review} />
+                <Review product={product} review={review} picture={picture} />
             </Grid>
             </Grid>
         </div>

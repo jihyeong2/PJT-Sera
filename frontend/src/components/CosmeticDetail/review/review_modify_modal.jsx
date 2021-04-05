@@ -3,15 +3,16 @@ import styles from './review_modify_modal.module.css';
 import Rating from '@material-ui/lab/Rating';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import Box from '@material-ui/core/Box';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import http from "../../../http-common.js";
 
 //★props내려준후 수정예정
-const ReviewModify = ({reviewOrigin,index}) => {
+const ReviewModify = ({product, reviewOrigin, index}) => {
     console.log(reviewOrigin,index);
+    console.log(product);
     const [fileName, setFileName] = useState("파일을 선택해주세요");
     const [imageFile, setImageFile] = useState("");
 
-    //★나중에 props받아온값으로 수정
     const [review, setReview] = useState({...reviewOrigin});
 
     const { reviewId, reviewImg, reviewScore, reviewGoodContent, reviewBadContent } = review;
@@ -68,11 +69,12 @@ const ReviewModify = ({reviewOrigin,index}) => {
     return (
         <div className={styles.modal_i}>
             <div className={styles.modal_img}>
-                <img className={styles.modal_product_img} src={process.env.PUBLIC_URL + '/images/product_Sample.PNG'} alt="상품사진" />
+                <img className={styles.modal_product_img} src={product.item_img} alt="상품사진" />
             </div>
             <div className={styles.modal_content}>
                 <div className={styles.modal_match}><span className={styles.modal_match_name} >나랑 맞지 않아요👎🏻</span></div>
-                <p className={styles.modal_product_category}>스킨케어 > 세럼</p>
+                <p className={styles.modal_product_category}>{product.category_large}
+                    <ArrowForwardIosIcon fontSize="small" /> {product.category_middle}</p>
                 <p className={styles.modal_product_name}>프로바이오틱스 세라마이드 크림</p>
                 <p><span className={styles.modal_volume}>60ml /  </span><span className={styles.modal_price}>35,000원</span></p>
             </div>

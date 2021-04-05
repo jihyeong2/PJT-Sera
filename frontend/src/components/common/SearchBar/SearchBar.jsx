@@ -1,16 +1,31 @@
 import { useRef, useState } from 'react';
-// import CloseIcon from '@material-ui/icons/Close';
 import SearchIcon from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
 import styles from './SearchBar.module.css';
 import { useHistory } from 'react-router';
+import {getSearchAll, getSearchCategory} from '../../../service/search';
+import Swal from 'sweetalert2';
 
 const SearchBar = (props) => {
+  var lowerCase = /[a-z]/; //소문자
+  var upperCase = /[A-Z]/; //대문자
+  var koreanCase =  /^[ㄱ-ㅎ가-힣]+$/; //한글 정규식
+  var specialCase =  /[~!@#$%^&*()_+|<>?:{}]/;//특수문자 정규식
+
   const history= useHistory();
   const inputRef= useRef();
   const selectRef= useRef();
   const handleSearch = (inputVal, inputCategory) => {
-    
+    if(!lowerCase.test(inputVal) || !upperCase.test(inputVal) || !koreanCase(inputVal) || !specialCase.test(inputVal)){
+      Swal.fire({
+        icon: 'error',
+        text: '검색어를 입력해주세요.',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      return
+    }
+    history.push()
   };
   const onKeyUpEnter = (e) => {
     if(e.key!=="Enter") return;

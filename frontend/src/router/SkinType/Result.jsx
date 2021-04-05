@@ -14,6 +14,7 @@ import { useHistory } from 'react-router';
 import {getCorrectProducts,setHate,setLike} from '../../service/product';
 import dropGreen from '../../assets/waterdrop_green.png';
 import dropRed from '../../assets/waterdrop_red.png';
+import TopButton from '../../components/common/Button/TopButton/TopButton';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -219,6 +220,13 @@ const Result = ({user,skin}) => {
       )
     }
   }
+  const onClickTopButton = () =>{
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
   useEffect(()=>{
     const a = document.querySelectorAll('.MuiTabs-flexContainer');
     a[1].style.cssText="justify-content: center;"
@@ -394,6 +402,9 @@ const Result = ({user,skin}) => {
           <button onClick={onClickFinish} className={styles.finish_btn}>완료</button>
         </div>
       </div>
+      {
+        window.scrollY>0 && <TopButton onClick={onClickTopButton}/>
+      }
       <Footer/>
     </div>
   );

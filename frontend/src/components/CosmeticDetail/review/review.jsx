@@ -133,64 +133,7 @@ const Review = ({product, review, user, skin}) => {
             <ReviewHead product={product} />
             <div className={styles.bar}></div>
             <div className={styles.filtering}>
-                <div className={styles.left_filter}>
-                    <select name="" id="" className={styles.select} >
-                        <option className={styles.option} value="none">나이</option>
-                        <option className={styles.option} value="10">10대</option>
-                        <option className={styles.option} value="20">20대</option>
-                        <option className={styles.option} value="30-40">30/40대</option>
-                        <option className={styles.option} value="50-60">50/60대</option>
-                        <option className={styles.option} value="60이상">60이상</option>
-                    </select>
-                    <select name="" id="" className={styles.select} >
-                        <option className={styles.option} value="none">성별   </option>
-                        <option className={styles.option} value="남자">남자</option>
-                        <option className={styles.option} value="여자">여자</option>
-                    </select>
-                    <select name="" id="" className={styles.select} >
-                        <option className={styles.option} value="none">피부타입</option>
-                        <option className={styles.option} value="DRPT">DRPT</option>
-                        <option className={styles.option} value="DRNT">DRNT</option>
-                        <option className={styles.option} value="DSPT">DSPT</option>
-                        <option className={styles.option} value="DSNT">DSNT</option>
-                        <option className={styles.option} value="DRPW">DRPW</option>
-                        <option className={styles.option} value="DRNW">DRNW</option>
-                        <option className={styles.option} value="DSPW">DSPW</option>
-                        <option className={styles.option} value="DSNW">DSNW</option>
-                        <option className={styles.option} value="ORPT">ORPT</option>
-                        <option className={styles.option} value="ORNT">ORNT</option>
-                        <option className={styles.option} value="OSPT">OSPT</option>
-                        <option className={styles.option} value="OSNT">OSNT</option>
-                        <option className={styles.option} value="ORPW">ORPW</option>
-                        <option className={styles.option} value="ORNW">ORNW</option>
-                        <option className={styles.option} value="OSPW">OSPW</option>
-                        <option className={styles.option} value="OSNW">OSNW</option>
-                    </select>
-                </div>
                 <div className={styles.right_check}>
-                    <FormControlLabel className={styles.radio}
-                        control={
-                        <Checkbox
-                            checked={state.checkedA}
-                            onChange={handleChange_radio}
-                            name="checkedA"
-                            color="primary"
-                        />
-                        }
-                        label="일반리뷰"
-                    />
-                    <FormControlLabel className={styles.radio}
-                        control={
-                        <Checkbox
-                            checked={state.checkedB}
-                            onChange={handleChange_radio}
-                            name="checkedB"
-                            color="primary"
-                        />
-                        }
-                        label="포토리뷰"
-                    />
-
                     <FormControl className={classes.formControl}>
                         <InputLabel id="demo-simple-select-label">정렬기준</InputLabel>
                         <Select

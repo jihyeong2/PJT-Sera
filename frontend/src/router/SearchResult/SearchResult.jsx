@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import styles from './SearchResult.module.css';
 import { useParams } from 'react-router';
 import PropTypes from 'prop-types';
@@ -9,7 +9,8 @@ import ProductList from '../../components/common/ProductList/ProductList';
 import data from '../../data/GP_items_1-10000.json';
 import Logo from '../../components/common/Logo/Logo';
 import Navbar from '../../components/common/Navbar/Navbar';
-
+import {connect} from 'react-redux';
+import { getSearchAll, getSearchCategory } from '../../service/search';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -42,14 +43,14 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
-const SearchResult = (props) => {
+const SearchResult = ({user}) => {
   const params=useParams();
   const [currTab,setCurrTab] = useState(1);
   const [idx,setIdx] = useState(12);
   const [idx2,setIdx2] = useState(12);
-  const [products,setProducts] = useState(data.slice(0,12));
-  const [products2,setProducts2] = useState(data.slice(0,12));
-  const [value, setValue] = React.useState(0);
+  const [products,setProducts] = useState([]);
+  const [products2,setProducts2] = useState([]);
+  const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -73,6 +74,30 @@ const SearchResult = (props) => {
 
   useEffect(() => {
     window.addEventListener('scroll', infinityScroll, true);
+    if(params.category==="전체"){
+      getSearchAll(
+        user.userId,
+        params.name,
+        (res)=>{
+          console.log(res);
+        },
+        (err)=>{
+          console.error(err);
+        }
+      )
+    } else{
+      getSearchCategory(
+        user.userId,
+        params.category,
+        params.name,
+        (res)=>{
+          console.log(res);
+        },
+        (err)=>{
+          console.error(err);
+        }
+      )
+    }
     return () => window.removeEventListener('scroll', infinityScroll,true);
   },[infinityScroll]);
 
@@ -107,4 +132,10 @@ const SearchResult = (props) => {
   );
 }
 
-export default SearchResult;
+const mapStateToProps = (state) => ({
+  user: state.user.user,
+})
+
+export default connect(
+  mapStateToProps,
+)(SearchResult)

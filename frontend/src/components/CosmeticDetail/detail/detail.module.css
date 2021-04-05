@@ -175,10 +175,12 @@
     margin-top: 10px;
 }
 .tag{
+    display: inline-block;
     border: 1px solid color-grey-3;
     color: color-grey-2;
     font-size: font-size-14;
     padding: 3px;
     border-radius: 25px;
-    margin-right: 5px;
+    margin-right: 7px;
+    margin-bottom: 7px;
 }

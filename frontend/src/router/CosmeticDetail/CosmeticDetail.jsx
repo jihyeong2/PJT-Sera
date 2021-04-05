@@ -16,8 +16,8 @@ import Typography from '@material-ui/core/Typography';
 import Logo from '../../components/common/Logo/Logo';
 import Navbar from '../../components/common/Navbar/Navbar';
 import { DialogContent } from '@material-ui/core';
-import axios from "axios";
 import http from "../../http-common.js";
+import httpd from "../../http-django";
 import {connect} from 'react-redux';
 import { useParams } from 'react-router';
 
@@ -57,9 +57,9 @@ const CosmeticDetail = ({user}) => {
     const param = useParams();
     // 아이템 가져오기 + 유튜브 불러오기 
     const getItem = () => {
-        axios({
+      httpd({
             method: 'GET',
-            url: `http://localhost:8000/v1/items/${user.userId}/${param.id}`,
+            url: `v1/items/${user.userId}/${param.id}`,
             headers:{
               "Content-type": "application/json",
             }

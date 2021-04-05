@@ -177,13 +177,36 @@ https://blog.ull.im/engineering/2019/03/10/logs-on-git.html 대로 메시지
 
 ### 와이어프레임
 
+![슬라이드1](/uploads/222fb3fe552cc2037311e2f81e7daef2/슬라이드1.PNG)
 
+![슬라이드2](/uploads/76b74c0a42ad52f8b246a1a70a28ca33/슬라이드2.PNG)
 
+![슬라이드4](/uploads/a3b279748040c13373e4fae2c0b7e53c/슬라이드4.PNG)
 
+![슬라이드3](/uploads/fa04fc3ef82134c5ad732637f1beb0ef/슬라이드3.PNG)
 
+![슬라이드5](/uploads/4dc68009d1fa9ee37c317f620f1dd5dc/슬라이드5.PNG)
 
+![슬라이드6](/uploads/55b21ce1d798df336838ebfec9ccd052/슬라이드6.PNG)
 
+![슬라이드7](/uploads/2f99035f9c4b6505933e62a61eba18d1/슬라이드7.PNG)
 
+![슬라이드8](/uploads/24b836cc79af2168aa282d15bd2f31f8/슬라이드8.PNG)
 
+![슬라이드10](/uploads/f8d160cc8c4c43cf5129214479a1aadd/슬라이드10.PNG)
+
+![슬라이드9](/uploads/e29032267d2ef3f3067a64341a256aee/슬라이드9.PNG)
+
+![슬라이드11](/uploads/b9753f141dea24511826f2224a0f5b0e/슬라이드11.PNG)
+
+![슬라이드12](/uploads/d948827154f162368646e0cf15c7fcea/슬라이드12.PNG)
+
+![슬라이드13](/uploads/c3547b039f5c179b57392720526cde8f/슬라이드13.PNG)
+
+![슬라이드14](/uploads/92b7c85c5395d46cf66cf385cfcb4b15/슬라이드14.PNG)
+
+![슬라이드15](/uploads/26211ff0ddfe9a2462e99eed68858ad5/슬라이드15.PNG)
+
+![슬라이드16](/uploads/e32b9b970d32abe738c68f3f30879796/슬라이드16.PNG)
 
 

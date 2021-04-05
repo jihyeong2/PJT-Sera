@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import ReviewWrite from "./review_write_modal";
+import ReviewChart from "./review_chart";
 
 
 const dstyles = (theme) => ({
@@ -53,10 +54,10 @@ const DialogContent = withStyles((theme) => ({
 }))(MuiDialogContent);
 
 // const ReviewHead = ({onCreateReview}) => {
-const ReviewHead = ({product}) => {
+const ReviewHead = ({ product }) => {
     // const [value, setValue] = React.useState(2);
     // const onSubmit = ()=>{
-        
+
     //     onCreateReview(review);
     // }
     const history = useHistory();
@@ -82,19 +83,19 @@ const ReviewHead = ({product}) => {
                     </Box>
                 </Grid>
                 <Grid item xs={4}>
-                    차트
+                    <ReviewChart />
                 </Grid>
                 <Grid item xs={4}>
                     <p className={styles.review_btn_title}>리뷰를 써보세요.</p>
                     <Button className={styles.review_btn} variant="contained" onClick={handleClickOpen} >리뷰작성</Button>
                     <Dialog style={{ height: '90%', }} fullWidth={fullWidth} maxWidth="lg" onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
-                            <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                                리뷰작성
+                        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+                            리뷰작성
                                 </DialogTitle>
-                                <DialogContent dividers>
-                                    <ReviewWrite product={product} />
-                                </DialogContent>
-                        </Dialog>
+                        <DialogContent dividers>
+                            <ReviewWrite product={product} />
+                        </DialogContent>
+                    </Dialog>
                 </Grid>
             </Grid>
         </div>

@@ -4,10 +4,16 @@ import React from 'react';
 import styles from './Product.module.css';
 import {connect} from 'react-redux';
 import { useHistory } from 'react-router';
-const Product = ({user,product, handleHeart, index}) => {
+const Product = ({user,product, handleHeart, index, handleHeart2, productsKey2}) => {
   const history = useHistory();
   const onClickHeart = () => {
-    handleHeart(product.item_id, index);
+    if(productsKey2!==undefined){
+      handleHeart2(productsKey2,product.item_id,index);
+    }
+    else {
+      console.log('b');
+      handleHeart(product.item_id, index);
+    }
   };
   const onClickProduct = () => {
     history.push(`/detail/${product.item_id}`);

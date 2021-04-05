@@ -47,7 +47,7 @@ const SearchModal = (props) => {
             </IconButton>
           </div>
           <div className={styles.search}>
-            <SearchBar/>
+            <SearchBar handleClose={handleClose}/>
           </div>
         </div>
       </Dialog>

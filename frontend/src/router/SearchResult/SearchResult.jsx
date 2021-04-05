@@ -13,6 +13,7 @@ import {connect} from 'react-redux';
 import { getSearchAll, getSearchCategory } from '../../service/search';
 import {setLike, setHate} from '../../service/product';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Footer from '../../components/common/Footer/Footer';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -189,38 +190,40 @@ const SearchResult = ({user}) => {
     }
   }
   return (
-    <div className={styles.container}>
-      <Navbar/>
-      <Logo type={1} className={styles.logo}/>
-      <div className={styles.header}>
-        "<span className={styles.highlight}>{params.name}</span>"의 검색 결과입니다.
+    <div style={{position:'relative', paddingBottom:'180px', minHeight:'100vh'}}>
+      <div className={styles.container}>
+        <Navbar/>
+        <Logo type={1} className={styles.logo}/>
+        <div className={styles.header}>
+          "<span className={styles.highlight}>{params.name}</span>"의 검색 결과입니다.
+        </div>
+        <AppBar position="static" style={{ background: '#FFFFFF' , color: '#333333', boxShadow: 'none'}}>
+          <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
+            <Tab onClick={onClick} label="상품명 결과" {...a11yProps(0)} />
+            <Tab onClick={onClick} label="성분명 결과" {...a11yProps(1)} />
+          </Tabs>
+        </AppBar>
+        <TabPanel value={value} index={0}>
+          <ProductList products={products} handleHeart={onHandleHeart}/>
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          {
+            productsKeys2.map((key,idx)=>{
+              <div key={key} className={styles.element_box}>
+                <div className={styles.element_title}>
+                  {
+                    idx%2 == 0 ?
+                    <FontAwesomeIcon icon={['fas', 'leaf']} size="sm" color="#4E9157"/>:
+                    <FontAwesomeIcon icon={['fas', 'leaf']} size="sm" color="#6F6AFA"/>
+                  }
+                  &nbsp;{key}</div>
+                <ProductList products={products2[idx].slice(0,4)} handleHeart2={onHandleHeart2} productsKey2={idx}/>
+              </div>
+            })
+          }
+        </TabPanel>
       </div>
-      <AppBar position="static" style={{ background: '#FFFFFF' , color: '#333333', boxShadow: 'none'}}>
-        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-          <Tab onClick={onClick} label="상품명 결과" {...a11yProps(0)} />
-          <Tab onClick={onClick} label="성분명 결과" {...a11yProps(1)} />
-        </Tabs>
-      </AppBar>
-      <TabPanel value={value} index={0}>
-        <ProductList products={products} handleHeart={onHandleHeart}/>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        {
-          productsKeys2.map((key,idx)=>{
-            <div key={key} className={styles.element_box}>
-              <div className={styles.element_title}>
-                {
-                  idx%2 == 0 ?
-                  <FontAwesomeIcon icon={['fas', 'leaf']} size="sm" color="#4E9157"/>:
-                  <FontAwesomeIcon icon={['fas', 'leaf']} size="sm" color="#6F6AFA"/>
-                }
-                &nbsp;{key}</div>
-              <ProductList products={products2[idx].slice(0,4)} handleHeart2={onHandleHeart2} productsKey2={idx}/>
-            </div>
-          })
-        }
-        
-      </TabPanel>
+      <Footer/>
     </div>
   );
 }

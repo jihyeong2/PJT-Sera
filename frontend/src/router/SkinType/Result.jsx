@@ -11,7 +11,7 @@ import Navbar from '../../components/common/Navbar/Navbar';
 import Logo from '../../components/common/Logo/Logo';
 import Footer from '../../components/common/Footer/Footer';
 import { useHistory } from 'react-router';
-import {getCorrectProducts,setHate,setLike} from '../../service/product';
+import {getHelpfulProducts,getCautionProducts,setHate,setLike} from '../../service/product';
 import dropGreen from '../../assets/waterdrop_green.png';
 import dropRed from '../../assets/waterdrop_red.png';
 
@@ -153,78 +153,11 @@ const Result = ({user,skin}) => {
       )
     }
   }
-  const onHandleHeart3 = (item_id,idx) => {
-    if(!products3[idx].dibs){ // 좋아요
-      setLike(
-        user.userId,
-        item_id,
-        (res)=>{
-          const tmp = products3.map(product => {
-            if(product.item_id != item_id) return product;
-            else return {...product, dibs: true, dibs_cnt: product.dibs_cnt+1};
-          })
-          setProducts3(tmp);
-        },
-        (err)=>{
-          console.error(err);
-        }
-      )
-    } else{ // 싫어요
-      setHate(
-        user.userId,
-        item_id,
-        (res)=>{
-          const tmp = products3.map(product => {
-            if(product.item_id != item_id) return product;
-            else return {...product, dibs: false, dibs_cnt: product.dibs_cnt-1};
-          })
-          setProducts3(tmp);
-        },
-        (err)=>{
-          console.error(err);
-        }
-      )
-    }
-  }
-  const onHandleHeart4 = (item_id,idx) => {
-    if(!products4[idx].dibs){ // 좋아요
-      setLike(
-        user.userId,
-        item_id,
-        (res)=>{
-          const tmp = products4.map(product => {
-            if(product.item_id != item_id) return product;
-            else return {...product, dibs: true, dibs_cnt: product.dibs_cnt+1};
-          })
-          setProducts4(tmp);
-        },
-        (err)=>{
-          console.error(err);
-        }
-      )
-    } else{ // 싫어요
-      setHate(
-        user.userId,
-        item_id,
-        (res)=>{
-          const tmp = products4.map(product => {
-            if(product.item_id != item_id) return product;
-            else return {...product, dibs: false, dibs_cnt: product.dibs_cnt-1};
-          })
-          setProducts4(tmp);
-        },
-        (err)=>{
-          console.error(err);
-        }
-      )
-    }
-  }
   useEffect(()=>{
     const a = document.querySelectorAll('.MuiTabs-flexContainer');
     a[1].style.cssText="justify-content: center;"
-    getCorrectProducts(
+    getHelpfulProducts(
       user.userId,
-      "스킨케어",
       (res)=>{
         setProducts1(res.data.item_list.slice(0,4));
       },
@@ -232,31 +165,10 @@ const Result = ({user,skin}) => {
         console.error(err);
       }
     )
-    getCorrectProducts(
+    getCautionProducts(
       user.userId,
-      "메이크업",
       (res)=>{
         setProducts2(res.data.item_list.slice(0,4));
-      },
-      (err)=>{
-        console.error(err);
-      }
-    )
-    getCorrectProducts(
-      user.userId,
-      "남성 화장품",
-      (res)=>{
-        setProducts3(res.data.item_list.slice(0,4));
-      },
-      (err)=>{
-        console.error(err);
-      }
-    )
-    getCorrectProducts(
-      user.userId,
-      "향수",
-      (res)=>{
-        setProducts4(res.data.item_list.slice(0,4));
       },
       (err)=>{
         console.error(err);
@@ -366,10 +278,8 @@ const Result = ({user,skin}) => {
         <div className={styles.recommends_box}>
           <AppBar position="static" style={{ background: '#FFFFFF' , color: '#333333', boxShadow: 'none', margin: '0',}}>
             <Tabs value={value2} onChange={handleChange2} aria-label="simple tabs example">
-              <Tab onClick={onClick2} label="스킨케어" {...a11yProps(0)} />
-              <Tab onClick={onClick2} label="메이크업" {...a11yProps(1)} />
-              <Tab onClick={onClick2} label="남성 화장품" {...a11yProps(2)} />
-              <Tab onClick={onClick2} label="향수" {...a11yProps(3)} />
+              <Tab onClick={onClick2} label="맞는 상품" {...a11yProps(0)} />
+              <Tab onClick={onClick2} label="안 맞는 상품" {...a11yProps(1)} />
             </Tabs>
           </AppBar>
           <div className={styles.recommends_desc_box}>
@@ -381,12 +291,6 @@ const Result = ({user,skin}) => {
           </TabPanel>
           <TabPanel value={value2} index={1}>
             <ProductList products={products2} handleHeart={onHandleHeart2}/>
-          </TabPanel>
-          <TabPanel value={value2} index={2}>
-            <ProductList products={products3} handleHeart={onHandleHeart3}/>
-          </TabPanel>
-          <TabPanel value={value2} index={3}>
-            <ProductList products={products4} handleHeart={onHandleHeart4}/>
           </TabPanel>
         </div>
         <div className={styles.btn_box}>

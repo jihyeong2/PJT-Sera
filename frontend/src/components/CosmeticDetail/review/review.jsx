@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 // const Review = ({onCreateReview}) => {
-const Review = ({product, review, user, skin}) => {
+const Review = ({product, review, user, skin, picture}) => {
     // console.log("리뷰 넘어왔니? "+review);
     // console.log(review[0]);
     // console.log(review[3]);
@@ -151,14 +151,10 @@ const Review = ({product, review, user, skin}) => {
                 </div>
             </div>
             <div className={styles.picture_list}>
-                <img className={styles.review_image} src={process.env.PUBLIC_URL + '/images/review_sample.PNG'} alt="리뷰사진"/>
-                <img className={styles.review_image} src={process.env.PUBLIC_URL + '/images/review_sample2.PNG'} alt="리뷰사진2"/>
-                <img className={styles.review_image} src={process.env.PUBLIC_URL + '/images/review_sample.PNG'} alt="리뷰사진"/>
-                <img className={styles.review_image} src={process.env.PUBLIC_URL + '/images/review_sample2.PNG'} alt="리뷰사진2"/>
-                <img className={styles.review_image} src={process.env.PUBLIC_URL + '/images/review_sample.PNG'} alt="리뷰사진"/>
-                <img className={styles.review_image} src={process.env.PUBLIC_URL + '/images/review_sample2.PNG'} alt="리뷰사진2"/>
-                <img className={styles.review_image} src={process.env.PUBLIC_URL + '/images/review_sample.PNG'} alt="리뷰사진"/>
-                <img className={styles.review_image} src={process.env.PUBLIC_URL + '/images/review_sample2.PNG'} alt="리뷰사진2"/>
+                {
+                    picture.map (picture=> ( <img className={styles.review_image} key={picture.idx} src={picture} alt="리뷰사진"/>))
+                }
+                
             </div>
             <div className={styles.review_list}>
                 {
@@ -177,14 +173,9 @@ const Review = ({product, review, user, skin}) => {
                                                 
                                             </div>
                                             <div className={styless.circle} >
-                                                {
-                                                    review.user.skinDto != null  && ( // 유저 피부타입 넣어달라고 하고 조건 빼기 🎈
-                                                        <div className={styless.skin_type} style={{color:`${skin.type[review.user.skinDto.skinType].color}`,border:`3px solid ${skin.type[review.user.skinDto.skinType].color}`, borderRadius:`50%`}} >
-                                                        {review.user.skinDto.skinType}
-                                                        </div>
-                                                    )
-                                                }
-                                                
+                                                <div className={styless.skin_type} style={{color:`${skin.type[review.user.skinDto.skinType].color}`,border:`3px solid ${skin.type[review.user.skinDto.skinType].color}`, borderRadius:`50%`}} >
+                                                    {review.user.skinDto.skinType}
+                                                </div>
                                             </div>
                                             
                                         </div>
@@ -195,17 +186,23 @@ const Review = ({product, review, user, skin}) => {
                                                 <Box className={styless.star_rate} component="fieldset" mb={3} borderColor="transparent">
                                                     <Rating name="read-only" value={4} readOnly />
                                                 </Box>
-                                                <span className={styles.date}>{ moment(review.writeDate).format('YYYY-MM-DD')}</span>
-                                                <CreateIcon fontSize="small" className={styless.change_icon} onClick={handleClickOpen} data-idx={idx}/>
-                                                <Dialog style={{ height: '90%', }} fullWidth={fullWidth} maxWidth="lg" onClose={handleClose} aria-labelledby="customized-dialog-title" open={open[idx]}>
-                                                    <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                                                        리뷰수정
-                                                        </DialogTitle>
-                                                        <DialogContent dividers>
-                                                            <ReviewModify product={product} reviewOrigin={review} index={idx} />
-                                                        </DialogContent>
-                                                </Dialog>
-                                                <DeleteIcon fontSize="small" className={styless.trash_icon}/>
+                                                <span className={styles.date}>{ moment(review.writeDate).format('YYYY-MM-DD')}</span> &nbsp;
+                                                {
+                                                    review.user.userNickname == user.userNickname && (
+                                                        <>
+                                                            <CreateIcon fontSize="small" className={styless.change_icon} onClick={handleClickOpen} data-idx={idx}/>
+                                                            <Dialog style={{ height: '90%', }} fullWidth={fullWidth} maxWidth="lg" onClose={handleClose} aria-labelledby="customized-dialog-title" open={open[idx]}>
+                                                                <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+                                                                    리뷰수정
+                                                                    </DialogTitle>
+                                                                    <DialogContent dividers>
+                                                                        <ReviewModify product={product} reviewOrigin={review} index={idx} />
+                                                                    </DialogContent>
+                                                            </Dialog>
+                                                            <DeleteIcon fontSize="small" className={styless.trash_icon}/>
+                                                        </>
+                                                    )
+                                                }
                                             </div>
                                             <div className={styless.good_review}>
                                                 <div className={styless.good}>

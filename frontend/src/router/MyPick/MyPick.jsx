@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import styles from './MyPick.module.css';
 import ProductList from '../../components/common/ProductList/ProductList';
-import data from '../../data/GP_items_1-10000.json';
 import Logo from '../../components/common/Logo/Logo';
 import Navbar from '../../components/common/Navbar/Navbar';
 import {connect} from 'react-redux';

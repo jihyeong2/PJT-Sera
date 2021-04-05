@@ -99,7 +99,7 @@ const CosmeticDetail = ({user}) => {
     const getReview = () => {
         http({
             method: 'GET',
-            url: `v1/review/list/4`,
+            url: `v1/review/list/4/${user.userLoginId}`,
             headers:{
               "Content-type": "application/json",
             }

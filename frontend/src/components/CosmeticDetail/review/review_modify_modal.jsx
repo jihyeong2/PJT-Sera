@@ -6,19 +6,13 @@ import Box from '@material-ui/core/Box';
 import http from "../../../http-common.js";
 
 //★props내려준후 수정예정
-const ReviewModify = (props) => {
-
+const ReviewModify = ({reviewOrigin,index}) => {
+    console.log(reviewOrigin,index);
     const [fileName, setFileName] = useState("파일을 선택해주세요");
     const [imageFile, setImageFile] = useState("");
 
     //★나중에 props받아온값으로 수정
-    const [review, setReview] = useState({
-        reviewId: 15,
-        reviewImg: '', //이전에 첨부판 사진 이름 보여주기용도
-        reviewScore: '',
-        reviewGoodContent: '',
-        reviewBadContent: '',
-    });
+    const [review, setReview] = useState({...reviewOrigin});
 
     const { reviewId, reviewImg, reviewScore, reviewGoodContent, reviewBadContent } = review;
     const changeFileName = (e) => {
@@ -98,13 +92,13 @@ const ReviewModify = (props) => {
                 <div className={styles.good}>
                     <h3>😀 좋았던 점<span>(최소 20자 이상)</span></h3>
                     <p>
-                        <textarea rows="10" name="ReviewGoodContent" className={styles.good_text} onChange={onChangeInput} placeholder="상품을 사용하면서 좋았던 점을 적어주세요"></textarea>
+                        <textarea rows="10" name="ReviewGoodContent" className={styles.good_text} value={review.reviewGoodContent} onChange={onChangeInput} placeholder="상품을 사용하면서 좋았던 점을 적어주세요"></textarea>
                     </p>
                 </div>
                 <div className={styles.bad}>
                     <h3>😥 아쉬운 점<span>(최소 20자 이상)</span></h3>
                     <p>
-                        <textarea rows="10" name="reviewBadContent" className={styles.bad_text} onChange={onChangeInput} placeholder="상품을 사용하면서 아쉬웠던 점을 적어주세요"></textarea>
+                        <textarea rows="10" name="reviewBadContent" className={styles.bad_text} value={review.reviewBadContent} onChange={onChangeInput} placeholder="상품을 사용하면서 아쉬웠던 점을 적어주세요"></textarea>
                     </p>
                 </div>
                 <div className={styles.picture}>

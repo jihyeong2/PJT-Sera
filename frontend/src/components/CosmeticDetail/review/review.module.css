@@ -54,6 +54,7 @@
     cursor: pointer;
 }
 .filtering{
+    margin-top: 30px;
     text-align: right;
     margin-right: 20px;
 }

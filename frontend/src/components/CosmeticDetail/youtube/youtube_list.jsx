@@ -13,9 +13,9 @@ const YoutubeList = ({videos, onVideoClick}) => {
             <p className={styles.sub}>인기영상으로 상세정보를 알아보세요.</p>
             <Grid className={styles.videos} container spacing={3}>
                 {videos.map(video => (
-                    <Grid item xs={3} className={styles.youtube_item}>
+                    <Grid key={video.id} item xs={3} className={styles.youtube_item}>
                         <div>
-                            <VideoItem key={video.id} video={video} onVideoClick={onVideoClick}/>
+                            <VideoItem  video={video} onVideoClick={onVideoClick}/>
                         </div>
                     </Grid>
                 ))}

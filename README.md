@@ -7,7 +7,7 @@
 
 
 
-##  팀원 역할
+##  👨‍💻 팀원 역할
 
 | 팀원   | 역할 | 비고                                          |
 | ------ | ---- | --------------------------------------------- |
@@ -19,7 +19,7 @@
 
 
 
-##  기술 스택
+## 📑 기술 스택
 
 ![HTML](https://img.shields.io/badge/HTML5----green?logo=HTML5)![CSS3](https://img.shields.io/badge/CCS3----green?logo=CSS3)![PostCSS](https://img.shields.io/badge/PostCSS----green?logo=PostCSS)![Javascript](https://img.shields.io/badge/JavaScript-ES6+-green?logo=javascript) ![React](https://img.shields.io/badge/React-v17.0.1-green?logo=react) ![React-Router](https://img.shields.io/badge/ReactRouter-v5-green?logo=react-router)
 
@@ -27,7 +27,7 @@
 
 
 
-## Gantt Chart
+## 📑 Gantt Chart
 
 ```mermaid
 gantt
@@ -98,7 +98,7 @@ gantt
 
 ```
 
-## ✔ Branch 규칙
+## 📑 Branch 규칙
 
 ```bash
 develop/feature/기능명
@@ -106,7 +106,7 @@ develop/feature/기능명
 
 
 
-## **✔** 커밋 메시지
+## 📑 커밋 메시지
 
 📌 하나의 기능 완성되면 한번에 커밋
 
@@ -127,7 +127,7 @@ https://blog.ull.im/engineering/2019/03/10/logs-on-git.html 대로 메시지
 
 
 
-## ✔ Code Style
+## 📑 Code Style
 
 | FrontEnd                                                     | BackEnd                                                      |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -159,24 +159,21 @@ https://blog.ull.im/engineering/2019/03/10/logs-on-git.html 대로 메시지
 
 
 
-## 기능
+## 📑 기능
 
 
 
-## 산출물
+## 📑 산출물
 
 
 
-### ERD
+### ✔ ERD
 
 ![image](/uploads/4e876635a389f2962b61334fcc5956d9/image.png)
 
 
-### 화면 정의서
 
-
-
-### 와이어프레임
+### ✔ 와이어프레임
 
 ![슬라이드1](/uploads/222fb3fe552cc2037311e2f81e7daef2/슬라이드1.PNG)
 

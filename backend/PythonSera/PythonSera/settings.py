@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import pymysql
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -138,3 +139,6 @@ AWS_REGION = "ap-northeast-2" # AWS 지역
 AWS_STORAGE_BUCKET_NAME = "sera-s3" # 버킷 이름
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (
     AWS_STORAGE_BUCKET_NAME, AWS_REGION)
+
+connect = pymysql.connect(host='sera.czh6yt8bx4v6.ap-northeast-2.rds.amazonaws.com', user='admin', password='ssafyB202SERA', db='seraDB', charset='utf8mb4')
+curs = connect.cursor()

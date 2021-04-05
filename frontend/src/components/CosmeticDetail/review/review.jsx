@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './review.module.css';
 import styless from './review_item.module.css';
 import Grid from '@material-ui/core/Grid';
@@ -14,8 +14,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Pagination from '@material-ui/lab/Pagination';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
@@ -28,6 +26,7 @@ import Typography from '@material-ui/core/Typography';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import ReviewModify from './review_modify_modal';
+import http from "../../../http-common";
 
 const dstyles = (theme) => ({
     root: {
@@ -80,14 +79,11 @@ const useStyles = makeStyles((theme) => ({
 // const Review = ({onCreateReview}) => {
 const Review = ({product, review, user, skin, picture}) => {
     // console.log("리뷰 넘어왔니? "+review);
-    // console.log(review[0]);
-    // console.log(review[3]);
-    // console.log(review[5]);
-    
     const classes = useStyles();
-    const [type, setType] = React.useState('');
+    const [type, setType] = React.useState(1);
 
     const handleChange = (event) => {
+        console.log(event);
         setType(event.target.value);
     };
 
@@ -104,13 +100,11 @@ const Review = ({product, review, user, skin, picture}) => {
     // const [value, setValue] = React.useState(2);
 
     const [fullWidth, setFullWidth] = React.useState(true);
-    // console.log(review.length);
+
     const [open, setOpen] = React.useState(Array(review.length).fill(false));
-    // console.log(open);
+
     const handleClickOpen = (e) => {
-        // console.log(e);
         const index = e.target.dataset.idx ? e.target.dataset.idx : e.target.parentNode.dataset.idx;
-        // console.log(index);
         const tmp = open.map((item,idx)=>{
             if(idx!=index) return item
             else return true
@@ -125,6 +119,24 @@ const Review = ({product, review, user, skin, picture}) => {
         })
         setOpen(tmp);
     };
+
+    const [good, setGood] = useState(review.helpMark);
+    const request = {
+        reviewId : review.reviewId, 
+        userId : user.userId
+    };
+    const help = () => {
+        http.put("v1/review/help", request)
+        .then(res=>{     
+            console.log("도움 데이터");   
+            console.log(res.data);                      
+            setGood(res.data);
+        })
+        .catch(err=>{
+            console.log("도움 에러");
+            console.error(err);
+        })
+    }
 
     return(
         <div>
@@ -232,12 +244,12 @@ const Review = ({product, review, user, skin, picture}) => {
                                         <div>
                                             {
                                                 review.helpMark == 1 && (
-                                                    <ThumbUpIcon className={styless.like_icon} style={{color:"#616BAD"}} />
+                                                    <ThumbUpIcon className={styless.like_icon} style={{color:"#616BAD"}} onClick={help}  />
                                                 )
                                             }
                                             {
                                                 review.helpMark == 0 && (
-                                                    <ThumbUpIcon className={styless.like_icon} style={{color:"#999999"}} />
+                                                    <ThumbUpIcon className={styless.like_icon} style={{color:"#999999"}} onClick={help}  />
                                                 )
                                             }
                                         </div>

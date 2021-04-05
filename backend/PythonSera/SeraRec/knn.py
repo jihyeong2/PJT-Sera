@@ -323,7 +323,7 @@ def knn(neighbor_cnt, user, category_large=None, category_middle = None):
             rec_correctRate.append([help_cnt, caution_cnt])
     return rec_items, rec_correctRate
 
-def search(user, keyword):
+def search(user, keyword, category_large=None):
     fields = ['item_id', 'item_name', 'item_img', 'item_brand','category_id','item_colors','item_volume','item_price','item_description','dibs_cnt',]
     category_fields = ['category_id', 'category_large', 'category_middle', 'category_small']
     etc = ['helpful_cnt','caution_cnt']
@@ -332,11 +332,18 @@ def search(user, keyword):
     curs.execute(query, ('%' + keyword + '%'))
     item_cnt = curs.fetchone()
     if item_cnt[0] > 0:
-        query = """SELECT i.*, c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
-                WHERE si.skin_id = %s AND i.item_name LIKE %s
-                ORDER BY si.helpful_cnt - si.caution_cnt DESC
-                LIMIT 100 """
-        curs.execute(query, (user['skin_id'], '%' + keyword + '%'))
+        if category_large is None:
+            query = """SELECT i.*, c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
+                    WHERE si.skin_id = %s AND i.item_name LIKE %s
+                    ORDER BY si.helpful_cnt - si.caution_cnt DESC
+                    LIMIT 100 """
+            curs.execute(query, (user['skin_id'], '%' + keyword + '%'))
+        else:
+            query = """SELECT i.*, c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
+                    WHERE si.skin_id = %s AND i.item_name LIKE %s AND c.category_large = %s
+                    ORDER BY si.helpful_cnt - si.caution_cnt DESC
+                    LIMIT 100 """
+            curs.execute(query, (user['skin_id'], '%' + keyword + '%', category_large))
         items = curs.fetchall()
         result_item_name = []
         for item in items:
@@ -362,11 +369,18 @@ def search(user, keyword):
         result_item_element = {}
         for e in tqdm.tqdm(elements):
             result_item_element[e[1]] = []
-            query = """SELECT i.*, c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
-                    WHERE si.skin_id = %s AND item_id in (SELECT item_id FROM item_element WHERE element_id = %s)
-                    ORDER BY si.helpful_cnt - si.caution_cnt DESC
-                    LIMIT 100"""
-            curs.execute(query, (user['skin_id'], e[0]))
+            if category_large is None:
+                query = """SELECT i.*, c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
+                        WHERE si.skin_id = %s AND item_id in (SELECT item_id FROM item_element WHERE element_id = %s)
+                        ORDER BY si.helpful_cnt - si.caution_cnt DESC
+                        LIMIT 100 """
+                curs.execute(query, (user['skin_id'], e[0]))
+            else:
+                query = """SELECT i.*, c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
+                        WHERE si.skin_id = %s AND item_id in (SELECT item_id FROM item_element WHERE element_id = %s) AND c.category_large = %s
+                        ORDER BY si.helpful_cnt - si.caution_cnt DESC
+                        LIMIT 100 """
+                curs.execute(query, (user['skin_id'], e[0], category_large))
             items = curs.fetchall()
             for item in items:
                 item_json = {}

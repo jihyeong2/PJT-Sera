@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
 import styles from './SearchBar.module.css';
@@ -6,7 +6,7 @@ import { useHistory } from 'react-router';
 import {getSearchAll, getSearchCategory} from '../../../service/search';
 import Swal from 'sweetalert2';
 
-const SearchBar = (props) => {
+const SearchBar = ({handleClose}) => {
   var lowerCase = /[a-z]/; //소문자
   var upperCase = /[A-Z]/; //대문자
   var koreanCase =  /^[ㄱ-ㅎ가-힣]+$/; //한글 정규식
@@ -25,6 +25,7 @@ const SearchBar = (props) => {
     //   });
     //   return
     // }
+    handleClose();
     history.push(`/search/${inputCategory}/${inputVal}`);
   };
   const onKeyUpEnter = (e) => {
@@ -34,6 +35,9 @@ const SearchBar = (props) => {
   const onClickSearch = () => {
     handleSearch(inputRef.current.value,selectRef.current.value);
   }
+  useEffect(()=>{
+    document.querySelector('#input').focus();
+  },[]);
   return (
     <div style={{marginTop: '2em'}}>
       <div className={styles.title}>
@@ -51,7 +55,7 @@ const SearchBar = (props) => {
           ref={inputRef}
           type="text"
           name=""
-          id=""
+          id="input"
           className={styles.input}
           onKeyUp={onKeyUpEnter}
           />

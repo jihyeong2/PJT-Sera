@@ -55,9 +55,10 @@ const SearchResult = ({user}) => {
   const [productsKeys2, setProductsKeys2] = useState([]);
   const [products2,setProducts2] = useState([]);
   const [value, setValue] = useState(0);
-  console.log(products);
-  console.log(products2);
+  // console.log(products);
+  // console.log(products2);
   console.log(productsKeys2)
+  console.log(value);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -80,7 +81,8 @@ const SearchResult = ({user}) => {
   },[idx,products,idx2,products2]);
 
   useEffect(() => {
-    window.addEventListener('scroll', infinityScroll, true);
+    console.log('aa');
+    // window.addEventListener('scroll', infinityScroll, true);
     if(params.category==="전체"){
       getSearchAll(
         user.userId,
@@ -89,7 +91,7 @@ const SearchResult = ({user}) => {
           // console.log(res);
           setProducts(res.data.item_list.item_name_list);
           setProducts2(Object.values(res.data.item_list.item_element_list));
-          setProductsKeys2(Object.values(res.data.item_list.item_element_list));
+          setProductsKeys2(Object.keys(res.data.item_list.item_element_list));
         },
         (err)=>{
           console.error(err);
@@ -104,15 +106,15 @@ const SearchResult = ({user}) => {
           // console.log(res);
           setProducts(res.data.item_list.item_name_list);
           setProducts2(Object.values(res.data.item_list.item_element_list));
-          setProductsKeys2(Object.values(res.data.item_list.item_element_list));         
+          setProductsKeys2(Object.keys(res.data.item_list.item_element_list));         
         },
         (err)=>{
           console.error(err);
         }
       )
     }
-    return () => window.removeEventListener('scroll', infinityScroll,true);
-  },[]);
+    // return () => window.removeEventListener('scroll', infinityScroll,true);
+  },[params]);
 
   const onClick = (e) => {
     if(e.target.innerText==='상품명 결과'){
@@ -161,10 +163,14 @@ const SearchResult = ({user}) => {
         item_id,
         (res)=>{
           const tmp = [...products2];
-          tmp[productsKey2].map(product => {
-            if(product.item_id != item_id) return product;
-            else return {...product, dibs: true, dibs_cnt: product.dibs_cnt+1};
-          })
+          tmp[productsKey2]=tmp[productsKey2].map(product => {
+            if(product.item_id !== item_id) {
+              return product;
+            }
+            else {
+              return {...product, dibs: true, dibs_cnt: product.dibs_cnt+1};
+            }
+          });
           setProducts2(tmp);
         },
         (err)=>{
@@ -177,9 +183,11 @@ const SearchResult = ({user}) => {
         item_id,
         (res)=>{
           const tmp = [...products2];
-          tmp[productsKey2].map(product => {
-            if(product.item_id != item_id) return product;
-            else return {...product, dibs: true, dibs_cnt: product.dibs_cnt+1};
+          tmp[productsKey2]=tmp[productsKey2].map(product => {
+            if(product.item_id !== item_id) return product;
+            else {
+              return {...product, dibs: false, dibs_cnt: product.dibs_cnt-1};
+            }
           })
           setProducts2(tmp);
         },
@@ -208,17 +216,20 @@ const SearchResult = ({user}) => {
         </TabPanel>
         <TabPanel value={value} index={1}>
           {
-            productsKeys2.map((key,idx)=>{
-              <div key={key} className={styles.element_box}>
-                <div className={styles.element_title}>
-                  {
-                    idx%2 == 0 ?
-                    <FontAwesomeIcon icon={['fas', 'leaf']} size="sm" color="#4E9157"/>:
-                    <FontAwesomeIcon icon={['fas', 'leaf']} size="sm" color="#6F6AFA"/>
-                  }
-                  &nbsp;{key}</div>
-                <ProductList products={products2[idx].slice(0,4)} handleHeart2={onHandleHeart2} productsKey2={idx}/>
-              </div>
+            products2.length>0 && productsKeys2.map((key,idx)=>{
+              return(
+                <div key={key} className={styles.element_box}>
+                  <div className={styles.element_title}>
+                    <FontAwesomeIcon icon={['fas', 'leaf']} size="sm" color="#333333"/>&nbsp;
+                    {
+                      idx%2==0 ?
+                      <span style={{color:'#4E9157'}}>{key}</span> :
+                      <span style={{color:'#6F6AFA'}}>{key}</span>
+                    }
+                  </div>
+                  <ProductList products={products2[idx].slice(0,4)} handleHeart2={onHandleHeart2} productsKey2={idx}/>
+                </div>
+              );
             })
           }
         </TabPanel>

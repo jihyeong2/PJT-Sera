@@ -7,9 +7,13 @@ import { useHistory } from 'react-router';
 const Product = ({user,product, handleHeart, index, handleHeart2, productsKey2}) => {
   const history = useHistory();
   const onClickHeart = () => {
-    if(handleHeart2 && productsKey2)
-      handleHeart(productsKey2,product.item_id,index);
-    else handleHeart(product.item_id, index);
+    if(productsKey2!==undefined){
+      handleHeart2(productsKey2,product.item_id,index);
+    }
+    else {
+      console.log('b');
+      handleHeart(product.item_id, index);
+    }
   };
   const onClickProduct = () => {
     history.push(`/detail/${product.item_id}`);

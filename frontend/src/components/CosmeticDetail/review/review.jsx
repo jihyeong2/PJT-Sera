@@ -121,12 +121,12 @@ const Review = ({product, review, user, skin, picture}) => {
     };
 
     const [good, setGood] = useState(review.helpMark);
-    const request = {
-        reviewId : review.reviewId, 
-        userId : user.userId
-    };
+    // const request = {
+    //     reviewId : review.reviewId, 
+    //     userId : user.userId
+    // };
     const help = () => {
-        http.put("v1/review/help", request)
+        http.put("v1/review/help")
         .then(res=>{     
             console.log("도움 데이터");   
             console.log(res.data);                      

@@ -5,7 +5,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import ProductList from '../../components/common/ProductList/ProductList';
-import data from '../../data/GP_items_1-10000.json';
 import {connect} from 'react-redux';
 import Navbar from '../../components/common/Navbar/Navbar';
 import Logo from '../../components/common/Logo/Logo';
@@ -163,15 +162,15 @@ const Result = ({user,skin}) => {
         console.error(err);
       }
     )
-    getCautionProducts(
-      user.userId,
-      (res)=>{
-        setProducts2(res.data.item_list.slice(0,4));
-      },
-      (err)=>{
-        console.error(err);
-      }
-    )
+    // getCautionProducts(
+    //   user.userId,
+    //   (res)=>{
+    //     setProducts2(res.data.item_list.slice(0,4));
+    //   },
+    //   (err)=>{
+    //     console.error(err);
+    //   }
+    // )
   },[]);
   const onClickTopButton = () => {
     window.scroll({

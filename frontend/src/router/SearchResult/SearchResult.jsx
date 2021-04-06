@@ -15,6 +15,7 @@ import {setLike, setHate} from '../../service/product';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Footer from '../../components/common/Footer/Footer';
 import TopButton from '../../components/common/Button/TopButton/TopButton';
+import Loader from '../../components/common/Loader/Loader';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -56,7 +57,8 @@ const SearchResult = ({user}) => {
   const [productsKeys2, setProductsKeys2] = useState([]);
   const [products2,setProducts2] = useState([]);
   const [value, setValue] = useState(0);
-  const [isScroll,setIsScroll] = useState(false); 
+  const [isScroll,setIsScroll] = useState(false);
+  const [isLoading,setIsLoading] = useState(true);
   const ScrollEvent =()=>{
     if(window.scrollY>0){
       setIsScroll(true);
@@ -81,17 +83,20 @@ const SearchResult = ({user}) => {
   useEffect(() => {
     window.addEventListener('scroll', ScrollEvent);
     if(products.length===0 && products2.length===0){
+      
       if(params.category==="전체"){
         getSearchAll(
           user.userId,
           params.name,
           (res)=>{
             // console.log(res);
+            setIsLoading(false);
             setProducts(res.data.item_list.item_name_list);
             setProducts2(Object.values(res.data.item_list.item_element_list));
             setProductsKeys2(Object.keys(res.data.item_list.item_element_list));
           },
           (err)=>{
+            setIsLoading(false);
             console.error(err);
           }
         )
@@ -101,11 +106,13 @@ const SearchResult = ({user}) => {
           params.category,
           params.name,
           (res)=>{
+            setIsLoading(false);
             setProducts(res.data.item_list.item_name_list);
             setProducts2(Object.values(res.data.item_list.item_element_list));
             setProductsKeys2(Object.keys(res.data.item_list.item_element_list));         
           },
           (err)=>{
+            setIsLoading(false);
             console.error(err);
           }
         )
@@ -206,6 +213,7 @@ const SearchResult = ({user}) => {
   };  
   return (
     <div style={{position:'relative', paddingBottom:'180px', minHeight:'100vh'}}>
+      <Loader open={isLoading}/>
       <div className={styles.container}>
         <Navbar/>
         <Logo type={1} className={styles.logo}/>

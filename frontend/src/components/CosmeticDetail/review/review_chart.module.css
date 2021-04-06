@@ -1,9 +1,10 @@
 .graph_area{
     float: left;
+    padding-right: 40px;
     width: 255px;
     height: 231px;
-    padding-top: 38px;
     border-right: 1px solid #ddd;
+    
 }
 
 .graph_list{

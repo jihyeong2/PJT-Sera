@@ -191,4 +191,19 @@ public class UserController {
         }
         return response;
     }
+
+    @ApiOperation(value = "아이디,전화번호에 해당하는 유저 찾기", notes = "찾으면 success, 못찾으면 fail", response = BaseResponse.class)
+    @GetMapping("/{userLoginId}/{userPhone}")
+    public BaseResponse findUserByIdAndPhone(@ApiParam(value = "사용자 로그인 아이디") @PathVariable String userLoginId,
+                                             @ApiParam(value = "사용자 로그인 아이디") @PathVariable String userPhone){
+        BaseResponse response = null;
+        try{
+            User findUser = userService.findByUserLoginIdAndUserPhone(userLoginId, validator.phoneValidator(userPhone));
+            response = new BaseResponse("success", findUser);
+        }
+        catch(Exception e){
+            response = new BaseResponse("fail",e.getMessage());
+        }
+        return response;
+    }
 }

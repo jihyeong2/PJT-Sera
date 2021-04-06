@@ -32,7 +32,7 @@ const SignUp1 = () => {
   const onChangeUserNickname = (e) => {
     setAbleNickname(false);
     setUserNickname(e.target.value);
-    if (4<=e.target.value.length && !RegExp.test(e.target.value)) setNameButtonColor("#FD6C1D");
+    if ((4<=e.target.value.length && e.target.value.length<=6) && !RegExp.test(e.target.value)) setNameButtonColor("#FD6C1D");
     else setNameButtonColor("#666");
   };
 
@@ -66,14 +66,14 @@ const SignUp1 = () => {
      .get("v1/users/duplicate/" + userLoginId)
      .then((res) => {
        if (res.data.status === "success") { //사용가능
-         alert("사용가능한 아이디입니다");
+         alert("사용가능한 아이디입니다");  
          setAbleLoginId(true);
        }else alert("이미 중복된 아이디입니다.");
      })
      .catch((err) => {
        console.error(err);
      });
-    }
+    }else alert("아이디 형식이 올바르지 않습니다");
   };
 
   //닉네임 중복확인
@@ -91,7 +91,7 @@ const SignUp1 = () => {
         .catch((err) => {
             console.error(err);
         });
-    }
+    }else alert("닉네임 형식이 올바르지 않습니다");
   };
   
 
@@ -107,6 +107,7 @@ const SignUp1 = () => {
        }else{
          if(!ableLoginId) alert("아이디 중복확인을 해주세요");
          else if(!ableNickname) alert("닉네임 중복확인을 해주세요");
+         else if(!ablePassword) alert("비밀번호가 일치하지 않습니다");
          else alert("모든 입력폼을 작성해주세요");
        }
   };
@@ -132,6 +133,7 @@ const SignUp1 = () => {
                   placeholder="5~12자의 소문자,숫자,-,_만 사용가능합니다"
                   onChange={onChangeUserLoginId}
                   value={userLoginId}
+                  maxLength="12"
                 />
                 <input
                   className={styles.input_btn}
@@ -149,9 +151,10 @@ const SignUp1 = () => {
                   className={styles.input_text}
                   type="text"
                   name="userNickname"
-                  placeholder="4자 이상의 한글,숫자 조합만 가능합니다"
+                  placeholder="4~6자 이하의 한글,숫자 조합만 가능합니다"
                   onChange={onChangeUserNickname}
                   value={userNickname}
+                  maxlenth="6"
                 />
                 <input
                   className={styles.input_btn}
@@ -172,6 +175,7 @@ const SignUp1 = () => {
                   placeholder="6~15자의 영문,숫자,특수문자 조합만 가능합니다."
                   onChange={onChangeUserPassword}
                   value={userPassword}
+                  maxlength="15"
                 />
               </li>
               <li className={styles.form_input}>
@@ -185,6 +189,7 @@ const SignUp1 = () => {
                   placeholder="비밀번호를 다시 입력하세요"
                   onChange={onChangeUserPassword2}
                   value={userPassword2}
+                  maxlength="15"
                 />
               </li>
             </ul>

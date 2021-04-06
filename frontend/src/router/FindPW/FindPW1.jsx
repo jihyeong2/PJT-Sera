@@ -3,6 +3,7 @@ import styles from "./FindPW1.module.css";
 import Grid from "@material-ui/core/Grid";
 import { useHistory } from "react-router-dom";
 import http from "../../http-common.js";
+import Swal from "sweetalert2";
 
 const FindPW1 = () => {
   const history = useHistory();
@@ -60,12 +61,16 @@ const FindPW1 = () => {
     setCertificateNumber(e.target.value);
 
     if (isNaN(e.target.value)) {
-      alert("숫자를 입력해주세요");
+      Swal.fire({
+        icon: "error",
+        text: "숫자를 입력해주세요",
+        showConfirmButton: false,
+        timer: 2000,
+      });
       onResetCertificateNumber();
-    } else if (e.target.value === "") setCertificateNumColor("#666");
-    else if (e.target.value.length === 6) {
-      setCertificateNumColor("#FD6C1D");
-    }
+    } else if (e.target.value.length === 6) setCertificateNumColor("#FD6C1D");
+    else setCertificateNumColor("#666");
+    
   };
 
   const onResetCertificateNumber = () => {
@@ -76,7 +81,12 @@ const FindPW1 = () => {
   const sendSns = () => {
 
     if (ablePhone) {
-      alert("이미 본인인증이 되었습니다.");
+      Swal.fire({
+        icon: "success",
+        text: "이미 본인인증이 되었습니다",
+        showConfirmButton: false,
+        timer: 2000,
+      });
       return;
     }
 
@@ -85,15 +95,32 @@ const FindPW1 = () => {
       http.get(`v1/users/${userLoginId}/${userPhone}`)
       .then((res) => {
         if(res.data.data === null){
-          alert("존재하지 않는 회원입니다.");
+          Swal.fire({
+            icon: "error",
+            text: "존재하지 않는 회원입니다",
+            showConfirmButton: false,
+            timer: 2000,
+          });
           return;
         }else{
           http
           .post("v1/auth?phoneNumber=" + userPhone)
           .then((res) => {
             if (res.data.status === "success")
-              alert("인증번호가 발송되었습니다.");
-            else alert("인증번호 발송이 실패했습니다.");
+            Swal.fire({
+              icon: "success",
+              text: "인증번호가 발송되었습니다",
+              showConfirmButton: false,
+              timer: 2000,
+            });
+            else{
+              Swal.fire({
+                icon: "error",
+                text: "인증번호 발송을 실패했습니다",
+                showConfirmButton: false,
+                timer: 2000,
+              });
+            }
           })
           .catch((err) => {
             console.error(err);
@@ -103,13 +130,25 @@ const FindPW1 = () => {
       .catch((err) => {
         console.log(err);
       });
-    } else alert("휴대번호 형식이 올바르지 않습니다");
+    } else{
+      Swal.fire({
+        icon: "error",
+        text: "휴대번호 방식이 올바르지 않습니다",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
   };
 
   //백에서 인증번호 비교
   const certificate = () => {
     if (ablePhone) {
-      alert("이미 본인인증이 되었습니다.");
+      Swal.fire({
+        icon: "success",
+        text: "이미 본인인증이 되었습니다",
+        showConfirmButton: false,
+        timer: 2000,
+      });
       return;
     }
 
@@ -120,12 +159,31 @@ const FindPW1 = () => {
           console.log(res.data.data);
           if (res.data.data === "true") {
             setAblePhone(true);
-            alert("본인인증이 완료했습니다.");
-          } else alert("인증번호가 일치하지 않습니다.");
+            Swal.fire({
+              icon: "success",
+              text: "본인인증을 완료했습니다",
+              showConfirmButton: false,
+              timer: 2000,
+            });
+          } else{
+            Swal.fire({
+              icon: "error",
+              text: "인증번호가 일치하지 않습니다",
+              showConfirmButton: false,
+              timer: 2000,
+            });
+          }
         })
         .catch((err) => {
           console.error(err);
         });
+    }else{
+      Swal.fire({
+        icon: "error",
+        text: "인증번호 6자리를 입력해주세요",
+        showConfirmButton: false,
+        timer: 2000,
+      });
     }
   };
 
@@ -138,9 +196,30 @@ const FindPW1 = () => {
         },
       });
     } else {
-      if (!ableLoginId) alert("아이디 형식이 올바르지 않습니다");
-      else if (!ablePhone) alert("본인 인증을 완료해주세요");
-      else alert("모든 입력폼을 작성해주세요");
+      if (!ableLoginId){
+        Swal.fire({
+          icon: "error",
+          text: "아이디 형식이 올바르지 않습니다",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      }
+      else if (!ablePhone){
+        Swal.fire({
+          icon: "error",
+          text: "본인인증을 완료해주세요",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      }
+      else{
+        Swal.fire({
+          icon: "error",
+          text: "모든 입력폼을 작성해주세요",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      }
     }
   };
 
@@ -195,7 +274,7 @@ const FindPW1 = () => {
                   className={styles.input_text}
                   type="text"
                   name="certificateNumber"
-                  placeholder="발송된 인증번호를 입력해주세요 예)1234"
+                  placeholder="발송된 인증번호 6자리를 입력해주세요"
                   value={certificateNumber}
                   onChange={onChangecertificateNumber}
                   maxlength="6"

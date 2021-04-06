@@ -82,9 +82,9 @@ public class UserController {
         try{
             boolean isDuplicate = userService.validateDuplicateUserLoginId(userLoginId);
             if(isDuplicate){
-                response = new BaseResponse("success", "중복입니다");
+                response = new BaseResponse("success", true);
             }else{
-                response = new BaseResponse("success", "중복이 아닙니다");
+                response = new BaseResponse("success", false);
             }
         }catch(Exception e){
             response = new BaseResponse("fail", e.getMessage());
@@ -99,9 +99,9 @@ public class UserController {
         try{
             boolean isDuplicate = userService.validateDuplicateNickname(userNickname);
             if(isDuplicate){
-                response = new BaseResponse("success", "중복입니다");
+                response = new BaseResponse("success", true);
             }else{
-                response = new BaseResponse("success", "중복이 아닙니다");
+                response = new BaseResponse("success", false);
             }
         }catch(Exception e){
             response = new BaseResponse("fail", e.getMessage());

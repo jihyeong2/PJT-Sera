@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import http from "../../http-common.js";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router";
+import Swal from "sweetalert2";
 
 const FindPW2 = () => {
   const history = useHistory();
@@ -26,7 +27,7 @@ const FindPW2 = () => {
     if (
       userPassword2 === e.target.value &&
       userPassword2 !== "" &&
-      e.target.value !== ""
+      e.target.value !== "" && e.target.value.length>=6 && e.target.value.length<=15
     )
       setAblePassword(true);
   };
@@ -37,7 +38,7 @@ const FindPW2 = () => {
     if (
       userPassword === e.target.value &&
       userPassword !== "" &&
-      e.target.value !== ""
+      e.target.value !== "" && e.target.value.length>=6 && e.target.value.length<=15
     )
       setAblePassword(true);
   };
@@ -55,10 +56,16 @@ const FindPW2 = () => {
 
   //비밀번호 변경
   const updatePw = () => {
+    if(!ablePassword){
+      Swal.fire({
+        icon: "error",
+        text: "비밀번호가 올바르지 않습니다",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      return;
+    }
 
-    if(!ablePassword) alert("비밀번호가 일치하지 않습니다.");
-
-    if (ablePassword) {
       http
         .put("v1/users/password", {
           userLoginId,
@@ -66,14 +73,26 @@ const FindPW2 = () => {
         })
         .then((res) => {
           if (res.data.status === "success") {
-            alert("비밀번호를 변경했습니다. 로그인해주세요");
+            Swal.fire({
+              icon: "success",
+              text: "비밀번호를 변경했습니다. 로그인 해주세요",
+              showConfirmButton: false,
+              timer: 2000,
+            });
             history.push("/login");
-          } else alert("비밀번호 변경을 실패했습니다");
+          } else{
+            Swal.fire({
+              icon: "error",
+              text: "비밀번호 변경을 실패했습니다",
+              showConfirmButton: false,
+              timer: 2000,
+            });
+          }
         })
         .catch((err) => {
           console.error(err);
         });
-    }
+    
   };
 
   return (

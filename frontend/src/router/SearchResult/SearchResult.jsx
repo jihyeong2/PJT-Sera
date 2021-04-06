@@ -52,18 +52,17 @@ const SearchResult = ({user}) => {
   const [currTab,setCurrTab] = useState(1);
   const [idx,setIdx] = useState(12);
   const [idx2,setIdx2] = useState(4);
-  // const [idx3,setIdx3] = useState(4);
   const [products,setProducts] = useState([]);
   const [productsKeys2, setProductsKeys2] = useState([]);
   const [products2,setProducts2] = useState([]);
   const [value, setValue] = useState(0);
-  const [isScroll,setIsScroll] = useState(false);  
-  const ScrollEvent = useCallback(()=>{
+  const [isScroll,setIsScroll] = useState(false); 
+  const ScrollEvent =()=>{
     if(window.scrollY>0){
       setIsScroll(true);
     } else{
       setIsScroll(false);
-    }    
+    }
     let scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
     let scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
     let clientHeight = document.documentElement.clientHeight;
@@ -71,53 +70,49 @@ const SearchResult = ({user}) => {
       if (scrollTop + clientHeight + 2 >= scrollHeight){
         const tmp=idx+12;
         setIdx(tmp);
-        // setProducts(products.concat(data.slice(idx,idx+12)));
       }
     }else{ // 성분명 결과 탭일 때 무한스크롤
       if (scrollTop + clientHeight + 2 >= scrollHeight){
         const tmp=idx2+4;
         setIdx2(tmp);
-        // setProducts2(products2.concat(data.slice(idx2,idx2+12)));
       }
     }
-  },[value,idx,idx2]);  
+  } 
   useEffect(() => {
     window.addEventListener('scroll', ScrollEvent);
-    console.log('effect')
-    if(params.category==="전체"){
-      getSearchAll(
-        user.userId,
-        params.name,
-        (res)=>{
-          // console.log(res);
-          setProducts(res.data.item_list.item_name_list);
-          setProducts2(Object.values(res.data.item_list.item_element_list));
-          setProductsKeys2(Object.keys(res.data.item_list.item_element_list));
-        },
-        (err)=>{
-          console.error(err);
-        }
-      )
-    } else{
-      getSearchCategory(
-        user.userId,
-        params.category,
-        params.name,
-        (res)=>{
-          setProducts(res.data.item_list.item_name_list);
-          setProducts2(Object.values(res.data.item_list.item_element_list));
-          setProductsKeys2(Object.keys(res.data.item_list.item_element_list));         
-        },
-        (err)=>{
-          console.error(err);
-        }
-      )
+    if(products.length===0 && products2.length===0){
+      if(params.category==="전체"){
+        getSearchAll(
+          user.userId,
+          params.name,
+          (res)=>{
+            // console.log(res);
+            setProducts(res.data.item_list.item_name_list);
+            setProducts2(Object.values(res.data.item_list.item_element_list));
+            setProductsKeys2(Object.keys(res.data.item_list.item_element_list));
+          },
+          (err)=>{
+            console.error(err);
+          }
+        )
+      } else{
+        getSearchCategory(
+          user.userId,
+          params.category,
+          params.name,
+          (res)=>{
+            setProducts(res.data.item_list.item_name_list);
+            setProducts2(Object.values(res.data.item_list.item_element_list));
+            setProductsKeys2(Object.keys(res.data.item_list.item_element_list));         
+          },
+          (err)=>{
+            console.error(err);
+          }
+        )
+      }
     }
     return () => window.removeEventListener('scroll', ScrollEvent);
-  },[params]);  
-  // console.log(value);
-  // console.log(idx,idx2);
-  // console.log(products.length,products2.length);
+  },[params,value,idx,idx2]);  
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };

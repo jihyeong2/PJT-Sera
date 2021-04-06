@@ -9,10 +9,11 @@ import BeautyTip from '../../components/common/BeautyTip/BeautyTip';
 import ColorPalette from '../../components/common/Pallette/ColorPalette';
 import { useHistory } from 'react-router';
 import TopButton from '../../components/common/Button/TopButton/TopButton';
-
+import Loader from '../../components/common/Loader/Loader';
 const PersonalColorResult = ({user,color}) => {
   const history = useHistory();
   const [isScroll,setIsScroll] = useState(false);
+  const [isLoading,setIsLoading] = useState(true);  
   const onClickReset = () => {
     history.push('/personal_color');
   }
@@ -28,6 +29,9 @@ const PersonalColorResult = ({user,color}) => {
   },[]);  
   useEffect(()=>{
     window.addEventListener('scroll', scrollEvent, true);
+    setTimeout(()=>{
+      setIsLoading(false);
+    },3000);
     return () => {
       window.removeEventListener('scroll', scrollEvent, true);
     }
@@ -41,6 +45,7 @@ const PersonalColorResult = ({user,color}) => {
   };      
   return (
     <div style={{position:'relative', paddingBottom:'180px', minHeight:"100vh"}}>
+      <Loader open={isLoading}/>
       <div className={styles.container}>
         <Navbar/>
         <div className={styles.logo_box}>

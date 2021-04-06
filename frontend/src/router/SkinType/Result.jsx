@@ -14,6 +14,7 @@ import {getHelpfulProducts,getCautionProducts,setHate,setLike} from '../../servi
 import dropGreen from '../../assets/waterdrop_green.png';
 import dropRed from '../../assets/waterdrop_red.png';
 import TopButton from '../../components/common/Button/TopButton/TopButton';
+import Loader from '../../components/common/Loader/Loader';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -53,6 +54,7 @@ const Result = ({user,skin}) => {
   const [value2, setValue2] = useState(0);
   const [products1, setProducts1] = useState([]);
   const [products2, setProducts2] = useState([]);
+  const [isLoading,setIsLoading] = useState(true);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -147,18 +149,22 @@ const Result = ({user,skin}) => {
     getHelpfulProducts(
       user.userId,
       (res)=>{
+        setIsLoading(false);
         setProducts1(res.data.item_list.slice(0,4));
       },
       (err)=>{
+        setIsLoading(false);
         console.error(err);
       }
     )
     getCautionProducts(
       user.userId,
       (res)=>{
+        setIsLoading(false);
         setProducts2(res.data.item_list.slice(0,4));
       },
       (err)=>{
+        setIsLoading(false);
         console.error(err);
       }
     )
@@ -176,6 +182,7 @@ const Result = ({user,skin}) => {
   };
   return(
     <div style={{position:'relative', paddingBottom:'180px', minHeight:"100vh"}}>
+      <Loader open={isLoading}/>
       <div className={styles.container}>
         <Navbar/>
         <Logo type={1}/>

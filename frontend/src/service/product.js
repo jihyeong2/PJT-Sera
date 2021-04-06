@@ -6,7 +6,7 @@ function getHelpfulProducts(user_id,success,fail){
   .catch(fail)
 }
 function getCautionProducts(user_id,success,fail){
-  httpDjango.get(`v1/items/correct/caution${user_id}`)
+  httpDjango.get(`v1/items/correct/caution/${user_id}`)
   .then(success)
   .catch(fail)
 }

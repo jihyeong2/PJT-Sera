@@ -1,0 +1,39 @@
+.graph_area{
+    float: left;
+    width: 255px;
+    height: 231px;
+    padding-top: 38px;
+    border-right: 1px solid #ddd; 
+}
+
+.graph_list{
+    text-align: center;
+}
+
+.graph_list li{
+    position: relative;
+    display: inline-block;
+    width: 38px;
+    padding: 27px 0 0 0;
+    text-align: center;
+}
+
+.per{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    font-size: 14px;
+    color: #aaa;
+    font-weight: 700;
+}
+
+.txt{
+    font-size: 14px;
+    color: #888;
+    font-weight: bold;
+}
+
+
+
+

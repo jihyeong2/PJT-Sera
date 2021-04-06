@@ -7,10 +7,13 @@ import {connect} from 'react-redux';
 import {getLikeList,setHate} from '../../service/product';
 import Footer from '../../components/common/Footer/Footer';
 import TopButton from '../../components/common/Button/TopButton/TopButton';
+import Loader from '../../components/common/Loader/Loader';
+
 const MyPick = ({user}) => {
   const [products,setProducts]= useState([]);
   const [productsIdx,setProductsIdx] = useState(12);
-  const [isScroll,setIsScroll] = useState(false); 
+  const [isScroll,setIsScroll] = useState(false);
+  const [isLoading,setIsLoading] = useState(true);
   const onHandleHeart = (item_id,idx) => {
     setHate(
       user.userId,
@@ -44,11 +47,12 @@ const MyPick = ({user}) => {
       getLikeList(
         user.userId,
         (res)=>{
-          console.log(res.data);
           setProducts(res.data.item_list);
+          setIsLoading(false);
         },
         (err)=>{
           console.error(err);
+          setIsLoading(false);
         }
       )
     }
@@ -65,6 +69,7 @@ const MyPick = ({user}) => {
   };    
   return (
     <div style={{position:'relative', paddingBottom:'180px', minHeight:"100vh"}}>
+      <Loader open={isLoading}/>
       <div className={styles.container}>
         <Navbar/>
         <Logo type={1} className={styles.logo}/>

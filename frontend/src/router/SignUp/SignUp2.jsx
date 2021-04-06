@@ -84,6 +84,11 @@ const SignUp2 = () => {
 
   //인증번호 발송
   const sendSns = () => {
+    if(ablePhone){
+      alert("이미 본인인증이 되었습니다.")
+      return;
+    }
+
     if(snsButtonColor === "#FD6C1D"){
       http.post("v1/auth?phoneNumber="+userPhone)
       .then((res) => {
@@ -93,19 +98,24 @@ const SignUp2 = () => {
       .catch((err) => {
           console.error(err);
       });
-    }
+    }else alert("휴대번호 형식이 올바르지 않습니다");
   };
   
 
   //백에서 인증번호 비교
   const certificate = () => {
+    if(ablePhone){
+      alert("이미 본인인증이 되었습니다.")
+      return;
+    }
+    
     if(certificateNumColor === "#FD6C1D"){
       http.get("v1/auth/"+certificateNumber)
       .then((res) => {
         console.log(res.data.data);
           if(res.data.data === "true"){
             setAblePhone(true);
-            alert("본인인증이 완료했습니다.");
+            alert("본인인증을 완료했습니다.");
           }
           else alert("인증번호가 일치하지 않습니다.");
       })
@@ -187,7 +197,7 @@ const SignUp2 = () => {
                   className={styles.input_text_select}
                   type="text"
                   name="userPhone"
-                  placeholder="ex)010-7123-1815"
+                  placeholder="예)010-7123-1815"
                   value={userPhone}
                   onChange={onChangeUserPhone}
                   maxLength="13"
@@ -205,7 +215,7 @@ const SignUp2 = () => {
                   className={styles.input_text}
                   type="text"
                   name="certificateNumber"
-                  placeholder="발송된 인증번호를 입력해주세요 예)1234"
+                  placeholder="발송된 인증번호를 입력해주세요 예)12345"
                   value={certificateNumber}
                   onChange={onChangecertificateNumber}
                   maxLength="6"

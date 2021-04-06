@@ -1,9 +1,10 @@
 .graph_area{
     float: left;
+    padding-right: 40px;
     width: 255px;
     height: 231px;
-    padding-top: 38px;
-    border-right: 1px solid #ddd; 
+    border-right: 1px solid #ddd;
+    
 }
 
 .graph_list{
@@ -28,12 +29,29 @@
     font-weight: 700;
 }
 
+.graph{
+    position: relative;
+    width: 8px;
+    height: 100px;
+    background-color: #e5e5e5;
+    border-radius: 5px;
+    margin: 0 auto;
+    margin-bottom: 8px;
+}
+
+.graph > span{
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    width: 8px;
+    height: 75%; /*동적 수정*/
+    background-color: #f27370;
+    border-radius: 5px;
+}
+
 .txt{
     font-size: 14px;
     color: #888;
     font-weight: bold;
 }
-
-
-
 

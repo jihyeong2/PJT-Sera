@@ -18,6 +18,7 @@ import Result from './router/SkinType/Result';
 import Survey from './router/SkinType/Survey';
 import React from 'react';
 import PersonalColorResult from './router/PersonalColor/PersonalColorResult';
+import ReviewChart from './components/CosmeticDetail/review/review_chart'
 function App() {
   return (
     <div className={styles.app}>

@@ -5,10 +5,15 @@ import { useHistory } from "react-router-dom";
 import http from "../../http-common.js";
 import {login} from '../../actions/index';
 import {connect} from 'react-redux';
+import { useCookies } from 'react-cookie';
+
 const { Kakao } = window;
 
 const Login = ({login}) => {
   const history = useHistory();
+  
+  const [isRemember, setIsRemember] = useState(false);
+  const [cookies, setCookie, removeCookie] = useCookies(['rememberId']);
 
   const [userLoginId, setUserLoginId] = useState(""); //아이디
   const [userPassword, setUserPassword] = useState(""); //비밀번호
@@ -21,20 +26,35 @@ const Login = ({login}) => {
   var regKorean =  /^[ㄱ-ㅎ가-힣]+$/; //한글 정규식
   var RegExp =  /[~!@#$%^&*()_+|<>?:{}]/;//특수문자 정규식
 
+  useEffect(() => {
+    if(cookies.rememberId !== undefined){
+      setUserLoginId(cookies.rememberId);
+      setIsRemember(true);
+    }
+  }, []);
+
+  
+  //아이디 기억하기
+  const onChangeRemember = (e) => {
+    setIsRemember(e.target.checked);
+    if(e.target.checked) setCookie('rememberId', userLoginId, {maxAge:2000});
+    else removeCookie('rememberId');
+  }
+
   //again
   useEffect(() => {
-    if(userLoginId.length >= 5){
+    if(userLoginId.length >= 5 && userLoginId.length <= 12 && userPassword.length>=6 && userPassword.length<=15){
       setSubmitBorderColor("#FD6C1D");
       setSubmitTxtColor("#FD6C1D");
     }else{
       setSubmitBorderColor("#666");
       setSubmitTxtColor("#666");
     }
-  }, [userLoginId]);
-
+  }, [userLoginId, userPassword]);
 
   const onChangeUserLoginId = (e) => {
     setUserLoginId(e.target.value);
+    if(isRemember) setCookie('rememberId', e.target.value, {maxAge:2000});
   };
 
   const onChangeUserPassword = (e) => {
@@ -45,10 +65,9 @@ const Login = ({login}) => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    if(submitBorderColor !== "#FD6C1D"){
-      alert("아이디 형식이 올바르지 않습니다(5글자 이상)");
-      return;
-    }
+    if(userLoginId.length<5 || userLoginId.length>12) alert("아이디 형식이 올바르지 않습니다");
+    if(userPassword.length<6 || userPassword.length>15) alert("비밀번호 형식이 올바르지 않습니다");
+    if(submitBorderColor==="#666") return;
 
     http
       .post("v1/login",
@@ -80,6 +99,7 @@ const Login = ({login}) => {
         alert(err);
       });
   };
+
 
     //카카오 로그인 
     const kakaoLogin = () => {
@@ -159,9 +179,10 @@ const Login = ({login}) => {
                 <input
                   type="text"
                   name="userLoginId"
-                  placeholder="아이디를 입력하세요"
+                  placeholder="아이디를 입력하세요(5~12자)"
                   value={userLoginId}
                   onChange={onChangeUserLoginId}
+                  maxlength="12"
                 />
               </li>
               <li className={styles.form_input}>
@@ -169,13 +190,14 @@ const Login = ({login}) => {
                 <input
                   type="password"
                   name="userPassword"
-                  placeholder="비밀번호를 입력하세요"
+                  placeholder="비밀번호를 입력하세요(6~15자)"
                   onChange={onChangeUserPassword}
+                  maxlength="15"
                 />
               </li>
               <li className={styles.form_input}>
                 <div className={styles.input_left}>
-                  <input type="checkbox" name="remeberId" />
+                  <input type="checkbox" name="remeberId" checked={isRemember} onChange={onChangeRemember}/>
                   <span className={styles.remeberId}>아이디 기억하기</span>
                 </div>
                 <div className={styles.input_right}>

@@ -31,10 +31,16 @@ const FindPW1 = () => {
     }
   }, [ableLoginId, ablePhone]);
 
+  var upperCase = /[A-Z]/; //대문자
+  var regKorean = /^[ㄱ-ㅎ가-힣]+$/; //한글 정규식
+  var RegExp = /[~!@#$%^&*()_+|<>?:{}]/; //특수문자 정규식
+
   const onChangeUserLoginId = (e) => {
-    setAbleLoginId(true); //일단 아이디랑 폰번호 일치하는지는 나중에 수정 예정...
     setUserLoginId(e.target.value);
+    if (((5<=e.target.value.length) && (e.target.value.length <= 12)) && !(RegExp.test(e.target.value) || upperCase.test(e.target.value)
+    || regKorean.test(e.target.value))) setAbleLoginId(true);
   };
+
 
   const onChangeUserPhone = (e) => {
     setAblePhone(false);
@@ -53,13 +59,11 @@ const FindPW1 = () => {
     setAblePhone(false);
     setCertificateNumber(e.target.value);
 
-    console.log(e.target.value.length);
-
     if (isNaN(e.target.value)) {
       alert("숫자를 입력해주세요");
       onResetCertificateNumber();
     } else if (e.target.value === "") setCertificateNumColor("#666");
-    else if(e.target.value.length === 6){
+    else if (e.target.value.length === 6) {
       setCertificateNumColor("#FD6C1D");
     }
   };
@@ -70,22 +74,45 @@ const FindPW1 = () => {
 
   //인증번호 발송
   const sendSns = () => {
-    if (snsButtonColor === "#FD6C1D") {
-      http
-        .post("v1/auth?phoneNumber=" + userPhone)
-        .then((res) => {
-          if (res.data.status === "success")
-            alert("인증번호가 발송되었습니다.");
-          else alert("인증번호 발송이 실패했습니다.");
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+
+    if (ablePhone) {
+      alert("이미 본인인증이 되었습니다.");
+      return;
     }
+
+    if (snsButtonColor === "#FD6C1D") {
+      //인증번호 발송 전 아이디와 전화번호가 일치하는 유저인지 확인
+      http.get(`v1/users/${userLoginId}/${userPhone}`)
+      .then((res) => {
+        if(res.data.data === null){
+          alert("존재하지 않는 회원입니다.");
+          return;
+        }else{
+          http
+          .post("v1/auth?phoneNumber=" + userPhone)
+          .then((res) => {
+            if (res.data.status === "success")
+              alert("인증번호가 발송되었습니다.");
+            else alert("인증번호 발송이 실패했습니다.");
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    } else alert("휴대번호 형식이 올바르지 않습니다");
   };
 
   //백에서 인증번호 비교
   const certificate = () => {
+    if (ablePhone) {
+      alert("이미 본인인증이 되었습니다.");
+      return;
+    }
+
     if (certificateNumColor === "#FD6C1D") {
       http
         .get("v1/auth/" + certificateNumber)
@@ -110,8 +137,9 @@ const FindPW1 = () => {
           userLoginId: userLoginId,
         },
       });
-    }else{
-      if(!ablePhone) alert("본인 인증을 완료해주세요");
+    } else {
+      if (!ableLoginId) alert("아이디 형식이 올바르지 않습니다");
+      else if (!ablePhone) alert("본인 인증을 완료해주세요");
       else alert("모든 입력폼을 작성해주세요");
     }
   };
@@ -132,9 +160,10 @@ const FindPW1 = () => {
                   className={styles.input_text}
                   type="text"
                   name="userLoginId"
-                  placeholder="가입한 아이디를 입력하세요"
+                  placeholder="가입한 아이디를 입력하세요(5~12자)"
                   value={userLoginId}
                   onChange={onChangeUserLoginId}
+                  maxlength="12"
                 />
               </li>
               <li className={styles.form_input}>
@@ -148,7 +177,7 @@ const FindPW1 = () => {
                   className={styles.input_text_select}
                   type="text"
                   name="userPhone"
-                  placeholder="ex)010-7123-1815"
+                  placeholder="예)010-7123-1815"
                   onChange={onChangeUserPhone}
                   value={userPhone}
                   maxlength="13"

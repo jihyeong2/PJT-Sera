@@ -43,7 +43,7 @@ def selectItemTag(item_id, connect, curs):
     return sorted(result)
 
 def selectDibs(user_id, item_id, connect, curs):
-    query = """SELECT dibs_id FROM dibs WHERE user_id=1=%s AND item_id=%s"""
+    query = """SELECT dibs_id FROM dibs WHERE user_id=%s AND item_id=%s"""
     curs.execute(query, (user_id,item_id))
     tags = curs.fetchone()
     result = True

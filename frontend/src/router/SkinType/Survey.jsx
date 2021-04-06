@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Logo from '../../components/common/Logo/Logo';
 import clock from '../../assets/clock.png';
 import report from '../../assets/report.png';
@@ -12,6 +12,8 @@ import setSkin from '../../service/skin';
 import {update} from '../../actions/index';
 import { useHistory } from 'react-router';
 import {connect} from 'react-redux';
+import TopButton from '../../components/common/Button/TopButton/TopButton';
+
 const Survey = ({user,skin,update}) => {
   const questions = [
     {
@@ -195,6 +197,7 @@ const Survey = ({user,skin,update}) => {
       ]
     },
   ];
+  const [isScroll,setIsScroll] = useState(false);
   const [surveyScores, setSurveyScores] = useState(new Array(20).fill(-1));
   const [pageNum, setPageNum] = useState(0);
   const history = useHistory();
@@ -305,15 +308,31 @@ const Survey = ({user,skin,update}) => {
       }
     )
   };
+  const scrollEvent = useCallback(()=>{
+    if(window.scrollY>0){
+      setIsScroll(true);
+    } else{
+      setIsScroll(false);
+    }
+  },[]);  
   useEffect(()=>{
     window.scrollTo(0,0);
+    window.addEventListener('scroll', scrollEvent, true);
     return () => {
       const zero = 0;
       const arr = new Array(20).fill(-1);
       setPageNum(zero);
       setSurveyScores(arr);
+      window.removeEventListener('scroll', scrollEvent, true);
     }
-  },[])
+  },[]);
+  const onClickTopButton = () => {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  };  
   return(
     <div style={{position:'relative', paddingBottom:'180px', minHeight:"100vh"}}>
       <div className={styles.container}>
@@ -379,6 +398,9 @@ const Survey = ({user,skin,update}) => {
           {pageNum == 3 && <button onClick={onSubmit} className={styles.btn_next}>진단하기 &gt;&gt;</button>}
         </div>
       </div>
+      {
+        isScroll && <TopButton onClick={onClickTopButton}/>
+      }
       <Footer/>
     </div>
   );

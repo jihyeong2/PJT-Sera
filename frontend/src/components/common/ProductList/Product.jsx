@@ -11,7 +11,6 @@ const Product = ({user,product, handleHeart, index, handleHeart2, productsKey2})
       handleHeart2(productsKey2,product.item_id,index);
     }
     else {
-      console.log('b');
       handleHeart(product.item_id, index);
     }
   };

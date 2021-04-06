@@ -18,7 +18,6 @@ import TopButton from '../../components/common/Button/TopButton/TopButton';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -49,6 +48,7 @@ function a11yProps(index) {
   };
 }
 const Result = ({user,skin}) => {
+  console.log(user.userId);
   const history=useHistory();
   const [value, setValue] = useState(0);
   const [value2, setValue2] = useState(0);
@@ -56,9 +56,6 @@ const Result = ({user,skin}) => {
   const [currTab2, setCurrTab2] = useState(1);
   const [products1, setProducts1] = useState([]);
   const [products2, setProducts2] = useState([]);
-  const [products3, setProducts3] = useState([]);
-  const [products4, setProducts4] = useState([]);
-  console.log(products1);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -154,82 +151,6 @@ const Result = ({user,skin}) => {
       )
     }
   }
-<<<<<<< HEAD
-  const onHandleHeart3 = (item_id,idx) => {
-    if(!products3[idx].dibs){ // 좋아요
-      setLike(
-        user.userId,
-        item_id,
-        (res)=>{
-          const tmp = products3.map(product => {
-            if(product.item_id != item_id) return product;
-            else return {...product, dibs: true, dibs_cnt: product.dibs_cnt+1};
-          })
-          setProducts3(tmp);
-        },
-        (err)=>{
-          console.error(err);
-        }
-      )
-    } else{ // 싫어요
-      setHate(
-        user.userId,
-        item_id,
-        (res)=>{
-          const tmp = products3.map(product => {
-            if(product.item_id != item_id) return product;
-            else return {...product, dibs: false, dibs_cnt: product.dibs_cnt-1};
-          })
-          setProducts3(tmp);
-        },
-        (err)=>{
-          console.error(err);
-        }
-      )
-    }
-  }
-  const onHandleHeart4 = (item_id,idx) => {
-    if(!products4[idx].dibs){ // 좋아요
-      setLike(
-        user.userId,
-        item_id,
-        (res)=>{
-          const tmp = products4.map(product => {
-            if(product.item_id != item_id) return product;
-            else return {...product, dibs: true, dibs_cnt: product.dibs_cnt+1};
-          })
-          setProducts4(tmp);
-        },
-        (err)=>{
-          console.error(err);
-        }
-      )
-    } else{ // 싫어요
-      setHate(
-        user.userId,
-        item_id,
-        (res)=>{
-          const tmp = products4.map(product => {
-            if(product.item_id != item_id) return product;
-            else return {...product, dibs: false, dibs_cnt: product.dibs_cnt-1};
-          })
-          setProducts4(tmp);
-        },
-        (err)=>{
-          console.error(err);
-        }
-      )
-    }
-  }
-  const onClickTopButton = () =>{
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: 'smooth'
-    });
-  }
-=======
->>>>>>> develop
   useEffect(()=>{
     const a = document.querySelectorAll('.MuiTabs-flexContainer');
     a[1].style.cssText="justify-content: center;"
@@ -251,7 +172,14 @@ const Result = ({user,skin}) => {
         console.error(err);
       }
     )
-  },[])
+  },[]);
+  const onClickTopButton = () => {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  };
   return(
     <div style={{position:'relative', paddingBottom:'180px', minHeight:"100vh"}}>
       <div className={styles.container}>
@@ -376,7 +304,7 @@ const Result = ({user,skin}) => {
         </div>
       </div>
       {
-        window.scrollY>0 && <TopButton onClick={onClickTopButton}/>
+        window.scrollY>10 && <TopButton onClick={onClickTopButton}/>
       }
       <Footer/>
     </div>

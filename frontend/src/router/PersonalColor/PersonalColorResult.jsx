@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useState, useEffect} from 'react';
 import styles from './PersonalColorResult.module.css';
 import Logo from '../../components/common/Logo/Logo';
 import Navbar from '../../components/common/Navbar/Navbar';
@@ -8,14 +8,37 @@ import { Grid } from '@material-ui/core';
 import BeautyTip from '../../components/common/BeautyTip/BeautyTip';
 import ColorPalette from '../../components/common/Pallette/ColorPalette';
 import { useHistory } from 'react-router';
+import TopButton from '../../components/common/Button/TopButton/TopButton';
+
 const PersonalColorResult = ({user,color}) => {
   const history = useHistory();
+  const [isScroll,setIsScroll] = useState(false);
   const onClickReset = () => {
     history.push('/personal_color');
   }
   const onClickFinish = () => {
     history.push('/');
-  }  
+  }
+  const scrollEvent = useCallback(()=>{
+    if(window.scrollY>0){
+      setIsScroll(true);
+    } else{
+      setIsScroll(false);
+    }
+  },[]);  
+  useEffect(()=>{
+    window.addEventListener('scroll', scrollEvent, true);
+    return () => {
+      window.removeEventListener('scroll', scrollEvent, true);
+    }
+  });
+  const onClickTopButton = () => {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  };      
   return (
     <div style={{position:'relative', paddingBottom:'180px', minHeight:"100vh"}}>
       <div className={styles.container}>
@@ -87,6 +110,9 @@ const PersonalColorResult = ({user,color}) => {
           <button onClick={onClickFinish} className={styles.finish_btn}>완료</button>
         </div>
       </div>
+      {
+        isScroll && <TopButton onClick={onClickTopButton}/>
+      }      
       <Footer/>
     </div>
   ) 

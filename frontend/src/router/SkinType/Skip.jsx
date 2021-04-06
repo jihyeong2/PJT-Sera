@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import styles from './Skip.module.css';
 import {connect} from 'react-redux';
 import SkinHexagon from '../../components/common/SkinHexagon/SkinHexagon';
@@ -11,9 +11,11 @@ import setSkin from '../../service/skin';
 import Swal from 'sweetalert2';
 import {update} from '../../actions/index';
 import { useHistory } from 'react-router';
+import TopButton from '../../components/common/Button/TopButton/TopButton';
 
 const Skip = ({user,skin,update}) => {
   const [currTag,setCurrTag] = useState("OSPT");
+  const [isScroll,setIsScroll] = useState(false);
   const history = useHistory();
   const onClickType = (tag) => {
     setCurrTag(tag);
@@ -59,8 +61,27 @@ const Skip = ({user,skin,update}) => {
         history.push("/skin");
       }
     );
-
-  }
+  };
+  const scrollEvent = useCallback(()=>{
+    if(window.scrollY>0){
+      setIsScroll(true);
+    } else{
+      setIsScroll(false);
+    }
+  },[]);  
+  useEffect(()=>{
+    window.addEventListener('scroll', scrollEvent, true);
+    return () => {
+      window.removeEventListener('scroll', scrollEvent, true);
+    }
+  });
+  const onClickTopButton = () => {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  };  
   return(
     <div style={{position:'relative', paddingBottom:'180px', minHeight:"100vh"}}>
       <div className={styles.container}>
@@ -89,6 +110,9 @@ const Skip = ({user,skin,update}) => {
           <button onClick={onSubmitSkin} className={styles.submit_btn}>선택 완료</button>
         </div>
       </div>
+      {
+        isScroll && <TopButton onClick={onClickTopButton}/>
+      }
       <Footer/>
     </div>
   );

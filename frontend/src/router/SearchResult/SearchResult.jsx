@@ -14,6 +14,7 @@ import { getSearchAll, getSearchCategory } from '../../service/search';
 import {setLike, setHate} from '../../service/product';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Footer from '../../components/common/Footer/Footer';
+import TopButton from '../../components/common/Button/TopButton/TopButton';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -50,39 +51,39 @@ const SearchResult = ({user}) => {
   const params=useParams();
   const [currTab,setCurrTab] = useState(1);
   const [idx,setIdx] = useState(12);
-  const [idx2,setIdx2] = useState(12);
+  const [idx2,setIdx2] = useState(4);
+  // const [idx3,setIdx3] = useState(4);
   const [products,setProducts] = useState([]);
   const [productsKeys2, setProductsKeys2] = useState([]);
   const [products2,setProducts2] = useState([]);
   const [value, setValue] = useState(0);
-  // console.log(products);
-  // console.log(products2);
-  // console.log(productsKeys2)
-  // console.log(value);
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-  const infinityScroll = useCallback(()=>{
+  const [isScroll,setIsScroll] = useState(false);  
+  const ScrollEvent = useCallback(()=>{
+    if(window.scrollY>0){
+      setIsScroll(true);
+    } else{
+      setIsScroll(false);
+    }    
     let scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
     let scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
     let clientHeight = document.documentElement.clientHeight;
-    if(currTab==1){ // 상품명 결과 탭일 때 무한스크롤
+    if(value===0){ // 상품명 결과 탭일 때 무한스크롤
       if (scrollTop + clientHeight + 2 >= scrollHeight){
-        // console.log(idx);
-        setIdx(idx+12);
-        setProducts(products.concat(data.slice(idx,idx+12)));
+        const tmp=idx+12;
+        setIdx(tmp);
+        // setProducts(products.concat(data.slice(idx,idx+12)));
       }
     }else{ // 성분명 결과 탭일 때 무한스크롤
       if (scrollTop + clientHeight + 2 >= scrollHeight){
-        setIdx2(idx2+12);
-        setProducts2(products2.concat(data.slice(idx2,idx2+12)));
+        const tmp=idx2+4;
+        setIdx2(tmp);
+        // setProducts2(products2.concat(data.slice(idx2,idx2+12)));
       }
     }
-  },[idx,products,idx2,products2]);
-
+  },[value,idx,idx2]);  
   useEffect(() => {
-    console.log('aa');
-    // window.addEventListener('scroll', infinityScroll, true);
+    window.addEventListener('scroll', ScrollEvent);
+    console.log('effect')
     if(params.category==="전체"){
       getSearchAll(
         user.userId,
@@ -103,7 +104,6 @@ const SearchResult = ({user}) => {
         params.category,
         params.name,
         (res)=>{
-          // console.log(res);
           setProducts(res.data.item_list.item_name_list);
           setProducts2(Object.values(res.data.item_list.item_element_list));
           setProductsKeys2(Object.keys(res.data.item_list.item_element_list));         
@@ -113,9 +113,14 @@ const SearchResult = ({user}) => {
         }
       )
     }
-    // return () => window.removeEventListener('scroll', infinityScroll,true);
-  },[params]);
-
+    return () => window.removeEventListener('scroll', ScrollEvent);
+  },[params]);  
+  // console.log(value);
+  // console.log(idx,idx2);
+  // console.log(products.length,products2.length);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
   const onClick = (e) => {
     if(e.target.innerText==='상품명 결과'){
       setCurrTab(1);
@@ -196,7 +201,14 @@ const SearchResult = ({user}) => {
         }
       )
     }
-  }
+  };
+  const onClickTopButton = () => {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  };  
   return (
     <div style={{position:'relative', paddingBottom:'180px', minHeight:'100vh'}}>
       <div className={styles.container}>
@@ -207,16 +219,16 @@ const SearchResult = ({user}) => {
         </div>
         <AppBar position="static" style={{ background: '#FFFFFF' , color: '#333333', boxShadow: 'none'}}>
           <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-            <Tab onClick={onClick} label="상품명 결과" {...a11yProps(0)} />
-            <Tab onClick={onClick} label="성분명 결과" {...a11yProps(1)} />
+            <Tab label="상품명 결과" {...a11yProps(0)} />
+            <Tab label="성분명 결과" {...a11yProps(1)} />
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
-          <ProductList products={products} handleHeart={onHandleHeart}/>
+          <ProductList products={products.slice(0,idx)} handleHeart={onHandleHeart}/>
         </TabPanel>
         <TabPanel value={value} index={1}>
           {
-            products2.length>0 && productsKeys2.map((key,idx)=>{
+            products2.length>0 && productsKeys2.slice(0,idx2).map((key,idx)=>{
               return(
                 <div key={key} className={styles.element_box}>
                   <div className={styles.element_title}>
@@ -234,6 +246,9 @@ const SearchResult = ({user}) => {
           }
         </TabPanel>
       </div>
+      {
+        isScroll && <TopButton onClick={onClickTopButton}/>
+      }
       <Footer/>
     </div>
   );

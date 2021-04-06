@@ -14,7 +14,7 @@ def personalColorTest(request):
     file = request.data.get('file')
     user_id = request.data.get('user_id')
     user_id = int(user_id)
-
+    s3_client = boto3.client('s3', aws_access_key_id= AWS_ACCESS_KEY_ID, aws_secret_access_key= AWS_SECRET_ACCESS_KEY)
     entries = s3_client.list_objects_v2(Bucket=AWS_STORAGE_BUCKET_NAME, Prefix='userImg/')
     for entry in entries['Contents']:
         key = entry['Key']
@@ -32,9 +32,11 @@ def personalColorTest(request):
     try:
         result = main(uri)
         result = result.split('톤')[0]
+        connect, curs = connectMySQL()
         query = """UPDATE user SET personal_color=%s, user_img=%s WHERE user_id=%s"""
         curs.execute(query, (result, uri, user_id))
         connect.commit()
+        connect.close()
         result_url = uri
     except:
         result = False

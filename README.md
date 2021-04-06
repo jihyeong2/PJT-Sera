@@ -197,7 +197,7 @@ https://blog.ull.im/engineering/2019/03/10/logs-on-git.html 대로 메시지
 
 ![슬라이드11](/uploads/b9753f141dea24511826f2224a0f5b0e/슬라이드11.PNG)
 
-![슬라이드12](/uploads/d948827154f162368646e0cf15c7fcea/슬라이드12.PNG)
+![슬라이드12](/uploads/4f7bcdb05ce792db8a0bf55b830332d8/슬라이드12.png)
 
 ![슬라이드13](/uploads/c3547b039f5c179b57392720526cde8f/슬라이드13.PNG)
 

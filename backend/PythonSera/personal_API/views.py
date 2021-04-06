@@ -32,9 +32,11 @@ def personalColorTest(request):
     try:
         result = main(uri)
         result = result.split('톤')[0]
+        connect, curs = connectMySQL()
         query = """UPDATE user SET personal_color=%s, user_img=%s WHERE user_id=%s"""
         curs.execute(query, (result, uri, user_id))
         connect.commit()
+        connect.close()
         result_url = uri
     except:
         result = False

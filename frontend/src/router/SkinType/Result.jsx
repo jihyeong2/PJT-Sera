@@ -14,10 +14,10 @@ import { useHistory } from 'react-router';
 import {getHelpfulProducts,getCautionProducts,setHate,setLike} from '../../service/product';
 import dropGreen from '../../assets/waterdrop_green.png';
 import dropRed from '../../assets/waterdrop_red.png';
+import TopButton from '../../components/common/Button/TopButton/TopButton';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -48,6 +48,7 @@ function a11yProps(index) {
   };
 }
 const Result = ({user,skin}) => {
+  console.log(user.userId);
   const history=useHistory();
   const [value, setValue] = useState(0);
   const [value2, setValue2] = useState(0);
@@ -55,9 +56,6 @@ const Result = ({user,skin}) => {
   const [currTab2, setCurrTab2] = useState(1);
   const [products1, setProducts1] = useState([]);
   const [products2, setProducts2] = useState([]);
-  const [products3, setProducts3] = useState([]);
-  const [products4, setProducts4] = useState([]);
-  console.log(products1);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -174,7 +172,14 @@ const Result = ({user,skin}) => {
         console.error(err);
       }
     )
-  },[])
+  },[]);
+  const onClickTopButton = () => {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  };
   return(
     <div style={{position:'relative', paddingBottom:'180px', minHeight:"100vh"}}>
       <div className={styles.container}>
@@ -298,6 +303,9 @@ const Result = ({user,skin}) => {
           <button onClick={onClickFinish} className={styles.finish_btn}>완료</button>
         </div>
       </div>
+      {
+        window.scrollY>10 && <TopButton onClick={onClickTopButton}/>
+      }
       <Footer/>
     </div>
   );

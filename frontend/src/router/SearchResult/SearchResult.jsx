@@ -57,8 +57,8 @@ const SearchResult = ({user}) => {
   const [value, setValue] = useState(0);
   // console.log(products);
   // console.log(products2);
-  console.log(productsKeys2)
-  console.log(value);
+  // console.log(productsKeys2)
+  // console.log(value);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };

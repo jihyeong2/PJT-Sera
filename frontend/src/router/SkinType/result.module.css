@@ -38,7 +38,7 @@
   display: flex;
   justify-content: space-around;
   border: 1px solid color-grey-2;
-  padding: 0.5em;
+  padding: 1em;
 }
 .skininfo_left {
   display: flex;
@@ -105,7 +105,8 @@
   color: color-green-3;
 }
 .skin_desc_box {
-  padding: 0.5em;
+  padding: 1em;
+  margin: auto 0;
 }
 .skin_desc_title {
   font-size: font-size-20;
@@ -161,9 +162,7 @@
 }
 .elements_box {
   width: 90%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  max-height: 450px;
   margin: auto;
   overflow-y: scroll;
 }
@@ -172,6 +171,7 @@
   justify-content: space-around;
   align-items: center;
   padding: 0.5em;
+  margin: 0 1em;
   border-bottom: 1px solid color-grey-2;
 }
 .img_box {

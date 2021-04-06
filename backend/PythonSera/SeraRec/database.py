@@ -1,5 +1,4 @@
 import os, json, pymysql, re
-from PythonSera.settings import connect, curs
 path = '../crawling/data/GP/output/'
 
 def loadJsonItem():
@@ -402,6 +401,12 @@ def insertItemTag():
             curs.execute(query, (item_id[0], tag_id[0]))
         connect.commit()
         print(str(i+1)+'/'+str(len(items))+' '+str(item['id']))
+
+def connectMySQL():
+    connect = pymysql.connect(host='sera.czh6yt8bx4v6.ap-northeast-2.rds.amazonaws.com', user='admin', password='ssafyB202SERA', db='seraDB', charset='utf8mb4')
+    curs = connect.cursor()
+
+    return connect, curs
 
 if __name__ == '__main__':
     # insertCategories()

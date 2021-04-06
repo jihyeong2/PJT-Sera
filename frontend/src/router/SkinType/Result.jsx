@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react';
+import React, { useCallback, useEffect, useState} from 'react';
 import styles from './result.module.css';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
@@ -14,6 +14,7 @@ import {getHelpfulProducts,getCautionProducts,setHate,setLike} from '../../servi
 import dropGreen from '../../assets/waterdrop_green.png';
 import dropRed from '../../assets/waterdrop_red.png';
 import TopButton from '../../components/common/Button/TopButton/TopButton';
+import Loader from '../../components/common/Loader/Loader';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -47,33 +48,18 @@ function a11yProps(index) {
   };
 }
 const Result = ({user,skin}) => {
-  console.log(user.userId);
   const history=useHistory();
+  const [isScroll,setIsScroll] = useState(false);
   const [value, setValue] = useState(0);
   const [value2, setValue2] = useState(0);
-  const [currTab, setCurrTab] = useState(1);
-  const [currTab2, setCurrTab2] = useState(1);
   const [products1, setProducts1] = useState([]);
   const [products2, setProducts2] = useState([]);
+  const [isLoading,setIsLoading] = useState(true);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   const handleChange2 = (event, newValue) => {
     setValue2(newValue);
-  };
-  const onClick = (e) => {
-    if(e.target.innerText==='상품명 결과'){
-      setCurrTab(currTab+1);
-    } else{
-      setCurrTab(currTab+1);
-    }
-  };
-  const onClick2 = (e) => {
-    if(e.target.innerText==='상품명 결과'){
-      setCurrTab(currTab+1);
-    } else{
-      setCurrTab(currTab+1);
-    }
   };
   const onClickPlus = () => {
     history.push('/list');
@@ -150,27 +136,42 @@ const Result = ({user,skin}) => {
       )
     }
   }
+  const scrollEvent = useCallback(()=>{
+    if(window.scrollY>0){
+      setIsScroll(true);
+    } else{
+      setIsScroll(false);
+    }
+  },[]);
   useEffect(()=>{
     const a = document.querySelectorAll('.MuiTabs-flexContainer');
     a[1].style.cssText="justify-content: center;"
     getHelpfulProducts(
       user.userId,
       (res)=>{
+        setIsLoading(false);
         setProducts1(res.data.item_list.slice(0,4));
       },
       (err)=>{
+        setIsLoading(false);
         console.error(err);
       }
     )
-    // getCautionProducts(
-    //   user.userId,
-    //   (res)=>{
-    //     setProducts2(res.data.item_list.slice(0,4));
-    //   },
-    //   (err)=>{
-    //     console.error(err);
-    //   }
-    // )
+    getCautionProducts(
+      user.userId,
+      (res)=>{
+        setIsLoading(false);
+        setProducts2(res.data.item_list.slice(0,4));
+      },
+      (err)=>{
+        setIsLoading(false);
+        console.error(err);
+      }
+    )
+    window.addEventListener('scroll', scrollEvent, true);
+    return () => {
+      window.removeEventListener('scroll', scrollEvent, true);
+    }
   },[]);
   const onClickTopButton = () => {
     window.scroll({
@@ -181,6 +182,7 @@ const Result = ({user,skin}) => {
   };
   return(
     <div style={{position:'relative', paddingBottom:'180px', minHeight:"100vh"}}>
+      <Loader open={isLoading}/>
       <div className={styles.container}>
         <Navbar/>
         <Logo type={1}/>
@@ -245,15 +247,15 @@ const Result = ({user,skin}) => {
           <div className={styles.items_box}>
             <AppBar position="static" style={{ background: '#FFFFFF' , color: '#333333', boxShadow: 'none', margin: '0',}}>
               <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-                <Tab onClick={onClick} label="BEST 성분" {...a11yProps(0)} />
-                <Tab onClick={onClick} label="WORST 성분" {...a11yProps(1)} />
+                <Tab label="BEST 성분" {...a11yProps(0)} />
+                <Tab label="WORST 성분" {...a11yProps(1)} />
               </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
               <div className={styles.elements_box}>
-                {skin.type[user.skinId.skinType].good.map(item => {
+                {skin.type[user.skinId.skinType].good.map((item,idx) => {
                   return(
-                    <div key={item} className={styles.element_box}>
+                    <div key={`${idx}_good`} className={styles.element_box}>
                       <div className={styles.img_box}>
                         <img className={styles.img} src={dropGreen} alt=""/>
                       </div>
@@ -265,9 +267,9 @@ const Result = ({user,skin}) => {
             </TabPanel>
             <TabPanel value={value} index={1}>
               <div className={styles.elements_box}>
-                {skin.type[user.skinId.skinType].bad.map(item => {
+                {skin.type[user.skinId.skinType].bad.map((item,idx) => {
                   return(
-                    <div key={item} className={styles.element_box}>
+                    <div key={`${idx}_bad`} className={styles.element_box}>
                       <div className={styles.img_box}>
                         <img className={styles.img} src={dropRed} alt=""/>
                       </div>
@@ -282,8 +284,8 @@ const Result = ({user,skin}) => {
         <div className={styles.recommends_box}>
           <AppBar position="static" style={{ background: '#FFFFFF' , color: '#333333', boxShadow: 'none', margin: '0',}}>
             <Tabs value={value2} onChange={handleChange2} aria-label="simple tabs example">
-              <Tab onClick={onClick2} label="맞는 상품" {...a11yProps(0)} />
-              <Tab onClick={onClick2} label="안 맞는 상품" {...a11yProps(1)} />
+              <Tab label="맞는 상품" {...a11yProps(0)} />
+              <Tab label="안 맞는 상품" {...a11yProps(1)} />
             </Tabs>
           </AppBar>
           <div className={styles.recommends_desc_box}>
@@ -303,7 +305,7 @@ const Result = ({user,skin}) => {
         </div>
       </div>
       {
-        window.scrollY>10 && <TopButton onClick={onClickTopButton}/>
+        isScroll && <TopButton onClick={onClickTopButton}/>
       }
       <Footer/>
     </div>

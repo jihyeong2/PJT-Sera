@@ -140,5 +140,3 @@ AWS_REGION = "ap-northeast-2" # AWS 지역
 AWS_STORAGE_BUCKET_NAME = "myserabucket" # 버킷 이름
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (
     AWS_STORAGE_BUCKET_NAME, AWS_REGION)
-
-s3_client = boto3.client('s3', aws_access_key_id= AWS_ACCESS_KEY_ID, aws_secret_access_key= AWS_SECRET_ACCESS_KEY)

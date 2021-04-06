@@ -14,7 +14,7 @@ def personalColorTest(request):
     file = request.data.get('file')
     user_id = request.data.get('user_id')
     user_id = int(user_id)
-
+    s3_client = boto3.client('s3', aws_access_key_id= AWS_ACCESS_KEY_ID, aws_secret_access_key= AWS_SECRET_ACCESS_KEY)
     entries = s3_client.list_objects_v2(Bucket=AWS_STORAGE_BUCKET_NAME, Prefix='userImg/')
     for entry in entries['Contents']:
         key = entry['Key']

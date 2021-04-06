@@ -122,7 +122,7 @@ def loadCategory():
 
 def insertItems():
     items = loadJsonItem()
-    
+    connect, curs = connectMySQL()
     query = """DELETE FROM item"""
     curs.execute(query)
     connect.commit()
@@ -141,30 +141,32 @@ def insertItems():
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
         curs.execute(query, (item['id'], item['name'], item['image'], item['brand'], category_id[0], item['colors'], item['volume'], item['price'], item['discription'], 0))
         print(str(i+1)+'/'+str(len(items)))
-        
-    connect.commit()
+        connect.commit()
+    connect.close()
 
 def insertCategories():
     category_dic = loadCategory()
+    connect, curs = connectMySQL()
     for category in category_dic:
         query = """INSERT INTO category (category_large, category_middle, category_small)
                 VALUES(%s, %s, %s) """
-        curs.execute(query, (category[0], category[1], category[2]))        
-    connect.commit()
+        curs.execute(query, (category[0], category[1], category[2]))
+        connect.commit()        
+    connect.close()
 
 def insertSkinType():
     skinType = loadSkinType()
-
+    connect, curs = connectMySQL()
     for skin in skinType:
         query = """INSERT INTO skin (skin_type)
                 VALUES(%s) """
         curs.execute(query, (skin['skinType']))
-
-    connect.commit()
+        connect.commit()
+    connect.close()
 
 def insertElement():
     elements = loadElement()
-
+    connect, curs = connectMySQL()
     query = """DELETE FROM element"""
     curs.execute(query)
     connect.commit()
@@ -175,11 +177,12 @@ def insertElement():
         curs.execute(query, (e[0], e[1]['english'], e[1]['purpose'], e[1]['level']))
         print(str(i+1)+'/'+str(len(elements)))
 
-    connect.commit()
+        connect.commit()
+    connect.close()
 
 def insertItemByElement():
     items = loadJsonItem()
-
+    connect, curs = connectMySQL()
     # query = """DELETE FROM item_element"""
     # curs.execute(query)
     # connect.commit()
@@ -251,6 +254,7 @@ def insertItemByElement():
                     query = """INSERT INTO item_element (item_id, element_id)
                             VALUES(%s, %s) """
                     curs.execute(query, (item_id[0], element_id[0]))
+                    connect.commit()
                 except pymysql.err.IntegrityError as e:
                     print(e)
                     continue
@@ -258,12 +262,12 @@ def insertItemByElement():
                 print('성분을 찾을 수 없음 ' + str(item_id[0]) + ' ' + e['korean'])
                 return
         print(str(i+1)+'/'+str(len(items))+' '+str(item_id[0]))
-        connect.commit()
+    connect.close()
         
 
 def insertHelpful():
     skins = loadSkinType()
-
+    connect, curs = connectMySQL()
     for skin in skins:
         query = """SELECT skin_id FROM skin WHERE skin_type = %s"""
         curs.execute(query, (skin['skinType']))
@@ -312,14 +316,15 @@ def insertHelpful():
                     query = """INSERT INTO helpful (skin_id, element_id)
                             VALUES(%s, %s) """
                     curs.execute(query, (skin_id[0], element_id[0]))
+                    connect.commit()
                 except pymysql.err.IntegrityError as e:
                     print(e)
                     continue
-        connect.commit()
+    connect.close()
 
 def insertCaution():
     skins = loadSkinType()
-
+    connect, curs = connectMySQL()
     for skin in skins:
         query = """SELECT skin_id FROM skin WHERE skin_type = %s"""
         curs.execute(query, (skin['skinType']))
@@ -368,13 +373,15 @@ def insertCaution():
                     query = """INSERT INTO caution (skin_id, element_id)
                             VALUES(%s, %s) """
                     curs.execute(query, (skin_id[0], element_id[0]))
+                    connect.commit()
                 except pymysql.err.IntegrityError as e:
                     print(e)
                     continue
-        connect.commit()
+    connect.close()
 
 def insertTag():
     items = loadJsonItem()
+    connect, curs = connectMySQL()
     tags = set()
     for item in items:
         [tags.add(t) for t in item['tags']]
@@ -383,10 +390,12 @@ def insertTag():
                 VALUES (%s)"""
     for t in tags:
         curs.execute(query,(t))
-    connect.commit()
+        connect.commit()
+    connect.close()
 
 def insertItemTag():
     items = loadJsonItem()
+    connect, curs = connectMySQL()
     query = """INSERT INTO item_tag (item_id, tag_id)
             VALUES (%s,%s)"""
     for i, item in enumerate(items[28022:]):
@@ -399,8 +408,9 @@ def insertItemTag():
             curs.execute(q, t)
             tag_id = curs.fetchone()
             curs.execute(query, (item_id[0], tag_id[0]))
-        connect.commit()
-        print(str(i+1)+'/'+str(len(items))+' '+str(item['id']))
+            connect.commit()
+        print(str(i + 1) + '/' + str(len(items)) + ' ' + str(item['id']))
+    connect.close()
 
 def connectMySQL():
     connect = pymysql.connect(host='sera.czh6yt8bx4v6.ap-northeast-2.rds.amazonaws.com', user='admin', password='ssafyB202SERA', db='seraDB', charset='utf8mb4')

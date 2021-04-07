@@ -13,6 +13,17 @@ import Swal from 'sweetalert2';
 import TopButton from '../../components/common/Button/TopButton/TopButton';
 
 const PersonalColor = ({user,color}) => {
+  let historys = useHistory();
+  if(user == null){
+    Swal.fire({
+      icon: 'error',
+      text: '로그인 후 이용해주세요',
+      confirmButtonText: '확인',
+    }).then(() => {
+      historys.push("/login");
+    })
+  }
+
   const [prevImg, setPrevImg] = useState(profile);
   const [imgFile, setImgFile] = useState(null);
   const [isScroll,setIsScroll] = useState(false);

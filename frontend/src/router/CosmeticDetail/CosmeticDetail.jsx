@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { Component, useEffect, useState, useCallback } from 'react';
 import DetailLeft from '../../components/CosmeticDetail/detail/detail_left';
 import DetailRight from '../../components/CosmeticDetail/detail/detail_right';
 import Youtube from '../../components/CosmeticDetail/youtube/youtube_list';
@@ -20,7 +20,8 @@ import http from "../../http-common.js";
 import httpd from "../../http-django";
 import {connect} from 'react-redux';
 import { useParams } from 'react-router';
-
+import TopButton from  '../../components/common/Button/TopButton/TopButton';
+import Footer from '../../components/common/Footer/Footer';
 const dstyles = (theme) => ({
   root: {
     margin: 0,
@@ -55,6 +56,7 @@ const DialogTitle = withStyles(dstyles)((props) => {
 const CosmeticDetail = ({user}) => {
     const [product, setProduct] = useState(null);
     const param = useParams();
+    const [isScroll,setIsScroll] = useState(false);
     // 아이템 가져오기 + 유튜브 불러오기 
     const getItem = () => {
       httpd({
@@ -73,13 +75,11 @@ const CosmeticDetail = ({user}) => {
               method: 'GET',
               redirect: 'follow'
             };
-            fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${res.data.item_name}&type=video&order=viewCount&maxResults=8&key=AIzaSyAIAN4fWbhQxYcuLU-cnjAGihX695m5azE`, requestOptions)
+            fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${res.data.item_name}&type=video&order=viewCount&maxResults=8&key=AIzaSyCIWCezwelvcvMD5ChmGFzuHm8BVbHOHx0`, requestOptions)
             .then(response => response.json()) // 보기좋은 json 형식
             .then(result => result.items.map(item => ({...item, id:item.id.videoId}))) // 그대로 하는데 id만 object가 아니라 videoId로 덮어주는 작업
             .then(items => setVideos(items)) // 그 비디오 아이템들로 업뎃
             .catch(error => console.log('error', error));
-            console.log("dha?")
-          console.log(product);
           })
           .catch(err=>{
               console.log("에러");
@@ -95,7 +95,7 @@ const CosmeticDetail = ({user}) => {
         setSelectedVideo(video); // 선택된 비디오로 업뎃 
     };
 
-    // 리뷰 가져오기 
+    // 리뷰 가져오기 + 점수계산
     const [review, setReview] = useState([]);
 
     const getReview = () => {
@@ -110,6 +110,7 @@ const CosmeticDetail = ({user}) => {
               console.log("리뷰 리스트 데이터");
             console.log(res.data.data);
             setReview(res.data.data);
+            getGrade(res.data.data);
           })
           .catch(err=>{
               console.log("리뷰 리스트 에러");
@@ -139,17 +140,70 @@ const CosmeticDetail = ({user}) => {
           })
     }
 
-    // const onCreateReview = (val) => {
-      
-    // }
-    // const onChangeReview = (reviewId,val) => {
+    const [avg, setAvg] = useState(0); //리뷰 평점
+    const [grade, setGrade] = useState({ //리뷰차트
+      star_5: 0,
+      star_4: 0,
+      star_3: 0,
+      star_2: 0,
+      star_1: 0
+    })
+    const getGrade = (a) => {
+      console.log("리뷰dd데이터:"+review);
+      for(var r in a){
+        setSum(sum+a[r].reviewScore);
+        console.log("for문돔"+a[r].reviewScore);
+        switch(a[r].reviewScore){
+          case 1:
+            setGrade({
+              star_1: grade.star_1++
+            })
+            break;
+          case 2:
+            setGrade({
+              star_2: grade.star_2++
+            })
+            break;
+          case 3:
+            setGrade({
+              star_3: grade.star_3++
+            })
+            break;
+          case 4:
+            setGrade({
+              star_4: grade.star_4++
+            })
+            break;
+          case 5:
+            setGrade({
+              star_5: grade.star_5++
+            })
+            break;
+        }
+      }//End 리뷰점수 추가
+  
+  
+      //평점 계산
+      setAvg(Math.round((sum/review.length),3).toFixed(1));
+      console.log("평점: "+avg);
+  
+      console.log("2점 개수: "+grade.star_2)
+    }
+  
+    const [sum, setSum] = useState(0); //리뷰 점수 합
 
-    //   set
-    // }
+    const scrollEvent = useCallback(()=>{
+      if(window.scrollY>0)  setIsScroll(true);
+      else setIsScroll(false);
+    });    
     useEffect(() => {
       getItem();
       getReview();
       getPicture();
+      window.addEventListener('scroll', scrollEvent, true);
+      return () =>{
+        window.removeEventListener('scroll', scrollEvent, true);
+      }
     }, []); // 마운트가 되었을 때만 호출
 
   const [open, setOpen] = React.useState(false);
@@ -158,10 +212,36 @@ const CosmeticDetail = ({user}) => {
     setOpen(false);
   };
   
-    const [fullWidth, setFullWidth] = React.useState(true);
+  const [fullWidth, setFullWidth] = React.useState(true);
     if(!product) return null; 
+  const handleCreateReview = () => {
+    getReview();
+  };
+  const handleModifyReview = () => {
+    getReview();
+  };
+  
+
+  const onClickTopButton = () => {
+    window.scroll({
+      top:0,
+      left:0,
+      behavior:'smooth',
+    })
+  };
+  const handleReviewGood = (id,val) => { 
+    const tmp = review.map(item=>{
+      if(item.reviewId===id){
+        if(val===0) return {...item, helpMark:val, helpCnt:item.helpCnt-1};
+        else return {...item, helpMark:val, helpCnt:item.helpCnt+1};
+      }
+      else return item;
+    })
+    setReview(tmp);
+  };
 
     return (
+      <div style={{position:'relative', paddingBottom:'180px', minHeight:'100vh'}}>
         <div className={styles.page}>
           <div className={styles.nav}>
             <Navbar/>
@@ -197,11 +277,22 @@ const CosmeticDetail = ({user}) => {
             </Grid>
             <div className={styles.bar}></div>
             <Grid item xs={12} className={styles.review}>
-                {/* <Review onCreateReview={onCreateReview}/> */}
-                <Review product={product} review={review} picture={picture} />
+                <Review 
+                  product={product} 
+                  review={review} 
+                  picture={picture} 
+                  onCreateReview={handleCreateReview} 
+                  onModifyReview={handleModifyReview}
+                  onClickReviewGood={handleReviewGood}
+                />
             </Grid>
             </Grid>
         </div>
+        {
+          isScroll && <TopButton onClick={onClickTopButton}/>
+        }
+        <Footer/>
+      </div>
     );
   }
 

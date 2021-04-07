@@ -99,7 +99,8 @@
     border-top: 1px solid color-grey-4;
 }
 .water_green_content,
-.water_red_content{
+.water_red_content,
+.water_orange_content{
     width: 55px;
     height: 55px;
 }

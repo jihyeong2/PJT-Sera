@@ -53,13 +53,7 @@ const DialogContent = withStyles((theme) => ({
     },
 }))(MuiDialogContent);
 
-// const ReviewHead = ({onCreateReview}) => {
-const ReviewHead = ({ product }) => {
-    // const [value, setValue] = React.useState(2);
-    // const onSubmit = ()=>{
-
-    //     onCreateReview(review);
-    // }
+const ReviewHead = ({ product, onCreateReview }) => {
     const history = useHistory();
 
     const [fullWidth, setFullWidth] = React.useState(true);
@@ -71,7 +65,9 @@ const ReviewHead = ({ product }) => {
     const handleClose = () => {
         setOpen(false);
     };
-
+    const handleCreateReview = () => {
+        onCreateReview();
+    };
     return (
         <div className={styles.review_head} >
             <Grid container spacing={4}>
@@ -93,7 +89,7 @@ const ReviewHead = ({ product }) => {
                             리뷰작성
                                 </DialogTitle>
                         <DialogContent dividers>
-                            <ReviewWrite product={product} />
+                            <ReviewWrite product={product} onCreateReview={handleCreateReview}/>
                         </DialogContent>
                     </Dialog>
                 </Grid>

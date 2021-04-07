@@ -94,6 +94,16 @@ const SignUp2 = () => {
 
   //인증번호 발송
   const sendSns = () => {
+    if(!ableAge){
+      Swal.fire({
+        icon: "success",
+        text: "나이를 입력해주세요",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      return;
+    }
+
     if(ablePhone){
       Swal.fire({
         icon: "success",

@@ -25,7 +25,7 @@ const Login = ({login}) => {
 
   var upperCase = /[A-Z]/; //대문자
   var regKorean =  /^[ㄱ-ㅎ가-힣]+$/; //한글 정규식
-  var RegExp =  /[~!@#$%^&*()_+|<>?:{}]/;//특수문자 정규식
+  var RegExp =  /[.~!@#$%^&*()_+|<>?:{}]/;//특수문자 정규식
 
   useEffect(() => {
     if(cookies.rememberId !== undefined){
@@ -66,13 +66,14 @@ const Login = ({login}) => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    if(userLoginId.length<5 || userLoginId.length>12){
+    if((5 > userLoginId.length || userLoginId.length > 12) || (RegExp.test(userLoginId) ||upperCase.test(userLoginId) ||regKorean.test(userLoginId))){
       Swal.fire({
         icon: "error",
         text: "아이디 형식이 올바르지 않습니다",
         showConfirmButton: false,
         timer: 2000,
       });
+      return;
     }
     if(userPassword.length<6 || userPassword.length>15){
       Swal.fire({
@@ -81,6 +82,7 @@ const Login = ({login}) => {
         showConfirmButton: false,
         timer: 2000,
       });
+      return;
     }
     if(submitBorderColor==="#666") return;
 

@@ -76,7 +76,7 @@ const SignUp1 = () => {
 
   var upperCase = /[A-Z]/; //대문자
   var regKorean = /^[ㄱ-ㅎ가-힣]+$/; //한글 정규식
-  var RegExp = /[~!@#$%^&*()_+|<>?:{}]/; //특수문자 정규식
+  var RegExp = /[.~!@#$%^&*()_+|<>?:{}]/; //특수문자 정규식
 
   //아이디 중복확인
   const checkUserLoginId = () => {
@@ -214,7 +214,7 @@ const SignUp1 = () => {
                   className={styles.input_text}
                   type="text"
                   name="userLoginId"
-                  placeholder="5~12자의 소문자,숫자,-,_만 사용가능합니다"
+                  placeholder="5~12자의 소문자,숫자만 사용가능합니다"
                   onChange={onChangeUserLoginId}
                   value={userLoginId}
                   maxlength="12"

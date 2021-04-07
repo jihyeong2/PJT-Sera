@@ -8,7 +8,6 @@ import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import {withStyles } from '@material-ui/core/styles';
-// import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,7 +17,6 @@ import {logout} from '../../../actions/index';
 import { useHistory } from 'react-router';
 
 const Navbar = ({user,logout,white}) => {
-  // console.log(white);
   const StyledTabs = withStyles({
     indicator: {
       display: 'none',
@@ -42,6 +40,10 @@ const Navbar = ({user,logout,white}) => {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    console.log(newValue);
+    if(newValue===0) history.push('/skin');
+    else if(newValue===1) history.push('/personal_color');
+    else history.push('/list');
   };
 
   // Material Toggle Menu

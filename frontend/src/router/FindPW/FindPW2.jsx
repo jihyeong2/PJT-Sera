@@ -1,51 +1,99 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./FindPW2.module.css";
 import Grid from "@material-ui/core/Grid";
 import http from "../../http-common.js";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router";
+import Swal from "sweetalert2";
 
 const FindPW2 = () => {
   const history = useHistory();
   const location = useLocation();
 
-  const userLoginId = location.state.userLoginId;//아이디
+  const userLoginId = location.state.userLoginId; //아이디
 
   const [userPassword, setUserPassword] = useState(""); //비밀번호
   const [userPassword2, setUserPassword2] = useState(""); //비밀번호 확인
 
   const [ablePassword, setAblePassword] = useState(false);
 
+  //style
+  const [submitBorderColor, setSubmitBorderColor] = useState("#666");
+  const [submitTxtColor, setSubmitTxtColor] = useState("#666");
+
   const onChangeUserPassword = (e) => {
     setAblePassword(false);
     setUserPassword(e.target.value);
-    if(userPassword2 === e.target.value && (userPassword2 !== '' && e.target.value!=='')) setAblePassword(true);
+    if (
+      userPassword2 === e.target.value &&
+      userPassword2 !== "" &&
+      e.target.value !== "" && e.target.value.length>=6 && e.target.value.length<=15
+    )
+      setAblePassword(true);
   };
 
   const onChangeUserPassword2 = (e) => {
     setAblePassword(false);
     setUserPassword2(e.target.value);
-    if(userPassword === e.target.value && (userPassword !== '' && e.target.value !== '')) setAblePassword(true);
-  }
+    if (
+      userPassword === e.target.value &&
+      userPassword !== "" &&
+      e.target.value !== "" && e.target.value.length>=6 && e.target.value.length<=15
+    )
+      setAblePassword(true);
+  };
 
+  useEffect(() => {
+    console.log(ablePassword);
+    if(ablePassword){
+      setSubmitBorderColor("#FD6C1D");
+      setSubmitTxtColor("#FD6C1D");
+    }else{
+      setSubmitBorderColor("#666");
+      setSubmitTxtColor("#666");
+    }
+  }, [ablePassword]);
 
   //비밀번호 변경
   const updatePw = () => {
-    if(ablePassword){
-      http.put("v1/users/password",{
-        userLoginId, userPassword
-      })
-      .then((res) => {
-          if(res.data.status === "success"){
-            alert("비밀번호를 변경했습니다. 로그인해주세요");
-            history.push("/login");
-          }else alert("비밀번호 변경을 실패했습니다");
-      })
-      .catch((err) => {
-          console.error(err);
+    if(!ablePassword){
+      Swal.fire({
+        icon: "error",
+        text: "비밀번호가 올바르지 않습니다",
+        showConfirmButton: false,
+        timer: 2000,
       });
+      return;
     }
-  }
+
+      http
+        .put("v1/users/password", {
+          userLoginId,
+          userPassword,
+        })
+        .then((res) => {
+          if (res.data.status === "success") {
+            Swal.fire({
+              icon: "success",
+              text: "비밀번호를 변경했습니다. 로그인 해주세요",
+              showConfirmButton: false,
+              timer: 2000,
+            });
+            history.push("/login");
+          } else{
+            Swal.fire({
+              icon: "error",
+              text: "비밀번호 변경을 실패했습니다",
+              showConfirmButton: false,
+              timer: 2000,
+            });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    
+  };
 
   return (
     <Grid container spacing={12} className={styles.container}>
@@ -80,7 +128,13 @@ const FindPW2 = () => {
                 />
               </li>
               <li className={styles.form_input}>
-                <input className={styles.submit} type="button" value="확인" onClick={updatePw}/>
+                <input
+                  className={styles.submit}
+                  type="button"
+                  value="확인"
+                  onClick={updatePw}
+                  style={{borderColor: submitBorderColor, color: submitTxtColor}}
+                />
               </li>
             </ul>
           </div>

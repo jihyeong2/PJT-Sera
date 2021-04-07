@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import Logo from '../../components/common/Logo/Logo';
 import Navbar from '../../components/common/Navbar/Navbar';
 import styles from './PersonalColor.module.css';
@@ -10,6 +10,7 @@ import {connect} from 'react-redux';
 import {update} from '../../actions/index';
 import { useHistory } from 'react-router';
 import Swal from 'sweetalert2';
+import TopButton from '../../components/common/Button/TopButton/TopButton';
 
 const PersonalColor = ({user,color}) => {
   let historys = useHistory();
@@ -25,6 +26,7 @@ const PersonalColor = ({user,color}) => {
 
   const [prevImg, setPrevImg] = useState(profile);
   const [imgFile, setImgFile] = useState(null);
+  const [isScroll,setIsScroll] = useState(false);
   const history = useHistory();
   const onUploadImage = (e) => {
     const input = document.querySelector('#file_route');
@@ -62,6 +64,26 @@ const PersonalColor = ({user,color}) => {
       }
     )
   };
+  const scrollEvent = useCallback(()=>{
+    if(window.scrollY>0){
+      setIsScroll(true);
+    } else{
+      setIsScroll(false);
+    }
+  },[]);  
+  useEffect(()=>{
+    window.addEventListener('scroll', scrollEvent, true);
+    return () => {
+      window.removeEventListener('scroll', scrollEvent, true);
+    }
+  });
+  const onClickTopButton = () => {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  };    
   return(
     <div style={{position:'relative', paddingBottom:'180px', minHeight:"100vh"}}>
       <div className={styles.container}>
@@ -141,6 +163,9 @@ const PersonalColor = ({user,color}) => {
           </div>
         </div>
       </div>
+      {
+        isScroll && <TopButton onClick={onClickTopButton}/>
+      }
       <Footer/>
     </div>
   );

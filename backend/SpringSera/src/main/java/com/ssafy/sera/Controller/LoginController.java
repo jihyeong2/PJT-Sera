@@ -80,8 +80,7 @@ public class LoginController {
             User loginUser = userService.findByUserLoginId(userRequest.getUserLoginId());
             if(loginUser==null) { //회원가입시키고 로그인
                 try {
-                    Skin skin = skinService.findBySkinType(userRequest.getSkinId().getSkinType());
-                    User user = User.createUser(userRequest, skin);
+                    User user = User.createUser1(userRequest);
                     userService.save(user);
                     loginUser = user;
                 } catch (IllegalStateException e) {

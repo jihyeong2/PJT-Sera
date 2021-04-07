@@ -1,43 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './detail.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {connect} from 'react-redux';
+import http from '../../../http-django';
 
-const Detail = ({ product }) => {
+const Detail = ({ product, user }) => {
     console.log(product);
+    console.log("유저: "+user.userId);
 
-    // const onHandleHeart = (item_id,idx) =>{
-    //     if(!products[idx].dibs){ //좋아요
-    //         setLike(
-    //             user.userId,
-    //             item_id,
-    //             (res)=>{
-    //                 const tmp = products.map(product=>{
-    //                     if(product.item_id != item_id) return product;
-    //                     else return {...product, dibs: true, dibs_cnt: product.dibs_cnt+1}
-    //                 })
-    //                 setProducts(tmp);
-    //             },
-    //             (err)=>{
-    //                 console.error(err);
-    //             }
-    //         )
-    //     } else{ //싫어요
-    //         setHate(
-    //             user.userId,
-    //             item_id,
-    //             (res)=>{
-    //                 const tmp = products.map(product=>{
-    //                     if(product.item_id != item_id) return product;
-    //                     else return {...product, dibs: false, dibs_cnt: product.dibs_cnt-1}
-    //                 })
-    //                 setProducts(tmp);
-    //             },
-    //             (err)=>{
-    //                 console.error(err);
-    //             }
-    //         )
-    //     }
-    // }
+    const [heart, setHeart] = useState(product.dibs);
+    const [cnt, setCnt] = useState(product.dibs_cnt);
+
+    const heartAdd = () => {
+        http.put(`v1/items/dibs/${user.userId}/${product.item_id}`)
+        .then(res=>{     
+            console.log("좋아요 성공");
+            console.log(res.data);
+            setHeart(true);
+            setCnt(cnt+1);
+        })
+        .catch(err=>{
+            console.log("좋아요 에러");
+            console.error(err);
+        })
+    }
+
+    const heartDel = () => {
+        http.delete(`v1/items/dibs/${user.userId}/${product.item_id}`)
+        .then(res=>{     
+            console.log("좋아요 취소 성공");
+            console.log(res.data);
+            setHeart(false);
+            setCnt(cnt-1);
+        })
+        .catch(err=>{
+            console.log("좋아요 취소 에러");
+            console.error(err);
+        })
+    }
 
     return (
         <div className={styles.detail_left}>
@@ -49,15 +49,15 @@ const Detail = ({ product }) => {
                 </div>
 
             <div className={styles.icon}>
-                {product.dibs_cnt}&nbsp;
+                <span style={{fontSize:"20px"}}> {cnt}&nbsp;</span>
                 {
-                    product.dibs == false && (
-                        <span className={styles.heart_icon}><FontAwesomeIcon icon={['far', 'heart']} size="lg" color="red" /></span>
+                    heart == false && (
+                        <span className={styles.heart_icon}><FontAwesomeIcon icon={['far', 'heart']} size="2x" color="red" onClick={heartAdd} /></span>
                     )
                 }
                 {
-                    product.dibs == true && (
-                        <span className={styles.heart_icon}><FontAwesomeIcon icon={['fas', 'heart']} size="2x" color="red"/></span>
+                    heart == true && (
+                        <span className={styles.heart_icon}><FontAwesomeIcon icon={['fas', 'heart']} size="2x" color="red" onClick={heartDel} /></span>
                     )
                 }
             </div>
@@ -66,4 +66,10 @@ const Detail = ({ product }) => {
 
 };
 
-export default Detail;
+// export default Detail;
+const mapStateToProps = (state) => ({
+    user: state.user.user,
+  })
+  export default connect(
+    mapStateToProps,
+  )(Detail);

@@ -11,6 +11,9 @@ import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import { withStyles } from '@material-ui/core/styles';
 import baubau from '../../assets/baubau.png';
+import {connect} from 'react-redux';
+import Swal from 'sweetalert2';
+
 const dstyles = (theme) => ({
     root: {
       margin: 0,
@@ -46,7 +49,18 @@ const dstyles = (theme) => ({
       padding: theme.spacing(2),
     },
   }))(MuiDialogContent);
-const SkinType = (props) => {
+const SkinType = ({user}) => {
+  let historys = useHistory();
+  if(user == null){
+    Swal.fire({
+      icon: 'error',
+      text: '로그인 후 이용해주세요',
+      confirmButtonText: '확인',
+    }).then(() => {
+      historys.push("/login");
+    })
+  }
+
   console.log('type');
   const trueState=true;
   const [open, setOpen] = React.useState(false);
@@ -124,4 +138,11 @@ const SkinType = (props) => {
   );
 };
 
-export default SkinType;
+// export default SkinType;
+const mapStateToProps = (state) => ({
+  user: state.user.user,
+})
+
+export default connect(
+  mapStateToProps,
+)(SkinType)

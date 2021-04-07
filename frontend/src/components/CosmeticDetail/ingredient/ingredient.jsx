@@ -12,7 +12,9 @@ const Ingredient = ({user, product}) => {
                 <img className={styles.modal_product_img} src={product.item_img} alt="상품사진"/>
             </div>
             <div className={styles.modal_content}>
-                <div className={styles.modal_match}><span className={styles.modal_match_name} >나랑 맞지 않아요 👎🏻</span></div> 
+            {product.rating<0 && <div style={{backgroundColor:'#AF3131'}} className={styles.modal_match}><span className={styles.modal_match_name} >나와 잘 맞지 않아요 👎🏻</span></div>}
+                {product.rating>0 && <div style={{backgroundColor:'#4E9157'}} className={styles.modal_match}><span className={styles.modal_match_name} >나와 잘 맞아요 👍🏻</span></div>}
+                {product.rating==0 && <div style={{backgroundColor:'#FAC56A'}} className={styles.modal_match}><span className={styles.modal_match_name} >보통이에요 🤏🏻</span></div>}
                 <p className={styles.modal_product_category}>{product.category_large}
             <ArrowForwardIosIcon fontSize="small" /> {product.category_middle} </p>
                 <p className={styles.modal_product_name}>{product.item_name}</p> 
@@ -45,8 +47,21 @@ const Ingredient = ({user, product}) => {
                                         <Grid container spacing={2}>
                                             <Grid item xs={2} >
                                                 <div className={styles.in_img}>
-                                                    {/* 유저 피부타입 불러와서 맞는 성분은 초록색, 안맞는 성분은 빨강으로 할거임 👲🏻 */}
-                                                    <img className={styles.water_green_content} src={process.env.PUBLIC_URL + '/images/waterdrop_orange.png'} alt="그린"/>
+                                                    {
+                                                        element.correct == 1 && ( // 일치 
+                                                            <img className={styles.water_green_content} src={process.env.PUBLIC_URL + '/images/waterdrop_green.png'} alt="그린"/>
+                                                        )
+                                                    }
+                                                    {
+                                                        element.correct == 0 && ( // 그냥 성분 
+                                                            <img className={styles.water_orange_content} src={process.env.PUBLIC_URL + '/images/waterdrop_orange.png'} alt="오렌지"/>
+                                                        )
+                                                    }
+                                                    {
+                                                        element.correct == -1 && ( // 불일치 
+                                                            <img className={styles.water_red_content} src={process.env.PUBLIC_URL + '/images/waterdrop_red.png'} alt="빨강"/>
+                                                        )
+                                                    }
                                                 </div>
                                             </Grid>
                                             <Grid item xs={10} >

@@ -11,6 +11,8 @@ import ProductList from '../../components/common/ProductList/ProductList';
 import {connect} from 'react-redux';
 import http from '../../http-django';
 import {setLike, setHate} from '../../service/product';
+import Loader from '../../components/common/Loding/Loader';
+
 const useStyles = makeStyles((theme) => ({
     formControl: {
       margin: theme.spacing(1),
@@ -34,6 +36,7 @@ const ProductNav = ({user}) => {
     const [selectedTab, setTab] = useState("✔ 전체"); 
     const [selectedTab2, setTab2] = useState(""); 
     const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(null);
 
     const selectedStyle = {
         backgroundColor:"#FFB58D",
@@ -54,96 +57,149 @@ const ProductNav = ({user}) => {
         // 다른것도 각각 맞춰서 바꾸고
         if(e.target.innerText==="✔ 맞춤"){
             setMenu(1)
-            http({
-                method: 'GET',
-                url: `v1/items/correct/helpful/${user.userId}`,
-                headers:{
-                    "Content-type": "application/json",
-                }
-            })
-            .then(res=>{                             
-                setProducts(res.data.item_list);
-            })
-            .catch(err=>{
-                console.error(err);
-            })                            
-        }
-        else if(e.target.innerText==="✔ 스킨케어"){
-            setMenu(2); 
-            http({
-                method: 'GET',
-                url: `v1/items/recom/${user.userId}/스킨케어`,
-                headers:{
-                    "Content-type": "application/json",
-                }
-            })
-            .then(res=>{                            
-                setProducts(res.data.item_list);
-            })
-            .catch(err=>{
-                console.error(err);
-            })
-        }
-        else if(e.target.innerText==="✔ 메이크업"){
-            setMenu(3); 
-            http({
-                method: 'GET',
-                url: `v1/items/recom/${user.userId}/메이크업`,
-                headers:{
-                    "Content-type": "application/json",
-                }
+            try {
+                setLoading(true);
+                http({
+                    method: 'GET',
+                    url: `v1/items/correct/helpful/${user.userId}`,
+                    headers:{
+                        "Content-type": "application/json",
+                    }
                 })
-                .then(res=>{                           
+                .then(res=>{                             
                     setProducts(res.data.item_list);
                 })
                 .catch(err=>{
-                console.error(err);
+                    console.error(err);
+                })              
+            }catch(e){
+                console.log(e);
+            }
+            setTimeout(function() {
+                setLoading(false);
+              }, 1000);
+                          
+        }
+        else if(e.target.innerText==="✔ 스킨케어"){
+            setMenu(2); 
+            
+            try {
+                setLoading(true);
+                http({
+                    method: 'GET',
+                    url: `v1/items/recom/${user.userId}/스킨케어`,
+                    headers:{
+                        "Content-type": "application/json",
+                    }
                 })
+                .then(res=>{                            
+                    setProducts(res.data.item_list);
+                })
+                .catch(err=>{
+                    console.error(err);
+                })            
+            }catch(e){
+                console.log(e);
+            }
+            setTimeout(function() {
+                setLoading(false);
+              }, 1000);
+        }
+        else if(e.target.innerText==="✔ 메이크업"){
+            setMenu(3); 
+            try {
+                setLoading(true);
+                http({
+                    method: 'GET',
+                    url: `v1/items/recom/${user.userId}/메이크업`,
+                    headers:{
+                        "Content-type": "application/json",
+                    }
+                    })
+                    .then(res=>{                           
+                        setProducts(res.data.item_list);
+                    })
+                    .catch(err=>{
+                    console.error(err);
+                    })        
+            }catch(e){
+                console.log(e);
+            }
+            setTimeout(function() {
+                setLoading(false);
+              }, 1000);
+           
         }else if(e.target.innerText==="✔ 향수"){
             setMenu(4);
-            http({
-                method: 'GET',
-                url: `v1/items/recom/${user.userId}/향수`,
-                headers:{
-                    "Content-type": "application/json",
-                }
-            })
-            .then(res=>{                                
-                setProducts(res.data.item_list);
-            })
-            .catch(err=>{
-                console.error(err);
-            })            
+            try {
+                setLoading(true);
+                http({
+                    method: 'GET',
+                    url: `v1/items/recom/${user.userId}/향수`,
+                    headers:{
+                        "Content-type": "application/json",
+                    }
+                })
+                .then(res=>{                                
+                    setProducts(res.data.item_list);
+                })
+                .catch(err=>{
+                    console.error(err);
+                })            
+            }catch(e){
+                console.log(e);
+            }
+            setTimeout(function() {
+                setLoading(false);
+              }, 1000);
+                 
         }else if(e.target.innerText==="✔ 남성"){
             setMenu(5);
-            http({
-                method: 'GET',
-                url: `v1/items/recom/${user.userId}/남성 화장품`,
-                headers:{
-                    "Content-type": "application/json",
-                }
-            })
-            .then(res=>{                               
-                setProducts(res.data.item_list);
-            })
-            .catch(err=>{
-                console.error(err);
-            })            
+            try {
+                setLoading(true);
+                http({
+                    method: 'GET',
+                    url: `v1/items/recom/${user.userId}/남성 화장품`,
+                    headers:{
+                        "Content-type": "application/json",
+                    }
+                })
+                .then(res=>{                               
+                    setProducts(res.data.item_list);
+                })
+                .catch(err=>{
+                    console.error(err);
+                })                
+            }catch(e){
+                console.log(e);
+            }
+            setTimeout(function() {
+                setLoading(false);
+              }, 1000);
+            
         }else if(e.target.innerText==="✔ 전체"){
             setMenu(0);
-            http({
-                method: 'GET',
-                url: `v1/items/recom/${user.userId}`,
-                headers:{
-                    "Content-type": "application/json",
-                }
-            })
-            .then(res=>{                               
-                setProducts(res.data.item_list);
-            })
-            .catch(err=>{
-                console.error(err);
-            })
+            try {
+                setLoading(true);
+                http({
+                    method: 'GET',
+                    url: `v1/items/recom/${user.userId}`,
+                    headers:{
+                        "Content-type": "application/json",
+                    }
+                })
+                .then(res=>{                               
+                    setProducts(res.data.item_list);
+                })
+                .catch(err=>{
+                    console.error(err);
+                })      
+            }catch(e){
+                console.log(e);
+            }
+            setTimeout(function() {
+                setLoading(false);
+              }, 1000);
         }
     }
 
@@ -172,24 +228,62 @@ const ProductNav = ({user}) => {
         // 이렇게 중분류 클릭했을때 그거에 따라서 products 바꿔줌
         if(selectedTab==="✔ 맞춤"){
             if(e.target.innerText==="맞는상품"){
-                http({
-                    method: 'GET',
-                    url: `v1/items/correct/helpful/${user.userId}`,
-                    headers:{
-                        "Content-type": "application/json",
-                    }
-                })
-                .then(res=>{                               
-                    setProducts(res.data.item_list);
-                })
-                .catch(err=>{
-                    console.error(err);
-                })
+                console.log(selectList.color);
+                try {
+                    setLoading(true);
+                    http({
+                        method: 'GET',
+                        url: `v1/items/correct/helpful/${user.userId}`,
+                        headers:{
+                            "Content-type": "application/json",
+                        }
+                    })
+                    .then(res=>{                               
+                        setProducts(res.data.item_list);
+                    })
+                    .catch(err=>{
+                        console.error(err);
+                    })
+                }catch(e){
+                    console.log(e);
+                }
+                setTimeout(function() {
+                    setLoading(false);
+                  }, 1000);
+                
             }
             else{
+                try {
+                    setLoading(true);
+                    http({
+                        method: 'GET',
+                        url: `v1/items/correct/caution/${user.userId}`,
+                        headers:{
+                            "Content-type": "application/json",
+                        }
+                    })
+                    .then(res=>{                                
+                        setProducts(res.data.item_list);
+                    })
+                    .catch(err=>{
+                        console.error(err);
+                    })     
+                }catch(e){
+                    console.log(e);
+                }
+                setTimeout(function() {
+                    setLoading(false);
+                  }, 1000);
+                    
+            }
+
+
+        } else if(selectedTab==="✔ 스킨케어"){
+            try {
+                setLoading(true);
                 http({
                     method: 'GET',
-                    url: `v1/items/correct/caution/${user.userId}`,
+                    url: `v1/items/recom/${user.userId}/스킨케어/${e.target.innerText}`,
                     headers:{
                         "Content-type": "application/json",
                     }
@@ -199,53 +293,63 @@ const ProductNav = ({user}) => {
                 })
                 .catch(err=>{
                     console.error(err);
-                })         
+                })
+            }catch(e){
+                console.log(e);
             }
-        } else if(selectedTab==="✔ 스킨케어"){
-            http({
-                method: 'GET',
-                url: `v1/items/recom/${user.userId}/스킨케어/${e.target.innerText}`,
-                headers:{
-                    "Content-type": "application/json",
-                }
-            })
-            .then(res=>{                                
-                setProducts(res.data.item_list);
-            })
-            .catch(err=>{
-                console.error(err);
-            })
+            setTimeout(function() {
+                setLoading(false);
+              }, 1000);
+            
         }
         else if(selectedTab==="✔ 메이크업"){
             setMenu(3); 
-            http({
-                method: 'GET',
-                url: `v1/items/recom/${user.userId}/메이크업/${e.target.innerText}`,
-                headers:{
-                    "Content-type": "application/json",
-                }
+            try {
+                setLoading(true);
+                http({
+                    method: 'GET',
+                    url: `v1/items/recom/${user.userId}/메이크업/${e.target.innerText}`,
+                    headers:{
+                        "Content-type": "application/json",
+                    }
+                    })
+                    .then(res=>{                           
+                        setProducts(res.data.item_list);
+                    })
+                    .catch(err=>{
+                    console.error(err);
+                    })
+            }catch(e){
+                console.log(e);
+            }
+            setTimeout(function() {
+                setLoading(false);
+              }, 1000);
+            
+        }else if(selectedTab==="✔ 남성"){
+            setMenu(5);
+            try {
+                setLoading(true);
+                http({
+                    method: 'GET',
+                    url: `v1/items/recom/${user.userId}/남성 화장품/${e.target.innerText}`,
+                    headers:{
+                        "Content-type": "application/json",
+                    }
                 })
-                .then(res=>{                           
+                .then(res=>{                             
                     setProducts(res.data.item_list);
                 })
                 .catch(err=>{
-                console.error(err);
-                })
-        }else if(selectedTab==="✔ 남성"){
-            setMenu(5);
-            http({
-                method: 'GET',
-                url: `v1/items/recom/${user.userId}/남성 화장품/${e.target.innerText}`,
-                headers:{
-                    "Content-type": "application/json",
-                }
-            })
-            .then(res=>{                             
-                setProducts(res.data.item_list);
-            })
-            .catch(err=>{
-                console.error(err);
-            })            
+                    console.error(err);
+                })   
+            }catch(e){
+                console.log(e);
+            }
+            setTimeout(function() {
+                setLoading(false);
+              }, 1000);
+                     
         }
     }
 
@@ -262,75 +366,120 @@ const ProductNav = ({user}) => {
                 // selectedTab2가 빈 스트링이면 대분류만 클릭했을 때
                 // 딱 대분류 정렬까지만
                 if(selectedTab==="✔ 전체"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/score/${user.userId}`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/score/${user.userId}`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                   
                 }else if(selectedTab==="✔ 스킨케어"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/score/${user.userId}/스킨케어`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/score/${user.userId}/스킨케어`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                    
                 } else if(selectedTab==="✔ 메이크업"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/score/${user.userId}/메이크업`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/score/${user.userId}/메이크업`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                    
                 } else if(selectedTab==="✔ 향수"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/score/${user.userId}/향수`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/score/${user.userId}/향수`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                    
                 } else if(selectedTab==="✔ 남성"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/score/${user.userId}/남성 화장품`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/score/${user.userId}/남성 화장품`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                    
                 }
             }else{
                 // 중분류가 선택이 된 상태로 정렬기준 선택했을때 
@@ -339,166 +488,264 @@ const ProductNav = ({user}) => {
                 // 대분류도 selectedTab에 저장되는데 저장한 값을 그대로 쓸수가 없는데
                 // 중분류는 그대로 쓸수있어서 대분류로만 나누고 저장한 중분류 값 그대로 넣었다.
                 if(selectedTab==="✔ 스킨케어"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/score/${user.userId}/스킨케어/${selectedTab2}`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/score/${user.userId}/스킨케어/${selectedTab2}`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                   
                 } else if(selectedTab==="✔ 메이크업"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/score/${user.userId}/메이크업/${selectedTab2}`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/score/${user.userId}/메이크업/${selectedTab2}`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                    
                 } else if(selectedTab==="✔ 남성"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/score/${user.userId}/남성 화장품/${selectedTab2}`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/score/${user.userId}/남성 화장품/${selectedTab2}`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
                 }
             }
         } else if(event.target.value==2){ 
             // 가격 낮은순
             if(selectedTab2===""){ // 가격 낮은 순에서 중분류 선택 안된 경우
                 if(selectedTab==="✔ 전체"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/price/${user.userId}/0`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/price/${user.userId}/0`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                    
                 }else if(selectedTab==="✔ 스킨케어"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/price/${user.userId}/스킨케어/0`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/price/${user.userId}/스킨케어/0`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                    
                 } else if(selectedTab==="✔ 메이크업"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/price/${user.userId}/메이크업/0`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/price/${user.userId}/메이크업/0`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                   
                 } else if(selectedTab==="✔ 향수"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/price/${user.userId}/향수/0`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/price/${user.userId}/향수/0`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                    
                 } else if(selectedTab==="✔ 남성"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/price/${user.userId}/남성 화장품/0`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/price/${user.userId}/남성 화장품/0`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                    
                 }
             }else{ // 가격 낮은 순에서 중분류 선택 된 경우
                 if(selectedTab==="✔ 스킨케어"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/price/${user.userId}/스킨케어/${selectedTab2}/0`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/price/${user.userId}/스킨케어/${selectedTab2}/0`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                   
                 } else if(selectedTab==="✔ 메이크업"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/price/${user.userId}/메이크업/${selectedTab2}/0`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/price/${user.userId}/메이크업/${selectedTab2}/0`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                   
                 } else if(selectedTab==="✔ 남성"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/price/${user.userId}/남성 화장품/${selectedTab2}/0`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/price/${user.userId}/남성 화장품/${selectedTab2}/0`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                    
                 }
             }
             // 가격 높은 순
@@ -506,120 +753,192 @@ const ProductNav = ({user}) => {
             // 가격높은순 에서 중분류 선택 안할 때
             if(selectedTab2===""){
                 if(selectedTab==="✔ 전체"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/price/${user.userId}/1`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/price/${user.userId}/1`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                    
                 }else if(selectedTab==="✔ 스킨케어"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/price/${user.userId}/스킨케어/1`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/price/${user.userId}/스킨케어/1`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                    
                 } else if(selectedTab==="✔ 메이크업"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/price/${user.userId}/메이크업/1`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/price/${user.userId}/메이크업/1`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                    
                 } else if(selectedTab==="✔ 향수"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/price/${user.userId}/향수/1`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/price/${user.userId}/향수/1`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                   
                 } else if(selectedTab==="✔ 남성"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/price/${user.userId}/남성 화장품/1`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/price/${user.userId}/남성 화장품/1`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                    
                 }
             }else{
                 // 가격높은순 에서 중분류 선택 될때 
                 if(selectedTab==="✔ 스킨케어"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/price/${user.userId}/스킨케어/${selectedTab2}/1`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/price/${user.userId}/스킨케어/${selectedTab2}/1`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                   
                 } else if(selectedTab==="✔ 메이크업"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/price/${user.userId}/메이크업/${selectedTab2}/1`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/price/${user.userId}/메이크업/${selectedTab2}/1`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                    
                 } else if(selectedTab==="✔ 남성"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/price/${user.userId}/남성 화장품/${selectedTab2}/1`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/price/${user.userId}/남성 화장품/${selectedTab2}/1`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                    
                 }
             }
         } else if(event.target.value==4){
@@ -627,127 +946,208 @@ const ProductNav = ({user}) => {
             if(selectedTab2===""){
                 // 리뷰순에서 중분류 선택안된상태
                 if(selectedTab==="✔ 전체"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/reviewCnt/${user.userId}`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/reviewCnt/${user.userId}`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })  
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                    
                 }else if(selectedTab==="✔ 스킨케어"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/reviewCnt/${user.userId}/스킨케어`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/reviewCnt/${user.userId}/스킨케어`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })  
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                    
                 } else if(selectedTab==="✔ 메이크업"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/reviewCnt/${user.userId}/메이크업`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/reviewCnt/${user.userId}/메이크업`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            }) 
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                   
                 } else if(selectedTab==="✔ 향수"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/reviewCnt/${user.userId}/향수`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/reviewCnt/${user.userId}/향수`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                    
                 } else if(selectedTab==="✔ 남성"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/reviewCnt/${user.userId}/남성 화장품`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/reviewCnt/${user.userId}/남성 화장품`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                    
                 }
             }else{ 
                 // 리뷰순에서 중분류 선택된 상태 
                 if(selectedTab==="✔ 스킨케어"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/reviewCnt/${user.userId}/스킨케어/${selectedTab2}`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/reviewCnt/${user.userId}/스킨케어/${selectedTab2}`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                   
                 } else if(selectedTab==="✔ 메이크업"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/reviewCnt/${user.userId}/메이크업/${selectedTab2}`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/reviewCnt/${user.userId}/메이크업/${selectedTab2}`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                    
                 } else if(selectedTab==="✔ 남성"){
-                    http({
-                        method: 'GET',
-                        url: `v1/items/sort/reviewCnt/${user.userId}/남성 화장품/${selectedTab2}`,
-                        headers:{
-                            "Content-type": "application/json",
-                        }
-                        })
-                        .then(res=>{                           
-                            setProducts(res.data.item_list);
-                        })
-                        .catch(err=>{
-                        console.error(err);
-                        })
+                    try {
+                        setLoading(true);
+                        http({
+                            method: 'GET',
+                            url: `v1/items/sort/reviewCnt/${user.userId}/남성 화장품/${selectedTab2}`,
+                            headers:{
+                                "Content-type": "application/json",
+                            }
+                            })
+                            .then(res=>{                           
+                                setProducts(res.data.item_list);
+                            })
+                            .catch(err=>{
+                            console.error(err);
+                            })
+                    }catch(e){
+                        console.log(e);
+                    }
+                    setTimeout(function() {
+                        setLoading(false);
+                      }, 1000);
+                    
                 }
             }
         }
     };
     useEffect(()=>{ 
         // 처음에 렌더링 됐을때 전체 긁어오는애
-        getAllList();
+        try {
+            setLoading(true);
+            getAllList();
+        }catch(e){
+            console.log(e);
+        }
+        setTimeout(function() {
+            setLoading(false);
+          }, 1500);
+        
         return () => {
             setType('');
             setTab("✔ 전체");
@@ -757,20 +1157,20 @@ const ProductNav = ({user}) => {
     },[]); 
 
     const getAllList = () => {
-        http({
-        method: 'GET',
-        url: `v1/items/recom/${user.userId}`,
-        headers:{
-            "Content-type": "application/json",
-        }
-        })
-        .then(res=>{                              
-        setProducts(res.data.item_list);
-        })
-        .catch(err=>{
-            console.log("전체 리스트 에러");
-        console.error(err);
-        })
+            http({
+                method: 'GET',
+                url: `v1/items/recom/${user.userId}`,
+                headers:{
+                    "Content-type": "application/json",
+                }
+            })
+            .then(res=>{                              
+                setProducts(res.data.item_list);
+            })
+            .catch(err=>{
+                console.log("전체 리스트 에러");
+                console.error(err);
+            })
     };
     const onHandleHeart = (item_id,idx) =>{
         if(!products[idx].dibs){ //좋아요
@@ -805,91 +1205,113 @@ const ProductNav = ({user}) => {
             )
         }
     }
-    return(
+
+
+    const message = "리스트 로딩 중 입니다.";
+    if (loading) return (
         <>
         <div className={styles.nav}>
-            <Button variant="contained" className={styles.nav_btn} style={selectedTab==="✔ 전체" ? selectedStyle : basicStyle} onClick={changeColor}> ✔ 전체</Button>
-            <Button variant="contained" className={styles.nav_btn} style={selectedTab==="✔ 맞춤" ? selectedStyle : basicStyle} onClick={changeColor}> ✔ 맞춤</Button>
-            <Button variant="contained" className={styles.nav_btn} style={selectedTab==="✔ 스킨케어" ? selectedStyle : basicStyle} onClick={changeColor}> ✔ 스킨케어</Button>
-            <Button variant="contained" className={styles.nav_btn} style={selectedTab==="✔ 메이크업" ? selectedStyle : basicStyle} onClick={changeColor}> ✔ 메이크업</Button>
-            <Button variant="contained" className={styles.nav_btn} style={selectedTab==="✔ 향수" ? selectedStyle : basicStyle} onClick={changeColor}> ✔ 향수</Button>
-            <Button variant="contained" className={styles.nav_btn} style={selectedTab==="✔ 남성" ? selectedStyle : basicStyle} onClick={changeColor}> ✔ 남성</Button>
-            <div className={styles.bar}></div>
-        </div>
-        {
-            (menuTab == 0 || menuTab == 4) && (<></>) // 전체, 향수는 하위분류 없음
-        }
-        {
-            menuTab == 1 && ( 
-                <div className={styles.click_nav}>
-                    <ButtonGroup variant="text" aria-label="text primary button group">
-                        <Button><span style={selectList==="맞는상품" ? selectStyle : startStyle} onClick={changeList}>맞는상품</span></Button>
-                        <Button><span style={selectList==="안맞는상품" ? selectStyle : startStyle} onClick={changeList}>안맞는상품</span></Button>
-                    </ButtonGroup>
-                </div>
-            )
-        }
-        {
-            menuTab == 2 && ( //스킨케어
-                <div className={styles.click_nav}>
-                    <ButtonGroup variant="text" aria-label="text primary button group">
-                        <Button><span style={selectList==="스킨케어" ? selectStyle : startStyle} onClick={changeList}>스킨케어</span></Button>
-                        <Button><span style={selectList==="선케어" ? selectStyle : startStyle} onClick={changeList}>선케어</span></Button>
-                        <Button><span style={selectList==="클랜징" ? selectStyle : startStyle} onClick={changeList}>클랜징</span></Button>
-                    </ButtonGroup>
-                </div>
-            )
-        }
-        {
-            menuTab == 3 && ( //메이크업
-                <div className={styles.click_nav}>
-                    <ButtonGroup variant="text" aria-label="text primary button group">
-                        <Button><span style={selectList==="페이스메이크업" ? selectStyle : startStyle} onClick={changeList}>페이스메이크업</span></Button>
-                        <Button><span style={selectList==="립메이크업" ? selectStyle : startStyle} onClick={changeList}>립메이크업</span></Button>
-                        <Button><span style={selectList==="아이메이크업" ? selectStyle : startStyle} onClick={changeList}>아이메이크업</span></Button>
-                        <Button><span style={selectList==="컨투어링" ? selectStyle : startStyle} onClick={changeList}>컨투어링</span></Button>
-                    </ButtonGroup>
-                </div>
-            )
-        }
-        {
-            menuTab == 5 && ( // 남성
-                <div className={styles.click_nav}>
-                    <ButtonGroup variant="text" aria-label="text primary button group">
-                        <Button><span style={selectList==="스킨케어" ? selectStyle : startStyle} onClick={changeList}>스킨케어</span></Button>
-                        <Button><span style={selectList==="메이크업" ? selectStyle : startStyle} onClick={changeList} onClick={changeList}>메이크업</span></Button>
-                        <Button><span style={selectList==="클랜징" ? selectStyle : startStyle} onClick={changeList}>클랜징</span></Button>
-                        <Button><span style={selectList==="쉐이빙" ? selectStyle : startStyle} onClick={changeList}>쉐이빙</span></Button>
-                    </ButtonGroup>
-                </div>
-            )
-        }
-        {
-            menuTab != 1 &&(
-                <div className={styles.filtering}>
-                    <div className={styles.right_check}>
-                        <FormControl className={classes.formControl}>
-                        <InputLabel id="demo-simple-select-label">정렬기준</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={type}
-                                onChange={handleChange}>
-                                    <MenuItem value={1}>인기 순</MenuItem>
-                                    <MenuItem value={2}>가격 낮은 순</MenuItem>
-                                    <MenuItem value={3}>가격 높은 순</MenuItem>
-                                    <MenuItem value={4}>리뷰 개수 순</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </div>
-                </div>
-            )
-        }
-        <div className={styles.list}>
-            <ProductList products={products} handleHeart={onHandleHeart}/>
-        </div>
+                <Button variant="contained" className={styles.nav_btn} style={selectedTab==="✔ 전체" ? selectedStyle : basicStyle} onClick={changeColor}> ✔ 전체</Button>
+                <Button variant="contained" className={styles.nav_btn} style={selectedTab==="✔ 맞춤" ? selectedStyle : basicStyle} onClick={changeColor}> ✔ 맞춤</Button>
+                <Button variant="contained" className={styles.nav_btn} style={selectedTab==="✔ 스킨케어" ? selectedStyle : basicStyle} onClick={changeColor}> ✔ 스킨케어</Button>
+                <Button variant="contained" className={styles.nav_btn} style={selectedTab==="✔ 메이크업" ? selectedStyle : basicStyle} onClick={changeColor}> ✔ 메이크업</Button>
+                <Button variant="contained" className={styles.nav_btn} style={selectedTab==="✔ 향수" ? selectedStyle : basicStyle} onClick={changeColor}> ✔ 향수</Button>
+                <Button variant="contained" className={styles.nav_btn} style={selectedTab==="✔ 남성" ? selectedStyle : basicStyle} onClick={changeColor}> ✔ 남성</Button>
+                <div className={styles.bar}></div>
+            </div>
+            
+        <Loader type="spin" color="#FD6C1D" message={message} />
         </>
-    )
+    );
+    
+    else {
+        return(
+            <>
+            <div className={styles.nav}>
+                <Button variant="contained" className={styles.nav_btn} style={selectedTab==="✔ 전체" ? selectedStyle : basicStyle} onClick={changeColor}> ✔ 전체</Button>
+                <Button variant="contained" className={styles.nav_btn} style={selectedTab==="✔ 맞춤" ? selectedStyle : basicStyle} onClick={changeColor}> ✔ 맞춤</Button>
+                <Button variant="contained" className={styles.nav_btn} style={selectedTab==="✔ 스킨케어" ? selectedStyle : basicStyle} onClick={changeColor}> ✔ 스킨케어</Button>
+                <Button variant="contained" className={styles.nav_btn} style={selectedTab==="✔ 메이크업" ? selectedStyle : basicStyle} onClick={changeColor}> ✔ 메이크업</Button>
+                <Button variant="contained" className={styles.nav_btn} style={selectedTab==="✔ 향수" ? selectedStyle : basicStyle} onClick={changeColor}> ✔ 향수</Button>
+                <Button variant="contained" className={styles.nav_btn} style={selectedTab==="✔ 남성" ? selectedStyle : basicStyle} onClick={changeColor}> ✔ 남성</Button>
+                <div className={styles.bar}></div>
+            </div>
+            {
+                (menuTab == 0 || menuTab == 4) && (<></>) // 전체, 향수는 하위분류 없음
+            }
+            {
+                menuTab == 1 && ( 
+                    <div className={styles.click_nav}>
+                        <ButtonGroup variant="text" aria-label="text primary button group">
+                            <Button><span style={selectedTab2==="맞는상품" ? selectStyle : startStyle} onClick={changeList}>맞는상품</span></Button>
+                            <Button><span style={selectedTab2==="안맞는상품" ? selectStyle : startStyle} onClick={changeList}>안맞는상품</span></Button>
+                        </ButtonGroup>
+                    </div>
+                )
+            }
+            {
+                menuTab == 2 && ( //스킨케어
+                    <div className={styles.click_nav}>
+                        <ButtonGroup variant="text" aria-label="text primary button group">
+                            <Button><span style={selectedTab2==="스킨케어" ? selectStyle : startStyle} onClick={changeList}>스킨케어</span></Button>
+                            <Button><span style={selectedTab2==="선케어" ? selectStyle : startStyle} onClick={changeList}>선케어</span></Button>
+                            <Button><span style={selectedTab2==="클랜징" ? selectStyle : startStyle} onClick={changeList}>클랜징</span></Button>
+                        </ButtonGroup>
+                    </div>
+                )
+            }
+            {
+                menuTab == 3 && ( //메이크업
+                    <div className={styles.click_nav}>
+                        <ButtonGroup variant="text" aria-label="text primary button group">
+                            <Button><span style={selectedTab2==="페이스메이크업" ? selectStyle : startStyle} onClick={changeList}>페이스메이크업</span></Button>
+                            <Button><span style={selectedTab2==="립메이크업" ? selectStyle : startStyle} onClick={changeList}>립메이크업</span></Button>
+                            <Button><span style={selectedTab2==="아이메이크업" ? selectStyle : startStyle} onClick={changeList}>아이메이크업</span></Button>
+                            <Button><span style={selectedTab2==="컨투어링" ? selectStyle : startStyle} onClick={changeList}>컨투어링</span></Button>
+                        </ButtonGroup>
+                    </div>
+                )
+            }
+            {
+                menuTab == 5 && ( // 남성
+                    <div className={styles.click_nav}>
+                        <ButtonGroup variant="text" aria-label="text primary button group">
+                            <Button><span style={selectedTab2==="스킨케어" ? selectStyle : startStyle} onClick={changeList}>스킨케어</span></Button>
+                            <Button><span style={selectedTab2==="메이크업" ? selectStyle : startStyle} onClick={changeList} onClick={changeList}>메이크업</span></Button>
+                            <Button><span style={selectedTab2==="클랜징" ? selectStyle : startStyle} onClick={changeList}>클랜징</span></Button>
+                            <Button><span style={selectedTab2==="쉐이빙" ? selectStyle : startStyle} onClick={changeList}>쉐이빙</span></Button>
+                        </ButtonGroup>
+                    </div>
+                )
+            }
+            {
+                menuTab != 1 &&(
+                    <div className={styles.filtering}>
+                        <div className={styles.right_check}>
+                            <FormControl className={classes.formControl}>
+                            <InputLabel id="demo-simple-select-label">정렬기준</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={type}
+                                    onChange={handleChange}>
+                                        <MenuItem value={1}>인기 순</MenuItem>
+                                        <MenuItem value={2}>가격 낮은 순</MenuItem>
+                                        <MenuItem value={3}>가격 높은 순</MenuItem>
+                                        <MenuItem value={4}>리뷰 개수 순</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </div>
+                    </div>
+                )
+            }
+            <div className={styles.list}>
+                <ProductList products={products} handleHeart={onHandleHeart}/>
+            </div>
+            </>
+        )
+    }
+    
 }
 
 // export default ProductNav;

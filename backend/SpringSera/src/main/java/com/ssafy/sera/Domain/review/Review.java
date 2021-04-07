@@ -59,6 +59,12 @@ public class Review implements Serializable {
         return reviewInput;
     }
 
+    @PrePersist
+    private void onCreate(){
+        this.writeDate = new Date();
+    }
+
+
     public long pushCnt(){
         this.helpCnt += 1;
         return this.helpCnt;

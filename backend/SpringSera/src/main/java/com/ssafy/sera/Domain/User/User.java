@@ -47,7 +47,20 @@ public class User {
     @OneToMany(mappedBy="user")
     private List<Review> reviewList;
 
-    public static User createUser(UserRequest userRequest, Skin skin){
+    public static User createUser1(UserRequest userRequest){ //피부타입 없을때
+        User userInput = new User();
+        userInput.userId = userRequest.getUserId();
+        userInput.setUserLoginId(userRequest.getUserLoginId());
+        userInput.setUserPassword(userRequest.getUserPassword());
+        userInput.setUserNickname(userRequest.getUserNickname());
+        userInput.setUserAge(userRequest.getUserAge());
+        userInput.setUserPhone(userRequest.getUserPhone());
+        userInput.setUserGender(userRequest.getUserGender());
+        return userInput;
+    }
+
+
+    public static User createUser(UserRequest userRequest, Skin skin){ //피부타입 있을때
         User userInput = new User();
         userInput.userId = userRequest.getUserId();
         userInput.setUserLoginId(userRequest.getUserLoginId());

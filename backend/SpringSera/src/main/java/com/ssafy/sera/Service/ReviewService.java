@@ -11,8 +11,10 @@ import com.ssafy.sera.Repository.ReviewRepository;
 import com.ssafy.sera.Util.Validator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -59,17 +61,18 @@ public class ReviewService {
      * @return
      */
     @Transactional
-    public void updateReview(ReviewRequest request) {
+    public void updateReview(ReviewRequest request, MultipartFile file) throws IOException {
         Optional<Review> findReview = Optional.ofNullable(reviewRepository.findByReviewId(request.getReviewId()));
         if(findReview.isPresent()) {
-            findReview.get().setReviewImg(request.getReviewImg());
+            if(file != null) { //사진 파일 업로드 했으면
+                if(findReview.get().getReviewImg()!=null) s3Service.delete(findReview.get().getReviewImg()); //현재 리뷰에 이미지가 있었다면 url s3에서 삭제
+                String review_img = s3Service.upload(file); //파일 s3에 업로드
+                findReview.get().setReviewImg(review_img);
+            }
             findReview.get().setWriteDate(request.getWriteDate());
             findReview.get().setReviewGoodContent(request.getReviewGoodContent());
             findReview.get().setReviewBadContent(request.getReviewBadContent());
             findReview.get().setReviewScore(request.getReviewScore());
-            if(findReview.get().getReviewImg()!=null){
-
-            }
         }
         else{
             throw new IllegalStateException("존재하지 않는 리뷰입니다.");

@@ -12,7 +12,7 @@ import javax.persistence.PrePersist;
 import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
-    @Query("select r from Review r where r.item = :item order by r.writeDate desc")
+    @Query("select r from Review r where r.item = :item order by r.writeDate asc")
     List<Review> findByItem(Item item); //default:등록순
     Review findByReviewId(Long reviewId);
 

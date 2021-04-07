@@ -92,12 +92,12 @@ public class ReviewController {
 
     @ApiOperation(value = "리뷰 수정", notes = "반환되는 데이터는 수정 성공 / 에러 메시지", response = BaseResponse.class)
     @PutMapping
-    public BaseResponse updateReview(@ApiParam(value = "리뷰 객체") @RequestBody ReviewRequest request) {
+    public BaseResponse updateReview(@ApiParam(value = "리뷰 객체", required=true) @RequestPart ReviewRequest request, @ApiParam(value = "사진 파일", required=false) @RequestPart(value = "file", required=true) MultipartFile file) {
         BaseResponse response = null;
         try {
-            reviewService.updateReview(request);
+            reviewService.updateReview(request, file);
             response = new BaseResponse("success", "수정 성공");
-        } catch (IllegalStateException e) {
+        } catch (IllegalStateException | IOException e) {
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;

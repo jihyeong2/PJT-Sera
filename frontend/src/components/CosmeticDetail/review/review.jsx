@@ -11,7 +11,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { makeStyles } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
-import Pagination from "material-ui-flat-pagination";
+import Pagination from "material-ui-flat-pagination"; 
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 import {connect} from 'react-redux';
@@ -75,7 +75,9 @@ const useStyles = makeStyles((theme) => ({
 
   const theme = createMuiTheme();
 
-const Review = ({product, review, user, skin, picture, onCreateReview, onModifyReview, onClickReviewGood}) => {
+const Review = ({product, review, user, skin, picture, onCreateReview, onModifyReview, onClickReviewGood, onDeleteReview}) => {
+
+    console.log(review);
     const classes = useStyles();
     const [type, setType] = React.useState(1);
 
@@ -134,9 +136,13 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
         })
     }
     const handleCreateReview = () => {
+        handleClose();
+        const tmp = [false,...open];
+        setOpen(tmp);
         onCreateReview();
     };
     const handleModifyReview = () => {
+        handleClose();
         onModifyReview();
     }
 
@@ -145,7 +151,18 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
         console.log(offset);
         setPage(offset);
     }
-
+    const handleDeleteReview = (e) => {
+        const index = e.target.dataset.idx ? e.target.dataset.idx : e.target.parentNode.dataset.idx;
+        const reviewId = review[index].reviewId;
+        http.delete(`v1/review/${reviewId}`)
+        .then(res =>{
+            onDeleteReview();
+        }) 
+        .catch(err=>{
+            console.error(err);
+        })
+        
+    }
     return(
         <div>
             <div className={styles.review_title}>REVIEW</div>
@@ -205,7 +222,7 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
                                                                         <ReviewModify product={product} reviewOrigin={review} index={idx} onModifyReview={handleModifyReview}/>
                                                                     </DialogContent>
                                                             </Dialog>
-                                                            <DeleteIcon fontSize="small" className={styless.trash_icon}/>
+                                                            <DeleteIcon fontSize="small" className={styless.trash_icon} onClick={handleDeleteReview} data-idx={idx}/>
                                                         </>
                                                     )
                                                 }

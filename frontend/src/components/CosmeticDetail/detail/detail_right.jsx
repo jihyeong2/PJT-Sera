@@ -102,7 +102,7 @@ const Detail = ({user, color, skin, product}) => {
                 <div className={styles.match_detail}>
                 <Grid container spacing={1}>
                         <Grid item xs={2} >
-                            {product.rating<0 && <div style={{backgroundColor:'#AF3131'}} className={styles.circle_percent}></div>}
+                            {product.rating<0 && <div style={{backgroundColor:'#AF3131'}} className={styles.circle_percent}>👎🏻</div>}
                             {product.rating>0 && <div style={{backgroundColor:'#4E9157'}} className={styles.circle_percent}>👍🏻</div>}
                             {product.rating==0 && <div style={{backgroundColor:'#FAC56A'}} className={styles.circle_percent}>🤏🏻</div>}
                         </Grid>

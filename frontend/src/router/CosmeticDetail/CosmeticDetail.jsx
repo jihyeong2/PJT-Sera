@@ -239,7 +239,9 @@ const CosmeticDetail = ({user}) => {
     })
     setReview(tmp);
   };
-
+  const handleDeleteReview = () => {
+    getReview();
+  }
     return (
       <div style={{position:'relative', paddingBottom:'180px', minHeight:'100vh'}}>
         <div className={styles.page}>
@@ -283,6 +285,7 @@ const CosmeticDetail = ({user}) => {
                   picture={picture} 
                   onCreateReview={handleCreateReview} 
                   onModifyReview={handleModifyReview}
+                  onDeleteReview={handleDeleteReview}
                   onClickReviewGood={handleReviewGood}
                 />
             </Grid>

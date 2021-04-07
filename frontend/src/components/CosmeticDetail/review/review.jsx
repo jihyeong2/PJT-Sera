@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
 
   const theme = createMuiTheme();
 
-const Review = ({product, review, user, skin, picture, onCreateReview, onModifyReview, onClickReviewGood}) => {
+const Review = ({product, review, user, skin, picture, onCreateReview, onModifyReview, onClickReviewGood, onDeleteReview}) => {
 
     console.log(review);
     const classes = useStyles();
@@ -151,7 +151,18 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
         console.log(offset);
         setPage(offset);
     }
-
+    const handleDeleteReview = (e) => {
+        const index = e.target.dataset.idx ? e.target.dataset.idx : e.target.parentNode.dataset.idx;
+        const reviewId = review[index].reviewId;
+        http.delete(`v1/review/${reviewId}`)
+        .then(res =>{
+            onDeleteReview();
+        }) 
+        .catch(err=>{
+            console.error(err);
+        })
+        
+    }
     return(
         <div>
             <div className={styles.review_title}>REVIEW</div>
@@ -211,7 +222,7 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
                                                                         <ReviewModify product={product} reviewOrigin={review} index={idx} onModifyReview={handleModifyReview}/>
                                                                     </DialogContent>
                                                             </Dialog>
-                                                            <DeleteIcon fontSize="small" className={styless.trash_icon}/>
+                                                            <DeleteIcon fontSize="small" className={styless.trash_icon} onClick={handleDeleteReview} data-idx={idx}/>
                                                         </>
                                                     )
                                                 }

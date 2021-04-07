@@ -61,9 +61,9 @@ const ReviewWrite = ({product, user, onCreateReview}) => {
             reviewBadContent: review_bad_content, //아쉬운점
             helpCnt: 0, //도움
         }
-
+        console.log(review);
         formData.append('request', new Blob([JSON.stringify(review)], { type: "application/json" }));
-
+        console.log(formData);
         http.post("v1/review", formData, {
             headers: {
                 "Content-Type": `multipart/form-data`,

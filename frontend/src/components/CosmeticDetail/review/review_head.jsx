@@ -75,7 +75,7 @@ const ReviewHead = ({ product, onCreateReview }) => {
                     <p className={styles.review_num_title}>총 <span>23</span>건의 리뷰</p>
                     <p className={styles.review_rate}><span>4.7</span>점</p>
                     <Box component="fieldset" mb={3} borderColor="transparent">
-                        <Rating name="read-only" value={4} readOnly />
+                        <Rating name="read-only" value={4} readOnly /> 
                     </Box>
                 </Grid>
                 <Grid item xs={4}>

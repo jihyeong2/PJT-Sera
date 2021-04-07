@@ -1,5 +1,5 @@
 @value font-size-50, font-size-20 from '../../common/style.css';
-@value color-grey-2, color-grey-3 from '../../common/style.css';
+@value color-grey-2,color-grey-3 from '../../common/style.css';
 
 .container {
     display: flex;
@@ -179,9 +179,9 @@ input::placeholder {
 
 
 .rightBox {
-    flex: 1 1 0;
-    /* flex: 1 1 0 */
-    overflow: hidden;
+    display: inline-block;
+    width: 50%;
+    background-color: #fff;
 }
 
 .rightBox .right_con {

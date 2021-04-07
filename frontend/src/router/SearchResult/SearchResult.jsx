@@ -108,7 +108,6 @@ const SearchResult = ({user}) => {
   }else{
     window.addEventListener('scroll', ScrollEvent);
     if(products.length===0 && products2.length===0){
-      
       if(params.category==="전체"){
         getSearchAll(
           user.userId,

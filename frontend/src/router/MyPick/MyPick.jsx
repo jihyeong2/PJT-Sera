@@ -59,7 +59,7 @@ const MyPick = ({user}) => {
     return () => {
       window.removeEventListener('scroll', ScrollEvent);
     }
-  },[productsIdx]);
+  },[]);
   const onClickTopButton = () => {
     window.scroll({
       top: 0,

@@ -41,6 +41,7 @@ const ProductNav = ({user}) => {
     const [selectedTab2, setTab2] = useState(""); 
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(null);
+    const [productsIdx,setProductsIdx] = useState(12);
 
     const selectedStyle = {
         backgroundColor:"#FFB58D",
@@ -52,6 +53,7 @@ const ProductNav = ({user}) => {
     };
     const changeColor = (e) => {
         setTab(e.target.innerText);
+        setProductsIdx(12);
         setTab2("");
         // 대분류 탭 클릭했을 때는 무조건 setTab2 초기화 
         // 대분류 탭을 맞춤이랑 뭐 그런걸로 설정
@@ -219,6 +221,7 @@ const ProductNav = ({user}) => {
 
     const changeList = (e) => {
         setTab2(e.target.innerText);
+        setProductsIdx(12);
         setType(0);
         // 중분류 탭 클릭했을 때
         // 중분류 자체가 대분류를 클릭했을때 그거에 맞춰서 보여주는 거기 때문에
@@ -353,7 +356,6 @@ const ProductNav = ({user}) => {
             setTimeout(function() {
                 setLoading(false);
               }, 1000);
-                     
         }
     }
 
@@ -364,6 +366,7 @@ const ProductNav = ({user}) => {
         // selectedTab = 대분류 저장해줬고, selectedTab2 = 중분류 저장함
         // 그거 각각 경우 나눠서 백 요청 진행 
         setType(event.target.value);
+        setProductsIdx(12);
         if(event.target.value==1){
             // 인기순(별점순)
             if(selectedTab2===""){
@@ -1140,8 +1143,17 @@ const ProductNav = ({user}) => {
             }
         }
     };
-
-    useEffect(()=>{ 
+    const ScrollEvent =()=>{
+      let scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+      let scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+      let clientHeight = document.documentElement.clientHeight;
+      if (scrollTop + clientHeight + 2 >= scrollHeight){
+        const tmp=productsIdx+12;
+        setProductsIdx(tmp);
+      }
+    }
+    console.log(productsIdx)
+    useEffect(()=>{
         if(user == null){
             Swal.fire({
               icon: 'error',
@@ -1150,26 +1162,31 @@ const ProductNav = ({user}) => {
             }).then(() => {
               history.push("/login");
             })
-          } else{
-            // 처음에 렌더링 됐을때 전체 긁어오는애
-        try {
-            setLoading(true);
-            getAllList();
-        }catch(e){
-            console.log(e);
+        } else{
+            window.addEventListener('scroll', ScrollEvent);
+          // 처음에 렌더링 됐을때 전체 긁어오는애
+            if(products.length===0){
+                try {
+                    setLoading(true);
+                    getAllList();
+                } catch(e){
+                    console.log(e);
+                }
+                setTimeout(function() {
+                    setLoading(false);
+                }, 1500);
+            }
+
         }
-        setTimeout(function() {
-            setLoading(false);
-          }, 1500);
-        
-        return () => {
-            setType('');
-            setTab("✔ 전체");
-            setMenu(0);
-            setList(""); 
-        }
-          }
-    },[]); 
+        // return () => {
+        //     // setType('');
+        //     // setTab("✔ 전체");
+        //     // setMenu(0);
+        //     // setList("");
+        //     window.removeEventListener('scroll', ScrollEvent);
+        // }
+        return () => window.removeEventListener('scroll',ScrollEvent);
+    },[productsIdx]); 
 
     const getAllList = () => {
             http({
@@ -1321,7 +1338,7 @@ const ProductNav = ({user}) => {
                 )
             }
             <div className={styles.list}>
-                <ProductList products={products} handleHeart={onHandleHeart}/>
+                <ProductList products={products.slice(0,productsIdx)} handleHeart={onHandleHeart}/>
             </div>
             </>
         )

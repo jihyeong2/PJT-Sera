@@ -162,13 +162,7 @@ def DibsItem(request, user_id, item_id):
 def DibsItemList(request, user_id):
     connect, curs = connectMySQL()
     user = selectUser(user_id, connect, curs)
-    query = """SELECT i.*, c.* FROM item i INNER JOIN category c USING(category_id)
-                WHERE i.item_id in (SELECT item_id FROM dibs WHERE user_id=%s)"""
-    curs.execute(query, (user_id))
-    items = curs.fetchall()
-    data = []
-    if len(items) > 0:
-        data = dibsItemList(user, connect, curs)
+    data = dibsItemList(user, connect, curs)
     connect.close()
     return JsonResponse({'item_list': data}, json_dumps_params={'ensure_ascii': False})
 

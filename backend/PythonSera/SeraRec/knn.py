@@ -481,11 +481,15 @@ def correct(user, category_large = None, type=None, connect=None, curs=None):
     return data
 
 def dibsItemList(user, connect, curs):
-    query = """SELECT i.*, c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
-            WHERE si.skin_id = %s AND item_id in (SELECT item_id FROM dibs WHERE user_id = %s)"""
+    query = """SELECT i.*, c.*,si.helpful_cnt, si.caution_cnt 
+            FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id) INNER JOIN dibs d USING(item_id)
+            WHERE si.skin_id = %s AND user_id = %s
+            ORDER BY d.dibs_id DESC"""
     curs.execute(query, (user['skin_id'], user['user_id']))
     items = curs.fetchall()
-    data = makeItemList(items, user, connect, curs)
+    data = []
+    if len(items) > 0:
+        data = makeItemList(items, user, connect, curs)
     return data
 
 def makeItemList(items, user, connect, curs):

@@ -130,51 +130,62 @@ const Detail = ({user, color, skin, product}) => {
                         </Grid>
                     </Grid>
                 </div>
+
+
+            {
+                user.personalColor != null && (
+                    <>
+                        <div className={styles.bar}></div>
+                        <div className={styles.tone_detail}>
+                            <Grid container spacing={1}>
+                                <Grid item xs={2} >
+                                    {
+                                        user.personalColor.split('')[0] == "봄" && (
+                                            <div style={{backgroundColor:`${color[user.personalColor].color}`}} className={styles.tone_circle}>
+                                                <div>{user.personalColor.split('')[0]}</div>
+                                                <div>{user.personalColor.split('')[1]}</div>
+                                            </div>
+                                        )
+                                    }
+                                    {
+                                        user.personalColor.split('')[0] != "봄" && (
+                                            <div style={{backgroundColor:`${color[user.personalColor].color}`}} className={styles.tone_circle}>
+                                                <div>{user.personalColor.split(' ')[0]}</div>
+                                                <div>{user.personalColor.split(' ')[1]}</div>
+                                            </div>
+                                        )
+                                    }
+                                </Grid>
+                                <Grid item xs={7} >
+                                    <div className={styles.tone_result}>
+                                        <br></br>
+                                        <span className={styles.nickname}> {user.userNickname}</span>님은 
+                                        <span style={{color:`${color[user.personalColor].color}`}} className={styles.test_tone}>{user.personalColor}톤</span> 입니다.
+                                    </div>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <br></br>
+                                    <Button className={styles.tone_btn} variant="outlined" onClick={handleClickOpens}>정보보기</Button>
+                                    <Dialog style={{ height: '90%', }} fullWidth={fullWidth} maxWidth="lg" onClose={handleCloses} aria-labelledby="customized-dialog-title" open={opens}>
+                                        <DialogTitle id="customized-dialog-title" onClose={handleCloses}>
+                                            퍼스널컬러 정보
+                                            </DialogTitle>
+                                        <DialogContent dividers>
+                                            <Typography gutterBottom>
+                                                <PersonalColor />
+                                            </Typography>
+                                        </DialogContent>
+                                    </Dialog>
+                                </Grid>
+                            </Grid>
+                        </div>
+                    </>
+                )
+            }
             
-            <div className={styles.bar}></div>
-                <div className={styles.tone_detail}>
-                    <Grid container spacing={1}>
-                        <Grid item xs={2} >
-                            {
-                                user.personalColor.split('')[0] == "봄" && (
-                                    <div style={{backgroundColor:`${color[user.personalColor].color}`}} className={styles.tone_circle}>
-                                        <div>{user.personalColor.split('')[0]}</div>
-                                        <div>{user.personalColor.split('')[1]}</div>
-                                    </div>
-                                )
-                            }
-                            {
-                                user.personalColor.split('')[0] != "봄" && (
-                                    <div style={{backgroundColor:`${color[user.personalColor].color}`}} className={styles.tone_circle}>
-                                        <div>{user.personalColor.split(' ')[0]}</div>
-                                        <div>{user.personalColor.split(' ')[1]}</div>
-                                    </div>
-                                )
-                            }
-                        </Grid>
-                        <Grid item xs={7} >
-                            <div className={styles.tone_result}>
-                                <br></br>
-                                <span className={styles.nickname}> {user.userNickname}</span>님은 
-                                <span style={{color:`${color[user.personalColor].color}`}} className={styles.test_tone}>{user.personalColor}톤</span> 입니다.
-                            </div>
-                        </Grid>
-                        <Grid item xs={3}>
-                            <br></br>
-                            <Button className={styles.tone_btn} variant="outlined" onClick={handleClickOpens}>정보보기</Button>
-                            <Dialog style={{ height: '90%', }} fullWidth={fullWidth} maxWidth="lg" onClose={handleCloses} aria-labelledby="customized-dialog-title" open={opens}>
-                                <DialogTitle id="customized-dialog-title" onClose={handleCloses}>
-                                    퍼스널컬러 정보
-                                    </DialogTitle>
-                                <DialogContent dividers>
-                                    <Typography gutterBottom>
-                                        <PersonalColor />
-                                    </Typography>
-                                </DialogContent>
-                            </Dialog>
-                        </Grid>
-                    </Grid>
-                </div>
+
+
+
             <div className={styles.bar}></div>
             <div className={styles.detail}>
                 <Grid container spacing={2}>

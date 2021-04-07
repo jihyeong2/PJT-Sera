@@ -12,6 +12,17 @@ import { useHistory } from 'react-router';
 import Swal from 'sweetalert2';
 
 const PersonalColor = ({user,color}) => {
+  let historys = useHistory();
+  if(user == null){
+    Swal.fire({
+      icon: 'error',
+      text: '로그인 후 이용해주세요',
+      confirmButtonText: '확인',
+    }).then(() => {
+      historys.push("/login");
+    })
+  }
+
   const [prevImg, setPrevImg] = useState(profile);
   const [imgFile, setImgFile] = useState(null);
   const history = useHistory();

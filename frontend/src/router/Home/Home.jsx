@@ -5,7 +5,8 @@ import Home2 from '../../components/Home/home2';
 import Home3 from '../../components/Home/home3';
 import Home4 from '../../components/Home/home4';
 import Navbar from '../../components/common/Navbar/Navbar';
-const Home = (props) => {
+
+const Home = () => {
   const [isWhite, setIsWhite] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   useEffect(()=>{

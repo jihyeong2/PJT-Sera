@@ -3,53 +3,60 @@
 
 
 .container {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 .leftBox {
+  flex: 1 1 0; /* flex: 1 1 0 */
+  overflow: hidden;
   background-color: #fff5f0;
 }
 
 .leftBox .left_con {
-  position: relative;
-  top: 10vh;
-  margin: 0 auto;
-  width: 50%;
+  position: flex;
+    margin: 0 auto;
+    width: 60%;
+    height: auto;
 }
 
 .leftBox .left_con .left_ttl {
-  position: relative;
-  width: 100%;
-  height: auto;
+  position: flex;
+    width: 90%;
 }
 
 .leftBox .left_con .left_ttl .ttl_h {
-  position: relative;
+  position: flex;
+  margin-bottom: 0;
   font-size: font-size-50;
   font-weight: bold;
 }
 
 .leftBox .left_con .left_ttl .ttl_p {
-  position: relative;
-  top: 21px;
+  position: flex;
   font-size: 22px;
   color: color-grey-3;
   font-weight: 700;
 }
 
 .leftBox .left_con .login_form {
-  position: relative;
-  top: 70px;
-  width: 100%;
+  position: flex;
+  margin-top:6vh;
+  width: 90%;
+  height: auto;
 }
 
 .leftBox .left_con .login_form .form_ul {
-  position: relative;
+  position: flex;
   width: 100%;
   height: auto;
 }
 
 .leftBox .left_con .login_form .form_ul .form_input {
-  position: relative;
+  position: flex;
   width: 100%;
   margin-top:36px;
 }
@@ -63,19 +70,19 @@
 }
 
 .leftBox .left_con .login_form .form_ul .form_input .input {
-  position: relative;
+  position: flex;
   width: 100%;
 }
 
 .leftBox .left_con .login_form .form_ul .form_input .input_ttl {
-  position: relative;
+  position: flex;
   font-size: 18px;
   font-weight: 700;
   color: color-grey-2;
 }
 
 .leftBox .left_con .login_form .form_ul .form_input input {
-  position: relative;
+  position: flex;
   width: 100%;
   height: 30px;
   border-top: 0;
@@ -95,30 +102,25 @@
 
 /*아이디 기억하기*/
 .leftBox .left_con .login_form .form_ul li:nth-child(3) {
-  position: relative;
+  position: flex;
   width: 100%;
-  height: 25px;
 }
 
 .leftBox .left_con .login_form .form_ul li:nth-child(3) .input_left {
   display: inline-block;
-  position: relative;
-  left: 0;
+  position: flex;
 }
 
 .leftBox .left_con .login_form .form_ul li:nth-child(3) .input_left input {
-  position: relative;
-  top: 0;
-  left: -4px;
+  position: flex;
   width: 18px;
   height: 18px;
   border: 1px solid #999;
 }
 
 .leftBox .left_con .login_form .form_ul li:nth-child(3) .input_left span {
-  position: relative;
-  left: 2px;
-  bottom: 3px;
+  position: flex;
+  margin-left: 2px;
   color: #999;
   font-size: 14px;
   font-weight: 700;
@@ -126,7 +128,6 @@
 
 .leftBox .left_con .login_form .form_ul li:nth-child(3) .input_right {
   display: inline-block;
-  position: relative;
   float: right;
   color: #999;
 }
@@ -160,7 +161,7 @@
 }
 
 .leftBox .left_con .or {
-  position: relative;
+  position: flex;
   top:90px;
   margin: 0 auto;
   width: 306px;
@@ -189,11 +190,9 @@
 }
 
 .leftBox .left_con .kakao {
-  position: relative;
-  top:120px;
+  padding-top: 20px;
   margin: 0 auto;
-  width: 363px;
-  height: 54px;
+  width: 280px;
   cursor: pointer;
 }
 
@@ -203,8 +202,9 @@
 }
 
 .rightBox {
+  flex: 1 1 0; 
+  overflow: hidden; 
   background-color: #fff;
-  overflow:hidden;
 }
 
 .rightBox .right_con {

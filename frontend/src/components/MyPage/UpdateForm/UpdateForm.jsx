@@ -371,6 +371,7 @@ const UpdateForm = ({user,update}) => {
         <div className={styles.table_row}>
           <div className={styles.label}>
             나이
+            <span className={styles.highlight}> *</span>
           </div>
           <div className={styles.value}>
             <input ref={ageRef} type="number" className={styles.input} name="userAge" value={userInfo.userAge} onChange={handleChange}/>
@@ -406,6 +407,7 @@ const UpdateForm = ({user,update}) => {
         <div className={styles.table_row}>
           <div className={styles.label}>
             성별
+            <span className={styles.highlight}> *</span>
           </div>
           <div className={styles.value}>
             <button id="male" className={styles.gender_button} onClick={onClickGender}>남</button>

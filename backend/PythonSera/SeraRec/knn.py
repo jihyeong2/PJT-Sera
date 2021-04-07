@@ -94,22 +94,15 @@ def selectElementForDetail(item_id, skin_id, connect, curs):
                 FROM element e INNER JOIN item_element ie USING(element_id) WHERE ie.item_id = % s """
     curs.execute(query, (skin_id, skin_id, item_id))
     elements = curs.fetchall()
-    best_elements = []
-    worst_elements = []
-    ingredient_elements = []
+    element_result = []
     if len(elements) > 0:
         feilds = ['element_id', 'element_korean_name', 'element_english_name', 'element_purpose', 'element_level', 'correct']
         for e in elements:
             element_json = {}
             for (i, f) in zip(e, feilds):
                 element_json[f] = i
-            if element_json['correct'] == 1:
-                best_elements.append(element_json)
-            elif element_json['correct'] == -1:
-                worst_elements.append(element_json)
-            else:
-                ingredient_elements.append(element_json)
-    return best_elements, worst_elements, ingredient_elements
+            element_result.append(element_json)
+    return element_result
 
 def makeSkinVector():
     helpful, caution = selectSpecialElement()

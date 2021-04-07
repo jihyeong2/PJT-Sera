@@ -12,6 +12,8 @@ import {connect} from 'react-redux';
 import http from '../../http-django';
 import {setLike, setHate} from '../../service/product';
 import Loader from '../../components/common/Loding/Loader';
+import { useHistory } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -32,6 +34,8 @@ selectedTab2는 중분류 탭
 정렬기준 바뀌었을때 이벤트가 handleChange
    */
 const ProductNav = ({user}) => {
+    let history = useHistory();
+    // 로그인 안한거 막기
     const [menuTab, setMenu] = useState(0);
     const [selectedTab, setTab] = useState("✔ 전체"); 
     const [selectedTab2, setTab2] = useState(""); 
@@ -1136,8 +1140,18 @@ const ProductNav = ({user}) => {
             }
         }
     };
+
     useEffect(()=>{ 
-        // 처음에 렌더링 됐을때 전체 긁어오는애
+        if(user == null){
+            Swal.fire({
+              icon: 'error',
+              text: '로그인 후 이용해주세요',
+              confirmButtonText: '확인',
+            }).then(() => {
+              history.push("/login");
+            })
+          } else{
+            // 처음에 렌더링 됐을때 전체 긁어오는애
         try {
             setLoading(true);
             getAllList();
@@ -1154,6 +1168,7 @@ const ProductNav = ({user}) => {
             setMenu(0);
             setList(""); 
         }
+          }
     },[]); 
 
     const getAllList = () => {
@@ -1205,7 +1220,7 @@ const ProductNav = ({user}) => {
             )
         }
     }
-
+  
 
     const message = "리스트 로딩 중 입니다.";
     if (loading) return (

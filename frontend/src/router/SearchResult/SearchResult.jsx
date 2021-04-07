@@ -14,14 +14,11 @@ import { getSearchAll, getSearchCategory } from '../../service/search';
 import {setLike, setHate} from '../../service/product';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Footer from '../../components/common/Footer/Footer';
-<<<<<<< HEAD
 import { useHistory } from "react-router-dom";
 import Swal from 'sweetalert2';
 
-=======
 import TopButton from '../../components/common/Button/TopButton/TopButton';
 import Loader from '../../components/common/Loader/Loader';
->>>>>>> 152608681a66995edfac16a206765ae3b979590c
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -57,27 +54,6 @@ function a11yProps(index) {
 const SearchResult = ({user}) => {
   let history = useHistory();
 
-  // 로그인 안한거 막기
-  if(user == null){
-    Swal.fire({
-      icon: 'error',
-      text: '로그인 후 이용해주세요',
-      confirmButtonText: '확인',
-    }).then(() => {
-      history.push("/login");
-    })
-  }
-
-  else if(user.skinId == null){
-    Swal.fire({
-      icon: 'error',
-      text: '피부진단 후 이용해주세요',
-      confirmButtonText: '진단하기',
-    }).then(() => {
-      history.push("/skin/");
-    })
-  }
-
   const params=useParams();
   const [currTab,setCurrTab] = useState(1);
   const [idx,setIdx] = useState(12);
@@ -87,7 +63,7 @@ const SearchResult = ({user}) => {
   const [products2,setProducts2] = useState([]);
   const [value, setValue] = useState(0);
   const [isScroll,setIsScroll] = useState(false);
-  const [isLoading,setIsLoading] = useState(true);
+  const [isLoading,setIsLoading] = useState('');
   const ScrollEvent =()=>{
     if(window.scrollY>0){
       setIsScroll(true);
@@ -110,6 +86,26 @@ const SearchResult = ({user}) => {
     }
   } 
   useEffect(() => {
+    // 로그인 안한거 막기
+  if(user == null){
+    Swal.fire({
+      icon: 'error',
+      text: '로그인 후 이용해주세요',
+      confirmButtonText: '확인',
+    }).then(() => {
+      history.push("/login");
+    })
+  }
+
+  else if(user.skinId == null){
+    Swal.fire({
+      icon: 'error',
+      text: '피부진단 후 이용해주세요',
+      confirmButtonText: '진단하기',
+    }).then(() => {
+      history.push("/skin/");
+    })
+  }else{
     window.addEventListener('scroll', ScrollEvent);
     if(products.length===0 && products2.length===0){
       
@@ -148,6 +144,8 @@ const SearchResult = ({user}) => {
       }
     }
     return () => window.removeEventListener('scroll', ScrollEvent);
+  }
+    
   },[params,value,idx,idx2]);  
   const handleChange = (event, newValue) => {
     setValue(newValue);

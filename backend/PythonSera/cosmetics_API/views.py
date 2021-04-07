@@ -71,10 +71,8 @@ def item_one(request, user_id, item_id):
     item_json['tags'] = selectItemTag(item[0], connect, curs)
     item_json['dibs'] = selectDibs(user['user_id'], item[0], connect, curs)
     item_json['rating'] = item_json['helpful_cnt']-item_json['caution_cnt']
-    best_elements, worst_elements, ingredient_elements = selectElementForDetail(item[0], user['skin_id'], connect, curs)
-    item_json['best_elements'] = best_elements
-    item_json['worst_elements'] = worst_elements
-    item_json['ingredient_elements'] = ingredient_elements
+    elements = selectElementForDetail(item[0], user['skin_id'], connect, curs)
+    item_json['elements'] = elements
     connect.close()
     return JsonResponse(item_json, json_dumps_params={'ensure_ascii': False})
     

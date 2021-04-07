@@ -216,9 +216,11 @@ const CosmeticDetail = ({user}) => {
     if(!product) return null; 
   const handleCreateReview = () => {
     getReview();
+    getPicture();
   };
   const handleModifyReview = () => {
     getReview();
+    getPicture();
   };
   
 
@@ -241,6 +243,7 @@ const CosmeticDetail = ({user}) => {
   };
   const handleDeleteReview = () => {
     getReview();
+    getPicture();
   }
     return (
       <div style={{position:'relative', paddingBottom:'180px', minHeight:'100vh'}}>

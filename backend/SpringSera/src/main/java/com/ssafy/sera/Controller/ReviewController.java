@@ -34,7 +34,7 @@ public class ReviewController {
 
     @ApiOperation(value = "리뷰 작성", notes = "리뷰 작성 성공시 BaseResponse에 data값으로 '성공적으로 작성' 설정 후 반환", response = BaseResponse.class)
     @PostMapping
-    public BaseResponse writeReview(@ApiParam(value = "리뷰 객체", required=false) @RequestPart ReviewRequest request, @ApiParam(value = "사진 파일", required=false) @RequestPart(value = "file", required=true) MultipartFile file) throws IOException {
+    public BaseResponse writeReview(@ApiParam(value = "리뷰 객체", required=false) @RequestPart ReviewRequest request, @ApiParam(value = "사진 파일", required=false) @RequestPart(value = "file", required=false) MultipartFile file) throws IOException {
         BaseResponse response = null;
 
         try{
@@ -92,7 +92,7 @@ public class ReviewController {
 
     @ApiOperation(value = "리뷰 수정", notes = "반환되는 데이터는 수정 성공 / 에러 메시지", response = BaseResponse.class)
     @PutMapping
-    public BaseResponse updateReview(@ApiParam(value = "리뷰 객체", required=false) @RequestPart ReviewRequest request, @ApiParam(value = "사진 파일", required=false) @RequestPart(value = "file", required=true) MultipartFile file) {
+    public BaseResponse updateReview(@ApiParam(value = "리뷰 객체", required=false) @RequestPart ReviewRequest request, @ApiParam(value = "사진 파일", required=false) @RequestPart(value = "file", required=false) MultipartFile file) {
         BaseResponse response = null;
         try {
             reviewService.updateReview(request, file);

@@ -77,22 +77,21 @@ const useStyles = makeStyles((theme) => ({
 
 const Review = ({product, review, user, skin, picture, onCreateReview, onModifyReview, onClickReviewGood, onDeleteReview}) => {
 
-    console.log(review);
     const classes = useStyles();
     const [type, setType] = React.useState(1);
 
-    const handleChange = (event) => {
-        console.log(event);
-        setType(event.target.value);
-    };
+    // const handleChange = (event) => {
+    //     console.log(event);
+    //     setType(event.target.value);
+    // };
 
     const [state, setState] = React.useState({
         checkedA: true,
         checkedB: true,
-      })
-    const handleChange_radio = (event) => {
-        setState({ ...state, [event.target.name]: event.target.checked });
-      };
+      });
+    // const handleChange_radio = (event) => {
+    //     setState({ ...state, [event.target.name]: event.target.checked });
+    //   };
     
     const [fullWidth, setFullWidth] = React.useState(true);
 
@@ -105,8 +104,9 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
             if(idx!=index) return item
             else return true
         })
-        console.log(open);
         console.log(tmp);
+        // console.log(open);
+        // console.log(tmp);
         setOpen(tmp);
     };
     const handleClose = () => {
@@ -147,6 +147,7 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
     }
 
     const [page, setPage] = useState(0);
+    console.log(page);
     const handleClick = (offset) => {
         console.log(offset);
         setPage(offset);
@@ -181,7 +182,7 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
             <MuiThemeProvider theme={theme}>
             <div className={styles.review_list}>
                 {
-                    review.map ((review,idx) => ( 
+                    review.slice(page,page+5).map ((review,idx) => ( 
                         <div className={styless.item} key={review.reviewId}>
                             <div className={styless.review_item} >
                                 <Grid container spacing={1}>
@@ -213,16 +214,16 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
                                                 {
                                                     review.user.userNickname == user.userNickname && (
                                                         <>
-                                                            <CreateIcon fontSize="small" className={styless.change_icon} onClick={handleClickOpen} data-idx={idx}/>
-                                                            <Dialog style={{ height: '90%', }} fullWidth={fullWidth} maxWidth="lg" onClose={handleClose} aria-labelledby="customized-dialog-title" open={open[idx]}>
+                                                            <CreateIcon fontSize="small" className={styless.change_icon} onClick={handleClickOpen} data-idx={page+idx}/>
+                                                            <Dialog style={{ height: '90%', }} fullWidth={fullWidth} maxWidth="lg" onClose={handleClose} aria-labelledby="customized-dialog-title" open={open[page+idx]}>
                                                                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
                                                                     리뷰수정
                                                                     </DialogTitle>
                                                                     <DialogContent dividers>
-                                                                        <ReviewModify product={product} reviewOrigin={review} index={idx} onModifyReview={handleModifyReview}/>
+                                                                        <ReviewModify product={product} reviewOrigin={review} index={page+idx} onModifyReview={handleModifyReview}/>
                                                                     </DialogContent>
                                                             </Dialog>
-                                                            <DeleteIcon fontSize="small" className={styless.trash_icon} onClick={handleDeleteReview} data-idx={idx}/>
+                                                            <DeleteIcon fontSize="small" className={styless.trash_icon} onClick={handleDeleteReview} data-idx={page+idx}/>
                                                         </>
                                                     )
                                                 }
@@ -256,7 +257,7 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
                                             {
                                                 review.helpMark== 1 && (
                                                     <>
-                                                        <ThumbUpIcon className={styless.like_icon} style={{color:"#616BAD"}} onClick={help} data-idx={idx} />
+                                                        <ThumbUpIcon className={styless.like_icon} style={{color:"#616BAD"}} onClick={help} data-idx={page+idx} />
                                                         <div className={styless.des}>
                                                             <span className={styless.help}>도움 </span>(<span>{review.helpCnt}</span>)
                                                         </div>
@@ -266,7 +267,7 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
                                             {
                                                 review.helpMark == 0 && (
                                                     <>
-                                                        <ThumbUpIcon className={styless.like_icon} style={{color:"#999999"}} onClick={help} data-idx={idx} />
+                                                        <ThumbUpIcon className={styless.like_icon} style={{color:"#999999"}} onClick={help} data-idx={page+idx} />
                                                         <div className={styless.des}>
                                                             <span className={styless.help}>도움 </span>(<span>{review.helpCnt}</span>)
                                                         </div>
@@ -286,7 +287,7 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
                     limit={5}
                     offset={page}
                     total={review.length}
-                    onClick={(offset) => handleClick(offset)}
+                    onClick={(e,offset) => handleClick(offset)}
                     currentPageColor={"secondary"}
                     otherPageColor={"default"}
                 />

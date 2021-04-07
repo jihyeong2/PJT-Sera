@@ -64,7 +64,5 @@ public class S3Service {
         if (isExistObject == true) {
             s3Client.deleteObject(bucket, fileName);
         }
-
     }
-
 }

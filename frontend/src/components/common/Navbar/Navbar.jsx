@@ -87,7 +87,7 @@ const Navbar = ({user,logout,white}) => {
   const onClickLogout = (e) => {
     handleClose(e);
     logout();
-    history.push('/login');
+    history.push('/');
   }
   const onClickSignup = (e) => {
     handleClose(e);

@@ -5,12 +5,14 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import Box from '@material-ui/core/Box';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import http from "../../../http-common.js";
+import {connect} from 'react-redux';
 
-const ReviewModify = ({product, reviewOrigin, index, onModifyReview}) => {
-    console.log(reviewOrigin,index);
-    console.log(product);
-    const [fileName, setFileName] = useState("파일을 선택해주세요");
-    const [imageFile, setImageFile] = useState("");
+const ReviewModify = ({user,product, reviewOrigin, index, onModifyReview}) => {
+    // console.log(reviewOrigin,index);
+    // console.log(product);
+    console.log(user);
+    const [fileName, setFileName] =  useState(reviewOrigin.reviewImg===null ? "파일을 선택해주세요" : reviewOrigin.reviewImg.split('_')[1]);
+    const [imageFile, setImageFile] = useState(null);
 
     const [review, setReview] = useState({...reviewOrigin});
 
@@ -32,6 +34,7 @@ const ReviewModify = ({product, reviewOrigin, index, onModifyReview}) => {
     };
 
     const onChangeInput = (e) => {
+        console.log(e.target.name);
         setReview({
             ...review,
             [e.target.name]: e.target.value
@@ -46,9 +49,9 @@ const ReviewModify = ({product, reviewOrigin, index, onModifyReview}) => {
             alert("리뷰는 20자 이상 작성해주세요");
             return;
         }
-
         formData.append('request', new Blob([JSON.stringify(review)], { type: "application/json" }));
-
+        console.log(review);
+        // console.log(formData);
         http.put("v1/review", formData, {
             headers: {
                 "Content-Type": `multipart/form-data`,
@@ -97,7 +100,7 @@ const ReviewModify = ({product, reviewOrigin, index, onModifyReview}) => {
                 <div className={styles.good}>
                     <h3>😀 좋았던 점<span>(최소 20자 이상)</span></h3>
                     <p>
-                        <textarea rows="10" name="ReviewGoodContent" className={styles.good_text} value={review.reviewGoodContent} onChange={onChangeInput} placeholder="상품을 사용하면서 좋았던 점을 적어주세요"></textarea>
+                        <textarea rows="10" name="reviewGoodContent" className={styles.good_text} value={review.reviewGoodContent} onChange={onChangeInput} placeholder="상품을 사용하면서 좋았던 점을 적어주세요"></textarea>
                     </p>
                 </div>
                 <div className={styles.bad}>
@@ -128,4 +131,9 @@ const ReviewModify = ({product, reviewOrigin, index, onModifyReview}) => {
     );
 }
 
-export default ReviewModify;
+const mapStateToProps = (state) => ({
+    user: state.user.user,
+  })
+  export default connect(
+    mapStateToProps,
+  )(ReviewModify);

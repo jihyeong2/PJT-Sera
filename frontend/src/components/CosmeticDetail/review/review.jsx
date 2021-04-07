@@ -11,7 +11,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { makeStyles } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
-import Pagination from "material-ui-flat-pagination";
+import Pagination from "material-ui-flat-pagination"; 
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 import {connect} from 'react-redux';
@@ -76,6 +76,8 @@ const useStyles = makeStyles((theme) => ({
   const theme = createMuiTheme();
 
 const Review = ({product, review, user, skin, picture, onCreateReview, onModifyReview, onClickReviewGood}) => {
+
+    console.log(review);
     const classes = useStyles();
     const [type, setType] = React.useState(1);
 
@@ -134,9 +136,13 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
         })
     }
     const handleCreateReview = () => {
+        handleClose();
+        const tmp = [false,...open];
+        setOpen(tmp);
         onCreateReview();
     };
     const handleModifyReview = () => {
+        handleClose();
         onModifyReview();
     }
 

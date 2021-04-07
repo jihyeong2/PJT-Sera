@@ -34,7 +34,7 @@ const FindPW1 = () => {
 
   var upperCase = /[A-Z]/; //대문자
   var regKorean = /^[ㄱ-ㅎ가-힣]+$/; //한글 정규식
-  var RegExp = /[.~!@#$%^&*()_+|<>?:{}]/; //특수문자 정규식
+  var RegExp = /[~!@#$%^&*()_+|<>?:{}]/; //특수문자 정규식
 
   const onChangeUserLoginId = (e) => {
     setUserLoginId(e.target.value);
@@ -224,8 +224,8 @@ const FindPW1 = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.leftBox}>
+    <Grid container spacing={12} className={styles.container}>
+      <Grid container item xs={6} className={styles.leftBox}>
         <div className={styles.left_con}>
           <div className={styles.left_ttl}>
             <p className={styles.ttl_h}>Forget your pw?</p>
@@ -302,8 +302,8 @@ const FindPW1 = () => {
             </ul>
           </div>
         </div>
-      </div>
-      <div className={styles.rightBox}>
+      </Grid>
+      <Grid container item xs={6} className={styles.rightBox}>
         <div className={styles.right_con}>
           <img
             className={styles.right_img}
@@ -311,8 +311,8 @@ const FindPW1 = () => {
             alt=""
           />
         </div>
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   );
 };
 

@@ -289,50 +289,56 @@ const SignUp2 = () => {
                   onChange={onChangeUserAge}
                 />
               </li>
-              <li className={styles.form_input}>
-                <p className={styles.input_ttl}>
-                  휴대번호<span>*</span>
-                </p>
-                <select className={styles.input_select}>
-                  <option value="SKT">SKT</option>
-                  <option value="KT">KT</option>
-                  <option value="LG">LGU+</option>
-                </select>
-                <input
-                  className={styles.input_text_select}
-                  type="text"
-                  name="userPhone"
-                  placeholder="예)010-7123-1815"
-                  value={userPhone}
-                  onChange={onChangeUserPhone}
-                  maxLength="13"
-                />
-                <input
-                  className={styles.input_btn_select}
-                  type="button"
-                  value="인증번호 전송"
-                  onClick={sendSns}
-                  style = {{backgroundColor: snsButtonColor}}
-                />
-              </li>
-              <li className={styles.form_input}>
-                <input
-                  className={styles.input_text}
-                  type="text"
-                  name="certificateNumber"
-                  placeholder="발송된 인증번호 6자리를 입력해주세요"
-                  value={certificateNumber}
-                  onChange={onChangecertificateNumber}
-                  maxLength="6"
-                />
-                <input
-                  className={styles.input_btn}
-                  type="button"
-                  value="본인 인증"
-                  style = {{backgroundColor: certificateNumColor}}
-                  onClick = {certificate}
-                />
-              </li>
+              {
+                !ablePhone &&
+              <div>
+                <li className={styles.form_input}>
+                  <p className={styles.input_ttl}>
+                    휴대번호<span>*</span>
+                  </p>
+                  <select className={styles.input_select}>
+                    <option value="SKT">SKT</option>
+                    <option value="KT">KT</option>
+                    <option value="LG">LGU+</option>
+                  </select>
+                  <input
+                    className={styles.input_text_select}
+                    type="text"
+                    name="userPhone"
+                    placeholder="예)010-7123-1815"
+                    value={userPhone}
+                    onChange={onChangeUserPhone}
+                    maxLength="13"
+                  />
+                  <input
+                    className={styles.input_btn_select}
+                    type="button"
+                    value="인증번호 전송"
+                    onClick={sendSns}
+                    style = {{backgroundColor: snsButtonColor}}
+                  />
+                </li>
+                <li className={styles.form_input}>
+                  <input
+                    className={styles.input_text}
+                    type="text"
+                    name="certificateNumber"
+                    placeholder="발송된 인증번호 6자리를 입력해주세요"
+                    value={certificateNumber}
+                    onChange={onChangecertificateNumber}
+                    maxLength="6"
+                  />
+                  <input
+                    className={styles.input_btn}
+                    type="button"
+                    value="본인 인증"
+                    style = {{backgroundColor: certificateNumColor}}
+                    onClick = {certificate}
+                  />
+                </li>
+              </div>
+              }
+
               <li className={styles.form_input}>
                 <p className={styles.input_ttl}>
                   성별<span>*</span>

@@ -1,7 +1,5 @@
 package com.ssafy.sera.Controller.Request;
 
-import com.ssafy.sera.Domain.Item.Item;
-import com.ssafy.sera.Domain.User.User;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 

@@ -86,9 +86,9 @@ public class ReviewService {
     public void deleteReview(Long reviewId) {
         Optional<Review> deleteReview = Optional.ofNullable(reviewRepository.findByReviewId(reviewId));
         if(deleteReview.isPresent()){
-            reviewRepository.delete(deleteReview.get());
             //s3 이미지 삭제
-            if(deleteReview.get().getReviewImg().length()>=5) s3Service.delete(deleteReview.get().getReviewImg());
+            if(deleteReview.get().getReviewImg() != null) s3Service.delete(deleteReview.get().getReviewImg());
+            reviewRepository.delete(deleteReview.get());
         }
     }
 

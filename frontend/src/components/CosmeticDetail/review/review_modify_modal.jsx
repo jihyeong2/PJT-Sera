@@ -91,7 +91,7 @@ const ReviewModify = ({user,product, reviewOrigin, index, onModifyReview}) => {
                         <Rating
                             name="reviewScore"
                             defaultValue={review.reviewScore}
-                            precision={0.5}
+                            precision={1}
                             emptyIcon={<StarBorderIcon fontSize="inherit" />}
                             onChange={onChangeInput}
                         />

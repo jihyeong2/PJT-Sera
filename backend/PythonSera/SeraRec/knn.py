@@ -94,22 +94,15 @@ def selectElementForDetail(item_id, skin_id, connect, curs):
                 FROM element e INNER JOIN item_element ie USING(element_id) WHERE ie.item_id = % s """
     curs.execute(query, (skin_id, skin_id, item_id))
     elements = curs.fetchall()
-    best_elements = []
-    worst_elements = []
-    ingredient_elements = []
+    element_result = []
     if len(elements) > 0:
         feilds = ['element_id', 'element_korean_name', 'element_english_name', 'element_purpose', 'element_level', 'correct']
         for e in elements:
             element_json = {}
             for (i, f) in zip(e, feilds):
                 element_json[f] = i
-            if element_json['correct'] == 1:
-                best_elements.append(element_json)
-            elif element_json['correct'] == -1:
-                worst_elements.append(element_json)
-            else:
-                ingredient_elements.append(element_json)
-    return best_elements, worst_elements, ingredient_elements
+            element_result.append(element_json)
+    return element_result
 
 def makeSkinVector():
     helpful, caution = selectSpecialElement()
@@ -488,11 +481,15 @@ def correct(user, category_large = None, type=None, connect=None, curs=None):
     return data
 
 def dibsItemList(user, connect, curs):
-    query = """SELECT i.*, c.*,si.helpful_cnt, si.caution_cnt FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id)
-            WHERE si.skin_id = %s AND item_id in (SELECT item_id FROM dibs WHERE user_id = %s)"""
+    query = """SELECT i.*, c.*,si.helpful_cnt, si.caution_cnt 
+            FROM item i INNER JOIN category c USING(category_id) INNER JOIN item_skin si USING(item_id) INNER JOIN dibs d USING(item_id)
+            WHERE si.skin_id = %s AND user_id = %s
+            ORDER BY d.dibs_id DESC"""
     curs.execute(query, (user['skin_id'], user['user_id']))
     items = curs.fetchall()
-    data = makeItemList(items, user, connect, curs)
+    data = []
+    if len(items) > 0:
+        data = makeItemList(items, user, connect, curs)
     return data
 
 def makeItemList(items, user, connect, curs):

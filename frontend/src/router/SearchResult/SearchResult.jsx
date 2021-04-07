@@ -14,6 +14,9 @@ import { getSearchAll, getSearchCategory } from '../../service/search';
 import {setLike, setHate} from '../../service/product';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Footer from '../../components/common/Footer/Footer';
+import { useHistory } from "react-router-dom";
+import Swal from 'sweetalert2';
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -47,6 +50,29 @@ function a11yProps(index) {
   };
 }
 const SearchResult = ({user}) => {
+  let history = useHistory();
+
+  // 로그인 안한거 막기
+  if(user == null){
+    Swal.fire({
+      icon: 'error',
+      text: '로그인 후 이용해주세요',
+      confirmButtonText: '확인',
+    }).then(() => {
+      history.push("/login");
+    })
+  }
+
+  else if(user.skinId == null){
+    Swal.fire({
+      icon: 'error',
+      text: '피부진단 후 이용해주세요',
+      confirmButtonText: '진단하기',
+    }).then(() => {
+      history.push("/skin/");
+    })
+  }
+
   const params=useParams();
   const [currTab,setCurrTab] = useState(1);
   const [idx,setIdx] = useState(12);

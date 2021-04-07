@@ -4,9 +4,10 @@ import Rating from '@material-ui/lab/Rating';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import Box from '@material-ui/core/Box';
 import http from "../../../http-common.js";
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import {connect} from 'react-redux';
 
-//★props내려준후 수정예정
-const ReviewWrite = ({product}) => {
+const ReviewWrite = ({product, user, onCreateReview}) => {
 
     const [fileName, setFileName] = useState("파일을 선택해주세요");
     const [imageFile, setImageFile] = useState("");
@@ -53,8 +54,8 @@ const ReviewWrite = ({product}) => {
         }
 
         const review = {
-            userLoginId: "teset1", //테스트용 아이디, ★나중에 redux적용하기
-            itemId: 4, //테스트용 상품번호, ★나중에 url로 넘어온 상품번호 적용하기
+            userLoginId: user.userLoginId, // 유저아이디
+            itemId: product.item_id, // 상품 아이디
             reviewScore: review_score, //별점
             reviewGoodContent: review_good_content, //좋았던점
             reviewBadContent: review_bad_content, //아쉬운점
@@ -69,7 +70,10 @@ const ReviewWrite = ({product}) => {
             }
         })
             .then((res) => {
-                if (res.data.status === "success") alert("리뷰 작성 완료");
+                if (res.data.status === "success") {
+                    alert("리뷰 작성 완료");
+                    onCreateReview();
+                }
                 else alert("리뷰 작성 실패");
             })
             .catch((err) => {
@@ -81,13 +85,16 @@ const ReviewWrite = ({product}) => {
     return (
         <div className={styles.modal_i}>
             <div className={styles.modal_img}>
-                <img className={styles.modal_product_img} src={process.env.PUBLIC_URL + '/images/product_Sample.PNG'} alt="상품사진" />
+                <img className={styles.modal_product_img} src={product.item_img} alt="상품사진" />
             </div>
             <div className={styles.modal_content}>
-                <div className={styles.modal_match}><span className={styles.modal_match_name} >나랑 맞지 않아요👎🏻</span></div>
-                <p className={styles.modal_product_category}>스킨케어 > 세럼</p>
-                <p className={styles.modal_product_name}>프로바이오틱스 세라마이드 크림</p>
-                <p><span className={styles.modal_volume}>60ml /  </span><span className={styles.modal_price}>35,000원</span></p>
+                {product.rating<0 && <div style={{backgroundColor:'#AF3131'}} className={styles.modal_match}><span className={styles.modal_match_name} >나와 잘 맞지 않아요 👎🏻</span></div>}
+                {product.rating>0 && <div style={{backgroundColor:'#4E9157'}} className={styles.modal_match}><span className={styles.modal_match_name} >나와 잘 맞아요 👍🏻</span></div>}
+                {product.rating==0 && <div style={{backgroundColor:'#FAC56A'}} className={styles.modal_match}><span className={styles.modal_match_name} >보통이에요 🤏🏻</span></div>}
+                <p className={styles.modal_product_category}>{product.category_large}
+                    <ArrowForwardIosIcon fontSize="small" /> {product.category_middle}</p>
+                <p className={styles.modal_product_name}>{product.item_name}</p>
+                <p><span className={styles.modal_volume}>{product.item_volume} /  </span><span className={styles.modal_price}>{product.item_price}</span></p>
             </div>
             <div className={styles.divs}>
                 <div className={styles.star}>
@@ -96,7 +103,7 @@ const ReviewWrite = ({product}) => {
                         <Rating
                             name="customized-empty"
                             defaultValue={review_score}
-                            precision={0.5}
+                            precision={1}
                             emptyIcon={<StarBorderIcon fontSize="inherit" />}
                             onChange={changeReviewScore}
                         />
@@ -135,4 +142,10 @@ const ReviewWrite = ({product}) => {
     );
 }
 
-export default ReviewWrite;
+// export default ReviewWrite;
+const mapStateToProps = (state) => ({
+    user: state.user.user,
+  })
+  export default connect(
+    mapStateToProps,
+  )(ReviewWrite);

@@ -6,8 +6,7 @@ import Box from '@material-ui/core/Box';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import http from "../../../http-common.js";
 
-//★props내려준후 수정예정
-const ReviewModify = ({product, reviewOrigin, index}) => {
+const ReviewModify = ({product, reviewOrigin, index, onModifyReview}) => {
     console.log(reviewOrigin,index);
     console.log(product);
     const [fileName, setFileName] = useState("파일을 선택해주세요");
@@ -15,7 +14,6 @@ const ReviewModify = ({product, reviewOrigin, index}) => {
 
     const [review, setReview] = useState({...reviewOrigin});
 
-    const { reviewId, reviewImg, reviewScore, reviewGoodContent, reviewBadContent } = review;
     const changeFileName = (e) => {
         const fileName = e.target.value;
         var fileExt = fileName.substring(fileName.lastIndexOf('.'), fileName.length).toLowerCase(); //파일 확장자명
@@ -57,7 +55,10 @@ const ReviewModify = ({product, reviewOrigin, index}) => {
             }
         })
             .then((res) => {
-                if (res.data.status === "success") alert("리뷰 수정 완료");
+                if (res.data.status === "success") {
+                    alert("리뷰 수정 완료");
+                    onModifyReview();
+                }
                 else alert("리뷰 수정 실패");
             })
             .catch((err) => {
@@ -72,11 +73,13 @@ const ReviewModify = ({product, reviewOrigin, index}) => {
                 <img className={styles.modal_product_img} src={product.item_img} alt="상품사진" />
             </div>
             <div className={styles.modal_content}>
-                <div className={styles.modal_match}><span className={styles.modal_match_name} >나랑 맞지 않아요👎🏻</span></div>
+            {product.rating<0 && <div style={{backgroundColor:'#AF3131'}} className={styles.modal_match}><span className={styles.modal_match_name} >나와 잘 맞지 않아요 👎🏻</span></div>}
+                {product.rating>0 && <div style={{backgroundColor:'#4E9157'}} className={styles.modal_match}><span className={styles.modal_match_name} >나와 잘 맞아요 👍🏻</span></div>}
+                {product.rating==0 && <div style={{backgroundColor:'#FAC56A'}} className={styles.modal_match}><span className={styles.modal_match_name} >보통이에요 🤏🏻</span></div>}
                 <p className={styles.modal_product_category}>{product.category_large}
                     <ArrowForwardIosIcon fontSize="small" /> {product.category_middle}</p>
-                <p className={styles.modal_product_name}>프로바이오틱스 세라마이드 크림</p>
-                <p><span className={styles.modal_volume}>60ml /  </span><span className={styles.modal_price}>35,000원</span></p>
+                <p className={styles.modal_product_name}>{product.item_name}</p>
+                <p><span className={styles.modal_volume}>{product.item_volume} /  </span><span className={styles.modal_price}>{product.item_price}</span></p>
             </div>
             <div className={styles.divs}>
                 <div className={styles.star}>
@@ -104,7 +107,7 @@ const ReviewModify = ({product, reviewOrigin, index}) => {
                     </p>
                 </div>
                 <div className={styles.picture}>
-                    <h3>📸 사진등록</h3>
+                    <h3>📸 사진변경</h3>
                     <div className={styles.fileBox}>
                         <span class={styles.fileName}>{fileName}</span>
                         <label>
@@ -112,6 +115,7 @@ const ReviewModify = ({product, reviewOrigin, index}) => {
                         </label>
                     </div>
                     <span>* 사진은 10MB이하의 PNG, GIF, JPG 파일만 등록 가능합니다.</span>
+                    <br></br> <span>* 변경할 사진을 선택해주세요. </span>
                 </div>
                 <div className={styles.buttons}>
                     <div className={styles.all_btns}>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './review.module.css';
 import styless from './review_item.module.css';
 import Grid from '@material-ui/core/Grid';
@@ -8,13 +8,10 @@ import MoodIcon from '@material-ui/icons/Mood';
 import MoodBadIcon from '@material-ui/icons/MoodBad';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import DeleteIcon from '@material-ui/icons/Delete';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import { makeStyles } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
-import Pagination from '@material-ui/lab/Pagination';
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+import Pagination from "material-ui-flat-pagination";
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 import {connect} from 'react-redux';
@@ -75,10 +72,9 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
+  const theme = createMuiTheme();
 
-// const Review = ({onCreateReview}) => {
-const Review = ({product, review, user, skin, picture}) => {
-    // console.log("리뷰 넘어왔니? "+review);
+const Review = ({product, review, user, skin, picture, onCreateReview, onModifyReview, onClickReviewGood}) => {
     const classes = useStyles();
     const [type, setType] = React.useState(1);
 
@@ -94,21 +90,19 @@ const Review = ({product, review, user, skin, picture}) => {
     const handleChange_radio = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked });
       };
-    // const onCreateReview = (val) =>{
-    //     onCreateReview(val);
-    // }
-    // const [value, setValue] = React.useState(2);
-
+    
     const [fullWidth, setFullWidth] = React.useState(true);
 
     const [open, setOpen] = React.useState(Array(review.length).fill(false));
 
     const handleClickOpen = (e) => {
         const index = e.target.dataset.idx ? e.target.dataset.idx : e.target.parentNode.dataset.idx;
+        console.log('data-idx:' , index);
         const tmp = open.map((item,idx)=>{
             if(idx!=index) return item
             else return true
         })
+        console.log(open);
         console.log(tmp);
         setOpen(tmp);
     };
@@ -120,54 +114,53 @@ const Review = ({product, review, user, skin, picture}) => {
         setOpen(tmp);
     };
 
-    const [good, setGood] = useState(review.helpMark);
-    // const request = {
-    //     reviewId : review.reviewId, 
-    //     userId : user.userId
-    // };
-    const help = () => {
-        http.put("v1/review/help")
+    
+    const userLoginId = user.userLoginId;
+    const help = (e) => {
+        const index = e.target.dataset.idx ? e.target.dataset.idx : e.target.parentNode.dataset.idx;
+        const reviewId = review[index].reviewId;
+        http.put("v1/review/help", {
+            reviewId, 
+            userLoginId 
+        })
         .then(res=>{     
-            console.log("도움 데이터");   
-            console.log(res.data);                      
-            setGood(res.data);
+            console.log("도움 데이터");
+            onClickReviewGood(reviewId,res.data.data);
         })
         .catch(err=>{
             console.log("도움 에러");
             console.error(err);
         })
     }
+    const handleCreateReview = () => {
+        onCreateReview();
+    };
+    const handleModifyReview = () => {
+        onModifyReview();
+    }
+
+    const [page, setPage] = useState(0);
+    const handleClick = (offset) => {
+        console.log(offset);
+        setPage(offset);
+    }
 
     return(
         <div>
             <div className={styles.review_title}>REVIEW</div>
-            {/* <ReviewHead onCreateReview={onCreateReview}/> */}
-            <ReviewHead product={product} />
+            <ReviewHead product={product} onCreateReview={handleCreateReview}/>
             <div className={styles.bar}></div>
-            <div className={styles.filtering}>
-                <div className={styles.right_check}>
-                    <FormControl className={classes.formControl}>
-                        <InputLabel id="demo-simple-select-label">정렬기준</InputLabel>
-                        <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={type}
-                        
-                        onChange={handleChange}
-                        >
-                            <MenuItem value={1}>최신순</MenuItem>
-                            <MenuItem value={2}>별점순</MenuItem>
-                            <MenuItem value={3}>도움이된순</MenuItem>
-                        </Select>
-                    </FormControl>
-                </div>
-            </div>
+            <div style={{color:"#666666", marginLeft:"5%", marginTop:"40px", fontWeight:"600", fontSize:"20px"}}> 📸 최근 리뷰사진 List </div>
             <div className={styles.picture_list}>
+                
                 {
                     picture.map (picture=> ( <img className={styles.review_image} key={picture.idx} src={picture} alt="리뷰사진"/>))
                 }
                 
             </div>
+            
+            <div className={styles.pagenation}>
+            <MuiThemeProvider theme={theme}>
             <div className={styles.review_list}>
                 {
                     review.map ((review,idx) => ( 
@@ -208,7 +201,7 @@ const Review = ({product, review, user, skin, picture}) => {
                                                                     리뷰수정
                                                                     </DialogTitle>
                                                                     <DialogContent dividers>
-                                                                        <ReviewModify product={product} reviewOrigin={review} index={idx} />
+                                                                        <ReviewModify product={product} reviewOrigin={review} index={idx} onModifyReview={handleModifyReview}/>
                                                                     </DialogContent>
                                                             </Dialog>
                                                             <DeleteIcon fontSize="small" className={styless.trash_icon}/>
@@ -243,20 +236,26 @@ const Review = ({product, review, user, skin, picture}) => {
                                     <Grid item xs={1}>
                                         <div>
                                             {
-                                                review.helpMark == 1 && (
-                                                    <ThumbUpIcon className={styless.like_icon} style={{color:"#616BAD"}} onClick={help}  />
+                                                review.helpMark== 1 && (
+                                                    <>
+                                                        <ThumbUpIcon className={styless.like_icon} style={{color:"#616BAD"}} onClick={help} data-idx={idx} />
+                                                        <div className={styless.des}>
+                                                            <span className={styless.help}>도움 </span>(<span>{review.helpCnt}</span>)
+                                                        </div>
+                                                    </>
                                                 )
                                             }
                                             {
                                                 review.helpMark == 0 && (
-                                                    <ThumbUpIcon className={styless.like_icon} style={{color:"#999999"}} onClick={help}  />
+                                                    <>
+                                                        <ThumbUpIcon className={styless.like_icon} style={{color:"#999999"}} onClick={help} data-idx={idx} />
+                                                        <div className={styless.des}>
+                                                            <span className={styless.help}>도움 </span>(<span>{review.helpCnt}</span>)
+                                                        </div>
+                                                    </>
                                                 )
                                             }
                                         </div>
-                                        <div className={styless.des}>
-                                        <span className={styless.help}>도움 </span>(<span>{review.helpCnt}</span>)
-                                        </div>
-                                    
                                     </Grid>
                                 </Grid>
                             </div>
@@ -265,8 +264,16 @@ const Review = ({product, review, user, skin, picture}) => {
                 }
                 
             </div>
-            <div className={styles.pagenation}>
-                <Pagination className={styles.pagenation} count={10} shape="rounded" />
+                <Pagination
+                    limit={5}
+                    offset={page}
+                    total={review.length}
+                    onClick={(offset) => handleClick(offset)}
+                    currentPageColor={"secondary"}
+                    otherPageColor={"default"}
+                />
+            </MuiThemeProvider>
+                {/* <Pagination className={styles.pagenation} count={} shape="rounded" style={{display:"table", marginLeft:"auto", marginInlineStart: "auto"}} /> */}
             </div>
             
         </div>

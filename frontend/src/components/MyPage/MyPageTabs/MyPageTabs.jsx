@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function NavTabs() {
+export default function QNavTabs() {
   const classes = useStyles();
   
   const [value, setValue] = React.useState(0);
@@ -83,12 +83,14 @@ export default function NavTabs() {
         <Tabs
           variant="fullWidth"
           value={value}
-          onChange={handleChange}
+        onChange={handleChange}
           aria-label="nav tabs example"
         >
           <LinkTab label="정보수정" href="/drafts" {...a11yProps(0)} />
           <LinkTab label="피부진단 결과" href="/trash" {...a11yProps(1)} />
-          <LinkTab label="퍼스널컬러 결과" href="/spam" {...a11yProps(2)} />
+          
+            <LinkTab label="퍼스널컬러 결과" href="/spam" {...a11yProps(2)} />
+          
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>

@@ -34,8 +34,7 @@ public class UserController {
         BaseResponse response = null;
         try{
             request.setUserPhone(validator.phoneValidator(request.getUserPhone()));
-            Skin  skin = skinService.findBySkinType(request.getSkinId().getSkinType());
-            User user = User.createUser(request, skin);
+            User user = User.createUser1(request);
             userService.save(user);
             response = new BaseResponse("success", "성공적으로 가입");
         }catch(IllegalStateException e){
@@ -82,9 +81,9 @@ public class UserController {
         try{
             boolean isDuplicate = userService.validateDuplicateUserLoginId(userLoginId);
             if(isDuplicate){
-                response = new BaseResponse("success", "중복입니다");
+                response = new BaseResponse("success", true);
             }else{
-                response = new BaseResponse("success", "중복이 아닙니다");
+                response = new BaseResponse("success", false);
             }
         }catch(Exception e){
             response = new BaseResponse("fail", e.getMessage());
@@ -99,9 +98,9 @@ public class UserController {
         try{
             boolean isDuplicate = userService.validateDuplicateNickname(userNickname);
             if(isDuplicate){
-                response = new BaseResponse("success", "중복입니다");
+                response = new BaseResponse("success", true);
             }else{
-                response = new BaseResponse("success", "중복이 아닙니다");
+                response = new BaseResponse("success", false);
             }
         }catch(Exception e){
             response = new BaseResponse("fail", e.getMessage());
@@ -188,6 +187,21 @@ public class UserController {
             response = new BaseResponse("success", "성공");
         }catch(Exception e){
             response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    @ApiOperation(value = "아이디,전화번호에 해당하는 유저 찾기", notes = "찾으면 success, 못찾으면 fail", response = BaseResponse.class)
+    @GetMapping("/{userLoginId}/{userPhone}")
+    public BaseResponse findUserByIdAndPhone(@ApiParam(value = "사용자 로그인 아이디") @PathVariable String userLoginId,
+                                             @ApiParam(value = "사용자 로그인 아이디") @PathVariable String userPhone){
+        BaseResponse response = null;
+        try{
+            User findUser = userService.findByUserLoginIdAndUserPhone(userLoginId, validator.phoneValidator(userPhone));
+            response = new BaseResponse("success", findUser);
+        }
+        catch(Exception e){
+            response = new BaseResponse("fail",e.getMessage());
         }
         return response;
     }

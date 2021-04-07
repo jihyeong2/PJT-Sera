@@ -5,10 +5,16 @@ import { useHistory } from "react-router-dom";
 import http from "../../http-common.js";
 import {login} from '../../actions/index';
 import {connect} from 'react-redux';
+import { useCookies } from 'react-cookie';
+import Swal from "sweetalert2";
+
 const { Kakao } = window;
 
 const Login = ({login}) => {
   const history = useHistory();
+  
+  const [isRemember, setIsRemember] = useState(false);
+  const [cookies, setCookie, removeCookie] = useCookies(['rememberId']);
 
   const [userLoginId, setUserLoginId] = useState(""); //아이디
   const [userPassword, setUserPassword] = useState(""); //비밀번호
@@ -19,36 +25,66 @@ const Login = ({login}) => {
 
   var upperCase = /[A-Z]/; //대문자
   var regKorean =  /^[ㄱ-ㅎ가-힣]+$/; //한글 정규식
-  var RegExp =  /[~!@#$%^&*()_+|<>?:{}]/;//특수문자 정규식
+  var RegExp =  /[.~!@#$%^&*()_+|<>?:{}]/;//특수문자 정규식
+
+  useEffect(() => {
+    if(cookies.rememberId !== undefined){
+      setUserLoginId(cookies.rememberId);
+      setIsRemember(true);
+    }
+  }, []);
+
+  
+  //아이디 기억하기
+  const onChangeRemember = (e) => {
+    setIsRemember(e.target.checked);
+    if(e.target.checked) setCookie('rememberId', userLoginId, {maxAge:2000});
+    else removeCookie('rememberId');
+  }
 
   //again
   useEffect(() => {
-    if(userLoginId.length >= 5){
+    if(userLoginId.length >= 5 && userLoginId.length <= 12 && userPassword.length>=6 && userPassword.length<=15){
       setSubmitBorderColor("#FD6C1D");
       setSubmitTxtColor("#FD6C1D");
     }else{
       setSubmitBorderColor("#666");
       setSubmitTxtColor("#666");
     }
-  }, [userLoginId]);
-
+  }, [userLoginId, userPassword]);
 
   const onChangeUserLoginId = (e) => {
     setUserLoginId(e.target.value);
+    if(isRemember) setCookie('rememberId', e.target.value, {maxAge:2000});
   };
 
   const onChangeUserPassword = (e) => {
     setUserPassword(e.target.value);
   };
 
-  //로그인
+  //일반 로그인
   const onSubmit = (e) => {
     e.preventDefault();
 
-    if(submitBorderColor !== "#FD6C1D"){
-      alert("아이디 형식이 올바르지 않습니다(5글자 이상)");
+    if((5 > userLoginId.length || userLoginId.length > 12) || (RegExp.test(userLoginId) ||upperCase.test(userLoginId) ||regKorean.test(userLoginId))){
+      Swal.fire({
+        icon: "error",
+        text: "아이디 형식이 올바르지 않습니다",
+        showConfirmButton: false,
+        timer: 2000,
+      });
       return;
     }
+    if(userPassword.length<6 || userPassword.length>15){
+      Swal.fire({
+        icon: "error",
+        text: "비밀번호 형식이 올바르지 않습니다",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      return;
+    }
+    if(submitBorderColor==="#666") return;
 
     http
       .post("v1/login",
@@ -58,28 +94,16 @@ const Login = ({login}) => {
       )
       .then((res) => {
         if (res.data.status) {
-          const user = {
-            auth_token: res.data.auth_token,
-            userLoginId: res.data.user.userLoginId,
-            userNickname: res.data.user.userNickname,
-            userPassword: res.data.user.userPassword,
-            userAge: res.data.user.userAge,
-            userPhone: res.data.user.userPhone,
-            userGender: res.data.user.userGender,
-          };
-
-          console.log("회원정보: " + JSON.stringify(user));
-
-        
-          console.log(res);
           login(res.data.user);
-          history.push("/mypage");
+          if(res.data.user.skinId === null) history.push("/skin"); //최초 로그인(피부타입x)
+          else history.push("/");
         }else alert(res.data.message);
       })
       .catch((err) => {
         alert(err);
       });
   };
+
 
     //카카오 로그인 
     const kakaoLogin = () => {
@@ -106,35 +130,33 @@ const Login = ({login}) => {
                 userPhone: "",
                 userGender: Object.keys(res.kakao_account).includes('gender') ? res.kakao_account.gender === "female" ? "여" : "남" : '남',
               };
+
+              if(user.userLoginId === ''){
+                Swal.fire({
+                  icon: "error",
+                  text: "카카오 로그인시 이메일을 필수 체크해주세요",
+                  showConfirmButton: false,
+                  timer: 2000,
+                });
+                return;
+              }
   
               // 로그인
               http
                 .post("v1/login/kakao", user)
                 .then((res) => {
-                  console.log(res);
                   if (res.data.status) {
-                    const user = {
-                      auth_token: res.data.auth_token,
-                      userLoginId: res.data.user.userLoginId,
-                      userNickname: res.data.user.userNickname,
-                      userPassword: res.data.user.userPassword,
-                      userAge: res.data.user.userAge,
-                      userPhone: res.data.user.userPhone,
-                      userGender: res.data.user.userGender,
-                    };
-                    console.log("회원정보 " + JSON.stringify(user));
                     login(res.data.user);
-                    history.push("/mypage");
-
-                    //첫 로그인이면 피부타입 검사하러 가기
+                    if(res.data.user.skinId === null) history.push("/skin"); //최초 로그인(피부타입x)
+                      else history.push("/");
                   } else alert("카카오 로그인에 실패했습니다.");
                 })
                 .catch((err) => {
                   console.log(err);
                 });
             },
-            fail: function (error) {
-              alert(JSON.stringify(error));
+            fail: function (err) {
+              alert(JSON.stringify(err));
             },
           });
         },
@@ -159,9 +181,10 @@ const Login = ({login}) => {
                 <input
                   type="text"
                   name="userLoginId"
-                  placeholder="아이디를 입력하세요"
+                  placeholder="아이디를 입력하세요(5~12자)"
                   value={userLoginId}
                   onChange={onChangeUserLoginId}
+                  maxlength="12"
                 />
               </li>
               <li className={styles.form_input}>
@@ -169,13 +192,14 @@ const Login = ({login}) => {
                 <input
                   type="password"
                   name="userPassword"
-                  placeholder="비밀번호를 입력하세요"
+                  placeholder="비밀번호를 입력하세요(6~15자)"
                   onChange={onChangeUserPassword}
+                  maxlength="15"
                 />
               </li>
               <li className={styles.form_input}>
                 <div className={styles.input_left}>
-                  <input type="checkbox" name="remeberId" />
+                  <input type="checkbox" name="remeberId" checked={isRemember} onChange={onChangeRemember}/>
                   <span className={styles.remeberId}>아이디 기억하기</span>
                 </div>
                 <div className={styles.input_right}>

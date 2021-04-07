@@ -71,10 +71,8 @@ def item_one(request, user_id, item_id):
     item_json['tags'] = selectItemTag(item[0], connect, curs)
     item_json['dibs'] = selectDibs(user['user_id'], item[0], connect, curs)
     item_json['rating'] = item_json['helpful_cnt']-item_json['caution_cnt']
-    best_elements, worst_elements, ingredient_elements = selectElementForDetail(item[0], user['skin_id'], connect, curs)
-    item_json['best_elements'] = best_elements
-    item_json['worst_elements'] = worst_elements
-    item_json['ingredient_elements'] = ingredient_elements
+    elements = selectElementForDetail(item[0], user['skin_id'], connect, curs)
+    item_json['ingredient_elements'] = elements
     connect.close()
     return JsonResponse(item_json, json_dumps_params={'ensure_ascii': False})
     
@@ -164,13 +162,7 @@ def DibsItem(request, user_id, item_id):
 def DibsItemList(request, user_id):
     connect, curs = connectMySQL()
     user = selectUser(user_id, connect, curs)
-    query = """SELECT i.*, c.* FROM item i INNER JOIN category c USING(category_id)
-                WHERE i.item_id in (SELECT item_id FROM dibs WHERE user_id=%s)"""
-    curs.execute(query, (user_id))
-    items = curs.fetchall()
-    data = []
-    if len(items) > 0:
-        data = dibsItemList(user, connect, curs)
+    data = dibsItemList(user, connect, curs)
     connect.close()
     return JsonResponse({'item_list': data}, json_dumps_params={'ensure_ascii': False})
 

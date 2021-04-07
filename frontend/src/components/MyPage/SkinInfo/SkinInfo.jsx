@@ -247,12 +247,14 @@ const SkinInfo = ({user,skin,color,update}) => {
             <div className={styles.color_type} style={{backgroundColor:`${color[user.personalColor].color}`}}>
               {user.personalColor}
             </div> :
-            <div className={styles.color_type}>컬러 Test</div>
+            <div></div>
           }
-          
+          {
+            user.personalColor != null ?
           <button className={styles.edit_btn} onClick={handleClickOpen2}>
             <FontAwesomeIcon icon="edit" size="lg" color="#707070"/>
-          </button>
+          </button> : <div></div>
+          }
           <Dialog style={{height:'100%',}} fullWidth={fullWidth} maxWidth="lg" onClose={handleClose2} aria-labelledby="customized-dialog-title" open={open2}>
               <DialogTitle id="customized-dialog-title" onClose={handleClose2}/>
               <DialogContent>

@@ -102,4 +102,7 @@ public class UserService {
         }
     }
 
+    public User findByUserLoginIdAndUserPhone(String userLoginId, String userPhone) {
+        return userRepository.findByUserLoginIdAndUserPhone(userLoginId, userPhone);
+    }
 }

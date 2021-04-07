@@ -6,8 +6,14 @@ import Navbar from '../../components/common/Navbar/Navbar';
 import {connect} from 'react-redux';
 import {getLikeList,setHate} from '../../service/product';
 import Footer from '../../components/common/Footer/Footer';
+import TopButton from '../../components/common/Button/TopButton/TopButton';
+import Loader from '../../components/common/Loader/Loader';
+
 const MyPick = ({user}) => {
   const [products,setProducts]= useState([]);
+  const [productsIdx,setProductsIdx] = useState(12);
+  const [isScroll,setIsScroll] = useState(false);
+  const [isLoading,setIsLoading] = useState(true);
   const onHandleHeart = (item_id,idx) => {
     setHate(
       user.userId,
@@ -21,20 +27,49 @@ const MyPick = ({user}) => {
       }
     )
   };
+  const ScrollEvent =()=>{
+    if(window.scrollY>0){
+      setIsScroll(true);
+    } else{
+      setIsScroll(false);
+    }
+    let scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+    let scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+    let clientHeight = document.documentElement.clientHeight;
+    if (scrollTop + clientHeight + 2 >= scrollHeight){
+      const tmp=productsIdx+12;
+      setProductsIdx(tmp);
+    }
+  }   
   useEffect(()=>{
-    getLikeList(
-      user.userId,
-      (res)=>{
-        console.log(res.data);
-        setProducts(res.data.item_list);
-      },
-      (err)=>{
-        console.error(err);
-      }
-    )
-  },[]);
+    window.addEventListener('scroll', ScrollEvent);
+    if(products.length===0){
+      getLikeList(
+        user.userId,
+        (res)=>{
+          setProducts(res.data.item_list);
+          setIsLoading(false);
+        },
+        (err)=>{
+          console.error(err);
+          setIsLoading(false);
+        }
+      )
+    }
+    return () => {
+      window.removeEventListener('scroll', ScrollEvent);
+    }
+  },[productsIdx]);
+  const onClickTopButton = () => {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  };    
   return (
     <div style={{position:'relative', paddingBottom:'180px', minHeight:"100vh"}}>
+      <Loader open={isLoading}/>
       <div className={styles.container}>
         <Navbar/>
         <Logo type={1} className={styles.logo}/>
@@ -48,11 +83,13 @@ const MyPick = ({user}) => {
           <span> 개 입니다.</span>
           
         </div>
-        <ProductList products={products} handleHeart={onHandleHeart}/>
+        <ProductList products={products.slice(0,productsIdx)} handleHeart={onHandleHeart}/>
       </div>
+      {
+        isScroll && <TopButton onClick={onClickTopButton}/>
+      }
       <Footer/>
     </div>
-
   );
 }
 const mapStateToProps = (state) => ({

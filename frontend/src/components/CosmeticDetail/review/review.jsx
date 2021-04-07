@@ -24,6 +24,7 @@ import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import ReviewModify from './review_modify_modal';
 import http from "../../../http-common";
+import ReactLoading from 'react-loading';
 
 const dstyles = (theme) => ({
     root: {

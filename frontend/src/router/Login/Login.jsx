@@ -149,7 +149,15 @@ const Login = ({login}) => {
                     login(res.data.user);
                     if(res.data.user.skinId === null) history.push("/skin"); //최초 로그인(피부타입x)
                       else history.push("/");
-                  } else alert("카카오 로그인에 실패했습니다.");
+                  } else{
+                    Swal.fire({
+                      icon: "error",
+                      text: "카카오 로그인에 실패했습니다.",
+                      showConfirmButton: false,
+                      timer: 2000,
+                    });
+                    return;
+                  }
                 })
                 .catch((err) => {
                   console.log(err);
@@ -167,8 +175,8 @@ const Login = ({login}) => {
     };
 
   return (
-    <Grid container spacing={12} className={styles.container}>
-      <Grid container item xs={6} className={styles.leftBox}>
+    <div className={styles.container}>
+      <div className={styles.leftBox}>
         <div className={styles.left_con}>
           <div className={styles.left_ttl}>
             <p className={styles.ttl_h}>Login</p>
@@ -245,8 +253,8 @@ const Login = ({login}) => {
             />
           </div>
         </div>
-      </Grid>
-      <Grid container item xs={6} className={styles.rightBox}>
+      </div>
+      <div className={styles.rightBox}>
         <div className={styles.right_con}>
           <img
             className={styles.right_img}
@@ -254,8 +262,8 @@ const Login = ({login}) => {
             alt=""
           />
         </div>
-      </Grid>
-    </Grid>
+      </div>
+    </div>
   );
 };
 const mapStateToProps = (state) => ({

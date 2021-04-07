@@ -266,8 +266,8 @@ const SignUp2 = () => {
   }
 
   return (
-    <Grid container spacing={12} className={styles.container}>
-      <Grid container item xs={6} className={styles.leftBox}>
+    <div className={styles.container}>
+      <div className={styles.leftBox}>
         <div className={styles.left_con}>
           <div className={styles.left_ttl}>
             <p className={styles.ttl_h}>Join</p>
@@ -380,8 +380,8 @@ const SignUp2 = () => {
             &lt; &nbsp;&nbsp; prev
           </div>
         </div>
-      </Grid>
-      <Grid container item xs={6} className={styles.rightBox}>
+      </div>
+      <div className={styles.rightBox}>
         <div className={styles.right_con}>
           <img
             className={styles.right_img}
@@ -389,8 +389,8 @@ const SignUp2 = () => {
             alt=""
           />
         </div>
-      </Grid>
-    </Grid>
+      </div>
+    </div>
   );
 };
 

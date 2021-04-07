@@ -34,7 +34,7 @@ const FindPW1 = () => {
 
   var upperCase = /[A-Z]/; //대문자
   var regKorean = /^[ㄱ-ㅎ가-힣]+$/; //한글 정규식
-  var RegExp = /[~!@#$%^&*()_+|<>?:{}]/; //특수문자 정규식
+  var RegExp = /[.~!@#$%^&*()_+|<>?:{}]/; //특수문자 정규식
 
   const onChangeUserLoginId = (e) => {
     setUserLoginId(e.target.value);

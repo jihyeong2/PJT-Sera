@@ -294,10 +294,12 @@ def knn(neighbor_cnt, user, category_large=None, category_middle = None, connect
             item_idx.append(vec_item[item[0]])
             data_idx[str(i)] = item[0]
         data_np = vec_np[item_idx,:]
-    neigh.fit(data_np)
+    result = []
+    if data_np.shape[0] != 0:
+        neigh.fit(data_np)
+        result = neigh.kneighbors([input])
     rec_items = []
     rec_correctRate = []
-    result = neigh.kneighbors([input])
     input[-1] = input[-2] = input[-3] = 0
     for i, index in enumerate(result[1][0]):
         if data_idx[str(index)] not in rec_items:

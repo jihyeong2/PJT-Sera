@@ -171,6 +171,9 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
             <div className={styles.bar}></div>
             <div style={{color:"#666666", marginLeft:"5%", marginTop:"40px", fontWeight:"600", fontSize:"20px"}}> 📸 최근 리뷰사진 List </div>
             <div className={styles.picture_list}>
+                {
+                    picture.length === 0 && (<div>사진리뷰가 없어요. 😥</div>)
+                }
                 
                 {
                     picture.map (picture=> ( <img className={styles.review_image} key={picture.idx} src={picture} alt="리뷰사진"/>))
@@ -292,7 +295,6 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
                     otherPageColor={"default"}
                 />
             </MuiThemeProvider>
-                {/* <Pagination className={styles.pagenation} count={} shape="rounded" style={{display:"table", marginLeft:"auto", marginInlineStart: "auto"}} /> */}
             </div>
             
         </div>

@@ -32,6 +32,7 @@ dependencies {
 	compile('javax.xml.bind:jaxb-api:2.3.0')
 	compile('javax.activation:activation:1.1')
 	compile('org.glassfish.jaxb:jaxb-runtime:2.3.0')
+	implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
 
 	// AWS S3
 	compile('org.springframework.cloud:spring-cloud-starter-aws')
@@ -67,3 +68,4 @@ bootJar{
     archiveBaseName="SpringSera"
     archiveVersion="0.0.1-SNAPSHOT"
 }
+

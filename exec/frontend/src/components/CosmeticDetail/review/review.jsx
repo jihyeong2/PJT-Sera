@@ -118,11 +118,7 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
             userLoginId 
         })
         .then(res=>{     
-            console.log(res);
-            console.log("원래조건"+review[index].helpMark);
-            console.log("백데이터 "+res.data.data);
             onClickReviewGood(reviewId,res.data.data);
-            console.log("밑에 조건 줌"+review[index].helpMark);
         })
         .catch(err=>{
             console.error(err);

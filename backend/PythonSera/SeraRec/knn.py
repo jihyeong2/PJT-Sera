@@ -5,6 +5,7 @@ import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 import numpy as np
 import collections
+from PythonSera.settings import BASE_DIR
 
 def selectSpecialElement():
     connect, curs = connectMySQL()
@@ -211,20 +212,23 @@ def makeVector():
         json.dump(review_idx, of, ensure_ascii=False, indent="\t")
 
 def getItemNumpy():
-    path = '../crawling/data/GP/item_np.npy'
+    # path = '../crawling/data/GP/item_np.npy'
     # path = './crawling/data/GP/item_np.npy'
+    path = BASE_DIR / 'crawling/data/GP/item_np.npy'
     item_np = np.load(path)
     return item_np
 
 def getReviewNumPy():
-    path = '../crawling/data/GP/review_np.npy'
+    # path = '../crawling/data/GP/review_np.npy'
     # path = './crawling/data/GP/review_np.npy'
+    path = BASE_DIR / 'crawling/data/GP/review_np.npy'
     review_np = np.load(path)
     return review_np
 
 def getVectorNumPy():
-    path = '../crawling/data/GP/vec_np.npy'
+    # path = '../crawling/data/GP/vec_np.npy'
     # path = './crawling/data/GP/vec_np.npy'
+    path = BASE_DIR / 'crawling/data/GP/vec_np.npy'
     vec_np = np.load(path)
     return vec_np
 
@@ -243,16 +247,18 @@ def getItemIdx():
     return item_id_dict
 
 def getVecIdx():
-    path = '../crawling/data/GP/vec_idx.json'
+    # path = '../crawling/data/GP/vec_idx.json'
     # path = './crawling/data/GP/vec_idx.json'
+    path = BASE_DIR / 'crawling/data/GP/vec_idx.npy'
     vec_idx = {}
     with open(path, 'r', encoding='utf-8') as f:
         vec_idx = json.load(f)
     return vec_idx
 
 def getSkinNumpy():
-    path = '../crawling/data/GP/skin_np.npy'
+    # path = '../crawling/data/GP/skin_np.npy'
     # path = './crawling/data/GP/skin_np.npy'
+    path = BASE_DIR / 'crawling/data/GP/skin_np.npy'
     skin_np = np.load(path)
     return skin_np
 

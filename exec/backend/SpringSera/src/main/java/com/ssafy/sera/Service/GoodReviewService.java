@@ -20,14 +20,14 @@ public class GoodReviewService {
     public int pressHelp(User user, Review review){
         if(goodReviewRepository.findByUserIdAndReviewId(user, review) == null){
             GoodReview goodReview = new GoodReview(user, review); //도움테이블에 내 아이디,리뷰번호 넣기
-            int helpCnt = (int)review.pushCnt(); //리뷰테이블 도움수 업데이트
             goodReviewRepository.save(goodReview);
-            return helpCnt;
+            review.pushCnt(); //리뷰테이블 도움수 업데이트
+            return 1;
         }else{
             GoodReview goodReview = goodReviewRepository.findByUserIdAndReviewId(user, review);
-            int helpCnt = (int)review.pullCnt();
             goodReviewRepository.delete(goodReview);
-            return helpCnt;
+            review.pullCnt();
+            return 0;
         }
     }
 }

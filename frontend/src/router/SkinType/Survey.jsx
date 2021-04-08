@@ -395,7 +395,7 @@ const Survey = ({user,skin,update}) => {
         <div className={styles.btn_box}>
           {pageNum > 0 && <button onClick={onPageBack} className={styles.btn_back}>&lt;&lt; Back</button>}
           {pageNum < 3 && <button onClick={onPageNext} className={styles.btn_next}>Next &gt;&gt;</button>}
-          {pageNum == 3 && <button onClick={onSubmit} className={styles.btn_next}>진단하기 &gt;&gt;</button>}
+          {pageNum === 3 && <button onClick={onSubmit} className={styles.btn_next}>진단하기 &gt;&gt;</button>}
         </div>
       </div>
       {

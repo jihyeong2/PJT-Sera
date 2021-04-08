@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react";
 import styles from "./SignUp2.module.css";
-import Grid from "@material-ui/core/Grid";
 import http from "../../http-common.js";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router";
@@ -27,7 +26,6 @@ const SignUp2 = () => {
   const [ableGender, setAbleGender] = useState(true);
 
   useEffect(() => {
-    console.log(ableAge+", "+ablePhone+", "+ableGender);
     if(ableAge && ablePhone && ableGender){
       setSubmitBorderColor("#FD6C1D");
       setSubmitTxtColor("#FD6C1D");

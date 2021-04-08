@@ -48,13 +48,11 @@ const Home = () => {
         -o-transform: translateY(-'+ count*100 +'vh);\
         transform: translateY(-'+ count*100 +'vh);\
       ');
-      // content.style.transform = 'translateY(-'+ count*100 +'vh)';
       document.querySelector('.sec_button.active').classList.remove('active');
       buttons[count].classList.add('active');
       document.querySelector('.sec_container.show') && document.querySelector('.sec_container.show').classList.remove('show');
       if(count===1){
         document.querySelector('.first').classList.add('show');
-        console.log(document.querySelector('.first'));
       } else if(count===2){
         document.querySelector('.second').classList.add('show');
       } else{

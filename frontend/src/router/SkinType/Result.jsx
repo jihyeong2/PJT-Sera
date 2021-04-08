@@ -77,7 +77,7 @@ const Result = ({user,skin}) => {
         item_id,
         (res)=>{
           const tmp = products1.map(product => {
-            if(product.item_id != item_id) return product;
+            if(product.item_id !== item_id) return product;
             else return {...product, dibs: true, dibs_cnt: product.dibs_cnt+1};
           })
           setProducts1(tmp);
@@ -92,7 +92,7 @@ const Result = ({user,skin}) => {
         item_id,
         (res)=>{
           const tmp = products1.map(product => {
-            if(product.item_id != item_id) return product;
+            if(product.item_id !== item_id) return product;
             else return {...product, dibs: false, dibs_cnt: product.dibs_cnt-1};
           })
           setProducts1(tmp);
@@ -110,7 +110,7 @@ const Result = ({user,skin}) => {
         item_id,
         (res)=>{
           const tmp = products2.map(product => {
-            if(product.item_id != item_id) return product;
+            if(product.item_id !== item_id) return product;
             else return {...product, dibs: true, dibs_cnt: product.dibs_cnt+1};
           })
           setProducts2(tmp);
@@ -125,7 +125,7 @@ const Result = ({user,skin}) => {
         item_id,
         (res)=>{
           const tmp = products2.map(product => {
-            if(product.item_id != item_id) return product;
+            if(product.item_id !== item_id) return product;
             else return {...product, dibs: false, dibs_cnt: product.dibs_cnt-1};
           })
           setProducts2(tmp);

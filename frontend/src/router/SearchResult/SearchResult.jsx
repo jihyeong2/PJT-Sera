@@ -160,7 +160,7 @@ const SearchResult = ({user}) => {
         item_id,
         (res)=>{
           const tmp = products.map(product => {
-            if(product.item_id != item_id) return product;
+            if(product.item_id !== item_id) return product;
             else return {...product, dibs: true, dibs_cnt: product.dibs_cnt+1};
           })
           setProducts(tmp);
@@ -175,7 +175,7 @@ const SearchResult = ({user}) => {
         item_id,
         (res)=>{
           const tmp = products.map(product => {
-            if(product.item_id != item_id) return product;
+            if(product.item_id !== item_id) return product;
             else return {...product, dibs: false, dibs_cnt: product.dibs_cnt-1};
           })
           setProducts(tmp);
@@ -275,7 +275,7 @@ const SearchResult = ({user}) => {
                     <div className={styles.element_title}>
                       <FontAwesomeIcon icon={['fas', 'leaf']} size="sm" color="#333333"/>&nbsp;
                       {
-                        idx%2==0 ?
+                        idx%2===0 ?
                         <span style={{color:'#4E9157'}}>{key}</span> :
                         <span style={{color:'#6F6AFA'}}>{key}</span>
                       }

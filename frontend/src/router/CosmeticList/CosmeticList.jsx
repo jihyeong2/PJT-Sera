@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import Logo from '../../components/common/Logo/Logo';
 import Navbar from '../../components/common/Navbar/Navbar';
 import ProductNav from '../../components/CosmeticList/product_nav';
@@ -10,7 +10,6 @@ import { useHistory } from "react-router-dom";
 import Swal from 'sweetalert2';
 
 const CosmeticList = ({user}) => {
-  console.log(user);
   let history = useHistory();
   // 로그인 안한거 막기
   if(user == null){
@@ -23,7 +22,7 @@ const CosmeticList = ({user}) => {
     })
   }
   // 피부타입 없을 때 진단으로 
-  else if(user.skinId == null){
+  else if(user.skinId === null){
     Swal.fire({
       icon: 'error',
       text: '피부진단 후 이용해주세요',
@@ -34,7 +33,7 @@ const CosmeticList = ({user}) => {
   }
 
   // 필수정보 없을 때 마이페이지로 
-  else if(user.userAge == '' || user.userGender == '' || user.userNickname == '' || user.userPassword == '' || user.userPhone == ''){
+  else if(user.userAge === '' || user.userGender === '' || user.userNickname === '' || user.userPassword === '' || user.userPhone === ''){
     Swal.fire({
       icon: 'error',
       text: '필수정보를 채운 후 이용해주세요',

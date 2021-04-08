@@ -83,7 +83,6 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
         const tmp = new Array(review.length).fill(false);
         setOpen(tmp);
     },[review])
-    console.log(review.length,open);
     const classes = useStyles();
     const [type, setType] = React.useState(1);
 
@@ -96,7 +95,6 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
 
     const handleClickOpen = (e) => {
         const index = e.target.dataset.idx ? e.target.dataset.idx : e.target.parentNode.dataset.idx;
-        console.log('data-idx:' , index);
         const tmp = open.map((item,idx)=>{
             if(idx!=index) return item
             else return true
@@ -130,9 +128,6 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
         })
     }
     const handleCreateReview = () => {
-        // handleClose();
-        // const tmp = [false,...open];
-        // setOpen(tmp);
         onCreateReview();
     };
     const handleModifyReview = () => {
@@ -141,7 +136,6 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
     }
 
     const [page, setPage] = useState(0);
-    console.log(page);
     const handleClick = (offset) => {
         setPage(offset);
     }

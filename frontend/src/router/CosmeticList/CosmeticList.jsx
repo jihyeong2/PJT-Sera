@@ -71,9 +71,7 @@ const CosmeticList = ({user}) => {
       <div className={styles.containar}>
           <Navbar/>
           <Logo type={1}/>
-          <React.StrictMode>
-            <ProductNav />
-          </React.StrictMode>
+          <ProductNav />
       </div>
         {
           isScroll && <TopButton onClick={onClickTopButton}/>

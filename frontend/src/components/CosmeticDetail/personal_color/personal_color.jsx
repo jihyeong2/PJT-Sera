@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import {connect} from 'react-redux';
 import BeautyTip from '../../../components/common/BeautyTip/BeautyTip';
 import Palette from '../../../components/common/Pallette/ColorPalette';
-import userEvent from '@testing-library/user-event';
+
 const PersonalColor = ({user, color}) => {
     console.log(user);
     console.log(color);

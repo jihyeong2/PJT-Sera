@@ -31,6 +31,7 @@ def personalColorTest(request):
     # uri = ''
     try:
         result = main(uri)
+        print(uri, result)
         result = result.split('톤')[0]
         connect, curs = connectMySQL()
         query = """UPDATE user SET personal_color=%s, user_img=%s WHERE user_id=%s"""

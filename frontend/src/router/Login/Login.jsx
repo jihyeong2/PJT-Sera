@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Login.module.css";
-import Grid from "@material-ui/core/Grid";
 import { useHistory } from "react-router-dom";
 import http from "../../http-common.js";
 import {login} from '../../actions/index';
@@ -115,10 +114,6 @@ const Login = ({login}) => {
           Kakao.API.request({
             url: "/v2/user/me",
             success: function (res) {
-              console.log(res);
-              // const kakao_email = res.kakao_account.email;
-              // const kakao_age_range = res.kakao_account.age_range;
-  
               const user = {
                 userLoginId: Object.keys(res.kakao_account).includes('email') ? res.kakao_account.email.substring(0, res.kakao_account.email.indexOf("@")) : '',
                 userNickname: Object.keys(res.kakao_account).includes('nickname') ? res.kakao_account.nickname : '',

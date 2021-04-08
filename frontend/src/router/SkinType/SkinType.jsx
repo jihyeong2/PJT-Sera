@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './SkinType.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import img from '../../assets/skin_main.PNG';
-import Navbar from '../../components/common/Navbar/Navbar';
 import { useHistory } from 'react-router';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
@@ -61,7 +60,6 @@ const SkinType = ({user}) => {
     })
   }
 
-  console.log('type');
   const trueState=true;
   const [open, setOpen] = React.useState(false);
   const [fullWidth, setFullWidth] = React.useState(true);
@@ -81,9 +79,6 @@ const SkinType = ({user}) => {
   return(
     <div style={{width:'100vw',height:'100vh', overflow:"hidden"}}>
       <img className={styles.background} src={img} alt=""/>
-      {/* <div style={{width:'80%'}}>
-        <Navbar white={trueState}/>
-      </div> */}
       <div className={styles.container}>
         <div className={styles.header}>
           <div className={styles.title}>

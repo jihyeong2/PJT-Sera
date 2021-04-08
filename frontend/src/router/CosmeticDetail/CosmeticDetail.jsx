@@ -139,58 +139,60 @@ const CosmeticDetail = ({user}) => {
             console.error(err);
           })
     }
-
-    const [avg, setAvg] = useState(0); //리뷰 평점
     const [grade, setGrade] = useState({ //리뷰차트
+      star_sum: 0,
+      star_cnt: 0,
+      star_avg: 0,
       star_5: 0,
       star_4: 0,
       star_3: 0,
       star_2: 0,
       star_1: 0
     })
-    const getGrade = (a) => {
-      console.log("리뷰dd데이터:"+review);
+    const getGrade = (a) => { //리뷰 차트 계산
+      var star_sum = 0;
+      var star_cnt = 0;
+      var star_avg = 0;
+      var star_5 = 0;
+      var star_4 = 0;
+      var star_3 = 0;
+      var star_2 = 0;
+      var star_1 = 0;
+
       for(var r in a){
-        setSum(sum+a[r].reviewScore);
-        console.log("for문돔"+a[r].reviewScore);
+        star_sum += a[r].reviewScore;
+        star_cnt++;
         switch(a[r].reviewScore){
           case 1:
-            setGrade({
-              star_1: grade.star_1++
-            })
+            star_1++;
             break;
           case 2:
-            setGrade({
-              star_2: grade.star_2++
-            })
+            star_2++;
             break;
           case 3:
-            setGrade({
-              star_3: grade.star_3++
-            })
+            star_3++;
             break;
           case 4:
-            setGrade({
-              star_4: grade.star_4++
-            })
+            star_4++;
             break;
           case 5:
-            setGrade({
-              star_5: grade.star_5++
-            })
+            star_5++;
             break;
         }
       }//End 리뷰점수 추가
   
-  
       //평점 계산
-      setAvg(Math.round((sum/review.length),3).toFixed(1));
-      console.log("평점: "+avg);
-  
-      console.log("2점 개수: "+grade.star_2)
+      setGrade({
+        star_sum: star_sum,
+        star_cnt: star_cnt,
+        star_avg: star_sum>0 ? (star_sum/star_cnt).toFixed(2) : 0,
+        star_5: star_5,
+        star_4: star_4,
+        star_3: star_3,
+        star_2: star_2,
+        star_1: star_1
+      });
     }
-  
-    const [sum, setSum] = useState(0); //리뷰 점수 합
 
     const scrollEvent = useCallback(()=>{
       if(window.scrollY>0)  setIsScroll(true);
@@ -290,6 +292,7 @@ const CosmeticDetail = ({user}) => {
                   onModifyReview={handleModifyReview}
                   onDeleteReview={handleDeleteReview}
                   onClickReviewGood={handleReviewGood}
+                  grade={grade}
                 />
             </Grid>
             </Grid>

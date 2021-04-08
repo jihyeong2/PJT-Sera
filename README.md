@@ -172,8 +172,8 @@ gantt
 	퍼스널 컬러 수정 모달 : done, after t13, 1d
 	피부 진단 페이지 (소개, 설문, skip, 도움말, 결과) : done, t20, 2021-03-31, 1d
 	퍼스널 컬러 페이지 (진단, 결과) : done, t21, after t20, 1d
-	검색 & 검색 결과페이지 api : active, 2021-04-03, 2d
-	내가 찜한 목록 api : active, 2021-04-03, 2d
+	검색 & 검색 결과페이지 api : done, 2021-04-03, 2d
+	내가 찜한 목록 api : done, 2021-04-03, 2d
     
     section Backend
   	글로우픽 크롤링 : done, b_t1, 2021-03-15, 6d

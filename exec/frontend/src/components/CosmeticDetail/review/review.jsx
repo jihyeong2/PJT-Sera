@@ -109,7 +109,6 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
         setOpen(tmp);
     };
 
-    
     const userLoginId = user.userLoginId;
     const help = (e) => {
         const index = e.target.dataset.idx ? e.target.dataset.idx : e.target.parentNode.dataset.idx;
@@ -269,7 +268,7 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
                                     <Grid item xs={1}>
                                         <div>
                                             {
-                                                review.helpMark== 1 && (
+                                                review.helpMark >= 1 && (
                                                     <>
                                                         <ThumbUpIcon className={styless.like_icon} style={{color:"#616BAD"}} onClick={help} data-idx={page+idx} />
                                                         <div className={styless.des}>

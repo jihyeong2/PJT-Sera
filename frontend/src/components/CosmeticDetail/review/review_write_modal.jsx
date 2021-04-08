@@ -9,7 +9,6 @@ import {connect} from 'react-redux';
 import Swal from 'sweetalert2';
 
 const ReviewWrite = ({product, user, onCreateReview}) => {
-
     const [fileName, setFileName] = useState("파일을 선택해주세요");
     const [imageFile, setImageFile] = useState("");
     const [review_score, setReviewScore] = useState(1);
@@ -24,7 +23,7 @@ const ReviewWrite = ({product, user, onCreateReview}) => {
                 icon: 'error',
                 text: "png, gif, jpg형식의 사진만 업로드 가능합니다",
                 showConfirmButton: false,
-                timer: 2000
+                timer: 1000
               });
             return;
         }
@@ -35,7 +34,7 @@ const ReviewWrite = ({product, user, onCreateReview}) => {
                 icon: 'error',
                 text: "1MB이하의 파일만 업로드 가능합니다",
                 showConfirmButton: false,
-                timer: 2000
+                timer: 1000
               });
             return;
         }
@@ -64,7 +63,7 @@ const ReviewWrite = ({product, user, onCreateReview}) => {
                 icon: 'error',
                 text: "리뷰는 20자 이상 작성해주세요",
                 showConfirmButton: false,
-                timer: 2000
+                timer: 1000
               });
             return;
         }
@@ -78,9 +77,7 @@ const ReviewWrite = ({product, user, onCreateReview}) => {
             helpCnt: 0, //도움ㄴ
             
         }
-        console.log(review);
         formData.append('request', new Blob([JSON.stringify(review)], { type: "application/json" }));
-        console.log(formData);
         http.post("v1/review", formData, {
             headers: {
                 "Content-Type": `multipart/form-data`,
@@ -88,20 +85,21 @@ const ReviewWrite = ({product, user, onCreateReview}) => {
         })
             .then((res) => {
                 if (res.data.status === "success") {
+                    onCreateReview();
                     Swal.fire({
                         icon: 'success',
                         text: '리뷰가 등록되었습니다',
                         showConfirmButton: false,
-                        timer: 2000
-                      });
-                    onCreateReview();
+                        timer: 1000
+                    });
+                    
                 }
                 else{
                     Swal.fire({
                         icon: 'error',
                         text: '리뷰 작성을 실패했습니다',
                         showConfirmButton: false,
-                        timer: 2000
+                        timer: 1000
                       });
                 }
             })
@@ -162,7 +160,6 @@ const ReviewWrite = ({product, user, onCreateReview}) => {
                 </div>
                 <div className={styles.buttons}>
                     <div className={styles.all_btns}>
-                        <input className={styles.closeBtn} type="button" value="닫기" />
                         <input className={styles.wrtieBtn} type="button" value="작성하기" onClick={onSubmit} />
                     </div>
                 </div>

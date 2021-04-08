@@ -235,7 +235,6 @@ const ProductNav = ({user}) => {
         // 이렇게 중분류 클릭했을때 그거에 따라서 products 바꿔줌
         if(selectedTab==="✔ 맞춤"){
             if(e.target.innerText==="맞는상품"){
-                console.log(selectList.color);
                 try {
                     setLoading(true);
                     http({
@@ -1152,7 +1151,6 @@ const ProductNav = ({user}) => {
         setProductsIdx(tmp);
       }
     }
-    console.log(productsIdx)
     useEffect(()=>{
         if(user == null){
             Swal.fire({
@@ -1200,7 +1198,6 @@ const ProductNav = ({user}) => {
                 setProducts(res.data.item_list);
             })
             .catch(err=>{
-                console.log("전체 리스트 에러");
                 console.error(err);
             })
     };

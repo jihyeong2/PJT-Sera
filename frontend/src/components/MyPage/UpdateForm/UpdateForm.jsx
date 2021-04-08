@@ -175,7 +175,7 @@ const UpdateForm = ({user,update}) => {
           }
         },
         (err)=>{
-          console.err(err);
+          console.error(err);
           setIsClickedCertify(falseState);
           Swal.fire({
             icon: 'error',
@@ -211,7 +211,7 @@ const UpdateForm = ({user,update}) => {
         }
       },
       (err)=>{
-        console.err(err);
+        console.error(err);
         Swal.fire({
           icon: 'error',
           text: `${userInfo.userPhone}의 번호로 인증번호 발송에 실패했습니다.`,

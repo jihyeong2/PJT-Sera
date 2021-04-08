@@ -6,6 +6,7 @@ import Box from '@material-ui/core/Box';
 import http from "../../../http-common.js";
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import {connect} from 'react-redux';
+import Swal from 'sweetalert2';
 
 const ReviewWrite = ({product, user, onCreateReview}) => {
 
@@ -19,13 +20,23 @@ const ReviewWrite = ({product, user, onCreateReview}) => {
         const fileName = e.target.value;
         var fileExt = fileName.substring(fileName.lastIndexOf('.'), fileName.length).toLowerCase(); //파일 확장자명
         if (fileExt !== '.jpg' && fileExt !== '.png' && fileExt !== '.gif') {
-            alert("png, gif, jpg형식의 사진만 업로드 가능합니다");
+            Swal.fire({
+                icon: 'error',
+                text: "png, gif, jpg형식의 사진만 업로드 가능합니다",
+                showConfirmButton: false,
+                timer: 2000
+              });
             return;
         }
 
-        var maxSize = 10 * 1024 * 1024; //10mb
+        var maxSize = 1024 * 1024; //10mb
         if (e.target.files[0].size > maxSize) {
-            alert("10MB이하의 파일만 업로드 가능합니다");
+            Swal.fire({
+                icon: 'error',
+                text: "1MB이하의 파일만 업로드 가능합니다",
+                showConfirmButton: false,
+                timer: 2000
+              });
             return;
         }
         setFileName(e.target.value);
@@ -49,7 +60,12 @@ const ReviewWrite = ({product, user, onCreateReview}) => {
         formData.append('file', imageFile); //첨부파일
 
         if (review_good_content.length < 20 || review_bad_content.length < 20) {
-            alert("리뷰는 20자 이상 작성해주세요");
+            Swal.fire({
+                icon: 'error',
+                text: "리뷰는 20자 이상 작성해주세요",
+                showConfirmButton: false,
+                timer: 2000
+              });
             return;
         }
 
@@ -59,7 +75,8 @@ const ReviewWrite = ({product, user, onCreateReview}) => {
             reviewScore: review_score, //별점
             reviewGoodContent: review_good_content, //좋았던점
             reviewBadContent: review_bad_content, //아쉬운점
-            helpCnt: 0, //도움
+            helpCnt: 0, //도움ㄴ
+            
         }
         console.log(review);
         formData.append('request', new Blob([JSON.stringify(review)], { type: "application/json" }));
@@ -71,10 +88,22 @@ const ReviewWrite = ({product, user, onCreateReview}) => {
         })
             .then((res) => {
                 if (res.data.status === "success") {
-                    alert("리뷰 작성 완료");
+                    Swal.fire({
+                        icon: 'success',
+                        text: '리뷰가 등록되었습니다',
+                        showConfirmButton: false,
+                        timer: 2000
+                      });
                     onCreateReview();
                 }
-                else alert("리뷰 작성 실패");
+                else{
+                    Swal.fire({
+                        icon: 'error',
+                        text: '리뷰 작성을 실패했습니다',
+                        showConfirmButton: false,
+                        timer: 2000
+                      });
+                }
             })
             .catch((err) => {
                 console.error(err);
@@ -129,7 +158,7 @@ const ReviewWrite = ({product, user, onCreateReview}) => {
                             <input type="file" name="picture" className={styles.fileInput} onChange={changeFileName} />
                         </label>
                     </div>
-                    <span>* 사진은 10MB이하의 PNG, GIF, JPG 파일만 등록 가능합니다.</span>
+                    <span>* 사진은 1MB이하의 PNG, GIF, JPG 파일만 등록 가능합니다.</span>
                 </div>
                 <div className={styles.buttons}>
                     <div className={styles.all_btns}>

@@ -124,8 +124,8 @@ public class ReviewController {
         try {
             User user = userService.findByUserLoginId(request.getUserLoginId());
             Review review = reviewService.findByReviewId(request.getReviewId());
-            long helpCnt = grs.pressHelp(user, review);
-            response = new BaseResponse("success", helpCnt);
+            int helpMark = grs.pressHelp(user, review);
+            response = new BaseResponse("success", helpMark);
         } catch (IllegalStateException e) {
             response = new BaseResponse("fail", e.getMessage());
         }

@@ -71,10 +71,15 @@ const PersonalColor = ({user,color,update}) => {
         const tmp = {...user, personalColor:res.data.personal_color,userImg:res.data.user_img};
         console.log(tmp);
         update(tmp);
-
         history.push("/personal_color/result");
       },
       (err)=>{
+        Swal.fire({
+            icon: 'error',
+            text: "퍼스널컬러를 진단할 수 없는 이미지입니다.",
+            showConfirmButton: false,
+            timer: 2000
+        });
         console.log(err);
       }
     )

@@ -26,7 +26,7 @@ const PersonalColorResult = ({user,color}) => {
     } else{
       setIsScroll(false);
     }
-  },[]);  
+  },[]);
   useEffect(()=>{
     window.addEventListener('scroll', scrollEvent, true);
     setTimeout(()=>{
@@ -42,7 +42,7 @@ const PersonalColorResult = ({user,color}) => {
       left: 0,
       behavior: 'smooth'
     });
-  };      
+  };
   return (
     <div style={{position:'relative', paddingBottom:'180px', minHeight:"100vh"}}>
       <div className={styles.container}>

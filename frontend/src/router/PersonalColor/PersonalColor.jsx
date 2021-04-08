@@ -12,7 +12,7 @@ import { useHistory } from 'react-router';
 import Swal from 'sweetalert2';
 import TopButton from '../../components/common/Button/TopButton/TopButton';
 
-const PersonalColor = ({user,color}) => {
+const PersonalColor = ({user,color,update}) => {
   let historys = useHistory();
   if(user == null){
     Swal.fire({
@@ -47,13 +47,14 @@ const PersonalColor = ({user,color}) => {
     colorTest(
       formData,
       (res)=>{
-        console.log(user);
         console.log(res);
-        const tmp = {...user};
-        // update(tmp);
+        console.log(user);
+        const tmp = {...user, personalColor:res.data.personal_color,userImg:res.data.user_img};
+        console.log(tmp);
+        update(tmp);
         // Swal.fire({
         //   icon: 'success',
-        //   text: `${user.userNickname}님의 피부타입은 ${result}입니다.`,
+        //   text: `${user.userNickname}님의 피부타입은 ${res.data.personal_color}입니다.`,
         //   showConfirmButton: false,
         //   timer: 1500
         // });

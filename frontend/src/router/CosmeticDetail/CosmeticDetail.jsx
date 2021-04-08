@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import DetailLeft from '../../components/CosmeticDetail/detail/detail_left';
 import DetailRight from '../../components/CosmeticDetail/detail/detail_right';
 import Youtube from '../../components/CosmeticDetail/youtube/youtube_list';
@@ -9,7 +9,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import MuiDialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
@@ -71,8 +70,6 @@ const CosmeticDetail = ({user}) => {
             }
           })
           .then(res=>{
-              console.log("데이터");
-            console.log(res.data);
             setProduct(res.data);
 
             const requestOptions = {
@@ -86,7 +83,6 @@ const CosmeticDetail = ({user}) => {
             .catch(error => console.log('error', error));
           })
           .catch(err=>{
-              console.log("에러");
             console.error(err);
           })
     }
@@ -111,8 +107,6 @@ const CosmeticDetail = ({user}) => {
             }
           })
           .then(res=>{
-              console.log("리뷰 리스트 데이터");
-            console.log(res.data.data);
             setReview(res.data.data);
             getGrade(res.data.data);
           })
@@ -134,12 +128,9 @@ const CosmeticDetail = ({user}) => {
             }
           })
           .then(res=>{
-              console.log("최신 사진 데이터");
-            console.log(res.data.data);
             setPicture(res.data.data);
           })
           .catch(err=>{
-              console.log("최신 사진 에러");
             console.error(err);
           })
     }

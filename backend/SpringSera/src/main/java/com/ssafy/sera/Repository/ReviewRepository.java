@@ -21,7 +21,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     GoodReview findHelpMark(@Param("userId") User user, @Param("reviewId") Review reviewId);
 
     //사진리뷰 최신순 8장 가져오기
-    @Query("select r.reviewImg from Review r where length(r.reviewImg) >= 5 and r.item = :item order by r.writeDate desc")
+    @Query("select r.reviewImg from Review r where length(r.reviewImg) >= 5 and r.item = :item order by r.reviewId desc")
     List<String> findPhotoRecent(Item item);
 
     //리뷰리스트 최신순 정렬

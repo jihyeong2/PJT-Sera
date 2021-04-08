@@ -128,6 +128,7 @@ const CosmeticDetail = ({user}) => {
             }
           })
           .then(res=>{
+            console.log(res.data.data);
             setPicture(res.data.data);
           })
           .catch(err=>{
@@ -223,12 +224,12 @@ const CosmeticDetail = ({user}) => {
   const [fullWidth, setFullWidth] = React.useState(true);
     if(!product) return null; 
   const handleCreateReview = () => {
-    getReview();
     getPicture();
+    getReview();
   };
   const handleModifyReview = () => {
-    getReview();
     getPicture();
+    getReview();
   };
   
 

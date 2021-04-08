@@ -1284,7 +1284,7 @@ const ProductNav = ({user}) => {
                         <ButtonGroup variant="text" aria-label="text primary button group">
                             <Button><span style={selectedTab2==="스킨케어" ? selectStyle : startStyle} onClick={changeList}>스킨케어</span></Button>
                             <Button><span style={selectedTab2==="선케어" ? selectStyle : startStyle} onClick={changeList}>선케어</span></Button>
-                            <Button><span style={selectedTab2==="클랜징" ? selectStyle : startStyle} onClick={changeList}>클랜징</span></Button>
+                            <Button><span style={selectedTab2==="클렌징" ? selectStyle : startStyle} onClick={changeList}>클렌징</span></Button>
                         </ButtonGroup>
                     </div>
                 )
@@ -1307,7 +1307,7 @@ const ProductNav = ({user}) => {
                         <ButtonGroup variant="text" aria-label="text primary button group">
                             <Button><span style={selectedTab2==="스킨케어" ? selectStyle : startStyle} onClick={changeList}>스킨케어</span></Button>
                             <Button><span style={selectedTab2==="메이크업" ? selectStyle : startStyle} onClick={changeList} onClick={changeList}>메이크업</span></Button>
-                            <Button><span style={selectedTab2==="클랜징" ? selectStyle : startStyle} onClick={changeList}>클랜징</span></Button>
+                            <Button><span style={selectedTab2==="클렌징" ? selectStyle : startStyle} onClick={changeList}>클렌징</span></Button>
                             <Button><span style={selectedTab2==="쉐이빙" ? selectStyle : startStyle} onClick={changeList}>쉐이빙</span></Button>
                         </ButtonGroup>
                     </div>

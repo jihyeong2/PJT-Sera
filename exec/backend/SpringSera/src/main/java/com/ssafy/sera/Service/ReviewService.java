@@ -105,9 +105,10 @@ public class ReviewService {
         int cnt = 0;
         List<String> totalImgList = reviewRepository.findPhotoRecent(item);
         List<String> top8ImgList = new ArrayList<>();
-        while(cnt++ < 8){
-            if(cnt >= totalImgList.size()) break;
+        while(cnt < 8){
+            if(cnt > totalImgList.size()) break;
             top8ImgList.add(totalImgList.get(cnt));
+            cnt++;
         }
         return top8ImgList;
     }

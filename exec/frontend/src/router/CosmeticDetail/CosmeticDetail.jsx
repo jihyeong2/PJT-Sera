@@ -223,12 +223,12 @@ const CosmeticDetail = ({user}) => {
   const [fullWidth, setFullWidth] = React.useState(true);
     if(!product) return null; 
   const handleCreateReview = () => {
-    getReview();
     getPicture();
+    getReview();
   };
   const handleModifyReview = () => {
-    getReview();
     getPicture();
+    getReview();
   };
   
 

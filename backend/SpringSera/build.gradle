@@ -30,9 +30,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	compile('javax.xml.bind:jaxb-api:2.3.0')
-	compile('javax.activation:activation:1.1')
-	compile('org.glassfish.jaxb:jaxb-runtime:2.3.0')
-	implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
+	implementation group: 'org.javassist', name: 'javassist', version: '3.25.0-GA'
+//	compile('javax.activation:activation:1.1')
+//	compile('org.glassfish.jaxb:jaxb-runtime:2.3.0')
+//	implementation group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
 
 	// AWS S3
 	compile('org.springframework.cloud:spring-cloud-starter-aws')

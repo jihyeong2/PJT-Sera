@@ -1,20 +1,8 @@
+# 💄 화장품 추천 서비스
+
 <p align="center">
   <img width="250px;" src="/uploads/1104acdedd3c689307b2f8c84c93d81c/Sera_Logo2.png" />
-  <br/>화장품 추천 서비스💄
-  <p align="center">
- <img src="https://img.shields.io/badge/JavaScript-ES6+-green?logo=javascript">
- <img src="https://img.shields.io/badge/Rect.js-v4.5.10-green?logo=react.js">
- <img src="https://img.shields.io/badge/Redux-v3-green?logo=Redux">
- <img src="https://img.shields.io/badge/Java-v1.8-blue?logo=java">
- <img src="https://img.shields.io/badge/spring-v3.9.15-blue?logo=spring">
- <img src="https://img.shields.io/badge/spring data JPA-v3.9.15-blue?logo=JPA">
- <img src="https://img.shields.io/badge/python-v3.6-blue?logo=python">
- <img src="https://img.shields.io/badge/Django-v3.6-blue?logo=django">
- <img src="https://img.shields.io/badge/AWS%20RDS----blue?logo=amazonaws">
- <img src="https://img.shields.io/badge/MySQL-v8.0-blue?logo=mysql">
-  </p>
-<br/>  
-<br/> 
+  <br/>
 </p>    
  
 > 서비스명: Será       

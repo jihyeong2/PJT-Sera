@@ -109,7 +109,6 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
         setOpen(tmp);
     };
 
-    
     const userLoginId = user.userLoginId;
     const help = (e) => {
         const index = e.target.dataset.idx ? e.target.dataset.idx : e.target.parentNode.dataset.idx;
@@ -119,7 +118,11 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
             userLoginId 
         })
         .then(res=>{     
+            console.log(res);
+            console.log("원래조건"+review[index].helpMark);
+            console.log("백데이터 "+res.data.data);
             onClickReviewGood(reviewId,res.data.data);
+            console.log("밑에 조건 줌"+review[index].helpMark);
         })
         .catch(err=>{
             console.error(err);
@@ -269,7 +272,7 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
                                     <Grid item xs={1}>
                                         <div>
                                             {
-                                                review.helpMark== 1 && (
+                                                review.helpMark >= 1 && (
                                                     <>
                                                         <ThumbUpIcon className={styless.like_icon} style={{color:"#616BAD"}} onClick={help} data-idx={page+idx} />
                                                         <div className={styless.des}>

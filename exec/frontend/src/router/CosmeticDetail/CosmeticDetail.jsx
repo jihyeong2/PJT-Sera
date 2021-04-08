@@ -128,7 +128,6 @@ const CosmeticDetail = ({user}) => {
             }
           })
           .then(res=>{
-            console.log(res.data.data);
             setPicture(res.data.data);
           })
           .catch(err=>{

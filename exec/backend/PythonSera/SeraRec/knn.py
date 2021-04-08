@@ -301,12 +301,13 @@ def knn(neighbor_cnt, user, category_large=None, category_middle = None, connect
     rec_items = []
     rec_correctRate = []
     input[-1] = input[-2] = input[-3] = 0
-    for i, index in enumerate(result[1][0]):
-        if data_idx[str(index)] not in rec_items:
-            rec_items.append(data_idx[str(index)])
-            correct_vec = data_np[index,:] * input
-            help_cnt, caution_cnt = calCorrectRate(correct_vec,'knn')
-            rec_correctRate.append([help_cnt, caution_cnt])
+    if len(result) != 0:
+        for i, index in enumerate(result[1][0]):
+            if data_idx[str(index)] not in rec_items:
+                rec_items.append(data_idx[str(index)])
+                correct_vec = data_np[index,:] * input
+                help_cnt, caution_cnt = calCorrectRate(correct_vec,'knn')
+                rec_correctRate.append([help_cnt, caution_cnt])
     return rec_items, rec_correctRate
 
 def search(user, keyword, category_large=None, connect=None, curs=None):

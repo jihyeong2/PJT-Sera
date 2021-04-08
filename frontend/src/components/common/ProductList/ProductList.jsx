@@ -14,7 +14,7 @@ const ProductList = ({products, handleHeart,handleHeart2,productsKey2}) => {
     <Grid className={styles.products} container spacing={5}>
         {products.map((product,idx) => (
           <Grid key={product.item_id} item xs={3} className={styles.product}>
-              <Product key={product.item_id} index={idx} productsKey2={productsKey2} product={product} handleHeart={onHandleHeart} handleHeart2={onHandleHeart2}/>
+              <Product index={idx} productsKey2={productsKey2} product={product} handleHeart={onHandleHeart} handleHeart2={onHandleHeart2}/>
           </Grid>
         ))}
     </Grid>

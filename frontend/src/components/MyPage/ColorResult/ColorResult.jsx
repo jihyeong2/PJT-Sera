@@ -65,9 +65,9 @@ const ColorResult = ({user,color}) => {
             </Grid>
           </div>
         </div>
-     :
-     <div style={{width:'300px', margin:'0 auto', textAlign:'center', marginTop: '10vh', color: '#888'}}>퍼스널컬러 진단 결과가 아직 없습니다.<br/>검사를 먼저 진행해주세요.</div> 
-      }
+    :
+      <div style={{width:'300px', margin:'0 auto', textAlign:'center', marginTop: '10vh', color: '#888'}}>퍼스널컬러 진단 결과가 아직 없습니다.<br/>검사를 먼저 진행해주세요.</div> 
+    }
     </>
   )
 };

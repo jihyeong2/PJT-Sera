@@ -21,7 +21,7 @@ const ReviewWrite = ({product, user, onCreateReview}) => {
         if (fileExt !== '.jpg' && fileExt !== '.png' && fileExt !== '.gif') {
             Swal.fire({
                 icon: 'error',
-                text: "png, gif, jpg형식의 사진만 업로드 가능합니다",
+                text: "png, jpg형식의 사진만 업로드 가능합니다",
                 showConfirmButton: false,
                 timer: 1000
               });
@@ -153,10 +153,10 @@ const ReviewWrite = ({product, user, onCreateReview}) => {
                     <div className={styles.fileBox}>
                         <span class={styles.fileName}>{fileName}</span>
                         <label>
-                            <input type="file" name="picture" className={styles.fileInput} onChange={changeFileName} />
+                            <input type="file" name="picture" accept="image/png, image/jpeg" className={styles.fileInput} onChange={changeFileName} />
                         </label>
                     </div>
-                    <span>* 사진은 1MB이하의 PNG, GIF, JPG 파일만 등록 가능합니다.</span>
+                    <span>* 사진은 1MB이하의 PNG, JPG 파일만 등록 가능합니다.</span>
                 </div>
                 <div className={styles.buttons}>
                     <div className={styles.all_btns}>

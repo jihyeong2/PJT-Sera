@@ -55,6 +55,7 @@ public class Review implements Serializable {
         reviewInput.setWriteDate(reviewRequest.getWriteDate());
         reviewInput.setReviewGoodContent(reviewRequest.getReviewGoodContent());
         reviewInput.setReviewBadContent(reviewRequest.getReviewBadContent());
+        reviewInput.setReviewScore(reviewRequest.getReviewScore());
         reviewInput.setHelpCnt(reviewRequest.getHelpCnt());
         return reviewInput;
     }

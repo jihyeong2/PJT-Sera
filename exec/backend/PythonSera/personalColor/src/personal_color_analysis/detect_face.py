@@ -6,13 +6,14 @@ import dlib
 import cv2
 import matplotlib.pyplot as plt
 import urllib.request
+from PythonSera.settings import BASE_DIR
 
 class DetectFace:
     def __init__(self, url):
         # initialize dlib's face detector (HOG-based)
         # and then create the facial landmark predictor
         self.detector = dlib.get_frontal_face_detector()
-        self.predictor = dlib.shape_predictor('./personalColor/res/shape_predictor_68_face_landmarks.dat')
+        self.predictor = dlib.shape_predictor( BASE_DIR / 'personalColor/res/shape_predictor_68_face_landmarks.dat' )
 
         #face detection part
         # self.img = cv2.imread(image)

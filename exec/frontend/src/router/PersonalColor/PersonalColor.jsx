@@ -66,10 +66,18 @@ const PersonalColor = ({user,color,update}) => {
     colorTest(
       formData,
       (res)=>{
-        console.log(res.data);
-        const tmp = {...user, personalColor:res.data.personal_color,userImg:res.data.user_img};
-        update(tmp);
-        history.push("/personal_color/result");
+        if(res.data.personal_color==false){
+          Swal.fire({
+              icon: 'error',
+              text: "퍼스널컬러를 진단할 수 없는 이미지입니다.",
+              showConfirmButton: false,
+              timer: 2000
+          });
+        } else{
+            const tmp = {...user, personalColor:res.data.personal_color,userImg:res.data.user_img};
+            update(tmp);
+            history.push("/personal_color/result");
+        }
       },
       (err)=>{
         Swal.fire({

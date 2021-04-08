@@ -66,6 +66,7 @@ const PersonalColor = ({user,color,update}) => {
     colorTest(
       formData,
       (res)=>{
+        console.log(res.data);
         const tmp = {...user, personalColor:res.data.personal_color,userImg:res.data.user_img};
         update(tmp);
         history.push("/personal_color/result");

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styles from "./SignUp1.module.css";
-import Grid from "@material-ui/core/Grid";
 import { useHistory } from "react-router-dom";
 import http from "../../http-common.js";
 import Swal from "sweetalert2";
@@ -41,7 +40,6 @@ const SignUp1 = () => {
   const onChangeUserNickname = (e) => {
     setAbleNickname(false);
     setUserNickname(e.target.value);
-    console.log(e.target.value);
     if ((4 <= e.target.value.length && e.target.value.length <= 6) && !RegExp.test(e.target.value)) setNameButtonColor("#FD6C1D");
     else setNameButtonColor("#666");
   };
@@ -69,7 +67,6 @@ const SignUp1 = () => {
   };
 
   useEffect(() => {
-    console.log(ableLoginId + ", " + ableNickname + ", " + ablePassword);
     if (ableLoginId && ableNickname && ablePassword) setNextColor("#FD6C1D");
     else setNextColor("#999");
   }, [ableLoginId, ableNickname, ablePassword]);
@@ -84,7 +81,6 @@ const SignUp1 = () => {
       http
         .get("v1/users/duplicate/" + userLoginId)
         .then((res) => {
-          console.log(res.data);
           if (res.data.data) {
             Swal.fire({
               icon: "error",

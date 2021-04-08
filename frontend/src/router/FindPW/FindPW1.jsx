@@ -22,7 +22,6 @@ const FindPW1 = () => {
   const [ablePhone, setAblePhone] = useState(false);
 
   useEffect(() => {
-    console.log(ableLoginId + ", " + ablePhone);
     if (ableLoginId && ablePhone) {
       setSubmitBorderColor("#FD6C1D");
       setSubmitTxtColor("#FD6C1D");
@@ -156,7 +155,6 @@ const FindPW1 = () => {
       http
         .get("v1/auth/" + certificateNumber)
         .then((res) => {
-          console.log(res.data.data);
           if (res.data.data === "true") {
             setAblePhone(true);
             Swal.fire({

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styles from "./FindPW2.module.css";
-import Grid from "@material-ui/core/Grid";
 import http from "../../http-common.js";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router";
@@ -44,7 +43,6 @@ const FindPW2 = () => {
   };
 
   useEffect(() => {
-    console.log(ablePassword);
     if(ablePassword){
       setSubmitBorderColor("#FD6C1D");
       setSubmitTxtColor("#FD6C1D");

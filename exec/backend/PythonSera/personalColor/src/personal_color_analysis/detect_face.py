@@ -13,7 +13,8 @@ class DetectFace:
         # initialize dlib's face detector (HOG-based)
         # and then create the facial landmark predictor
         self.detector = dlib.get_frontal_face_detector()
-        self.predictor = dlib.shape_predictor( BASE_DIR / 'personalColor/res/shape_predictor_68_face_landmarks.dat' )
+        path = BASE_DIR / 'personalColor/res/shape_predictor_68_face_landmarks.dat'
+        self.predictor = dlib.shape_predictor(path)
 
         #face detection part
         # self.img = cv2.imread(image)

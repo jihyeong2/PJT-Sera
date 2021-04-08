@@ -67,6 +67,8 @@ const ReviewHead = ({ product, onCreateReview, grade }) => {
         setOpen(false);
     };
     const handleCreateReview = () => {
+        setOpen(false);
+        console.log('얘왜안오냐 시발')
         onCreateReview();
     };
     return (

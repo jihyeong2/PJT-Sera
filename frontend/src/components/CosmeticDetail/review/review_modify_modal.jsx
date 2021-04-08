@@ -147,7 +147,6 @@ const ReviewModify = ({user,product, reviewOrigin, index, onModifyReview}) => {
                 </div>
                 <div className={styles.buttons}>
                     <div className={styles.all_btns}>
-                        <input className={styles.closeBtn} type="button" value="닫기"  />
                         <input className={styles.wrtieBtn} type="button" value="수정하기" onClick={onSubmit} />
                     </div>
                 </div>

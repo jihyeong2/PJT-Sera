@@ -6,8 +6,6 @@ import BeautyTip from '../../../components/common/BeautyTip/BeautyTip';
 import Palette from '../../../components/common/Pallette/ColorPalette';
 
 const PersonalColor = ({user, color}) => {
-    console.log(user);
-    console.log(color);
     return(
         <div className={styles.container}>
             <div className={styles.main_title}>

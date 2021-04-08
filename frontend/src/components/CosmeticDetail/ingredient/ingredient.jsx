@@ -5,7 +5,6 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import {connect} from 'react-redux';
 
 const Ingredient = ({user, product}) => {
-    console.log(product);
     return(
         <div className={styles.modal_i}>
             <div className={styles.modal_img}>

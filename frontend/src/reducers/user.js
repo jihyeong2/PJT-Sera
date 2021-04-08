@@ -4,7 +4,6 @@ const initialState = {
 const user = (state = initialState, action) => {
   switch (action.type) {
     case 'LOGIN':
-      console.log(action.user);
       return {user: action.user}
     case 'LOGOUT':
       return {user: null}

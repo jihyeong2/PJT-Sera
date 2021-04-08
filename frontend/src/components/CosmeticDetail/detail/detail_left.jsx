@@ -12,13 +12,10 @@ const Detail = ({ product, user }) => {
     const heartAdd = () => {
         http.put(`v1/items/dibs/${user.userId}/${product.item_id}`)
         .then(res=>{     
-            console.log("좋아요 성공");
-            console.log(res.data);
             setHeart(true);
             setCnt(cnt+1);
         })
         .catch(err=>{
-            console.log("좋아요 에러");
             console.error(err);
         })
     }
@@ -26,13 +23,10 @@ const Detail = ({ product, user }) => {
     const heartDel = () => {
         http.delete(`v1/items/dibs/${user.userId}/${product.item_id}`)
         .then(res=>{     
-            console.log("좋아요 취소 성공");
-            console.log(res.data);
             setHeart(false);
             setCnt(cnt-1);
         })
         .catch(err=>{
-            console.log("좋아요 취소 에러");
             console.error(err);
         })
     }

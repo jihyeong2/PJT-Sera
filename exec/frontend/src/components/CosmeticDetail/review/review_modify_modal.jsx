@@ -18,23 +18,13 @@ const ReviewModify = ({user,product, reviewOrigin, index, onModifyReview}) => {
         const fileName = e.target.value;
         var fileExt = fileName.substring(fileName.lastIndexOf('.'), fileName.length).toLowerCase(); //파일 확장자명
         if (fileExt !== '.jpg' && fileExt !== '.png' && fileExt !== '.gif') {
-            Swal.fire({
-                icon: 'error',
-                text: "png, jpg형식의 사진만 업로드 가능합니다",
-                showConfirmButton: false,
-                timer: 1000
-              });
+            alert("png, jpg형식의 사진만 업로드 가능합니다");
             return;
         }
 
         var maxSize = 1024 * 1024; //10mb
         if (e.target.files[0].size > maxSize) {
-            Swal.fire({
-                icon: 'error',
-                text: "1MB이하의 파일만 업로드 가능합니다",
-                showConfirmButton: false,
-                timer: 1000
-              });
+            alert("1MB이하의 파일만 업로드 가능합니다");
             return;
         }
         setFileName(e.target.value);
@@ -53,12 +43,7 @@ const ReviewModify = ({user,product, reviewOrigin, index, onModifyReview}) => {
         formData.append('file', imageFile); //첨부파일
 
         if (review.reviewGoodContent.length < 20 || review.reviewBadContent.length < 20) {
-            Swal.fire({
-                icon: 'error',
-                text: "리뷰는 20자 이상 작성해주세요",
-                showConfirmButton: false,
-                timer: 1000
-              });
+            alert("리뷰는 20자 이상 작성해주세요");
             return;
         }
         formData.append('request', new Blob([JSON.stringify(review)], { type: "application/json" }));

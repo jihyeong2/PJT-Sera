@@ -31,6 +31,16 @@ const PersonalColor = ({user,color,update}) => {
   const onUploadImage = (e) => {
     const input = document.querySelector('#file_route');
     if (e.target.files && e.target.files[0]){
+      const maxSize = 1024 * 1024; //10mb
+      if (e.target.files[0].size > maxSize) {
+          Swal.fire({
+              icon: 'error',
+              text: "1MB이하의 파일만 업로드 가능합니다",
+              showConfirmButton: false,
+              timer: 2000
+            });
+          return;
+      }
       let reader = new FileReader();
       reader.onload=function(event){
         setPrevImg(event.target.result);
@@ -41,6 +51,15 @@ const PersonalColor = ({user,color,update}) => {
     }
   };
   const onSubmit = () => {
+    if(imgFile===null){
+      Swal.fire({
+        icon: 'error',
+        text: `진단하고 싶은 사진을 업로드해주세요.`,
+        showConfirmButton: false,
+        timer: 1500
+      });
+      return
+    }
     const formData = new FormData();
     formData.append("file", imgFile);
     formData.append("user_id", user.userId);
@@ -52,15 +71,15 @@ const PersonalColor = ({user,color,update}) => {
         const tmp = {...user, personalColor:res.data.personal_color,userImg:res.data.user_img};
         console.log(tmp);
         update(tmp);
-        // Swal.fire({
-        //   icon: 'success',
-        //   text: `${user.userNickname}님의 피부타입은 ${res.data.personal_color}입니다.`,
-        //   showConfirmButton: false,
-        //   timer: 1500
-        // });
         history.push("/personal_color/result");
       },
       (err)=>{
+        Swal.fire({
+            icon: 'error',
+            text: "퍼스널컬러를 진단할 수 없는 이미지입니다.",
+            showConfirmButton: false,
+            timer: 2000
+        });
         console.log(err);
       }
     )

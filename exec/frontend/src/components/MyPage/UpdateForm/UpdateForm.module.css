@@ -1,0 +1,115 @@
+@value color-grey-1, color-grey-2, color-red-5, font-size-12, font-size-14 from '../../../common/style.css';
+@value color-orange-1, color-white, color-grey-5, color-grey-3, color-grey-4, font-size-14 from '../../../common/style.css';
+
+button {
+  cursor: pointer;
+  outline: none;
+}
+.container {
+  margin-top: 2em;
+}
+.guide {
+  color: color-grey-2;
+  font-size: font-size-12;
+  margin: 1em 0;
+}
+.highlight {
+  color: color-red-5;
+  font-size: font-size-14;
+}
+.table {
+  width: 100%;
+  border-top: 2px solid color-grey-1;
+}
+.table .table_row {
+  display: flex;
+  border-bottom: 1px solid color-grey-4;
+}
+.table .table_row .label {
+  background-color: color-grey-5;
+  color: color-grey-2;
+  font-size: font-size-12;
+  font-weight: 700;
+  width: 180px;
+  height: 40px;
+  padding-left: 2em;
+  line-height: 40px;
+}
+.table .table_row .value {
+  padding: 0.25em 0 0.25em 0.5em;
+  font-size: font-size-14;
+  margin: auto 0;
+}
+.input {
+  border: 1px solid color-grey-4;
+  height: 24px;
+}
+.button {
+  background-color: color-grey-3;
+  color: color-white;
+  font-size: font-size-12;
+  height: 24px;
+  border: 1px solid color-grey-3;
+}
+.select {
+  color: color-grey-3;
+}
+.gender_button {
+  width: 150px;
+  background-color: color-white;
+  color: color-grey-3;
+  border: 1px solid color-grey-3;
+}
+.gender_button_active {
+  width: 150px;
+  background-color: color-white;
+  color: color-orange-1;
+  border: 2px solid color-orange-1;
+}
+.notice_box {
+  background-color: color-grey-5;
+  color: color-grey-2;
+  padding: 1em;
+  margin: 2em 0;
+}
+.notice_title {
+  font-size: font-size-14;
+  font-weight: 700;
+}
+.notice_list {
+  list-style: circle;
+}
+.notice {
+  font-size: font-size-12;
+  padding: 0.1em 0;
+}
+.button_box {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+.white_button {
+  width: 150px;
+  height: 40px;
+  background-color: color-white;
+  border: 2px solid color-grey-1;
+  color: color-grey-1;
+  font-size: font-size-14;
+  margin: 0 0.5em;
+}
+.black_button {
+  width: 150px;
+  height: 40px;
+  background-color: color-grey-1;
+  color: color-white;
+  font-size: font-size-14;
+  margin: 0 0.5em;
+}
+.red_button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: color-white;
+  color: color-red-5;
+  border: none;
+}

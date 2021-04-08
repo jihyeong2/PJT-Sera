@@ -1,0 +1,31 @@
+@value color-yellow-1, color-skin-5, color-white from '../../../common/style.css';
+@value font-size-40 from '../../../common/style.css';
+@value border-rad-circle from '../../../common/style.css';
+.container {
+  background-color: color-skin-5;
+  padding: 2em 2em 4em 2em;
+}
+.box {
+  background-color: color-white;
+  padding: 2em;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.skintype {
+  color: color-yellow-1;
+  font-size: font-size-40;
+  border: 2px solid color-yellow-1;
+  border-radius: border-rad-circle;
+  width: 150px;
+  height: 150px;
+  text-align: center;
+  line-height: 150px;
+  font-weight: 700;
+}
+.skintype_info {
+  padding: 1em;
+  width: 55%;
+}

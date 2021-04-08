@@ -1,0 +1,99 @@
+@value color-orange-1, color-orange-3, color-orange-6, color-white, color-grey-2 from '../../common/style.css';
+@value font-size-14, font-size-16, font-size-65,font-size-24, font-size-18 from '../../common/style.css';
+.container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.background {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  filter: brightness(0.5);
+  z-index: -1;
+}
+.header {
+  width: 80%;
+}
+.title,
+.subtitle,
+.subtitle2,
+.bottom {
+  color: color-white;
+  text-align: center;
+}
+.title {
+  font-size: font-size-65;
+  font-weight: 700;
+  padding-bottom: 30px;
+  border-bottom: 1px solid color-white;
+}
+.subtitle {
+  font-size: font-size-24;
+  font-weight: 700;
+  padding-top: 30px;
+}
+.subtitle2 {
+  font-size: font-size-18;
+}
+.bottom {
+  display: flex;
+  flex-direction: column;
+}
+.bottom button {
+  background-color: transparent;
+  color: color-white;
+}
+.test_btn {
+  font-size: font-size-18;
+  padding: 0.5em 2em;
+  border: 1px solid color-white;
+  border-radius: 2.5em;
+}
+.skip_btn {
+  font-size: font-size-16;
+  padding: 0.5em;
+  border: none;
+}
+.help_btn {
+  font-size: font-size-14;
+  padding-top: 1.5em;
+  border: none;
+}
+.modal_container {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+.baubau {
+  flex-basis: 40%;
+  padding: 0 2em;
+}
+.bau_desc {
+  padding: 0 2em;
+  display: flex;
+  flex-basis: 60%;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.bau_title {
+  font-size: font-size-24;
+  padding: 0.5em 0;
+  border-bottom: 2px solid color-orange-1;
+}
+.bau_content {
+  font-size: font-size-14;
+  padding: 1em 0;
+}
+.bold_text {
+  font-weight: 700;
+}
+.highlight {
+  color: color-orange-1;
+}

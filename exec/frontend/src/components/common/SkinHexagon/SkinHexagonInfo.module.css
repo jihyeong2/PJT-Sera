@@ -1,0 +1,27 @@
+@value color-yellow-1, color-grey-1  from '../../../common/style.css';
+@value font-size-20, font-size-14, font-size-26, font-size-40 from '../../../common/style.css';
+
+.skintype {
+  font-size: font-size-40;
+  text-align: center;
+  font-weight: 700;
+}
+.skintype_info {
+  padding: 1em;
+}
+.bar {
+  width: 100%;
+  height: 1px;
+  background-color: color-grey-1;
+  opacity: 0.5;
+}
+.title {
+  font-size: font-size-20;
+  color: color-grey-1;
+  font-weight: 700;
+  padding: 0.25em;
+}
+.content {
+  font-size: font-size-14;
+  padding: 0.5em;
+}

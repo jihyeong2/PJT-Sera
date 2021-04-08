@@ -1,0 +1,7 @@
+@value color-yellow-1, color-grey-1  from '../../../common/style.css';
+@value font-size-20, font-size-14, font-size-26, font-size-40 from '../../../common/style.css';
+.logo {
+  font-size: font-size-26;
+  font-family: "Libre Baskerville", serif;
+  font-weight: 400;
+}

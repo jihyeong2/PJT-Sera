@@ -1,0 +1,18 @@
+@value color-grey-1,font-size-30,font-weight-bold from '../../common/style.css';
+.container {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  width: 80%;
+  margin: 0 auto;
+  padding-bottom:30em;
+}
+.title {
+  color: color-grey-1;
+  font-size: font-size-30;
+  font-weight: 700;
+  margin: 1em 0;
+}
+.logo {
+  margin: 0 2em;
+}

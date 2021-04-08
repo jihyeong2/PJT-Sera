@@ -1,0 +1,39 @@
+@value font-size-14, font-size-20, font-size-30 from '../../common/style.css';
+@value color-grey-1, color-grey-2, color-orange-1 from '../../common/style.css';
+.container {
+  width: 80%;
+  height: 100%;
+  padding: 1em 2em 0 2em;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.header {
+  display: flex;
+  padding-top: 1em;
+  padding-bottom: 4em;
+}
+.title {
+  font-size: font-size-30;
+  font-weight: 700;
+  color: color-grey-1;
+}
+.subtitle {
+  font-size: font-size-14;
+  color: color-grey-2;
+}
+.submit_box {
+  display: flex;
+  justify-content: center;
+  margin-top: 10em;
+  margin-bottom: 5em;
+}
+.submit_btn {
+  background-color: transparent;
+  border: 1px solid color-orange-1;
+  color: color-orange-1;
+  font-size: font-size-20;
+  padding: 0.5em 3em;
+  border-radius: 2em;
+}

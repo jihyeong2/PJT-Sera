@@ -1,0 +1,17 @@
+@value font-size-40, color-grey-1 from '../../common/style.css';
+.container {
+  width: 80%;
+  margin: auto;
+}
+.text_box {
+}
+.title {
+  color: color-grey-1;
+  font-size: font-size-40;
+  font-weight: 700;
+  padding: 20px 40px;
+}
+.content {
+  color: color-grey-1;
+  padding: 20px 40px;
+}

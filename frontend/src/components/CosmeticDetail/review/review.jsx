@@ -245,7 +245,7 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
                                                 </div>
                                             </div>
                                             {
-                                                review.reviewImg != "" && (
+                                                review.reviewImg != null && (
                                                     <img className={styless.review_image} src={review.reviewImg} alt="리뷰사진2"/>
                                                 )
                                             }

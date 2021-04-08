@@ -185,7 +185,7 @@ const CosmeticDetail = ({user}) => {
       setGrade({
         star_sum: star_sum,
         star_cnt: star_cnt,
-        star_avg: (star_sum/star_cnt).toFixed(2),
+        star_avg: star_sum>0 ? (star_sum/star_cnt).toFixed(2) : 0,
         star_5: star_5,
         star_4: star_4,
         star_3: star_3,

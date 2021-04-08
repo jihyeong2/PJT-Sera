@@ -21,9 +21,12 @@
 > 팀명: 장고      
 > 개발 기간: 2021.02.22 ~ 2021.04.09 (약 7주)        
  
+### 📃문서     
+[SubPJT1_기획문서](https://www.notion.so/dovvn/Sub1-13498659a2844ee39995e24f63ee4558)     
+[SubPJT2_학습 및 개발기본 문서](https://www.notion.so/Sub2-6c68ef0be53645c7bc32051b72655781)        
+[SubPJT3_심화 및 마무리 문서](https://www.notion.so/Sub3-9809c183f48346e4aa94df8c34cccb75)          
 
-[SubPJT2 노션 문서](https://www.notion.so/_sub2-4acb788881b04c9e8f218912fda101c8)
-
+<br/>
 
 
 ##  👨‍💻 팀원 역할

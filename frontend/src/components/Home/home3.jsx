@@ -8,7 +8,6 @@ import person4 from '../../assets/main_person4.png';
 
 const Home3 = (props) => {
   const [currPerson, setPerson] = useState(0);
-  // console.log(currPerson);
   const profiles =[
     {
       name: '심수련',
@@ -129,8 +128,6 @@ const Home3 = (props) => {
   ];
   const onMouseOver = (e) => {
     const idx = Number(e.target.dataset.key);
-    console.log(e.target.dataset.key);
-    // console.log(idx);
     setPerson(idx);
   }
   return (

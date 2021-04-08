@@ -13,7 +13,7 @@ class DetectFace:
         # initialize dlib's face detector (HOG-based)
         # and then create the facial landmark predictor
         self.detector = dlib.get_frontal_face_detector()
-        path = BASE_DIR / 'personalColor/res/shape_predictor_68_face_landmarks.dat'
+        path = '/app/swim/workspace/jenkins_item/exec/backend/PythonSera/personalColor/res/shape_predictor_68_face_landmarks.dat'
         self.predictor = dlib.shape_predictor(path)
 
         #face detection part

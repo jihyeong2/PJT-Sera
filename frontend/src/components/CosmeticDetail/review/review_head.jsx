@@ -14,6 +14,7 @@ import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import ReviewWrite from "./review_write_modal";
 import ReviewChart from "./review_chart";
+import review from './review';
 
 
 const dstyles = (theme) => ({
@@ -53,7 +54,7 @@ const DialogContent = withStyles((theme) => ({
     },
 }))(MuiDialogContent);
 
-const ReviewHead = ({ product, onCreateReview }) => {
+const ReviewHead = ({ product, onCreateReview, grade }) => {
     const history = useHistory();
 
     const [fullWidth, setFullWidth] = React.useState(true);
@@ -72,14 +73,14 @@ const ReviewHead = ({ product, onCreateReview }) => {
         <div className={styles.review_head} >
             <Grid container spacing={4}>
                 <Grid item xs={4}>
-                    <p className={styles.review_num_title}>총 <span>23</span>건의 리뷰</p>
-                    <p className={styles.review_rate}><span>4.7</span>점</p>
+                    <p className={styles.review_num_title}>총 <span>{grade.star_cnt}</span>건의 리뷰</p>
+                    <p className={styles.review_rate}><span>{grade.star_avg}</span>점</p>
                     <Box component="fieldset" mb={3} borderColor="transparent">
-                        <Rating name="read-only" value={4} readOnly /> 
+                        <Rating name="read-only" value={grade.star_avg} readOnly /> 
                     </Box>
                 </Grid>
                 <Grid item xs={4}>
-                    <ReviewChart />
+                    <ReviewChart grade={grade}/>
                 </Grid>
                 <Grid item xs={4}>
                     <p className={styles.review_btn_title}>리뷰를 써보세요.</p>

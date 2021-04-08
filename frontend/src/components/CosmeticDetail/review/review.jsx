@@ -119,11 +119,9 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
             userLoginId 
         })
         .then(res=>{     
-            console.log("도움 데이터");
             onClickReviewGood(reviewId,res.data.data);
         })
         .catch(err=>{
-            console.log("도움 에러");
             console.error(err);
         })
     }

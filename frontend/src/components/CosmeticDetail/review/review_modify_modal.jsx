@@ -9,7 +9,6 @@ import {connect} from 'react-redux';
 import Swal from 'sweetalert2';
 
 const ReviewModify = ({user,product, reviewOrigin, index, onModifyReview}) => {
-    console.log(user);
     const [fileName, setFileName] =  useState(reviewOrigin.reviewImg===null ? "파일을 선택해주세요" : reviewOrigin.reviewImg.split('_')[1]);
     const [imageFile, setImageFile] = useState(null);
 
@@ -43,7 +42,6 @@ const ReviewModify = ({user,product, reviewOrigin, index, onModifyReview}) => {
     };
 
     const onChangeInput = (e) => {
-        console.log(e.target.name);
         setReview({
             ...review,
             [e.target.name]: e.target.value
@@ -64,7 +62,6 @@ const ReviewModify = ({user,product, reviewOrigin, index, onModifyReview}) => {
             return;
         }
         formData.append('request', new Blob([JSON.stringify(review)], { type: "application/json" }));
-        console.log(review);
         http.put("v1/review", formData, {
             headers: {
                 "Content-Type": `multipart/form-data`,

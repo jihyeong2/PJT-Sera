@@ -40,7 +40,6 @@ const Navbar = ({user,logout,white}) => {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    console.log(newValue);
     if(newValue===0) history.push('/skin');
     else if(newValue===1) history.push('/personal_color');
     else history.push('/list');

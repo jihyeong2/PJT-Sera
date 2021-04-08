@@ -82,6 +82,7 @@ CORS_ORIGIN_WHITELIST = (
     'http://127.0.0.1:8080',
     'http://localhost:3000',
     'http://127.0.0.1:3000',
+    'http://j4b202.p.ssafy.io/'
 )
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases

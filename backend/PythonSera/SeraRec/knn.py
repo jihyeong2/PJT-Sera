@@ -249,7 +249,7 @@ def getItemIdx():
 def getVecIdx():
     # path = '../crawling/data/GP/vec_idx.json'
     # path = './crawling/data/GP/vec_idx.json'
-    path = BASE_DIR / 'crawling/data/GP/vec_idx.npy'
+    path = BASE_DIR / 'crawling/data/GP/vec_idx.json'
     vec_idx = {}
     with open(path, 'r', encoding='utf-8') as f:
         vec_idx = json.load(f)

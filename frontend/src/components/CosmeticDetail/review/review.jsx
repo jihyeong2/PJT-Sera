@@ -75,7 +75,8 @@ const useStyles = makeStyles((theme) => ({
 
   const theme = createMuiTheme();
 
-const Review = ({product, review, user, skin, picture, onCreateReview, onModifyReview, onClickReviewGood, onDeleteReview}) => {
+
+const Review = ({product, review, user, skin, picture, onCreateReview, onModifyReview, onClickReviewGood, onDeleteReview, grade}) => {
     const [open, setOpen] = React.useState([]);
     useEffect(()=>{
         const tmp = new Array(review.length).fill(false);
@@ -158,7 +159,7 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
     return(
         <div>
             <div className={styles.review_title}>REVIEW</div>
-            <ReviewHead product={product} onCreateReview={handleCreateReview}/>
+            <ReviewHead product={product} grade={grade} onCreateReview={handleCreateReview}/>
             <div className={styles.bar}></div>
             <div style={{color:"#666666", marginLeft:"5%", marginTop:"40px", fontWeight:"600", fontSize:"20px"}}> 📸 최근 리뷰사진 List </div>
             <div className={styles.picture_list}>

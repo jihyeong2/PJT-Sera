@@ -205,7 +205,7 @@ const SkinInfo = ({user,skin,color,update}) => {
             <div className={styles.skin_type} style={{border:`2px solid ${skin.type[user.skinId.skinType].color}`,color:`${skin.type[user.skinId.skinType].color}`}}>
               {user.skinId.skinType}
             </div>
-            : <div className={styles.skin_type} >피부 Test</div>
+            : <div></div>
           }
           <button className={styles.edit_btn} onClick={handleClickOpen}>
             <FontAwesomeIcon icon="edit" size="lg" color="#707070"/>      
@@ -243,14 +243,14 @@ const SkinInfo = ({user,skin,color,update}) => {
               </DialogContent>
           </Dialog>
           {
-            user.personalColor!=null ? 
+            user.personalColor!==null ? 
             <div className={styles.color_type} style={{backgroundColor:`${color[user.personalColor].color}`}}>
               {user.personalColor}
             </div> :
             <div></div>
           }
           {
-            user.personalColor != null ?
+            user.personalColor !== null ?
           <button className={styles.edit_btn} onClick={handleClickOpen2}>
             <FontAwesomeIcon icon="edit" size="lg" color="#707070"/>
           </button> : <div></div>

@@ -390,9 +390,12 @@ const UpdateForm = ({user,update}) => {
                 <option className={styles.option} value="LG">LG</option>
               </select>
               <input ref={phoneRef} type="text" className={styles.input} name="userPhone" value={userInfo.userPhone} onChange={handleChange}/>
-              <button className={styles.button} onClick={onClickPhone}>
-                인증번호 발송
-              </button>
+              {
+                !isClickedCertify && 
+                <button className={styles.button} onClick={onClickPhone}>
+                  인증번호 발송
+                </button>
+              }
             </div>
             {(!isCertified && isClickedCertify) &&
               <div style={{marginTop:'0.5em'}}>

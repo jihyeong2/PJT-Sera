@@ -9,8 +9,6 @@ import {connect} from 'react-redux';
 import Swal from 'sweetalert2';
 
 const ReviewModify = ({user,product, reviewOrigin, index, onModifyReview}) => {
-    // console.log(reviewOrigin,index);
-    // console.log(product);
     console.log(user);
     const [fileName, setFileName] =  useState(reviewOrigin.reviewImg===null ? "파일을 선택해주세요" : reviewOrigin.reviewImg.split('_')[1]);
     const [imageFile, setImageFile] = useState(null);
@@ -25,7 +23,7 @@ const ReviewModify = ({user,product, reviewOrigin, index, onModifyReview}) => {
                 icon: 'error',
                 text: "png, gif, jpg형식의 사진만 업로드 가능합니다",
                 showConfirmButton: false,
-                timer: 2000
+                timer: 1000
               });
             return;
         }
@@ -36,7 +34,7 @@ const ReviewModify = ({user,product, reviewOrigin, index, onModifyReview}) => {
                 icon: 'error',
                 text: "1MB이하의 파일만 업로드 가능합니다",
                 showConfirmButton: false,
-                timer: 2000
+                timer: 1000
               });
             return;
         }
@@ -61,7 +59,7 @@ const ReviewModify = ({user,product, reviewOrigin, index, onModifyReview}) => {
                 icon: 'error',
                 text: "리뷰는 20자 이상 작성해주세요",
                 showConfirmButton: false,
-                timer: 2000
+                timer: 1000
               });
             return;
         }
@@ -79,7 +77,7 @@ const ReviewModify = ({user,product, reviewOrigin, index, onModifyReview}) => {
                         icon: 'success',
                         text: '리뷰가 수정되었습니다',
                         showConfirmButton: false,
-                        timer: 2000
+                        timer: 1000
                       });
                     onModifyReview();
                 }
@@ -88,7 +86,7 @@ const ReviewModify = ({user,product, reviewOrigin, index, onModifyReview}) => {
                         icon: 'error',
                         text: '리뷰 수정을 실패했습니다',
                         showConfirmButton: false,
-                        timer: 2000
+                        timer: 1000
                       });
                 }
             })
@@ -96,7 +94,6 @@ const ReviewModify = ({user,product, reviewOrigin, index, onModifyReview}) => {
                 console.error(err);
             });
     }
-
 
     return (
         <div className={styles.modal_i}>
@@ -150,7 +147,7 @@ const ReviewModify = ({user,product, reviewOrigin, index, onModifyReview}) => {
                 </div>
                 <div className={styles.buttons}>
                     <div className={styles.all_btns}>
-                        <input className={styles.closeBtn} type="button" value="닫기" />
+                        <input className={styles.closeBtn} type="button" value="닫기"  />
                         <input className={styles.wrtieBtn} type="button" value="수정하기" onClick={onSubmit} />
                     </div>
                 </div>

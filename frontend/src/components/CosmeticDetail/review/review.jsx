@@ -24,6 +24,7 @@ import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import ReviewModify from './review_modify_modal';
 import http from "../../../http-common";
+import Swal from 'sweetalert2';
 import ReactLoading from 'react-loading';
 
 const dstyles = (theme) => ({
@@ -129,13 +130,14 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
         })
     }
     const handleCreateReview = () => {
-        handleClose();
-        const tmp = [false,...open];
-        setOpen(tmp);
+        // handleClose();
+        // const tmp = [false,...open];
+        // setOpen(tmp);
+        setOpen(false);
         onCreateReview();
     };
     const handleModifyReview = () => {
-        handleClose();
+        setOpen(false);
         onModifyReview();
     }
 
@@ -147,15 +149,42 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
     const handleDeleteReview = (e) => {
         const index = e.target.dataset.idx ? e.target.dataset.idx : e.target.parentNode.dataset.idx;
         const reviewId = review[index].reviewId;
-        http.delete(`v1/review/${reviewId}`)
-        .then(res =>{
-            onDeleteReview();
-        }) 
-        .catch(err=>{
-            console.error(err);
-        })
-        
+        Swal.fire({
+            title: '정말로 삭제하시겠습니까?',
+            text: "당신의 리뷰는 소중합니다.😥",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '예',
+            cancelButtonText:'아니오',
+          }).then((result) => {
+            if (result.isConfirmed) {
+                http.delete(`v1/review/${reviewId}`)
+                .then(res =>{
+                    if(res.data.status==="success"){
+                        Swal.fire(
+                          '삭제되었습니다.',
+                          '',
+                          'success'
+                        );
+                        onDeleteReview();
+                      } else{
+                        Swal.fire(
+                          '삭제에 실패했습니다.',
+                          '',
+                          'error'
+                        );
+                      }
+                }) 
+                .catch(err=>{
+                    console.error(err);
+                })
+            }
+          })
     }
+
+    
     return(
         <div>
             <div className={styles.review_title}>REVIEW</div>
@@ -209,7 +238,7 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
                                                     review.user.userNickname == user.userNickname && (
                                                         <>
                                                             <CreateIcon fontSize="small" className={styless.change_icon} onClick={handleClickOpen} data-idx={page+idx}/>
-                                                            <Dialog style={{ height: '90%', }} fullWidth={fullWidth} maxWidth="lg" onClose={handleClose} aria-labelledby="customized-dialog-title" open={open[page+idx]}>
+                                                            <Dialog style={{ height: '90%', }} fullWidth={fullWidth} maxWidth="lg" onClose={handleClose} aria-labelledby="customized-dialog-title" open={open[page+idx]}  >
                                                                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
                                                                     리뷰수정
                                                                     </DialogTitle>

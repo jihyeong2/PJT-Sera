@@ -47,6 +47,7 @@
     font-size: font-size-14;
     margin-bottom: 15px;
     padding: 5px;
+    word-break:break-all;
 }
 .review_image{
     width: 120px;

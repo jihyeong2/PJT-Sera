@@ -8,7 +8,7 @@ import ColorPalette from '../../common/Pallette/ColorPalette';
 const ColorResult = ({user,color}) => {
   return(
     <>
-      {user.personalColor !== null ?
+      {user.personalColor !== false ?
         <div className={styles.container}>
           <div className={styles.header}>
             당신의 퍼스널 컬러는 <br/>

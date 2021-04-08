@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import styles from './SearchResult.module.css';
 import { useParams } from 'react-router';
 import PropTypes from 'prop-types';
@@ -6,7 +6,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import ProductList from '../../components/common/ProductList/ProductList';
-import data from '../../data/GP_items_1-10000.json';
 import Logo from '../../components/common/Logo/Logo';
 import Navbar from '../../components/common/Navbar/Navbar';
 import {connect} from 'react-redux';
@@ -16,9 +15,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Footer from '../../components/common/Footer/Footer';
 import { useHistory } from "react-router-dom";
 import Swal from 'sweetalert2';
-
 import TopButton from '../../components/common/Button/TopButton/TopButton';
-import Loader from '../../components/common/Loader/Loader';
+import Loader from '../../components/common/Loding/Loader';
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -53,7 +52,6 @@ function a11yProps(index) {
 }
 const SearchResult = ({user}) => {
   let history = useHistory();
-
   const params=useParams();
   const [currTab,setCurrTab] = useState(1);
   const [idx,setIdx] = useState(12);
@@ -63,7 +61,7 @@ const SearchResult = ({user}) => {
   const [products2,setProducts2] = useState([]);
   const [value, setValue] = useState(0);
   const [isScroll,setIsScroll] = useState(false);
-  const [isLoading,setIsLoading] = useState('');
+  const [loading, setLoading] = useState(true);
   const ScrollEvent =()=>{
     if(window.scrollY>0){
       setIsScroll(true);
@@ -113,14 +111,13 @@ const SearchResult = ({user}) => {
           user.userId,
           params.name,
           (res)=>{
-            // console.log(res);
-            setIsLoading(false);
+            setLoading(false);
             setProducts(res.data.item_list.item_name_list);
             setProducts2(Object.values(res.data.item_list.item_element_list));
             setProductsKeys2(Object.keys(res.data.item_list.item_element_list));
           },
           (err)=>{
-            setIsLoading(false);
+            setLoading(false);
             console.error(err);
           }
         )
@@ -130,13 +127,13 @@ const SearchResult = ({user}) => {
           params.category,
           params.name,
           (res)=>{
-            setIsLoading(false);
+            setLoading(false);
             setProducts(res.data.item_list.item_name_list);
             setProducts2(Object.values(res.data.item_list.item_element_list));
             setProductsKeys2(Object.keys(res.data.item_list.item_element_list));         
           },
           (err)=>{
-            setIsLoading(false);
+            setLoading(false);
             console.error(err);
           }
         )
@@ -236,10 +233,9 @@ const SearchResult = ({user}) => {
       left: 0,
       behavior: 'smooth'
     });
-  };  
+  };
   return (
     <div style={{position:'relative', paddingBottom:'180px', minHeight:'100vh'}}>
-      <Loader open={isLoading}/>
       <div className={styles.container}>
         <Navbar/>
         <Logo type={1} className={styles.logo}/>
@@ -252,28 +248,45 @@ const SearchResult = ({user}) => {
             <Tab label="성분명 결과" {...a11yProps(1)} />
           </Tabs>
         </AppBar>
-        <TabPanel value={value} index={0}>
-          <ProductList products={products.slice(0,idx)} handleHeart={onHandleHeart}/>
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          {
-            products2.length>0 && productsKeys2.slice(0,idx2).map((key,idx)=>{
-              return(
-                <div key={key} className={styles.element_box}>
-                  <div className={styles.element_title}>
-                    <FontAwesomeIcon icon={['fas', 'leaf']} size="sm" color="#333333"/>&nbsp;
-                    {
-                      idx%2==0 ?
-                      <span style={{color:'#4E9157'}}>{key}</span> :
-                      <span style={{color:'#6F6AFA'}}>{key}</span>
-                    }
+        {
+          loading &&
+          <Loader type="spin" color="#FD6C1D" message="리스트 로딩 중 입니다." />
+        }
+        {
+          !loading &&
+          <TabPanel value={value} index={0}>
+            {
+              products.length===0 ? 
+              <div style={{padding: '1em'}}>"<span className={styles.highlight}>{params.name}</span>"로 검색된 상품이 존재하지 않습니다.</div> :
+              <ProductList products={products.slice(0,idx)} handleHeart={onHandleHeart}/>
+
+            }
+          </TabPanel>
+        }
+        {
+          !loading &&
+          <TabPanel value={value} index={1}>
+            {
+              products2.length===0 ? 
+              <div style={{padding: '1em'}}>"<span className={styles.highlight}>{params.name}</span>"로 검색된 상품이 존재하지 않습니다.</div> :
+              productsKeys2.slice(0,idx2).map((key,idx)=>{
+                return(
+                  <div key={key} className={styles.element_box}>
+                    <div className={styles.element_title}>
+                      <FontAwesomeIcon icon={['fas', 'leaf']} size="sm" color="#333333"/>&nbsp;
+                      {
+                        idx%2==0 ?
+                        <span style={{color:'#4E9157'}}>{key}</span> :
+                        <span style={{color:'#6F6AFA'}}>{key}</span>
+                      }
+                    </div>
+                    <ProductList products={products2[idx].slice(0,4)} handleHeart2={onHandleHeart2} productsKey2={idx}/>
                   </div>
-                  <ProductList products={products2[idx].slice(0,4)} handleHeart2={onHandleHeart2} productsKey2={idx}/>
-                </div>
-              );
-            })
-          }
-        </TabPanel>
+                );
+              })
+            }
+          </TabPanel>
+        }
       </div>
       {
         isScroll && <TopButton onClick={onClickTopButton}/>

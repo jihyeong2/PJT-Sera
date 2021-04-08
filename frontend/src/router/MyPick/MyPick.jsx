@@ -7,13 +7,13 @@ import {connect} from 'react-redux';
 import {getLikeList,setHate} from '../../service/product';
 import Footer from '../../components/common/Footer/Footer';
 import TopButton from '../../components/common/Button/TopButton/TopButton';
-import Loader from '../../components/common/Loader/Loader';
+import Loader from '../../components/common/Loding/Loader';
 
 const MyPick = ({user}) => {
   const [products,setProducts]= useState([]);
   const [productsIdx,setProductsIdx] = useState(12);
   const [isScroll,setIsScroll] = useState(false);
-  const [isLoading,setIsLoading] = useState(true);
+  const [loading,setLoading] = useState(true);
   const onHandleHeart = (item_id,idx) => {
     setHate(
       user.userId,
@@ -48,11 +48,11 @@ const MyPick = ({user}) => {
         user.userId,
         (res)=>{
           setProducts(res.data.item_list);
-          setIsLoading(false);
+          setLoading(false);
         },
         (err)=>{
           console.error(err);
-          setIsLoading(false);
+          setLoading(false);
         }
       )
     }
@@ -69,7 +69,6 @@ const MyPick = ({user}) => {
   };    
   return (
     <div style={{position:'relative', paddingBottom:'180px', minHeight:"100vh"}}>
-      <Loader open={isLoading}/>
       <div className={styles.container}>
         <Navbar/>
         <Logo type={1} className={styles.logo}/>
@@ -83,7 +82,11 @@ const MyPick = ({user}) => {
           <span> 개 입니다.</span>
           
         </div>
-        <ProductList products={products.slice(0,productsIdx)} handleHeart={onHandleHeart}/>
+        {
+          loading ?
+          <Loader type="spin" color="#FD6C1D" message="리스트 로딩 중 입니다." /> :
+          <ProductList products={products.slice(0,productsIdx)} handleHeart={onHandleHeart}/>
+        }
       </div>
       {
         isScroll && <TopButton onClick={onClickTopButton}/>

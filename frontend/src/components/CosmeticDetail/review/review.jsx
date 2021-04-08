@@ -133,11 +133,10 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
         // handleClose();
         // const tmp = [false,...open];
         // setOpen(tmp);
-        setOpen(false);
         onCreateReview();
     };
     const handleModifyReview = () => {
-        setOpen(false);
+        handleClose();
         onModifyReview();
     }
 

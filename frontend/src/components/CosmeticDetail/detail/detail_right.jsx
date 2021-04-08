@@ -14,7 +14,6 @@ import Ingredient from '../ingredient/ingredient';
 import PersonalColor from '../personal_color/personal_color';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import {connect} from 'react-redux';
-// import ReviewModify from '../review/review_modify_modal';
 
 const dstyles = (theme) => ({
     root: {
@@ -79,8 +78,6 @@ const Detail = ({user, color, skin, product}) => {
         setOpens(false);
     };
     const [fullWidth, setFullWidth] = React.useState(true);
-
-    
 
         const naver = () => {
             window.open(`https://search.shopping.naver.com/search/all?query=${product.item_name}&cat_id=&frm=NVSHAKW`);

@@ -1,0 +1,13 @@
+.btn {
+  cursor: pointer;
+}
+.large {
+  width: 150px;
+  height: 60px;
+  z-index: 1;
+}
+.small {
+  width: 70px;
+  height: 30px;
+  z-index: 1;
+}

@@ -1,0 +1,15 @@
+@value color-yellow-1, color-grey-1  from '../../../common/style.css';
+@value font-size-20, font-size-14 from '../../../common/style.css';
+.title {
+  font-size: font-size-20;
+  color: color-grey-1;
+  font-weight: 700;
+  padding: 0.25em;
+}
+.highlight {
+  color: color-yellow-1;
+}
+.content {
+  font-size: font-size-14;
+  padding: 0.25em;
+}

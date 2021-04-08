@@ -1,0 +1,75 @@
+@value font-size-40,font-size-30, font-size-22 from '../../common/style.css';
+@value color-orange-1, color-grey-1 from '../../common/style.css';
+.container {
+  width: 80%;
+  min-height: 100%;
+  margin: auto;
+}
+.logo_box {
+  padding: 1em 0 3em 0;
+}
+.header {
+  margin-bottom: 2em;
+}
+.header .title {
+  font-size: font-size-30;
+  font-weight: 700;
+  color: color-grey-1;
+}
+.color_box {
+  padding: 1em;
+}
+.color_box_header {
+  font-size: font-size-22;
+  text-align: center;
+  margin-bottom: 1em;
+}
+.bold_text {
+  font-weight: 700;
+}
+.color_box_title {
+  font-size: font-size-40;
+  font-weight: 700;
+  margin: auto;
+}
+.info_box {
+  width: 60%;
+  margin: auto;
+}
+.info {
+  font-size: font-size-14;
+  color: color-grey-1;
+  /* text-align: center; */
+}
+.box2 {
+  padding: 2em 0;
+  width: 100%;
+}
+.tip_title {
+  border-left: 3px solid color-orange-1;
+  padding-left: 0.5em;
+  font-size: font-size-20;
+  color: color-grey-1;
+  margin-bottom: 1em;
+}
+.btn_box {
+  padding: 2.5em;
+  display: flex;
+  justify-content: center;
+}
+.reset_btn {
+  border: none;
+  background-color: transparent;
+  margin: 0 1em;
+  padding: 0 1em;
+  font-size: font-size-14;
+}
+.finish_btn {
+  background-color: transparent;
+  margin: 0 1em;
+  padding: 0 1em;
+  font-size: font-size-14;
+  color: color-orange-1;
+  border: 1px solid color-orange-1;
+  border-radius: 1em;
+}

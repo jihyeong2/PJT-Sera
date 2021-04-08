@@ -1,0 +1,22 @@
+@value color-orange-1, color-grey-1, font-size-24, font-size-14 from '../../common/style.css';
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+.header {
+  margin-top: 1em;
+  font-size: font-size-24;
+  font-weight: 700;
+  padding: 0.25em 0;
+  border-bottom: 3px solid color-grey-1;
+}
+.highlight {
+  color: color-orange-1;
+}
+.element_box {
+  padding: 0.5em 0;
+}
+.element_title {
+  font-size: font-size-14;
+  font-weight: 700;
+}

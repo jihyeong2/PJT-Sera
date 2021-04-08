@@ -1,0 +1,34 @@
+@value color-gery-2, color-grey-3 from '../../../common/style.css';
+@value font-size-16 from '../../../common/style.css';
+
+.title {
+  font-size: font-size-16;
+  font-weight: 700;
+  text-align: center;
+  width: 60%;
+}
+.container {
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid color-grey-3;
+  width: 60%;
+}
+.select {
+  flex: 1;
+  outline: none;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+}
+.option {
+  font-weight: 700;
+}
+.input {
+  flex: 4;
+  outline: none;
+  border: none;
+}
+.icon {
+  flex: 1;
+}

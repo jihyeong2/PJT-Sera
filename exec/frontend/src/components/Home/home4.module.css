@@ -1,0 +1,28 @@
+@value font-size-20, font-size-40, color-grey-1 from '../../common/style.css';
+.container {
+  width: 80%;
+  margin: auto;
+}
+.text_box {
+}
+.title {
+  color: color-grey-1;
+  font-size: font-size-40;
+  font-weight: 700;
+  padding: 20px 0;
+}
+.content {
+  color: color-grey-1;
+  padding: 20px 0;
+}
+.tone_tag {
+  font-size: font-size-20;
+  padding: 0.1em 0.25em;
+  text-align: center;
+  cursor: pointer;
+}
+.color_title {
+  font-size: font-size-40;
+  font-weight: 700;
+  margin-bottom: 1em;
+}

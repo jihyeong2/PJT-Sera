@@ -1,51 +1,114 @@
-# 💄 화장품 추천 서비스
-
-<p align="center">
+<div align="center">
   <img width="250px;" src="/uploads/1104acdedd3c689307b2f8c84c93d81c/Sera_Logo2.png" />
-  <br/>
-</p>    
+  <br/><br/>
+  <br/>코스메틱 추천 서비스 💄 
+
+  
+  <p align="center"><br/>
+     <img src="https://img.shields.io/badge/PostCSS----green?logo=PostCSS">
+     <img src="https://img.shields.io/badge/JavaScript-ES6+-green?logo=javascript">
+     <img src="https://img.shields.io/badge/React.js-v17.0.1-green?logo=react">
+     <img src="https://img.shields.io/badge/ReactRouter-v5-green?logo=react-router"><br/>
+     <img src="https://img.shields.io/badge/python-v3.6-blue?logo=python">
+     <img src="https://img.shields.io/badge/Java-v1.8-blue?logo=java">
+     <img src="https://img.shields.io/badge/Spring Boot-v3.9.15-blue?logo=spring">
+     <img src="https://img.shields.io/badge/AWS%20EC2----blue?logo=awsec2">
+     <img src="https://img.shields.io/badge/AWS%20RDS----blue?logo=awsrds">
+     <img src="https://img.shields.io/badge/MySQL-v8.0-blue?logo=mysql">
+     <img src="https://img.shields.io/badge/Django-v3.1.7-blue?logo=django">
+  </p>
+</div>  
  
 > 서비스명: Será       
-> 팀명: 장고      
+> 팀명: 장코   
 > 개발 기간: 2021.02.22 ~ 2021.04.09 (약 7주)        
- 
-### 📃문서     
-[SubPJT1_기획문서](https://www.notion.so/dovvn/Sub1-13498659a2844ee39995e24f63ee4558)     
-[SubPJT2_학습 및 개발기본 문서](https://www.notion.so/Sub2-6c68ef0be53645c7bc32051b72655781)        
-[SubPJT3_심화 및 마무리 문서](https://www.notion.so/Sub3-9809c183f48346e4aa94df8c34cccb75)          
+
+
+
+### 📃문서  
+> [기획 문서](https://www.notion.so/PJT-2a4c024fa30c4c919aee328b7e09e64c)   
+> [1️⃣SubPJT_기획문서](https://www.notion.so/dovvn/Sub1-13498659a2844ee39995e24f63ee4558), [2️⃣SubPJT_학습 및 개발기본 문서](https://www.notion.so/Sub2-6c68ef0be53645c7bc32051b72655781), [3️⃣SubPJT3_심화 및 마무리 문서](https://www.notion.so/Sub3-9809c183f48346e4aa94df8c34cccb75)      
 
 <br/>
 
 
+
+
 ## 📑 서비스개요      
-> 사회현상     
-1. 코로나 현상으로 마스크가 불가피 해지면서 피부관리와 화장품 성분에 관심이 높아졌다.     
-2. 자신의 피부타입을 알지 못하고 단순한 리뷰로만 구매하여 실패하는 사례가 많다.
-3. 자신의 퍼스널컬러를 잘 알지 못한다.     
-4. 자기관리가 필수화 된 사회이다.    
+* **사회현상**
+  > 1. 코로나 현상으로 마스크가 불가피 해지면서 피부관리와 화장품 성분에 관심이 높아졌다.  
+  >
+  > 2. 자신의 피부타입을 알지 못하고 단순한 리뷰로만 구매하여 실패하는 사례가 많다.  
+  >
+  > 3. 자신의 퍼스널컬러를 잘 알지 못한다.      
+  >
+  > 4. 자기관리가 필수화 된 사회이다.     
 
-> 위와 같은 사회현상으로 인해 고민이 들어난 남녀노소 모든 사용자를 대상으로 피부타입에 따른 설명, 좋은 성분과 피해야하는 성분, 좋은 성분이 들어간 상품들을 추천받을 수 있다. 
-> 더불어 퍼스널컬러에 따른 설명, 뷰티팁, 어울리는 색상을 추천받을 수 있다.     
+위와 같은 사회현상으로 인해 고민이 들어난 남녀노소 모든 사용자를 대상으로 `피부타입`에 따른 설명, `좋은 성분과 피해야하는 성분`, 좋은 성분이 들어간 상품들을 `추천`받을 수 있다.   
+더불어 `퍼스널컬러` 진단 후 뷰티팁, 어울리는 색상을 추천받고 다른 유저들이 올린 `리뷰`를 통해 신뢰도 높은 화장품 정보를 제공 받을 수 있다.   
 
 
+<br/>
 
-##  👨‍💻 팀원 역할
+
+## 👨 팀원 역할
 
 | 팀원   | 역할 | 비고                                          |
 | ------ | ---- | --------------------------------------------- |
-| 김지형 | 팀장 | 프론트엔드 개발, GIT마스터, 화면정의서        |
+| 김지형 | 팀장 | 프론트엔드 개발, GIT마스터        |
 | 백정현 | 팀원 | 백엔드 개발, QA(Jira관리), 로고 디자인        |
 | 유진이 | 팀원 | 프론트엔드 테크리더, QA(Jira관리), UX/UI 디자인       |
-| 정다운 | 팀원 | 풀스택 개발, 화면정의서, UX/UI 디자인 |
-| 정혜지 | 팀원 | 백엔드 테크리더, 화면정의서                   |
+| 정다운 | 팀원 | 풀스택 개발, UX/UI 디자인 |
+| 정혜지 | 팀원 | 백엔드 테크리더, 테스트 시나리오 작성                   |
 
 
+<br/>
 
-## 📑 기술 스택
 
-![HTML](https://img.shields.io/badge/HTML5----green?logo=HTML5)![CSS3](https://img.shields.io/badge/CCS3----green?logo=CSS3)![PostCSS](https://img.shields.io/badge/PostCSS----green?logo=PostCSS)![Javascript](https://img.shields.io/badge/JavaScript-ES6+-green?logo=javascript) ![React](https://img.shields.io/badge/React-v17.0.1-green?logo=react) ![React-Router](https://img.shields.io/badge/ReactRouter-v5-green?logo=react-router)
+## 📑 주요 기능  
+* **회원가입/로그인 기능**  
+  > a. 사용자 회원정보를 받아 핸드폰 인증 후 회원가입에 성공한다.  
+  >
+  > b. 이외 간편 SNS로그인(카카오톡)으로 별도 인증 없이 빠르게 로그인할 수 있다.  
+  >
+  > c. 가입 후 최초 로그인 시 피부진단 페이지로 이동한다.  
+* **피부진단 테스트 기능**  
+  > a. 바우만 피부타입 분석 프로세스 기반으로 20가지의 설문문항으로 구성된 테스트를 진행한다.
+  >
+  > b. 만약, 본인의 피부타입을 이미 알고 있는 경우 skip하여 피부타입을 직접 선택할 수 있다.
+  >
+  > c. 16가지로 분류된 본인의 피부타입을 기반으로 본인의 피부에 맞는/맞지 않는 성분들을 확인하고 제품을 추천받을 수 있다.  
+* **퍼스널컬러 진단 기능**
+  > a. 본인의 사진을 업로드하여 퍼스널컬러(4가지)를 진단받을 수 있다.
+  >
+  > b. 진단 결과 페이지에서는 본인 퍼스널컬러에 대한 설명과 뷰티팁, 어울리는 색상을 확인할 수 있다.
+* **상품 기능**
+  > a. 상품 페이지에서는 전체, 맞춤, 스킨케어, 메이크업, 향수, 남성 등 카테고리별로  필터링하여 화장품 리스트를 확인할 수 있다. 
+  >
+  > b. 본인의 피부타입이 진단된 후, "맞춤" 탭에서 맞는 제품 또는 안맞는 제품 탭으로 구분하여 확인할 수 있다.
+  >
+  > c. 상품 이미지에서는 본인의 피부타입에 따라 "잘 맞아요/보통이에요/맞지 않아요" 3가지로 색상과 문구가 구분되어 표시된다.
+  >
+  > d. 인기순, 가격 낮은 순, 가격 높은 순, 리뷰 개수 순으로 리스트를 정렬 할 수 있다.
+* **찜하기기능**
+  > a. 상품 리스트, 상세, 검색결과 페이지에서 원하는 상품을 찜하기 할 수 있다.  
+  >
+  > b. 찜한 상품들은 "내 찜 목록"페이지에서 모아 확인할 수 있다.  
+* **검색 기능**
+  > a. 카테고리 별로 상품 이름을 검색할 수 있다.  
+  > 
+  > b. 검색 아이콘 클릭 후 검색 결과 목록을 확인할 수 있다.   
+* **마이페이지 기능**
+  > a. 마이페이지에서 가입시 입력한 본인 정보를 수정할 수 있다.   
+  >  
+  > b. 진단받은 피부타입과 퍼스널컬러 유형을 직접 선택해서 수정할 수 있다.   
+  >  
+  > c. 피부타입탭에서 본인의 피부타임에 관한 설명을 확인할 수 있다.   
+  >  
+  > d. 퍼스널컬러 탭에서 본인의 퍼스털컬러에 대한 설명을 확인할 수 있다.   
 
-![Python](https://img.shields.io/badge/python-v3.6-blue?logo=python)![Java](https://img.shields.io/badge/Java-v1.8-blue?logo=java) ![Spring Boot](https://img.shields.io/badge/spring-v3.9.15-blue?logo=spring) ![AWS RDS](https://img.shields.io/badge/AWS%20RDS----blue?logo=amazonaws) ![MySQL](https://img.shields.io/badge/MySQL-v8.0-blue?logo=mysql) 
+
+<br/>
 
 
 
@@ -120,84 +183,94 @@ gantt
 
 ```
 
-## 📑 Branch 규칙
 
+<br/>
+
+
+
+## ✔Branch 규칙  
 ```bash
-develop/feature/기능명
-```
+develop/feature/기능명  
+```  
 
 
 
-## 📑 커밋 메시지
-
-📌 하나의 기능 완성되면 한번에 커밋
-
-```markdown
-> 공통
-https://blog.ull.im/engineering/2019/03/10/logs-on-git.html 대로 메시지 
-한글 사용하자 :)) 
-
-프론트 : "[Jira issue number]FE_{featureName}_날짜:완성한 기능(작업 부분-폴더명)" 
-		ex) FE_0118:피드작성 컴포넌트 추가/수정/삭제 (Feed)
-
-백 : "[Jira issue number]BE_{featureName}_날짜: 완성한 기능(작업 부분-파일명)" 
-		ex) BE_0118:피드작성 컴포넌트 추가/수정/삭제 (UserController)
-
-리드미 : "README_날짜: 수정한 부분" 
-		ex) README_0118:와이어프레임 수정
-```
+<br/>
 
 
 
-## 📑 Code Style
 
-| FrontEnd                                                     | BackEnd                                                      |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| 1. 폴더명: 첫글자 대문자<br />→ ex) Feed/Add.vue <br/><br/>2. 파일명: 첫글자 대문자 <br/> → ex) Add.vue <br/><br/>3. 경로명: 소문자 → ex) /add | 1. 클래스명:  첫글자 대문자 + camel case <br/> ex) MainController.java <br/><br/> 2. 함수, 변수: 첫글자 소문자 + camel case <br/> ex) public void setUserName(); |
-
+## ✔Code Style
+| FrontEnd   | BackEnd |
+| ------ | ---- |
+| 1. 폴더명: 첫글자 대문자<br/>→ ex) Feed/Add.vue <br/><br/>2. 파일명: 첫글자 대문자 <br/> → ex) Add.vue <br/><br/>3. 경로명: 소문자 → ex) /add | 1. 클래스명:  첫글자 대문자 + camel case <br/> ex) MainController.java <br/><br/> 2. 함수, 변수: 첫글자 소문자 + camel case <br/> ex) public void setUserName(); |
 - if문
+    - 한줄 일 때, Block 처리하기
+    - else if / else /중괄호는 조건문 바로 옆에 붙이기
 
-  - 한줄 일 때, Block 처리하기
-  - else if / else /중괄호는 조건문 바로 옆에 붙이기
-
-  ```
-  if(condition){
-   statement;
-  } else if(condition2){
-   statement2;
-  } else{
-   statement3;
-  }
-  ```
+    ```java
+    if(condition){
+     statement;
+    } else if(condition2){
+     statement2;
+    } else{
+     statement3;
+    }
+    ```
 
 - for
-
-  - 단순 반복문은 iterator를 i,j,k,...,z순으로 명명하기
-
+  
+    - 단순 반복문은 iterator를 i,j,k,...,z순으로 명명하기
 - 주석 상대방이 이해할 수 있도록 달기
-
-  - /**/ 설명 여러줄 필요할 때 코드 위에 작성
-  - // 간단한 주석 코드 옆에 작성
-
+    - /**/ 설명 여러줄 필요할 때 코드 위에 작성
+    - // 간단한 주석 코드 옆에 작성
 
 
-## 📑 기능
+<br/>
 
 
-
-## 📑 산출물
+<br/>
 
 
 
-### ✔ ERD
 
-![image](/uploads/4e876635a389f2962b61334fcc5956d9/image.png)
-
+## ✔프로젝트 구조  
 
 
-### ✔ 와이어프레임
 
-![슬라이드1](/uploads/222fb3fe552cc2037311e2f81e7daef2/슬라이드1.PNG)
+<br/>
+
+
+
+
+
+## 💻 주요 기능 미리보기  
+### 1. 메인 화면           
+사진
+작성 예정
+<br/>
+
+
+
+# 📑산출물  
+> 1. ER 다이어그램     
+> 2. 와이어프레임   
+
+  
+##  💄 ER 다이어그램   
+![erd](/uploads/983b82e6ad67cc5ebfc7a58106039b72/erd.png)  
+
+
+---    
+
+
+<br/>
+
+
+
+### 💄 와이어프레임
+
+![슬라이드1](/uploads/525c1c753fc52877366989acacafa4b0/슬라이드1.png)
 
 ![슬라이드2](/uploads/76b74c0a42ad52f8b246a1a70a28ca33/슬라이드2.PNG)
 

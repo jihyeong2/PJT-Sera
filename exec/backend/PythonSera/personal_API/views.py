@@ -29,17 +29,17 @@ def personalColorTest(request):
     uri = 'https://%s.s3.%s.amazonaws.com/%s' % (AWS_STORAGE_BUCKET_NAME, AWS_REGION, key)
     result_url = ''
     # uri = ''
-    try:
-        result = main(uri)
-        print(uri, result)
-        result = result.split('톤')[0]
-        connect, curs = connectMySQL()
-        query = """UPDATE user SET personal_color=%s, user_img=%s WHERE user_id=%s"""
-        curs.execute(query, (result, uri, user_id))
-        connect.commit()
-        connect.close()
-        result_url = uri
-    except:
-        result = False
+    # try:
+    result = main(uri)
+    result = result.split('톤')[0]
+    connect, curs = connectMySQL()
+    query = """UPDATE user SET personal_color=%s, user_img=%s WHERE user_id=%s"""
+    curs.execute(query, (result, uri, user_id))
+    connect.commit()
+    connect.close()
+    result_url = uri
+    # except:
+    print(uri, result)
+    result = False
     return JsonResponse({'personal_color': result , 'user_img' : result_url}, json_dumps_params={'ensure_ascii': False})
 

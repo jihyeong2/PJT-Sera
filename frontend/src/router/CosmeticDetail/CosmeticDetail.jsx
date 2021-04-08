@@ -22,6 +22,9 @@ import {connect} from 'react-redux';
 import { useParams } from 'react-router';
 import TopButton from  '../../components/common/Button/TopButton/TopButton';
 import Footer from '../../components/common/Footer/Footer';
+import { useHistory } from "react-router-dom";
+import Swal from 'sweetalert2';
+
 const dstyles = (theme) => ({
   root: {
     margin: 0,
@@ -54,6 +57,7 @@ const DialogTitle = withStyles(dstyles)((props) => {
 });
 
 const CosmeticDetail = ({user}) => {
+    let history = useHistory();
     const [product, setProduct] = useState(null);
     const param = useParams();
     const [isScroll,setIsScroll] = useState(false);
@@ -75,7 +79,7 @@ const CosmeticDetail = ({user}) => {
               method: 'GET',
               redirect: 'follow'
             };
-            fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${res.data.item_name}&type=video&order=viewCount&maxResults=8&key=AIzaSyCIWCezwelvcvMD5ChmGFzuHm8BVbHOHx0`, requestOptions)
+            fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${res.data.item_name}&type=video&order=viewCount&maxResults=8&key=AIzaSyAtjCXrIEz4k2kainW4AWnqwaeiX-LV7cw`, requestOptions)
             .then(response => response.json()) // 보기좋은 json 형식
             .then(result => result.items.map(item => ({...item, id:item.id.videoId}))) // 그대로 하는데 id만 object가 아니라 videoId로 덮어주는 작업
             .then(items => setVideos(items)) // 그 비디오 아이템들로 업뎃
@@ -199,12 +203,23 @@ const CosmeticDetail = ({user}) => {
       else setIsScroll(false);
     });    
     useEffect(() => {
-      getItem();
-      getReview();
-      getPicture();
-      window.addEventListener('scroll', scrollEvent, true);
-      return () =>{
-        window.removeEventListener('scroll', scrollEvent, true);
+       // 로그인 안한거 막기
+      if(user == null){
+        Swal.fire({
+          icon: 'error',
+          text: '로그인 후 이용해주세요',
+          confirmButtonText: '확인',
+        }).then(() => {
+          history.push("/login");
+        })
+      }else{
+        getItem();
+        getReview();
+        getPicture();
+        window.addEventListener('scroll', scrollEvent, true);
+        return () =>{
+          window.removeEventListener('scroll', scrollEvent, true);
+        }
       }
     }, []); // 마운트가 되었을 때만 호출
 

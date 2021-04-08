@@ -14,8 +14,6 @@ import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import ReviewWrite from "./review_write_modal";
 import ReviewChart from "./review_chart";
-import review from './review';
-
 
 const dstyles = (theme) => ({
     root: {
@@ -68,7 +66,6 @@ const ReviewHead = ({ product, onCreateReview, grade }) => {
     };
     const handleCreateReview = () => {
         setOpen(false);
-        console.log('얘왜안오냐 시발')
         onCreateReview();
     };
     return (

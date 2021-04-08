@@ -5,8 +5,6 @@ import {connect} from 'react-redux';
 import http from '../../../http-django';
 
 const Detail = ({ product, user }) => {
-    console.log(product);
-    console.log("유저: "+user.userId);
 
     const [heart, setHeart] = useState(product.dibs);
     const [cnt, setCnt] = useState(product.dibs_cnt);

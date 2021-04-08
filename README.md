@@ -155,7 +155,7 @@ gantt
     section Frontend
    	회원가입/로그인/비밀번호찾기 페이지 :  done, t1, 2021-03-14, 2d
    	마이페이지 :  done, t2, 2021-03-14, 2d
-   	상품 리스트/디테일 페이지  : crit, t3, 2021-03-22, 4d
+   	상품 리스트/디테일 페이지  : done, t3, 2021-03-22, 4d
     회원가입/로그인/비밀번호찾기 api 연동 : done, t4, after t1,2d
     공통 컴포넌트 UI : done, t7, 2021-03-16, 1d
     마이페이지 api 연동: done, t5, 2021-03-18, 1d
@@ -184,7 +184,7 @@ gantt
     회원정보 CRUD : done, b_t7, 2021-03-15, 1d
     Swagger : done, b_t8, after b_t6, 1d
     CF 추천 알고리즘 : done, b_t3, 2021-03-14, 11d
-    상품 리스트 & 디테일 조회 api (Django): crit, b_t11, 2021-03-30, 2d
+    상품 리스트 & 디테일 조회 api (Django): done, b_t11, 2021-03-30, 2d
     상품 검색 api (Django): done, b_t13, after b_t11, 1d
     리뷰 CRUD api (Spring) : done, 2021-03-29, 3d
     퍼스널 컬러 api (Django) : done, after b_t13, 1d

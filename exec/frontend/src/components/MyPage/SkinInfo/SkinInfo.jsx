@@ -243,14 +243,14 @@ const SkinInfo = ({user,skin,color,update}) => {
               </DialogContent>
           </Dialog>
           {
-            user.personalColor!==null ? 
+            user.personalColor!==false ? 
             <div className={styles.color_type} style={{backgroundColor:`${color[user.personalColor].color}`}}>
               {user.personalColor}
             </div> :
             <div></div>
           }
           {
-            user.personalColor !== null ?
+            user.personalColor !== false ?
           <button className={styles.edit_btn} onClick={handleClickOpen2}>
             <FontAwesomeIcon icon="edit" size="lg" color="#707070"/>
           </button> : <div></div>

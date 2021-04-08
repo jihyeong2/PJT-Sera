@@ -75,27 +75,22 @@ const useStyles = makeStyles((theme) => ({
 
   const theme = createMuiTheme();
 
-const Review = ({product, review, user, skin, picture, onCreateReview, onModifyReview, onClickReviewGood, onDeleteReview, grade}) => {
-    
+const Review = ({product, review, user, skin, picture, onCreateReview, onModifyReview, onClickReviewGood, onDeleteReview}) => {
+    const [open, setOpen] = React.useState([]);
+    useEffect(()=>{
+        const tmp = new Array(review.length).fill(false);
+        setOpen(tmp);
+    },[review])
+    console.log(review.length,open);
     const classes = useStyles();
     const [type, setType] = React.useState(1);
-
-    // const handleChange = (event) => {
-    //     console.log(event);
-    //     setType(event.target.value);
-    // };
 
     const [state, setState] = React.useState({
         checkedA: true,
         checkedB: true,
       });
-    // const handleChange_radio = (event) => {
-    //     setState({ ...state, [event.target.name]: event.target.checked });
-    //   };
-    
     const [fullWidth, setFullWidth] = React.useState(true);
 
-    const [open, setOpen] = React.useState(Array(review.length).fill(false));
 
     const handleClickOpen = (e) => {
         const index = e.target.dataset.idx ? e.target.dataset.idx : e.target.parentNode.dataset.idx;
@@ -104,9 +99,6 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
             if(idx!=index) return item
             else return true
         })
-        console.log(tmp);
-        // console.log(open);
-        // console.log(tmp);
         setOpen(tmp);
     };
     const handleClose = () => {
@@ -149,7 +141,6 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
     const [page, setPage] = useState(0);
     console.log(page);
     const handleClick = (offset) => {
-        console.log(offset);
         setPage(offset);
     }
     const handleDeleteReview = (e) => {
@@ -171,6 +162,9 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
             <div className={styles.bar}></div>
             <div style={{color:"#666666", marginLeft:"5%", marginTop:"40px", fontWeight:"600", fontSize:"20px"}}> 📸 최근 리뷰사진 List </div>
             <div className={styles.picture_list}>
+                {
+                    picture.length === 0 && (<div>사진리뷰가 없어요. 😥</div>)
+                }
                 
                 {
                     picture.map (picture=> ( <img className={styles.review_image} key={picture.idx} src={picture} alt="리뷰사진"/>))
@@ -178,8 +172,7 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
                 
             </div>
             
-            <div className={styles.pagenation}>
-            <MuiThemeProvider theme={theme}>
+            
             <div className={styles.review_list}>
                 {
                     review.slice(page,page+5).map ((review,idx) => ( 
@@ -283,16 +276,17 @@ const Review = ({product, review, user, skin, picture, onCreateReview, onModifyR
                 }
                 
             </div>
-                <Pagination
-                    limit={5}
-                    offset={page}
-                    total={review.length}
-                    onClick={(e,offset) => handleClick(offset)}
-                    currentPageColor={"secondary"}
-                    otherPageColor={"default"}
-                />
-            </MuiThemeProvider>
-                {/* <Pagination className={styles.pagenation} count={} shape="rounded" style={{display:"table", marginLeft:"auto", marginInlineStart: "auto"}} /> */}
+            <div className={styles.pagenation} style={{display:'flex', justifyContent:'center'}}>
+                <MuiThemeProvider theme={theme}>
+                    <Pagination
+                        limit={5}
+                        offset={page}
+                        total={review.length}
+                        onClick={(e,offset) => handleClick(offset)}
+                        currentPageColor={"secondary"}
+                        otherPageColor={"default"}
+                    />
+                </MuiThemeProvider>
             </div>
             
         </div>

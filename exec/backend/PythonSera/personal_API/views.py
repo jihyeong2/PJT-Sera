@@ -38,7 +38,8 @@ def personalColorTest(request):
         connect.commit()
         connect.close()
         result_url = uri
-    except:
+    except Exception as e:
+        print(e)
         result = False
     return JsonResponse({'personal_color': result , 'user_img' : result_url}, json_dumps_params={'ensure_ascii': False})
 

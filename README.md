@@ -1,11 +1,9 @@
-<div align="center">
-  <img width="250px;" src="/uploads/1104acdedd3c689307b2f8c84c93d81c/Sera_Logo2.png" />
-  <br/><br/>
+
+<p align="center">
+ <img width="250px;" src="https://user-images.githubusercontent.com/72757829/114306905-615df500-9b18-11eb-80dc-e1bfc0a8e33c.png" />
   <br/>코스메틱 추천 서비스 💄 
-
-
-  <p align="center"><br/>
-     <img src="https://img.shields.io/badge/PostCSS----green?logo=PostCSS">
+  <p align="center">
+ <img src="https://img.shields.io/badge/PostCSS----green?logo=PostCSS">
      <img src="https://img.shields.io/badge/JavaScript-ES6+-green?logo=javascript">
      <img src="https://img.shields.io/badge/React.js-v17.0.1-green?logo=react">
      <img src="https://img.shields.io/badge/ReactRouter-v5-green?logo=react-router"><br/>
@@ -17,7 +15,9 @@
      <img src="https://img.shields.io/badge/MySQL-v8.0-blue?logo=mysql">
      <img src="https://img.shields.io/badge/Django-v3.1.7-blue?logo=django">
   </p>
-</div>  
+<br/>  
+<br/> 
+</p>  
 
 > 서비스명: Será       
 > 팀명: 장코   
@@ -247,33 +247,49 @@ develop/feature/기능명
 
 
 ## ✔프로젝트 구조  
-![20210408_163746](/uploads/fb3148ff252b8a9f16411466d76fcca8/20210408_163746.png)  
+![프로젝트구조](https://user-images.githubusercontent.com/72757829/114307081-0678cd80-9b19-11eb-81ee-c47da47a2a0d.png)
+
 
 <br/>
 
 
 
 
-## 💻 주요 기능 미리보기  
+## 💻 주요 기능 미리보기    
+![서비스소개](https://user-images.githubusercontent.com/72757829/114307163-5a83b200-9b19-11eb-8ee3-d579cadc5b93.png)
+
 ### 1. 메인 화면           
 ![녹화_2021_04_08_16_45_35_778](/uploads/9008c18417659568049f02abb44f7fa8/녹화_2021_04_08_16_45_35_778.gif)    
 메인화면에서는 핵심 기능인 피부 진단, 맞춤 화장품 추천, 퍼스널컬러 진단 기능을 원페이지 스크롤로 구현하고 있습니다.  
 
 
 ### 2. 피부 진단  
-![녹화_2021_04_08_16_47_25_826](/uploads/b4624639b5a3bbb1bbd62bce53cdc9b9/녹화_2021_04_08_16_47_25_826.gif)    
+- 테스트하러가기     
+![image46](https://user-images.githubusercontent.com/72757829/114307281-e09ff880-9b19-11eb-8b89-52764703521e.gif)
+- Skip
+![image47](https://user-images.githubusercontent.com/72757829/114307297-eeee1480-9b19-11eb-9e87-aae871df8e8c.gif)
+
 피부진단 페이지에서는 16문항의 설문테스트 후 본인의 피부타입 결과를 확인할 수 있습니다.  
 만약, 설문을 하지 않고 스킵하여 본인의 피부타입을 바로 선택할 수도 있습니다.  
 결고 페이지에서는 피부타입에 맞는 성분과 맞지 않는 성분이 소개되며, 피부타입에 맞는 성분으로 구성된 제품을 추천해줍니다.  
 
 
 ### 3. 퍼스널컬러 진단
-![녹화_2021_04_08_16_47_45_199](/uploads/0822f525d5a1677a1a43566a8cada39f/녹화_2021_04_08_16_47_45_199.gif)  
+![image54](https://user-images.githubusercontent.com/72757829/114307337-1c3ac280-9b1a-11eb-85d4-4eaee17b4bbd.gif) 
+
 본인의 사진을 업로드하여 퍼스널컬러를 확인하고 이와 관련된 뷰티팁, 컬러리스트를 추천받을 수 있습니다.  
 
 
 ### 4. 상품 기능
-![녹화_2021_04_08_16_49_45_189](/uploads/9c76f092e2be94558b7133ae73afdd80/녹화_2021_04_08_16_49_45_189.gif)  
+- 상품리스트     
+![image48](https://user-images.githubusercontent.com/72757829/114307362-42f8f900-9b1a-11eb-9866-8bd86f11cc12.gif)
+
+- 상품디테일(상품상세)     
+
+- 상품디테일(리뷰)     
+![image53](https://user-images.githubusercontent.com/72757829/114307376-5015e800-9b1a-11eb-94c8-af84fc7fd6d6.gif)
+
+
 상품 페이지에서는 전체 상품 리스트를 확인할 수 있고, 카테고리에 따라 분류하여 볼 수 있습니다.  
 상품마다 본인의 피부타입에 맞는지 문구와 색상으로 구분하여 표시되며, 인기순, 리뷰순으로 정렬하여 볼 수 있습니다.  
 상품 상세 페이지에서는 상품에 대한 소개와 관련 유튜브 영상으로 이동이 가능하며, 사용자들이 작성한 리뷰를 제공합니다.  
@@ -290,7 +306,7 @@ develop/feature/기능명
 
 
 ##  💄 ER 다이어그램   
-![erd](/uploads/983b82e6ad67cc5ebfc7a58106039b72/erd.png)  
+![erd](https://user-images.githubusercontent.com/72757829/114307027-cc0f3080-9b18-11eb-9475-726774581049.png)
 
 
 ---
@@ -301,34 +317,20 @@ develop/feature/기능명
 
 
 ### 💄 와이어프레임
-![슬라이드0001](/uploads/d3dfff039f7ccd3ccd1bcf6cab46b75a/슬라이드0001.png)
+![슬라이드1](https://user-images.githubusercontent.com/72757829/114306985-af72f880-9b18-11eb-860c-d2dd8856631e.png)
+![슬라이드2](https://user-images.githubusercontent.com/72757829/114306987-b0a42580-9b18-11eb-91eb-0cb4c7a56a49.PNG)
+![슬라이드3](https://user-images.githubusercontent.com/72757829/114306989-b0a42580-9b18-11eb-8704-bb7ac29044f3.PNG)
+![슬라이드4](https://user-images.githubusercontent.com/72757829/114306990-b13cbc00-9b18-11eb-84ce-9843ff50c437.PNG)
+![슬라이드5](https://user-images.githubusercontent.com/72757829/114306991-b1d55280-9b18-11eb-9eec-a6b5af286b0e.PNG)
+![슬라이드6](https://user-images.githubusercontent.com/72757829/114306992-b1d55280-9b18-11eb-8de2-fd2120cbba0e.PNG)
+![슬라이드7](https://user-images.githubusercontent.com/72757829/114306993-b26de900-9b18-11eb-9b77-523a74cddaea.PNG)
+![슬라이드8](https://user-images.githubusercontent.com/72757829/114306994-b26de900-9b18-11eb-99e7-956a972decdb.PNG)
+![슬라이드9](https://user-images.githubusercontent.com/72757829/114306995-b3067f80-9b18-11eb-8d33-2eacb48eedf9.PNG)
+![슬라이드10](https://user-images.githubusercontent.com/72757829/114306996-b3067f80-9b18-11eb-8a88-4199663d2ee3.PNG)
+![슬라이드11](https://user-images.githubusercontent.com/72757829/114306997-b39f1600-9b18-11eb-89ef-5820d2e0e3a6.PNG)
+![슬라이드12](https://user-images.githubusercontent.com/72757829/114306999-b39f1600-9b18-11eb-85e1-707e38dae8e2.png)
+![슬라이드13](https://user-images.githubusercontent.com/72757829/114307001-b437ac80-9b18-11eb-8d8f-9c2476d169f8.PNG)
+![슬라이드14](https://user-images.githubusercontent.com/72757829/114307003-b437ac80-9b18-11eb-837a-663042c9b528.PNG)
+![슬라이드15](https://user-images.githubusercontent.com/72757829/114307004-b4d04300-9b18-11eb-8b47-8b4d5ce4d57e.PNG)
+![슬라이드16](https://user-images.githubusercontent.com/72757829/114307005-b4d04300-9b18-11eb-95f9-ab377fa4296b.PNG)
 
-![슬라이드0002](/uploads/e29f37c1737acdee2d4519f05bcfdde1/슬라이드0002.png)
-
-![슬라이드0003](/uploads/0ed75017b66e19ec53d7df08fb44ecd7/슬라이드0003.png)
-
-![슬라이드0004](/uploads/02b36011070b483c70b7b1f35fe886be/슬라이드0004.png)
-
-![슬라이드0005](/uploads/f45e61902c6331239ecc6cd87e6e688f/슬라이드0005.png)
-
-![슬라이드0006](/uploads/ebe8d6d010060d338da1fddbfafd440f/슬라이드0006.png)
-
-![슬라이드0007](/uploads/5cc1cbe26a9d568d1b59eb09849de2ba/슬라이드0007.png)
-
-![슬라이드0008](/uploads/311d4070e6a2ea8c8ef9c73fac04d7b3/슬라이드0008.png)
-
-![슬라이드0009](/uploads/29dafacdda5c46f3a107dc33db199904/슬라이드0009.png)
-
-![슬라이드0010](/uploads/f4054457c05f5ccb0226d9faad39acb1/슬라이드0010.png)
-
-![슬라이드0011](/uploads/5149c6997213610750fbc33ee85c74ac/슬라이드0011.png)
-
-![슬라이드0012](/uploads/54c0ffe3fc2a8cb4baa1ab56e1b90124/슬라이드0012.png)
-
-![슬라이드0013](/uploads/0e9d3b383aaac01e29cbd23becdc77d3/슬라이드0013.png)
-
-![슬라이드0014](/uploads/5f57333443801663883a5495d4506d4f/슬라이드0014.png)
-
-![슬라이드0015](/uploads/1655d15006532f67a71b04548cf2430d/슬라이드0015.png)
-
-![슬라이드0016](/uploads/fcc49547de6c69bcd257064e00bdacda/슬라이드0016.png)

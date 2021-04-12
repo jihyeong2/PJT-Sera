@@ -194,7 +194,9 @@ develop/feature/기능명
 ![서비스소개](https://user-images.githubusercontent.com/72757829/114307163-5a83b200-9b19-11eb-8ee3-d579cadc5b93.png)
 
 ### 1. 메인 화면           
-![녹화_2021_04_08_16_45_35_778](/uploads/9008c18417659568049f02abb44f7fa8/녹화_2021_04_08_16_45_35_778.gif)    
+
+![녹화_2021_04_13_03_24_40_190](https://user-images.githubusercontent.com/59414210/114442751-dcea9f80-9c07-11eb-8b50-63cb75deb1dc.gif)  
+![녹화_2021_04_13_03_25_00_81](https://user-images.githubusercontent.com/59414210/114442754-de1bcc80-9c07-11eb-97a6-03a50ac13bbc.gif)  
 메인화면에서는 핵심 기능인 피부 진단, 맞춤 화장품 추천, 퍼스널컬러 진단 기능을 원페이지 스크롤로 구현하고 있습니다.  
 
 
@@ -220,6 +222,10 @@ develop/feature/기능명
 ![image48](https://user-images.githubusercontent.com/72757829/114307362-42f8f900-9b1a-11eb-9866-8bd86f11cc12.gif)
 
 - 상품디테일(상품상세)     
+![녹화_2021_04_13_04_09_08_417](https://user-images.githubusercontent.com/59414210/114448027-04dd0180-9c0e-11eb-98f4-c92f5e9dc043.gif)
+![녹화_2021_04_13_04_07_17_701](https://user-images.githubusercontent.com/59414210/114447904-dfe88e80-9c0d-11eb-9f1d-2214ec60830b.gif)  
+![녹화_2021_04_13_04_07_50_281](https://user-images.githubusercontent.com/59414210/114447908-e0812500-9c0d-11eb-99a9-efa03f0d08e1.gif)  
+
 
 - 상품디테일(리뷰)     
 ![image53](https://user-images.githubusercontent.com/72757829/114307376-5015e800-9b1a-11eb-94c8-af84fc7fd6d6.gif)
@@ -268,4 +274,11 @@ develop/feature/기능명
 ![슬라이드14](https://user-images.githubusercontent.com/72757829/114307003-b437ac80-9b18-11eb-837a-663042c9b528.PNG)
 ![슬라이드15](https://user-images.githubusercontent.com/72757829/114307004-b4d04300-9b18-11eb-8b47-8b4d5ce4d57e.PNG)
 ![슬라이드16](https://user-images.githubusercontent.com/72757829/114307005-b4d04300-9b18-11eb-95f9-ab377fa4296b.PNG)
+
+
+## 💡 프로젝트 회고
+
+
+## Awards
+-  
 

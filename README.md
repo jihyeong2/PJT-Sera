@@ -280,5 +280,5 @@ develop/feature/기능명
 
 
 ## Awards
--  
+- 🥈삼성청년SW아카데미 2학기 특화PJT 2등 수상 
 
